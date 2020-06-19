@@ -1,0 +1,2812 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Exploring Boston Weather Data | Victor Omondi Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Exploring Boston Weather Data" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I created this blog so that I can add all that I am working on, sharing tips and anything that I feel might be of impact to my fellow developers." />
+<meta property="og:description" content="I created this blog so that I can add all that I am working on, sharing tips and anything that I feel might be of impact to my fellow developers." />
+<link rel="canonical" href="https://victoromondi1997.github.io/blog/2020/06/18/Exploring-Boston-Weather-Data.html" />
+<meta property="og:url" content="https://victoromondi1997.github.io/blog/2020/06/18/Exploring-Boston-Weather-Data.html" />
+<meta property="og:site_name" content="Victor Omondi Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-18T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"I created this blog so that I can add all that I am working on, sharing tips and anything that I feel might be of impact to my fellow developers.","@type":"BlogPosting","headline":"Exploring Boston Weather Data","dateModified":"2020-06-18T00:00:00-05:00","datePublished":"2020-06-18T00:00:00-05:00","url":"https://victoromondi1997.github.io/blog/2020/06/18/Exploring-Boston-Weather-Data.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://victoromondi1997.github.io/blog/2020/06/18/Exploring-Boston-Weather-Data.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://victoromondi1997.github.io/blog/feed.xml" title="Victor Omondi | Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-170138117-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Exploring Boston Weather Data | Victor Omondi Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Exploring Boston Weather Data" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I created this blog so that I can add all that I am working on, sharing tips and anything that I feel might be of impact to my fellow developers." />
+<meta property="og:description" content="I created this blog so that I can add all that I am working on, sharing tips and anything that I feel might be of impact to my fellow developers." />
+<link rel="canonical" href="https://victoromondi1997.github.io/blog/2020/06/18/Exploring-Boston-Weather-Data.html" />
+<meta property="og:url" content="https://victoromondi1997.github.io/blog/2020/06/18/Exploring-Boston-Weather-Data.html" />
+<meta property="og:site_name" content="Victor Omondi Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-18T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"I created this blog so that I can add all that I am working on, sharing tips and anything that I feel might be of impact to my fellow developers.","@type":"BlogPosting","headline":"Exploring Boston Weather Data","dateModified":"2020-06-18T00:00:00-05:00","datePublished":"2020-06-18T00:00:00-05:00","url":"https://victoromondi1997.github.io/blog/2020/06/18/Exploring-Boston-Weather-Data.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://victoromondi1997.github.io/blog/2020/06/18/Exploring-Boston-Weather-Data.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://victoromondi1997.github.io/blog/feed.xml" title="Victor Omondi | Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-170138117-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Victor Omondi | Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Exploring Boston Weather Data</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-06-18T00:00:00-05:00" itemprop="datePublished">
+        Jun 18, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      40 min read
+    
+</span></p>
+
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/VictorOmondi1997/blog/tree/master/_notebooks/Exploring Boston Weather Data.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/VictorOmondi1997/blog/master?filepath=_notebooks%2FExploring+Boston+Weather+Data.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/VictorOmondi1997/blog/blob/master/_notebooks/Exploring Boston Weather Data.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/Exploring Boston Weather Data.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">weather</span> <span class="o">=</span> <span class="n">readRDS</span><span class="p">(</span><span class="n">gzcon</span><span class="p">(</span><span class="n">url</span><span class="p">(</span><span class="s1">&#39;https://assets.datacamp.com/production/repositories/34/datasets/b3c1036d9a60a9dfe0f99051d2474a54f76055ea/weather.rds&#39;</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Libraries">Libraries<a class="anchor-link" href="#Libraries"> </a></h1>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">library</span><span class="p">(</span><span class="n">readr</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">lubridate</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">stringr</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">installr</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">tidyr</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Warning message:
+&#34;package &#39;tidyr&#39; was built under R version 3.6.3&#34;</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Verify that weather is a data.frame</span>
+<span class="n">class</span><span class="p">(</span><span class="n">weather</span><span class="p">)</span>
+
+<span class="c1"># Check the dimensions</span>
+<span class="n">dim</span><span class="p">(</span><span class="n">weather</span><span class="p">)</span>
+
+<span class="c1"># View the column names</span>
+<span class="n">names</span><span class="p">(</span><span class="n">weather</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+'data.frame'
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+&lt;ol class=list-inline&gt;
+	<li>286</li>
+	<li>35</li>
+&lt;/ol&gt;
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+&lt;ol class=list-inline&gt;
+	<li>'X'</li>
+	<li>'year'</li>
+	<li>'month'</li>
+	<li>'measure'</li>
+	<li>'X1'</li>
+	<li>'X2'</li>
+	<li>'X3'</li>
+	<li>'X4'</li>
+	<li>'X5'</li>
+	<li>'X6'</li>
+	<li>'X7'</li>
+	<li>'X8'</li>
+	<li>'X9'</li>
+	<li>'X10'</li>
+	<li>'X11'</li>
+	<li>'X12'</li>
+	<li>'X13'</li>
+	<li>'X14'</li>
+	<li>'X15'</li>
+	<li>'X16'</li>
+	<li>'X17'</li>
+	<li>'X18'</li>
+	<li>'X19'</li>
+	<li>'X20'</li>
+	<li>'X21'</li>
+	<li>'X22'</li>
+	<li>'X23'</li>
+	<li>'X24'</li>
+	<li>'X25'</li>
+	<li>'X26'</li>
+	<li>'X27'</li>
+	<li>'X28'</li>
+	<li>'X29'</li>
+	<li>'X30'</li>
+	<li>'X31'</li>
+&lt;/ol&gt;
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We've confirmed that the object is a data frame with 286 rows and 35 columns.</p>
+<h1 id="Summarize-the-data">Summarize the data<a class="anchor-link" href="#Summarize-the-data"> </a></h1><p>Next up is to look at some summaries of the data. This is where functions like <code>str()</code>, <code>glimpse()</code> from dplyr, and <code>summary()</code> come in handy.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># View the structure of the data</span>
+<span class="nb">str</span><span class="p">(</span><span class="n">weather</span><span class="p">)</span>
+
+<span class="c1"># Look at the structure using dplyr&#39;s glimpse()</span>
+<span class="n">glimpse</span><span class="p">(</span><span class="n">weather</span><span class="p">)</span>
+
+<span class="c1"># View a summary of the data</span>
+<span class="n">summary</span><span class="p">(</span><span class="n">weather</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&#39;data.frame&#39;:	286 obs. of  35 variables:
+ $ X      : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ year   : int  2014 2014 2014 2014 2014 2014 2014 2014 2014 2014 ...
+ $ month  : int  12 12 12 12 12 12 12 12 12 12 ...
+ $ measure: chr  &#34;Max.TemperatureF&#34; &#34;Mean.TemperatureF&#34; &#34;Min.TemperatureF&#34; &#34;Max.Dew.PointF&#34; ...
+ $ X1     : chr  &#34;64&#34; &#34;52&#34; &#34;39&#34; &#34;46&#34; ...
+ $ X2     : chr  &#34;42&#34; &#34;38&#34; &#34;33&#34; &#34;40&#34; ...
+ $ X3     : chr  &#34;51&#34; &#34;44&#34; &#34;37&#34; &#34;49&#34; ...
+ $ X4     : chr  &#34;43&#34; &#34;37&#34; &#34;30&#34; &#34;24&#34; ...
+ $ X5     : chr  &#34;42&#34; &#34;34&#34; &#34;26&#34; &#34;37&#34; ...
+ $ X6     : chr  &#34;45&#34; &#34;42&#34; &#34;38&#34; &#34;45&#34; ...
+ $ X7     : chr  &#34;38&#34; &#34;30&#34; &#34;21&#34; &#34;36&#34; ...
+ $ X8     : chr  &#34;29&#34; &#34;24&#34; &#34;18&#34; &#34;28&#34; ...
+ $ X9     : chr  &#34;49&#34; &#34;39&#34; &#34;29&#34; &#34;49&#34; ...
+ $ X10    : chr  &#34;48&#34; &#34;43&#34; &#34;38&#34; &#34;45&#34; ...
+ $ X11    : chr  &#34;39&#34; &#34;36&#34; &#34;32&#34; &#34;37&#34; ...
+ $ X12    : chr  &#34;39&#34; &#34;35&#34; &#34;31&#34; &#34;28&#34; ...
+ $ X13    : chr  &#34;42&#34; &#34;37&#34; &#34;32&#34; &#34;28&#34; ...
+ $ X14    : chr  &#34;45&#34; &#34;39&#34; &#34;33&#34; &#34;29&#34; ...
+ $ X15    : chr  &#34;42&#34; &#34;37&#34; &#34;32&#34; &#34;33&#34; ...
+ $ X16    : chr  &#34;44&#34; &#34;40&#34; &#34;35&#34; &#34;42&#34; ...
+ $ X17    : chr  &#34;49&#34; &#34;45&#34; &#34;41&#34; &#34;46&#34; ...
+ $ X18    : chr  &#34;44&#34; &#34;40&#34; &#34;36&#34; &#34;34&#34; ...
+ $ X19    : chr  &#34;37&#34; &#34;33&#34; &#34;29&#34; &#34;25&#34; ...
+ $ X20    : chr  &#34;36&#34; &#34;32&#34; &#34;27&#34; &#34;30&#34; ...
+ $ X21    : chr  &#34;36&#34; &#34;33&#34; &#34;30&#34; &#34;30&#34; ...
+ $ X22    : chr  &#34;44&#34; &#34;39&#34; &#34;33&#34; &#34;39&#34; ...
+ $ X23    : chr  &#34;47&#34; &#34;45&#34; &#34;42&#34; &#34;45&#34; ...
+ $ X24    : chr  &#34;46&#34; &#34;44&#34; &#34;41&#34; &#34;46&#34; ...
+ $ X25    : chr  &#34;59&#34; &#34;52&#34; &#34;44&#34; &#34;58&#34; ...
+ $ X26    : chr  &#34;50&#34; &#34;44&#34; &#34;37&#34; &#34;31&#34; ...
+ $ X27    : chr  &#34;52&#34; &#34;45&#34; &#34;38&#34; &#34;34&#34; ...
+ $ X28    : chr  &#34;52&#34; &#34;46&#34; &#34;40&#34; &#34;42&#34; ...
+ $ X29    : chr  &#34;41&#34; &#34;36&#34; &#34;30&#34; &#34;26&#34; ...
+ $ X30    : chr  &#34;30&#34; &#34;26&#34; &#34;22&#34; &#34;10&#34; ...
+ $ X31    : chr  &#34;30&#34; &#34;25&#34; &#34;20&#34; &#34;8&#34; ...
+Rows: 286
+Columns: 35
+$ X       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, ...
+$ year    &lt;int&gt; 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014,...
+$ month   &lt;int&gt; 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,...
+$ measure &lt;chr&gt; &#34;Max.TemperatureF&#34;, &#34;Mean.TemperatureF&#34;, &#34;Min.TemperatureF&#34;...
+$ X1      &lt;chr&gt; &#34;64&#34;, &#34;52&#34;, &#34;39&#34;, &#34;46&#34;, &#34;40&#34;, &#34;26&#34;, &#34;74&#34;, &#34;63&#34;, &#34;52&#34;, &#34;30.4...
+$ X2      &lt;chr&gt; &#34;42&#34;, &#34;38&#34;, &#34;33&#34;, &#34;40&#34;, &#34;27&#34;, &#34;17&#34;, &#34;92&#34;, &#34;72&#34;, &#34;51&#34;, &#34;30.7...
+$ X3      &lt;chr&gt; &#34;51&#34;, &#34;44&#34;, &#34;37&#34;, &#34;49&#34;, &#34;42&#34;, &#34;24&#34;, &#34;100&#34;, &#34;79&#34;, &#34;57&#34;, &#34;30....
+$ X4      &lt;chr&gt; &#34;43&#34;, &#34;37&#34;, &#34;30&#34;, &#34;24&#34;, &#34;21&#34;, &#34;13&#34;, &#34;69&#34;, &#34;54&#34;, &#34;39&#34;, &#34;30.5...
+$ X5      &lt;chr&gt; &#34;42&#34;, &#34;34&#34;, &#34;26&#34;, &#34;37&#34;, &#34;25&#34;, &#34;12&#34;, &#34;85&#34;, &#34;66&#34;, &#34;47&#34;, &#34;30.6...
+$ X6      &lt;chr&gt; &#34;45&#34;, &#34;42&#34;, &#34;38&#34;, &#34;45&#34;, &#34;40&#34;, &#34;36&#34;, &#34;100&#34;, &#34;93&#34;, &#34;85&#34;, &#34;30....
+$ X7      &lt;chr&gt; &#34;38&#34;, &#34;30&#34;, &#34;21&#34;, &#34;36&#34;, &#34;20&#34;, &#34;-3&#34;, &#34;92&#34;, &#34;61&#34;, &#34;29&#34;, &#34;30.6...
+$ X8      &lt;chr&gt; &#34;29&#34;, &#34;24&#34;, &#34;18&#34;, &#34;28&#34;, &#34;16&#34;, &#34;3&#34;, &#34;92&#34;, &#34;70&#34;, &#34;47&#34;, &#34;30.77...
+$ X9      &lt;chr&gt; &#34;49&#34;, &#34;39&#34;, &#34;29&#34;, &#34;49&#34;, &#34;41&#34;, &#34;28&#34;, &#34;100&#34;, &#34;93&#34;, &#34;86&#34;, &#34;30....
+$ X10     &lt;chr&gt; &#34;48&#34;, &#34;43&#34;, &#34;38&#34;, &#34;45&#34;, &#34;39&#34;, &#34;37&#34;, &#34;100&#34;, &#34;95&#34;, &#34;89&#34;, &#34;29....
+$ X11     &lt;chr&gt; &#34;39&#34;, &#34;36&#34;, &#34;32&#34;, &#34;37&#34;, &#34;31&#34;, &#34;27&#34;, &#34;92&#34;, &#34;87&#34;, &#34;82&#34;, &#34;29.8...
+$ X12     &lt;chr&gt; &#34;39&#34;, &#34;35&#34;, &#34;31&#34;, &#34;28&#34;, &#34;27&#34;, &#34;25&#34;, &#34;85&#34;, &#34;75&#34;, &#34;64&#34;, &#34;29.8...
+$ X13     &lt;chr&gt; &#34;42&#34;, &#34;37&#34;, &#34;32&#34;, &#34;28&#34;, &#34;26&#34;, &#34;24&#34;, &#34;75&#34;, &#34;65&#34;, &#34;55&#34;, &#34;29.8...
+$ X14     &lt;chr&gt; &#34;45&#34;, &#34;39&#34;, &#34;33&#34;, &#34;29&#34;, &#34;27&#34;, &#34;25&#34;, &#34;82&#34;, &#34;68&#34;, &#34;53&#34;, &#34;29.9...
+$ X15     &lt;chr&gt; &#34;42&#34;, &#34;37&#34;, &#34;32&#34;, &#34;33&#34;, &#34;29&#34;, &#34;27&#34;, &#34;89&#34;, &#34;75&#34;, &#34;60&#34;, &#34;30.1...
+$ X16     &lt;chr&gt; &#34;44&#34;, &#34;40&#34;, &#34;35&#34;, &#34;42&#34;, &#34;36&#34;, &#34;30&#34;, &#34;96&#34;, &#34;85&#34;, &#34;73&#34;, &#34;30.1...
+$ X17     &lt;chr&gt; &#34;49&#34;, &#34;45&#34;, &#34;41&#34;, &#34;46&#34;, &#34;41&#34;, &#34;32&#34;, &#34;100&#34;, &#34;85&#34;, &#34;70&#34;, &#34;29....
+$ X18     &lt;chr&gt; &#34;44&#34;, &#34;40&#34;, &#34;36&#34;, &#34;34&#34;, &#34;30&#34;, &#34;26&#34;, &#34;89&#34;, &#34;73&#34;, &#34;57&#34;, &#34;29.8...
+$ X19     &lt;chr&gt; &#34;37&#34;, &#34;33&#34;, &#34;29&#34;, &#34;25&#34;, &#34;22&#34;, &#34;20&#34;, &#34;69&#34;, &#34;63&#34;, &#34;56&#34;, &#34;30.1...
+$ X20     &lt;chr&gt; &#34;36&#34;, &#34;32&#34;, &#34;27&#34;, &#34;30&#34;, &#34;24&#34;, &#34;20&#34;, &#34;89&#34;, &#34;79&#34;, &#34;69&#34;, &#34;30.3...
+$ X21     &lt;chr&gt; &#34;36&#34;, &#34;33&#34;, &#34;30&#34;, &#34;30&#34;, &#34;27&#34;, &#34;25&#34;, &#34;85&#34;, &#34;77&#34;, &#34;69&#34;, &#34;30.3...
+$ X22     &lt;chr&gt; &#34;44&#34;, &#34;39&#34;, &#34;33&#34;, &#34;39&#34;, &#34;34&#34;, &#34;25&#34;, &#34;89&#34;, &#34;79&#34;, &#34;69&#34;, &#34;30.4...
+$ X23     &lt;chr&gt; &#34;47&#34;, &#34;45&#34;, &#34;42&#34;, &#34;45&#34;, &#34;42&#34;, &#34;37&#34;, &#34;100&#34;, &#34;91&#34;, &#34;82&#34;, &#34;30....
+$ X24     &lt;chr&gt; &#34;46&#34;, &#34;44&#34;, &#34;41&#34;, &#34;46&#34;, &#34;44&#34;, &#34;41&#34;, &#34;100&#34;, &#34;98&#34;, &#34;96&#34;, &#34;30....
+$ X25     &lt;chr&gt; &#34;59&#34;, &#34;52&#34;, &#34;44&#34;, &#34;58&#34;, &#34;43&#34;, &#34;29&#34;, &#34;100&#34;, &#34;75&#34;, &#34;49&#34;, &#34;29....
+$ X26     &lt;chr&gt; &#34;50&#34;, &#34;44&#34;, &#34;37&#34;, &#34;31&#34;, &#34;29&#34;, &#34;28&#34;, &#34;70&#34;, &#34;60&#34;, &#34;49&#34;, &#34;30.1...
+$ X27     &lt;chr&gt; &#34;52&#34;, &#34;45&#34;, &#34;38&#34;, &#34;34&#34;, &#34;31&#34;, &#34;29&#34;, &#34;70&#34;, &#34;60&#34;, &#34;50&#34;, &#34;30.2...
+$ X28     &lt;chr&gt; &#34;52&#34;, &#34;46&#34;, &#34;40&#34;, &#34;42&#34;, &#34;35&#34;, &#34;27&#34;, &#34;76&#34;, &#34;65&#34;, &#34;53&#34;, &#34;29.9...
+$ X29     &lt;chr&gt; &#34;41&#34;, &#34;36&#34;, &#34;30&#34;, &#34;26&#34;, &#34;20&#34;, &#34;10&#34;, &#34;64&#34;, &#34;51&#34;, &#34;37&#34;, &#34;30.2...
+$ X30     &lt;chr&gt; &#34;30&#34;, &#34;26&#34;, &#34;22&#34;, &#34;10&#34;, &#34;4&#34;, &#34;-6&#34;, &#34;50&#34;, &#34;38&#34;, &#34;26&#34;, &#34;30.36...
+$ X31     &lt;chr&gt; &#34;30&#34;, &#34;25&#34;, &#34;20&#34;, &#34;8&#34;, &#34;5&#34;, &#34;1&#34;, &#34;57&#34;, &#34;44&#34;, &#34;31&#34;, &#34;30.32&#34;,...
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>       X               year          month          measure         
+ Min.   :  1.00   Min.   :2014   Min.   : 1.000   Length:286        
+ 1st Qu.: 72.25   1st Qu.:2015   1st Qu.: 4.000   Class :character  
+ Median :143.50   Median :2015   Median : 7.000   Mode  :character  
+ Mean   :143.50   Mean   :2015   Mean   : 6.923                     
+ 3rd Qu.:214.75   3rd Qu.:2015   3rd Qu.:10.000                     
+ Max.   :286.00   Max.   :2015   Max.   :12.000                     
+      X1                 X2                 X3                 X4           
+ Length:286         Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+      X5                 X6                 X7                 X8           
+ Length:286         Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+      X9                X10                X11                X12           
+ Length:286         Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+     X13                X14                X15                X16           
+ Length:286         Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+     X17                X18                X19                X20           
+ Length:286         Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+     X21                X22                X23                X24           
+ Length:286         Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+     X25                X26                X27                X28           
+ Length:286         Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+     X29                X30                X31           
+ Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character  
+                                                         
+                                                         
+                                                         </pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we have a pretty good feel for how the table is structured, we'll take a look at some real observations!</p>
+<h1 id="Take-a-closer-look">Take a closer look<a class="anchor-link" href="#Take-a-closer-look"> </a></h1><p>After understanding the structure of the data and looking at some brief summaries, it often helps to preview the actual data. The functions <code>head()</code> and <code>tail()</code> allow us to view the top and bottom rows of the data, respectively.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># View first 6 rows</span>
+<span class="n">head</span><span class="p">(</span><span class="n">weather</span><span class="p">)</span>
+
+<span class="c1"># View first 15 rows</span>
+<span class="n">head</span><span class="p">(</span><span class="n">weather</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
+<span class="c1"># View the last 6 rows</span>
+<span class="n">tail</span><span class="p">(</span><span class="n">weather</span><span class="p">)</span>
+
+<span class="c1"># View the last 10 rows</span>
+<span class="n">tail</span><span class="p">(</span><span class="n">weather</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope="col">X</th><th scope="col">year</th><th scope="col">month</th><th scope="col">measure</th><th scope="col">X1</th><th scope="col">X2</th><th scope="col">X3</th><th scope="col">X4</th><th scope="col">X5</th><th scope="col">X6</th><th scope="col">...</th><th scope="col">X22</th><th scope="col">X23</th><th scope="col">X24</th><th scope="col">X25</th><th scope="col">X26</th><th scope="col">X27</th><th scope="col">X28</th><th scope="col">X29</th><th scope="col">X30</th><th scope="col">X31</th></tr></thead>
+<tbody>
+	<tr><td>1                </td><td>2014             </td><td>12               </td><td>Max.TemperatureF </td><td>64               </td><td>42               </td><td>51               </td><td>43               </td><td>42               </td><td>45               </td><td>...              </td><td>44               </td><td>47               </td><td>46               </td><td>59               </td><td>50               </td><td>52               </td><td>52               </td><td>41               </td><td>30               </td><td>30               </td></tr>
+	<tr><td>2                </td><td>2014             </td><td>12               </td><td>Mean.TemperatureF</td><td>52               </td><td>38               </td><td>44               </td><td>37               </td><td>34               </td><td>42               </td><td>...              </td><td>39               </td><td>45               </td><td>44               </td><td>52               </td><td>44               </td><td>45               </td><td>46               </td><td>36               </td><td>26               </td><td>25               </td></tr>
+	<tr><td>3                </td><td>2014             </td><td>12               </td><td>Min.TemperatureF </td><td>39               </td><td>33               </td><td>37               </td><td>30               </td><td>26               </td><td>38               </td><td>...              </td><td>33               </td><td>42               </td><td>41               </td><td>44               </td><td>37               </td><td>38               </td><td>40               </td><td>30               </td><td>22               </td><td>20               </td></tr>
+	<tr><td>4                </td><td>2014             </td><td>12               </td><td>Max.Dew.PointF   </td><td>46               </td><td>40               </td><td>49               </td><td>24               </td><td>37               </td><td>45               </td><td>...              </td><td>39               </td><td>45               </td><td>46               </td><td>58               </td><td>31               </td><td>34               </td><td>42               </td><td>26               </td><td>10               </td><td>8                </td></tr>
+	<tr><td>5                </td><td>2014             </td><td>12               </td><td>MeanDew.PointF   </td><td>40               </td><td>27               </td><td>42               </td><td>21               </td><td>25               </td><td>40               </td><td>...              </td><td>34               </td><td>42               </td><td>44               </td><td>43               </td><td>29               </td><td>31               </td><td>35               </td><td>20               </td><td>4                </td><td>5                </td></tr>
+	<tr><td>6                </td><td>2014             </td><td>12               </td><td>Min.DewpointF    </td><td>26               </td><td>17               </td><td>24               </td><td>13               </td><td>12               </td><td>36               </td><td>...              </td><td>25               </td><td>37               </td><td>41               </td><td>29               </td><td>28               </td><td>29               </td><td>27               </td><td>10               </td><td>-6               </td><td>1                </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope="col">X</th><th scope="col">year</th><th scope="col">month</th><th scope="col">measure</th><th scope="col">X1</th><th scope="col">X2</th><th scope="col">X3</th><th scope="col">X4</th><th scope="col">X5</th><th scope="col">X6</th><th scope="col">...</th><th scope="col">X22</th><th scope="col">X23</th><th scope="col">X24</th><th scope="col">X25</th><th scope="col">X26</th><th scope="col">X27</th><th scope="col">X28</th><th scope="col">X29</th><th scope="col">X30</th><th scope="col">X31</th></tr></thead>
+<tbody>
+	<tr><td> 1                       </td><td>2014                     </td><td>12                       </td><td>Max.TemperatureF         </td><td>64                       </td><td>42                       </td><td>51                       </td><td>43                       </td><td>42                       </td><td>45                       </td><td>...                      </td><td>44                       </td><td>47                       </td><td>46                       </td><td>59                       </td><td>50                       </td><td>52                       </td><td>52                       </td><td>41                       </td><td>30                       </td><td>30                       </td></tr>
+	<tr><td> 2                       </td><td>2014                     </td><td>12                       </td><td>Mean.TemperatureF        </td><td>52                       </td><td>38                       </td><td>44                       </td><td>37                       </td><td>34                       </td><td>42                       </td><td>...                      </td><td>39                       </td><td>45                       </td><td>44                       </td><td>52                       </td><td>44                       </td><td>45                       </td><td>46                       </td><td>36                       </td><td>26                       </td><td>25                       </td></tr>
+	<tr><td> 3                       </td><td>2014                     </td><td>12                       </td><td>Min.TemperatureF         </td><td>39                       </td><td>33                       </td><td>37                       </td><td>30                       </td><td>26                       </td><td>38                       </td><td>...                      </td><td>33                       </td><td>42                       </td><td>41                       </td><td>44                       </td><td>37                       </td><td>38                       </td><td>40                       </td><td>30                       </td><td>22                       </td><td>20                       </td></tr>
+	<tr><td> 4                       </td><td>2014                     </td><td>12                       </td><td>Max.Dew.PointF           </td><td>46                       </td><td>40                       </td><td>49                       </td><td>24                       </td><td>37                       </td><td>45                       </td><td>...                      </td><td>39                       </td><td>45                       </td><td>46                       </td><td>58                       </td><td>31                       </td><td>34                       </td><td>42                       </td><td>26                       </td><td>10                       </td><td>8                        </td></tr>
+	<tr><td> 5                       </td><td>2014                     </td><td>12                       </td><td>MeanDew.PointF           </td><td>40                       </td><td>27                       </td><td>42                       </td><td>21                       </td><td>25                       </td><td>40                       </td><td>...                      </td><td>34                       </td><td>42                       </td><td>44                       </td><td>43                       </td><td>29                       </td><td>31                       </td><td>35                       </td><td>20                       </td><td>4                        </td><td>5                        </td></tr>
+	<tr><td> 6                       </td><td>2014                     </td><td>12                       </td><td>Min.DewpointF            </td><td>26                       </td><td>17                       </td><td>24                       </td><td>13                       </td><td>12                       </td><td>36                       </td><td>...                      </td><td>25                       </td><td>37                       </td><td>41                       </td><td>29                       </td><td>28                       </td><td>29                       </td><td>27                       </td><td>10                       </td><td>-6                       </td><td>1                        </td></tr>
+	<tr><td> 7                       </td><td>2014                     </td><td>12                       </td><td>Max.Humidity             </td><td>74                       </td><td>92                       </td><td>100                      </td><td>69                       </td><td>85                       </td><td>100                      </td><td>...                      </td><td>89                       </td><td>100                      </td><td>100                      </td><td>100                      </td><td>70                       </td><td>70                       </td><td>76                       </td><td>64                       </td><td>50                       </td><td>57                       </td></tr>
+	<tr><td> 8                       </td><td>2014                     </td><td>12                       </td><td>Mean.Humidity            </td><td>63                       </td><td>72                       </td><td>79                       </td><td>54                       </td><td>66                       </td><td>93                       </td><td>...                      </td><td>79                       </td><td>91                       </td><td>98                       </td><td>75                       </td><td>60                       </td><td>60                       </td><td>65                       </td><td>51                       </td><td>38                       </td><td>44                       </td></tr>
+	<tr><td> 9                       </td><td>2014                     </td><td>12                       </td><td>Min.Humidity             </td><td>52                       </td><td>51                       </td><td>57                       </td><td>39                       </td><td>47                       </td><td>85                       </td><td>...                      </td><td>69                       </td><td>82                       </td><td>96                       </td><td>49                       </td><td>49                       </td><td>50                       </td><td>53                       </td><td>37                       </td><td>26                       </td><td>31                       </td></tr>
+	<tr><td>10                       </td><td>2014                     </td><td>12                       </td><td>Max.Sea.Level.PressureIn </td><td>30.45                    </td><td>30.71                    </td><td>30.4                     </td><td>30.56                    </td><td>30.68                    </td><td>30.42                    </td><td>...                      </td><td>30.4                     </td><td>30.31                    </td><td>30.13                    </td><td>29.96                    </td><td>30.16                    </td><td>30.22                    </td><td>29.99                    </td><td>30.22                    </td><td>30.36                    </td><td>30.32                    </td></tr>
+	<tr><td>11                       </td><td>2014                     </td><td>12                       </td><td>Mean.Sea.Level.PressureIn</td><td>30.13                    </td><td>30.59                    </td><td>30.07                    </td><td>30.33                    </td><td>30.59                    </td><td>30.24                    </td><td>...                      </td><td>30.35                    </td><td>30.23                    </td><td>29.9                     </td><td>29.63                    </td><td>30.11                    </td><td>30.14                    </td><td>29.87                    </td><td>30.12                    </td><td>30.32                    </td><td>30.25                    </td></tr>
+	<tr><td>12                       </td><td>2014                     </td><td>12                       </td><td>Min.Sea.Level.PressureIn </td><td>30.01                    </td><td>30.4                     </td><td>29.87                    </td><td>30.09                    </td><td>30.45                    </td><td>30.16                    </td><td>...                      </td><td>30.3                     </td><td>30.16                    </td><td>29.55                    </td><td>29.47                    </td><td>29.99                    </td><td>30.03                    </td><td>29.77                    </td><td>30                       </td><td>30.23                    </td><td>30.13                    </td></tr>
+	<tr><td>13                       </td><td>2014                     </td><td>12                       </td><td>Max.VisibilityMiles      </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>...                      </td><td>10                       </td><td>10                       </td><td>2                        </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td></tr>
+	<tr><td>14                       </td><td>2014                     </td><td>12                       </td><td>Mean.VisibilityMiles     </td><td>10                       </td><td>8                        </td><td>5                        </td><td>10                       </td><td>10                       </td><td>4                        </td><td>...                      </td><td>10                       </td><td>5                        </td><td>1                        </td><td>8                        </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td></tr>
+	<tr><td>15                       </td><td>2014                     </td><td>12                       </td><td>Min.VisibilityMiles      </td><td>10                       </td><td>2                        </td><td>1                        </td><td>10                       </td><td>5                        </td><td>0                        </td><td>...                      </td><td>4                        </td><td>1                        </td><td>0                        </td><td>1                        </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th></th><th scope="col">X</th><th scope="col">year</th><th scope="col">month</th><th scope="col">measure</th><th scope="col">X1</th><th scope="col">X2</th><th scope="col">X3</th><th scope="col">X4</th><th scope="col">X5</th><th scope="col">X6</th><th scope="col">...</th><th scope="col">X22</th><th scope="col">X23</th><th scope="col">X24</th><th scope="col">X25</th><th scope="col">X26</th><th scope="col">X27</th><th scope="col">X28</th><th scope="col">X29</th><th scope="col">X30</th><th scope="col">X31</th></tr></thead>
+<tbody>
+	<tr><th scope="row">281</th><td>281               </td><td>2015              </td><td>12                </td><td>Mean.Wind.SpeedMPH</td><td>6                 </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>...               </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td></tr>
+	<tr><th scope="row">282</th><td>282               </td><td>2015              </td><td>12                </td><td>Max.Gust.SpeedMPH </td><td>17                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>...               </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td></tr>
+	<tr><th scope="row">283</th><td>283               </td><td>2015              </td><td>12                </td><td>PrecipitationIn   </td><td>0.14              </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>...               </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td></tr>
+	<tr><th scope="row">284</th><td>284               </td><td>2015              </td><td>12                </td><td>CloudCover        </td><td>7                 </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>...               </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td></tr>
+	<tr><th scope="row">285</th><td>285               </td><td>2015              </td><td>12                </td><td>Events            </td><td>Rain              </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>...               </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td></tr>
+	<tr><th scope="row">286</th><td>286               </td><td>2015              </td><td>12                </td><td>WindDirDegrees    </td><td>109               </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>...               </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th></th><th scope="col">X</th><th scope="col">year</th><th scope="col">month</th><th scope="col">measure</th><th scope="col">X1</th><th scope="col">X2</th><th scope="col">X3</th><th scope="col">X4</th><th scope="col">X5</th><th scope="col">X6</th><th scope="col">...</th><th scope="col">X22</th><th scope="col">X23</th><th scope="col">X24</th><th scope="col">X25</th><th scope="col">X26</th><th scope="col">X27</th><th scope="col">X28</th><th scope="col">X29</th><th scope="col">X30</th><th scope="col">X31</th></tr></thead>
+<tbody>
+	<tr><th scope="row">277</th><td>277                 </td><td>2015                </td><td>12                  </td><td>Max.VisibilityMiles </td><td>10                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+	<tr><th scope="row">278</th><td>278                 </td><td>2015                </td><td>12                  </td><td>Mean.VisibilityMiles</td><td>8                   </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+	<tr><th scope="row">279</th><td>279                 </td><td>2015                </td><td>12                  </td><td>Min.VisibilityMiles </td><td>1                   </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+	<tr><th scope="row">280</th><td>280                 </td><td>2015                </td><td>12                  </td><td>Max.Wind.SpeedMPH   </td><td>15                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+	<tr><th scope="row">281</th><td>281                 </td><td>2015                </td><td>12                  </td><td>Mean.Wind.SpeedMPH  </td><td>6                   </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+	<tr><th scope="row">282</th><td>282                 </td><td>2015                </td><td>12                  </td><td>Max.Gust.SpeedMPH   </td><td>17                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+	<tr><th scope="row">283</th><td>283                 </td><td>2015                </td><td>12                  </td><td>PrecipitationIn     </td><td>0.14                </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+	<tr><th scope="row">284</th><td>284                 </td><td>2015                </td><td>12                  </td><td>CloudCover          </td><td>7                   </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+	<tr><th scope="row">285</th><td>285                 </td><td>2015                </td><td>12                  </td><td>Events              </td><td>Rain                </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+	<tr><th scope="row">286</th><td>286                 </td><td>2015                </td><td>12                  </td><td>WindDirDegrees      </td><td>109                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Let's-tidy-the-data">Let's tidy the data<a class="anchor-link" href="#Let's-tidy-the-data"> </a></h1><h2 id="Column-names-are-values">Column names are values<a class="anchor-link" href="#Column-names-are-values"> </a></h2><p>The <code>weather</code> dataset suffers from one of the five most common symptoms of messy data: column names are values. In particular, the column names <code>X1-X31</code> represent days of the month, which should really be values of a new variable called <code>day</code>.</p>
+<p>The tidyr package provides the <code>gather()</code> function for exactly this scenario.</p>
+<div class="highlight"><pre><span></span><span class="n">gather</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">t1</span><span class="p">:</span><span class="n">t3</span><span class="p">)</span>
+</pre></div>
+<blockquote><p><code>gather()</code> allows us to select multiple columns to be gathered by using the <code>:</code> operator.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Gather the columns</span>
+<span class="n">weather2</span> <span class="o">&lt;-</span> <span class="n">gather</span><span class="p">(</span><span class="n">weather</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">X1</span><span class="p">:</span><span class="n">X31</span><span class="p">,</span> <span class="n">na</span><span class="o">.</span><span class="n">rm</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+
+<span class="c1"># View the head</span>
+<span class="n">head</span><span class="p">(</span><span class="n">weather2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope="col">X</th><th scope="col">year</th><th scope="col">month</th><th scope="col">measure</th><th scope="col">day</th><th scope="col">value</th></tr></thead>
+<tbody>
+	<tr><td>1                </td><td>2014             </td><td>12               </td><td>Max.TemperatureF </td><td>X1               </td><td>64               </td></tr>
+	<tr><td>2                </td><td>2014             </td><td>12               </td><td>Mean.TemperatureF</td><td>X1               </td><td>52               </td></tr>
+	<tr><td>3                </td><td>2014             </td><td>12               </td><td>Min.TemperatureF </td><td>X1               </td><td>39               </td></tr>
+	<tr><td>4                </td><td>2014             </td><td>12               </td><td>Max.Dew.PointF   </td><td>X1               </td><td>46               </td></tr>
+	<tr><td>5                </td><td>2014             </td><td>12               </td><td>MeanDew.PointF   </td><td>X1               </td><td>40               </td></tr>
+	<tr><td>6                </td><td>2014             </td><td>12               </td><td>Min.DewpointF    </td><td>X1               </td><td>26               </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Values-are-variable-names">Values are variable names<a class="anchor-link" href="#Values-are-variable-names"> </a></h2><p>Our data suffer from a second common symptom of messy data: values are variable names. Specifically, values in the <code>measure</code> column should be variables (i.e. column names) in our dataset.</p>
+<p>The <code>spread()</code> function from tidyr is designed to help with this.</p>
+<div class="highlight"><pre><span></span><span class="n">spread</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># First remove column of row names</span>
+<span class="n">without_x</span> <span class="o">&lt;-</span> <span class="n">weather2</span><span class="p">[,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Spread the data</span>
+<span class="n">weather3</span> <span class="o">&lt;-</span> <span class="n">spread</span><span class="p">(</span><span class="n">without_x</span><span class="p">,</span> <span class="n">measure</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+<span class="c1"># View the head</span>
+<span class="n">head</span><span class="p">(</span><span class="n">weather3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope="col">year</th><th scope="col">month</th><th scope="col">day</th><th scope="col">CloudCover</th><th scope="col">Events</th><th scope="col">Max.Dew.PointF</th><th scope="col">Max.Gust.SpeedMPH</th><th scope="col">Max.Humidity</th><th scope="col">Max.Sea.Level.PressureIn</th><th scope="col">Max.TemperatureF</th><th scope="col">...</th><th scope="col">Mean.VisibilityMiles</th><th scope="col">Mean.Wind.SpeedMPH</th><th scope="col">MeanDew.PointF</th><th scope="col">Min.DewpointF</th><th scope="col">Min.Humidity</th><th scope="col">Min.Sea.Level.PressureIn</th><th scope="col">Min.TemperatureF</th><th scope="col">Min.VisibilityMiles</th><th scope="col">PrecipitationIn</th><th scope="col">WindDirDegrees</th></tr></thead>
+<tbody>
+	<tr><td>2014     </td><td>12       </td><td>X1       </td><td>6        </td><td>Rain     </td><td>46       </td><td>29       </td><td>74       </td><td>30.45    </td><td>64       </td><td>...      </td><td>10       </td><td>13       </td><td>40       </td><td>26       </td><td>52       </td><td>30.01    </td><td>39       </td><td>10       </td><td>0.01     </td><td>268      </td></tr>
+	<tr><td>2014     </td><td>12       </td><td>X10      </td><td>8        </td><td>Rain     </td><td>45       </td><td>29       </td><td>100      </td><td>29.58    </td><td>48       </td><td>...      </td><td>3        </td><td>13       </td><td>39       </td><td>37       </td><td>89       </td><td>29.43    </td><td>38       </td><td>1        </td><td>0.28     </td><td>357      </td></tr>
+	<tr><td>2014     </td><td>12       </td><td>X11      </td><td>8        </td><td>Rain-Snow</td><td>37       </td><td>28       </td><td>92       </td><td>29.81    </td><td>39       </td><td>...      </td><td>7        </td><td>13       </td><td>31       </td><td>27       </td><td>82       </td><td>29.44    </td><td>32       </td><td>1        </td><td>0.02     </td><td>230      </td></tr>
+	<tr><td>2014     </td><td>12       </td><td>X12      </td><td>7        </td><td>Snow     </td><td>28       </td><td>21       </td><td>85       </td><td>29.88    </td><td>39       </td><td>...      </td><td>10       </td><td>11       </td><td>27       </td><td>25       </td><td>64       </td><td>29.81    </td><td>31       </td><td>7        </td><td>T        </td><td>286      </td></tr>
+	<tr><td>2014     </td><td>12       </td><td>X13      </td><td>5        </td><td>         </td><td>28       </td><td>23       </td><td>75       </td><td>29.86    </td><td>42       </td><td>...      </td><td>10       </td><td>12       </td><td>26       </td><td>24       </td><td>55       </td><td>29.78    </td><td>32       </td><td>10       </td><td>T        </td><td>298      </td></tr>
+	<tr><td>2014     </td><td>12       </td><td>X14      </td><td>4        </td><td>         </td><td>29       </td><td>20       </td><td>82       </td><td>29.91    </td><td>45       </td><td>...      </td><td>10       </td><td>10       </td><td>27       </td><td>25       </td><td>53       </td><td>29.78    </td><td>33       </td><td>10       </td><td>0.00     </td><td>306      </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This dataset is looking much better already!</p>
+<h1 id="Prepare-the-data-for-analysis">Prepare the data for analysis<a class="anchor-link" href="#Prepare-the-data-for-analysis"> </a></h1><h2 id="Clean-up-dates">Clean up dates<a class="anchor-link" href="#Clean-up-dates"> </a></h2><p>Now that the weather dataset adheres to tidy data principles, the next step is to prepare it for analysis. We'll start by combining the <code>year</code>, <code>month</code>, and <code>day</code> columns and recoding the resulting character column as a <code>date</code>. We can use a combination of base R, stringr, and lubridate to accomplish this task.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Remove X&#39;s from day column</span>
+<span class="n">weather3</span><span class="err">$</span><span class="n">day</span> <span class="o">&lt;-</span> <span class="n">str_replace</span><span class="p">(</span><span class="n">weather3</span><span class="err">$</span><span class="n">day</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="c1"># Unite the year, month, and day columns</span>
+<span class="n">weather4</span> <span class="o">&lt;-</span> <span class="n">unite</span><span class="p">(</span><span class="n">weather3</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span>
+
+<span class="c1"># Convert date column to proper date format using lubridates&#39;s ymd()</span>
+<span class="n">weather4</span><span class="err">$</span><span class="n">date</span> <span class="o">&lt;-</span> <span class="n">ymd</span><span class="p">(</span><span class="n">weather4</span><span class="err">$</span><span class="n">date</span><span class="p">)</span>
+
+<span class="c1"># Rearrange columns using dplyr&#39;s select()</span>
+<span class="n">weather5</span> <span class="o">&lt;-</span> <span class="n">select</span><span class="p">(</span><span class="n">weather4</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">Events</span><span class="p">,</span> <span class="n">CloudCover</span><span class="p">:</span><span class="n">WindDirDegrees</span><span class="p">)</span>
+
+<span class="c1"># View the head of weather5</span>
+<span class="n">head</span><span class="p">(</span><span class="n">weather5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope="col">date</th><th scope="col">Events</th><th scope="col">CloudCover</th><th scope="col">Max.Dew.PointF</th><th scope="col">Max.Gust.SpeedMPH</th><th scope="col">Max.Humidity</th><th scope="col">Max.Sea.Level.PressureIn</th><th scope="col">Max.TemperatureF</th><th scope="col">Max.VisibilityMiles</th><th scope="col">Max.Wind.SpeedMPH</th><th scope="col">...</th><th scope="col">Mean.VisibilityMiles</th><th scope="col">Mean.Wind.SpeedMPH</th><th scope="col">MeanDew.PointF</th><th scope="col">Min.DewpointF</th><th scope="col">Min.Humidity</th><th scope="col">Min.Sea.Level.PressureIn</th><th scope="col">Min.TemperatureF</th><th scope="col">Min.VisibilityMiles</th><th scope="col">PrecipitationIn</th><th scope="col">WindDirDegrees</th></tr></thead>
+<tbody>
+	<tr><td>2014-12-01</td><td>Rain      </td><td>6         </td><td>46        </td><td>29        </td><td>74        </td><td>30.45     </td><td>64        </td><td>10        </td><td>22        </td><td>...       </td><td>10        </td><td>13        </td><td>40        </td><td>26        </td><td>52        </td><td>30.01     </td><td>39        </td><td>10        </td><td>0.01      </td><td>268       </td></tr>
+	<tr><td>2014-12-10</td><td>Rain      </td><td>8         </td><td>45        </td><td>29        </td><td>100       </td><td>29.58     </td><td>48        </td><td>10        </td><td>23        </td><td>...       </td><td>3         </td><td>13        </td><td>39        </td><td>37        </td><td>89        </td><td>29.43     </td><td>38        </td><td>1         </td><td>0.28      </td><td>357       </td></tr>
+	<tr><td>2014-12-11</td><td>Rain-Snow </td><td>8         </td><td>37        </td><td>28        </td><td>92        </td><td>29.81     </td><td>39        </td><td>10        </td><td>21        </td><td>...       </td><td>7         </td><td>13        </td><td>31        </td><td>27        </td><td>82        </td><td>29.44     </td><td>32        </td><td>1         </td><td>0.02      </td><td>230       </td></tr>
+	<tr><td>2014-12-12</td><td>Snow      </td><td>7         </td><td>28        </td><td>21        </td><td>85        </td><td>29.88     </td><td>39        </td><td>10        </td><td>16        </td><td>...       </td><td>10        </td><td>11        </td><td>27        </td><td>25        </td><td>64        </td><td>29.81     </td><td>31        </td><td>7         </td><td>T         </td><td>286       </td></tr>
+	<tr><td>2014-12-13</td><td>          </td><td>5         </td><td>28        </td><td>23        </td><td>75        </td><td>29.86     </td><td>42        </td><td>10        </td><td>17        </td><td>...       </td><td>10        </td><td>12        </td><td>26        </td><td>24        </td><td>55        </td><td>29.78     </td><td>32        </td><td>10        </td><td>T         </td><td>298       </td></tr>
+	<tr><td>2014-12-14</td><td>          </td><td>4         </td><td>29        </td><td>20        </td><td>82        </td><td>29.91     </td><td>45        </td><td>10        </td><td>15        </td><td>...       </td><td>10        </td><td>10        </td><td>27        </td><td>25        </td><td>53        </td><td>29.78     </td><td>33        </td><td>10        </td><td>0.00      </td><td>306       </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="A-closer-look-at-column-types">A closer look at column types<a class="anchor-link" href="#A-closer-look-at-column-types"> </a></h2><p>It's important for analysis that variables are coded appropriately. This is not yet the case with our weather data.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># View the structure of weather5</span>
+<span class="nb">str</span><span class="p">(</span><span class="n">weather5</span><span class="p">)</span>
+
+<span class="c1"># Examine the first 20 rows of weather5. Are most of the characters numeric?</span>
+<span class="n">head</span><span class="p">(</span><span class="n">weather5</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># See what happens if we try to convert PrecipitationIn to numeric</span>
+<span class="k">as</span><span class="o">.</span><span class="n">numeric</span><span class="p">(</span><span class="n">weather5</span><span class="err">$</span><span class="n">PrecipitationIn</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&#39;data.frame&#39;:	366 obs. of  23 variables:
+ $ date                     : Date, format: &#34;2014-12-01&#34; &#34;2014-12-10&#34; ...
+ $ Events                   : chr  &#34;Rain&#34; &#34;Rain&#34; &#34;Rain-Snow&#34; &#34;Snow&#34; ...
+ $ CloudCover               : chr  &#34;6&#34; &#34;8&#34; &#34;8&#34; &#34;7&#34; ...
+ $ Max.Dew.PointF           : chr  &#34;46&#34; &#34;45&#34; &#34;37&#34; &#34;28&#34; ...
+ $ Max.Gust.SpeedMPH        : chr  &#34;29&#34; &#34;29&#34; &#34;28&#34; &#34;21&#34; ...
+ $ Max.Humidity             : chr  &#34;74&#34; &#34;100&#34; &#34;92&#34; &#34;85&#34; ...
+ $ Max.Sea.Level.PressureIn : chr  &#34;30.45&#34; &#34;29.58&#34; &#34;29.81&#34; &#34;29.88&#34; ...
+ $ Max.TemperatureF         : chr  &#34;64&#34; &#34;48&#34; &#34;39&#34; &#34;39&#34; ...
+ $ Max.VisibilityMiles      : chr  &#34;10&#34; &#34;10&#34; &#34;10&#34; &#34;10&#34; ...
+ $ Max.Wind.SpeedMPH        : chr  &#34;22&#34; &#34;23&#34; &#34;21&#34; &#34;16&#34; ...
+ $ Mean.Humidity            : chr  &#34;63&#34; &#34;95&#34; &#34;87&#34; &#34;75&#34; ...
+ $ Mean.Sea.Level.PressureIn: chr  &#34;30.13&#34; &#34;29.5&#34; &#34;29.61&#34; &#34;29.85&#34; ...
+ $ Mean.TemperatureF        : chr  &#34;52&#34; &#34;43&#34; &#34;36&#34; &#34;35&#34; ...
+ $ Mean.VisibilityMiles     : chr  &#34;10&#34; &#34;3&#34; &#34;7&#34; &#34;10&#34; ...
+ $ Mean.Wind.SpeedMPH       : chr  &#34;13&#34; &#34;13&#34; &#34;13&#34; &#34;11&#34; ...
+ $ MeanDew.PointF           : chr  &#34;40&#34; &#34;39&#34; &#34;31&#34; &#34;27&#34; ...
+ $ Min.DewpointF            : chr  &#34;26&#34; &#34;37&#34; &#34;27&#34; &#34;25&#34; ...
+ $ Min.Humidity             : chr  &#34;52&#34; &#34;89&#34; &#34;82&#34; &#34;64&#34; ...
+ $ Min.Sea.Level.PressureIn : chr  &#34;30.01&#34; &#34;29.43&#34; &#34;29.44&#34; &#34;29.81&#34; ...
+ $ Min.TemperatureF         : chr  &#34;39&#34; &#34;38&#34; &#34;32&#34; &#34;31&#34; ...
+ $ Min.VisibilityMiles      : chr  &#34;10&#34; &#34;1&#34; &#34;1&#34; &#34;7&#34; ...
+ $ PrecipitationIn          : chr  &#34;0.01&#34; &#34;0.28&#34; &#34;0.02&#34; &#34;T&#34; ...
+ $ WindDirDegrees           : chr  &#34;268&#34; &#34;357&#34; &#34;230&#34; &#34;286&#34; ...
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope="col">date</th><th scope="col">Events</th><th scope="col">CloudCover</th><th scope="col">Max.Dew.PointF</th><th scope="col">Max.Gust.SpeedMPH</th><th scope="col">Max.Humidity</th><th scope="col">Max.Sea.Level.PressureIn</th><th scope="col">Max.TemperatureF</th><th scope="col">Max.VisibilityMiles</th><th scope="col">Max.Wind.SpeedMPH</th><th scope="col">...</th><th scope="col">Mean.VisibilityMiles</th><th scope="col">Mean.Wind.SpeedMPH</th><th scope="col">MeanDew.PointF</th><th scope="col">Min.DewpointF</th><th scope="col">Min.Humidity</th><th scope="col">Min.Sea.Level.PressureIn</th><th scope="col">Min.TemperatureF</th><th scope="col">Min.VisibilityMiles</th><th scope="col">PrecipitationIn</th><th scope="col">WindDirDegrees</th></tr></thead>
+<tbody>
+	<tr><td>2014-12-01</td><td>Rain      </td><td>6         </td><td>46        </td><td>29        </td><td>74        </td><td>30.45     </td><td>64        </td><td>10        </td><td>22        </td><td>...       </td><td>10        </td><td>13        </td><td>40        </td><td>26        </td><td>52        </td><td>30.01     </td><td>39        </td><td>10        </td><td>0.01      </td><td>268       </td></tr>
+	<tr><td>2014-12-10</td><td>Rain      </td><td>8         </td><td>45        </td><td>29        </td><td>100       </td><td>29.58     </td><td>48        </td><td>10        </td><td>23        </td><td>...       </td><td>3         </td><td>13        </td><td>39        </td><td>37        </td><td>89        </td><td>29.43     </td><td>38        </td><td>1         </td><td>0.28      </td><td>357       </td></tr>
+	<tr><td>2014-12-11</td><td>Rain-Snow </td><td>8         </td><td>37        </td><td>28        </td><td>92        </td><td>29.81     </td><td>39        </td><td>10        </td><td>21        </td><td>...       </td><td>7         </td><td>13        </td><td>31        </td><td>27        </td><td>82        </td><td>29.44     </td><td>32        </td><td>1         </td><td>0.02      </td><td>230       </td></tr>
+	<tr><td>2014-12-12</td><td>Snow      </td><td>7         </td><td>28        </td><td>21        </td><td>85        </td><td>29.88     </td><td>39        </td><td>10        </td><td>16        </td><td>...       </td><td>10        </td><td>11        </td><td>27        </td><td>25        </td><td>64        </td><td>29.81     </td><td>31        </td><td>7         </td><td>T         </td><td>286       </td></tr>
+	<tr><td>2014-12-13</td><td>          </td><td>5         </td><td>28        </td><td>23        </td><td>75        </td><td>29.86     </td><td>42        </td><td>10        </td><td>17        </td><td>...       </td><td>10        </td><td>12        </td><td>26        </td><td>24        </td><td>55        </td><td>29.78     </td><td>32        </td><td>10        </td><td>T         </td><td>298       </td></tr>
+	<tr><td>2014-12-14</td><td>          </td><td>4         </td><td>29        </td><td>20        </td><td>82        </td><td>29.91     </td><td>45        </td><td>10        </td><td>15        </td><td>...       </td><td>10        </td><td>10        </td><td>27        </td><td>25        </td><td>53        </td><td>29.78     </td><td>33        </td><td>10        </td><td>0.00      </td><td>306       </td></tr>
+	<tr><td>2014-12-15</td><td>          </td><td>2         </td><td>33        </td><td>21        </td><td>89        </td><td>30.15     </td><td>42        </td><td>10        </td><td>15        </td><td>...       </td><td>10        </td><td>6         </td><td>29        </td><td>27        </td><td>60        </td><td>29.91     </td><td>32        </td><td>10        </td><td>0.00      </td><td>324       </td></tr>
+	<tr><td>2014-12-16</td><td>Rain      </td><td>8         </td><td>42        </td><td>10        </td><td>96        </td><td>30.17     </td><td>44        </td><td>10        </td><td>8         </td><td>...       </td><td>9         </td><td>4         </td><td>36        </td><td>30        </td><td>73        </td><td>29.92     </td><td>35        </td><td>5         </td><td>T         </td><td>79        </td></tr>
+	<tr><td>2014-12-17</td><td>Rain      </td><td>8         </td><td>46        </td><td>26        </td><td>100       </td><td>29.91     </td><td>49        </td><td>10        </td><td>20        </td><td>...       </td><td>6         </td><td>11        </td><td>41        </td><td>32        </td><td>70        </td><td>29.69     </td><td>41        </td><td>1         </td><td>0.43      </td><td>311       </td></tr>
+	<tr><td>2014-12-18</td><td>Rain      </td><td>7         </td><td>34        </td><td>30        </td><td>89        </td><td>29.87     </td><td>44        </td><td>10        </td><td>23        </td><td>...       </td><td>10        </td><td>14        </td><td>30        </td><td>26        </td><td>57        </td><td>29.71     </td><td>36        </td><td>10        </td><td>0.01      </td><td>281       </td></tr>
+	<tr><td>2014-12-19</td><td>          </td><td>4         </td><td>25        </td><td>23        </td><td>69        </td><td>30.15     </td><td>37        </td><td>10        </td><td>17        </td><td>...       </td><td>10        </td><td>11        </td><td>22        </td><td>20        </td><td>56        </td><td>29.86     </td><td>29        </td><td>10        </td><td>0.00      </td><td>305       </td></tr>
+	<tr><td>2014-12-02</td><td>Rain-Snow </td><td>7         </td><td>40        </td><td>29        </td><td>92        </td><td>30.71     </td><td>42        </td><td>10        </td><td>24        </td><td>...       </td><td>8         </td><td>15        </td><td>27        </td><td>17        </td><td>51        </td><td>30.4      </td><td>33        </td><td>2         </td><td>0.10      </td><td>62        </td></tr>
+	<tr><td>2014-12-20</td><td>Snow      </td><td>6         </td><td>30        </td><td>26        </td><td>89        </td><td>30.31     </td><td>36        </td><td>10        </td><td>21        </td><td>...       </td><td>10        </td><td>10        </td><td>24        </td><td>20        </td><td>69        </td><td>30.17     </td><td>27        </td><td>7         </td><td>T         </td><td>350       </td></tr>
+	<tr><td>2014-12-21</td><td>Snow      </td><td>8         </td><td>30        </td><td>20        </td><td>85        </td><td>30.37     </td><td>36        </td><td>10        </td><td>16        </td><td>...       </td><td>9         </td><td>9         </td><td>27        </td><td>25        </td><td>69        </td><td>30.28     </td><td>30        </td><td>6         </td><td>T         </td><td>2         </td></tr>
+	<tr><td>2014-12-22</td><td>Rain      </td><td>7         </td><td>39        </td><td>22        </td><td>89        </td><td>30.4      </td><td>44        </td><td>10        </td><td>18        </td><td>...       </td><td>10        </td><td>8         </td><td>34        </td><td>25        </td><td>69        </td><td>30.3      </td><td>33        </td><td>4         </td><td>0.05      </td><td>24        </td></tr>
+	<tr><td>2014-12-23</td><td>Rain      </td><td>8         </td><td>45        </td><td>25        </td><td>100       </td><td>30.31     </td><td>47        </td><td>10        </td><td>20        </td><td>...       </td><td>5         </td><td>13        </td><td>42        </td><td>37        </td><td>82        </td><td>30.16     </td><td>42        </td><td>1         </td><td>0.25      </td><td>63        </td></tr>
+	<tr><td>2014-12-24</td><td>Fog-Rain  </td><td>8         </td><td>46        </td><td>15        </td><td>100       </td><td>30.13     </td><td>46        </td><td>2         </td><td>13        </td><td>...       </td><td>1         </td><td>6         </td><td>44        </td><td>41        </td><td>96        </td><td>29.55     </td><td>41        </td><td>0         </td><td>0.56      </td><td>12        </td></tr>
+	<tr><td>2014-12-25</td><td>Rain      </td><td>6         </td><td>58        </td><td>40        </td><td>100       </td><td>29.96     </td><td>59        </td><td>10        </td><td>28        </td><td>...       </td><td>8         </td><td>14        </td><td>43        </td><td>29        </td><td>49        </td><td>29.47     </td><td>44        </td><td>1         </td><td>0.14      </td><td>250       </td></tr>
+	<tr><td>2014-12-26</td><td>          </td><td>1         </td><td>31        </td><td>25        </td><td>70        </td><td>30.16     </td><td>50        </td><td>10        </td><td>18        </td><td>...       </td><td>10        </td><td>11        </td><td>29        </td><td>28        </td><td>49        </td><td>29.99     </td><td>37        </td><td>10        </td><td>0.00      </td><td>255       </td></tr>
+	<tr><td>2014-12-27</td><td>          </td><td>3         </td><td>34        </td><td>21        </td><td>70        </td><td>30.22     </td><td>52        </td><td>10        </td><td>17        </td><td>...       </td><td>10        </td><td>9         </td><td>31        </td><td>29        </td><td>50        </td><td>30.03     </td><td>38        </td><td>10        </td><td>0.00      </td><td>251       </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Warning message in eval(expr, envir, enclos):
+&#34;NAs introduced by coercion&#34;</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+&lt;ol class=list-inline&gt;
+	<li>0.01</li>
+	<li>0.28</li>
+	<li>0.02</li>
+	<li>&lt;NA&gt;</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0.43</li>
+	<li>0.01</li>
+	<li>0</li>
+	<li>0.1</li>
+	<li>&lt;NA&gt;</li>
+	<li>&lt;NA&gt;</li>
+	<li>0.05</li>
+	<li>0.25</li>
+	<li>0.56</li>
+	<li>0.14</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.01</li>
+	<li>0</li>
+	<li>0.44</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.11</li>
+	<li>1.09</li>
+	<li>0.13</li>
+	<li>0.03</li>
+	<li>2.9</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.2</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0.12</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.15</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0.71</li>
+	<li>0</li>
+	<li>0.1</li>
+	<li>0.95</li>
+	<li>0.01</li>
+	<li>&lt;NA&gt;</li>
+	<li>0.62</li>
+	<li>0.06</li>
+	<li>0.05</li>
+	<li>0.57</li>
+	<li>0</li>
+	<li>0.02</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0.01</li>
+	<li>0</li>
+	<li>0.05</li>
+	<li>0.01</li>
+	<li>0.03</li>
+	<li>0</li>
+	<li>0.23</li>
+	<li>0.39</li>
+	<li>0</li>
+	<li>0.02</li>
+	<li>0.01</li>
+	<li>0.06</li>
+	<li>0.78</li>
+	<li>0</li>
+	<li>0.17</li>
+	<li>0.11</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0.07</li>
+	<li>0.02</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.09</li>
+	<li>&lt;NA&gt;</li>
+	<li>0.07</li>
+	<li>0.37</li>
+	<li>0.88</li>
+	<li>0.17</li>
+	<li>0.06</li>
+	<li>0.01</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.8</li>
+	<li>0.27</li>
+	<li>0</li>
+	<li>0.14</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.01</li>
+	<li>0.05</li>
+	<li>0.09</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.04</li>
+	<li>0.8</li>
+	<li>0.21</li>
+	<li>0.12</li>
+	<li>0</li>
+	<li>0.26</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0.02</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.09</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.01</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.06</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.61</li>
+	<li>0.54</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.1</li>
+	<li>0.07</li>
+	<li>0</li>
+	<li>0.03</li>
+	<li>0</li>
+	<li>0.39</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.03</li>
+	<li>0.26</li>
+	<li>0.09</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.02</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.27</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.91</li>
+	<li>0</li>
+	<li>0.02</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.38</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0.4</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.74</li>
+	<li>0.04</li>
+	<li>1.72</li>
+	<li>0</li>
+	<li>0.01</li>
+	<li>0</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0.2</li>
+	<li>1.43</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0.09</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>&lt;NA&gt;</li>
+	<li>0.5</li>
+	<li>1.12</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.03</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0.14</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.01</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0.06</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.02</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.02</li>
+	<li>&lt;NA&gt;</li>
+	<li>0.15</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0.83</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.08</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.14</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.63</li>
+	<li>&lt;NA&gt;</li>
+	<li>0.02</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.49</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.17</li>
+	<li>0.66</li>
+	<li>0.01</li>
+	<li>0.38</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.04</li>
+	<li>0.01</li>
+	<li>2.46</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.2</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.12</li>
+	<li>0</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>&lt;NA&gt;</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0.08</li>
+	<li>&lt;NA&gt;</li>
+	<li>0.07</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.03</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.36</li>
+	<li>0.73</li>
+	<li>0.01</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.34</li>
+	<li>&lt;NA&gt;</li>
+	<li>0.07</li>
+	<li>0.54</li>
+	<li>0.04</li>
+	<li>0.01</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>&lt;NA&gt;</li>
+	<li>0</li>
+	<li>0.86</li>
+	<li>0</li>
+	<li>0.3</li>
+	<li>0.04</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.21</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0</li>
+	<li>0.14</li>
+&lt;/ol&gt;
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Column-type-conversions">Column type conversions<a class="anchor-link" href="#Column-type-conversions"> </a></h2><p><code>"T"</code> was used to denote a trace amount (i.e. too small to be accurately measured) of precipitation in the <code>PrecipitationIn</code> column. In order to coerce this column to numeric, wwe'll need to deal with this somehow. To keep things simple, we will just replace <code>"T"</code> with zero, as a string (<code>"0"</code>).</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Replace &quot;T&quot; with &quot;0&quot; (T = trace)</span>
+<span class="n">weather5</span><span class="err">$</span><span class="n">PrecipitationIn</span> <span class="o">&lt;-</span> <span class="n">str_replace</span><span class="p">(</span><span class="n">weather5</span><span class="err">$</span><span class="n">PrecipitationIn</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span>
+
+<span class="c1"># Convert characters to numerics</span>
+<span class="n">weather6</span> <span class="o">&lt;-</span> <span class="n">mutate_at</span><span class="p">(</span><span class="n">weather5</span><span class="p">,</span> <span class="nb">vars</span><span class="p">(</span><span class="n">CloudCover</span><span class="p">:</span><span class="n">WindDirDegrees</span><span class="p">),</span> <span class="n">funs</span><span class="p">(</span><span class="k">as</span><span class="o">.</span><span class="n">numeric</span><span class="p">))</span>
+
+<span class="c1"># Look at result</span>
+<span class="nb">str</span><span class="p">(</span><span class="n">weather6</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Warning message:
+&#34;`funs()` is deprecated as of dplyr 0.8.0.
+Please use a list of either functions or lambdas: 
+
+  # Simple named list: 
+  list(mean = mean, median = median)
+
+  # Auto named with `tibble::lst()`: 
+  tibble::lst(mean, median)
+
+  # Using lambdas
+  list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_warnings()` to see where this warning was generated.&#34;</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&#39;data.frame&#39;:	366 obs. of  23 variables:
+ $ date                     : Date, format: &#34;2014-12-01&#34; &#34;2014-12-10&#34; ...
+ $ Events                   : chr  &#34;Rain&#34; &#34;Rain&#34; &#34;Rain-Snow&#34; &#34;Snow&#34; ...
+ $ CloudCover               : num  6 8 8 7 5 4 2 8 8 7 ...
+ $ Max.Dew.PointF           : num  46 45 37 28 28 29 33 42 46 34 ...
+ $ Max.Gust.SpeedMPH        : num  29 29 28 21 23 20 21 10 26 30 ...
+ $ Max.Humidity             : num  74 100 92 85 75 82 89 96 100 89 ...
+ $ Max.Sea.Level.PressureIn : num  30.4 29.6 29.8 29.9 29.9 ...
+ $ Max.TemperatureF         : num  64 48 39 39 42 45 42 44 49 44 ...
+ $ Max.VisibilityMiles      : num  10 10 10 10 10 10 10 10 10 10 ...
+ $ Max.Wind.SpeedMPH        : num  22 23 21 16 17 15 15 8 20 23 ...
+ $ Mean.Humidity            : num  63 95 87 75 65 68 75 85 85 73 ...
+ $ Mean.Sea.Level.PressureIn: num  30.1 29.5 29.6 29.9 29.8 ...
+ $ Mean.TemperatureF        : num  52 43 36 35 37 39 37 40 45 40 ...
+ $ Mean.VisibilityMiles     : num  10 3 7 10 10 10 10 9 6 10 ...
+ $ Mean.Wind.SpeedMPH       : num  13 13 13 11 12 10 6 4 11 14 ...
+ $ MeanDew.PointF           : num  40 39 31 27 26 27 29 36 41 30 ...
+ $ Min.DewpointF            : num  26 37 27 25 24 25 27 30 32 26 ...
+ $ Min.Humidity             : num  52 89 82 64 55 53 60 73 70 57 ...
+ $ Min.Sea.Level.PressureIn : num  30 29.4 29.4 29.8 29.8 ...
+ $ Min.TemperatureF         : num  39 38 32 31 32 33 32 35 41 36 ...
+ $ Min.VisibilityMiles      : num  10 1 1 7 10 10 10 5 1 10 ...
+ $ PrecipitationIn          : num  0.01 0.28 0.02 0 0 0 0 0 0.43 0.01 ...
+ $ WindDirDegrees           : num  268 357 230 286 298 306 324 79 311 281 ...
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It looks like our data are finally in the correct formats and organized in a logical manner! Now that our data are in the right form, we can begin the analysis.</p>
+<h1 id="Missing,-extreme,-and-unexpected-values">Missing, extreme, and unexpected values<a class="anchor-link" href="#Missing,-extreme,-and-unexpected-values"> </a></h1><h2 id="Find-missing-values">Find missing values<a class="anchor-link" href="#Find-missing-values"> </a></h2><p>Before dealing with missing values in the data, it's important to find them and figure out why they exist in the first place.</p>
+<blockquote><p>If the dataset is too big to look at all at once, like it is here, we will use <code>sum()</code> and <code>is.na()</code> to quickly size up the situation by counting the number of NA values.</p>
+</blockquote>
+<p>The <code>summary()</code> function also come in handy for identifying which variables contain the missing values. Finally, the <code>which()</code> function is useful for locating the missing values within a particular column.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Count missing values</span>
+<span class="nb">sum</span><span class="p">(</span><span class="ow">is</span><span class="o">.</span><span class="n">na</span><span class="p">(</span><span class="n">weather6</span><span class="p">))</span>
+
+<span class="c1"># Find missing values</span>
+<span class="n">summary</span><span class="p">(</span><span class="n">weather6</span><span class="p">)</span>
+
+<span class="c1"># Find indices of NAs in Max.Gust.SpeedMPH</span>
+<span class="n">ind</span> <span class="o">&lt;-</span> <span class="n">which</span><span class="p">(</span><span class="ow">is</span><span class="o">.</span><span class="n">na</span><span class="p">(</span><span class="n">weather6</span><span class="err">$</span><span class="n">Max</span><span class="o">.</span><span class="n">Gust</span><span class="o">.</span><span class="n">SpeedMPH</span><span class="p">))</span>
+
+<span class="c1"># Look at the full rows for records missing Max.Gust.SpeedMPH</span>
+<span class="n">weather6</span><span class="p">[</span><span class="n">ind</span><span class="p">,</span> <span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+6
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>      date               Events            CloudCover    Max.Dew.PointF 
+ Min.   :2014-12-01   Length:366         Min.   :0.000   Min.   :-6.00  
+ 1st Qu.:2015-03-02   Class :character   1st Qu.:3.000   1st Qu.:32.00  
+ Median :2015-06-01   Mode  :character   Median :5.000   Median :47.50  
+ Mean   :2015-06-01                      Mean   :4.708   Mean   :45.48  
+ 3rd Qu.:2015-08-31                      3rd Qu.:7.000   3rd Qu.:61.00  
+ Max.   :2015-12-01                      Max.   :8.000   Max.   :75.00  
+                                                                        
+ Max.Gust.SpeedMPH  Max.Humidity     Max.Sea.Level.PressureIn Max.TemperatureF
+ Min.   : 0.00     Min.   :  39.00   Min.   :29.58            Min.   :18.00   
+ 1st Qu.:21.00     1st Qu.:  73.25   1st Qu.:30.00            1st Qu.:42.00   
+ Median :25.50     Median :  86.00   Median :30.14            Median :60.00   
+ Mean   :26.99     Mean   :  85.69   Mean   :30.16            Mean   :58.93   
+ 3rd Qu.:31.25     3rd Qu.:  93.00   3rd Qu.:30.31            3rd Qu.:76.00   
+ Max.   :94.00     Max.   :1000.00   Max.   :30.88            Max.   :96.00   
+ NA&#39;s   :6                                                                    
+ Max.VisibilityMiles Max.Wind.SpeedMPH Mean.Humidity  
+ Min.   : 2.000      Min.   : 8.00     Min.   :28.00  
+ 1st Qu.:10.000      1st Qu.:16.00     1st Qu.:56.00  
+ Median :10.000      Median :20.00     Median :66.00  
+ Mean   : 9.907      Mean   :20.62     Mean   :66.02  
+ 3rd Qu.:10.000      3rd Qu.:24.00     3rd Qu.:76.75  
+ Max.   :10.000      Max.   :38.00     Max.   :98.00  
+                                                      
+ Mean.Sea.Level.PressureIn Mean.TemperatureF Mean.VisibilityMiles
+ Min.   :29.49             Min.   : 8.00     Min.   :-1.000      
+ 1st Qu.:29.87             1st Qu.:36.25     1st Qu.: 8.000      
+ Median :30.03             Median :53.50     Median :10.000      
+ Mean   :30.04             Mean   :51.40     Mean   : 8.861      
+ 3rd Qu.:30.19             3rd Qu.:68.00     3rd Qu.:10.000      
+ Max.   :30.77             Max.   :84.00     Max.   :10.000      
+                                                                 
+ Mean.Wind.SpeedMPH MeanDew.PointF   Min.DewpointF     Min.Humidity  
+ Min.   : 4.00      Min.   :-11.00   Min.   :-18.00   Min.   :16.00  
+ 1st Qu.: 8.00      1st Qu.: 24.00   1st Qu.: 16.25   1st Qu.:35.00  
+ Median :10.00      Median : 41.00   Median : 35.00   Median :46.00  
+ Mean   :10.68      Mean   : 38.96   Mean   : 32.25   Mean   :48.31  
+ 3rd Qu.:13.00      3rd Qu.: 56.00   3rd Qu.: 51.00   3rd Qu.:60.00  
+ Max.   :22.00      Max.   : 71.00   Max.   : 68.00   Max.   :96.00  
+                                                                     
+ Min.Sea.Level.PressureIn Min.TemperatureF Min.VisibilityMiles PrecipitationIn 
+ Min.   :29.16            Min.   :-3.00    Min.   : 0.000      Min.   :0.0000  
+ 1st Qu.:29.76            1st Qu.:30.00    1st Qu.: 2.000      1st Qu.:0.0000  
+ Median :29.94            Median :46.00    Median :10.000      Median :0.0000  
+ Mean   :29.93            Mean   :43.33    Mean   : 6.716      Mean   :0.1016  
+ 3rd Qu.:30.09            3rd Qu.:60.00    3rd Qu.:10.000      3rd Qu.:0.0400  
+ Max.   :30.64            Max.   :74.00    Max.   :10.000      Max.   :2.9000  
+                                                                               
+ WindDirDegrees 
+ Min.   :  1.0  
+ 1st Qu.:113.0  
+ Median :222.0  
+ Mean   :200.1  
+ 3rd Qu.:275.0  
+ Max.   :360.0  
+                </pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th></th><th scope="col">date</th><th scope="col">Events</th><th scope="col">CloudCover</th><th scope="col">Max.Dew.PointF</th><th scope="col">Max.Gust.SpeedMPH</th><th scope="col">Max.Humidity</th><th scope="col">Max.Sea.Level.PressureIn</th><th scope="col">Max.TemperatureF</th><th scope="col">Max.VisibilityMiles</th><th scope="col">Max.Wind.SpeedMPH</th><th scope="col">...</th><th scope="col">Mean.VisibilityMiles</th><th scope="col">Mean.Wind.SpeedMPH</th><th scope="col">MeanDew.PointF</th><th scope="col">Min.DewpointF</th><th scope="col">Min.Humidity</th><th scope="col">Min.Sea.Level.PressureIn</th><th scope="col">Min.TemperatureF</th><th scope="col">Min.VisibilityMiles</th><th scope="col">PrecipitationIn</th><th scope="col">WindDirDegrees</th></tr></thead>
+<tbody>
+	<tr><th scope="row">161</th><td>2015-05-18</td><td>Fog       </td><td>6         </td><td>52        </td><td>NA        </td><td>100       </td><td>30.30     </td><td>58        </td><td>10        </td><td>16        </td><td>...       </td><td> 8        </td><td>10        </td><td>48        </td><td>43        </td><td>57        </td><td>30.12     </td><td>49        </td><td> 0        </td><td>0         </td><td> 72       </td></tr>
+	<tr><th scope="row">205</th><td>2015-06-03</td><td>          </td><td>7         </td><td>48        </td><td>NA        </td><td> 93       </td><td>30.31     </td><td>56        </td><td>10        </td><td>14        </td><td>...       </td><td>10        </td><td> 7        </td><td>45        </td><td>43        </td><td>71        </td><td>30.19     </td><td>47        </td><td>10        </td><td>0         </td><td> 90       </td></tr>
+	<tr><th scope="row">273</th><td>2015-08-08</td><td>          </td><td>4         </td><td>61        </td><td>NA        </td><td> 87       </td><td>30.02     </td><td>76        </td><td>10        </td><td>14        </td><td>...       </td><td>10        </td><td> 6        </td><td>57        </td><td>54        </td><td>49        </td><td>29.95     </td><td>61        </td><td>10        </td><td>0         </td><td> 45       </td></tr>
+	<tr><th scope="row">275</th><td>2015-09-01</td><td>          </td><td>1         </td><td>63        </td><td>NA        </td><td> 78       </td><td>30.06     </td><td>79        </td><td>10        </td><td>15        </td><td>...       </td><td>10        </td><td> 9        </td><td>62        </td><td>59        </td><td>52        </td><td>29.96     </td><td>69        </td><td>10        </td><td>0         </td><td> 54       </td></tr>
+	<tr><th scope="row">308</th><td>2015-10-12</td><td>          </td><td>0         </td><td>56        </td><td>NA        </td><td> 89       </td><td>29.86     </td><td>76        </td><td>10        </td><td>15        </td><td>...       </td><td>10        </td><td> 8        </td><td>51        </td><td>48        </td><td>41        </td><td>29.74     </td><td>51        </td><td>10        </td><td>0         </td><td>199       </td></tr>
+	<tr><th scope="row">358</th><td>2015-11-03</td><td>          </td><td>1         </td><td>44        </td><td>NA        </td><td> 82       </td><td>30.25     </td><td>73        </td><td>10        </td><td>16        </td><td>...       </td><td>10        </td><td> 8        </td><td>42        </td><td>40        </td><td>31        </td><td>30.06     </td><td>47        </td><td>10        </td><td>0         </td><td>281       </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this situation it's unclear why these values are missing and there doesn't appear to be any obvious pattern to their missingness, so we'll leave them alone for now.</p>
+<h2 id="An-obvious-error">An obvious error<a class="anchor-link" href="#An-obvious-error"> </a></h2><p>Besides missing values, we want to know if there are values in the data that are too extreme or bizarre to be plausible. A great way to start the search for these values is with <code>summary()</code>.</p>
+<p>Once implausible values are identified, they must be dealt with in an intelligent and informed way.</p>
+<blockquote><p>Sometimes the best way forward is obvious and other times it may require some research and/or discussions with the original collectors of the data.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Review distributions for all variables</span>
+<span class="n">summary</span><span class="p">(</span><span class="n">weather6</span><span class="p">)</span>
+
+<span class="c1"># Find row with Max.Humidity of 1000</span>
+<span class="n">ind</span> <span class="o">&lt;-</span> <span class="n">which</span><span class="p">(</span><span class="n">weather6</span><span class="err">$</span><span class="n">Max</span><span class="o">.</span><span class="n">Humidity</span><span class="o">==</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># Look at the data for that day</span>
+<span class="n">weather6</span><span class="p">[</span><span class="n">ind</span><span class="p">,</span> <span class="p">]</span>
+
+<span class="c1"># Change 1000 to 100</span>
+<span class="n">weather6</span><span class="err">$</span><span class="n">Max</span><span class="o">.</span><span class="n">Humidity</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="mi">100</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>      date               Events            CloudCover    Max.Dew.PointF 
+ Min.   :2014-12-01   Length:366         Min.   :0.000   Min.   :-6.00  
+ 1st Qu.:2015-03-02   Class :character   1st Qu.:3.000   1st Qu.:32.00  
+ Median :2015-06-01   Mode  :character   Median :5.000   Median :47.50  
+ Mean   :2015-06-01                      Mean   :4.708   Mean   :45.48  
+ 3rd Qu.:2015-08-31                      3rd Qu.:7.000   3rd Qu.:61.00  
+ Max.   :2015-12-01                      Max.   :8.000   Max.   :75.00  
+                                                                        
+ Max.Gust.SpeedMPH  Max.Humidity     Max.Sea.Level.PressureIn Max.TemperatureF
+ Min.   : 0.00     Min.   :  39.00   Min.   :29.58            Min.   :18.00   
+ 1st Qu.:21.00     1st Qu.:  73.25   1st Qu.:30.00            1st Qu.:42.00   
+ Median :25.50     Median :  86.00   Median :30.14            Median :60.00   
+ Mean   :26.99     Mean   :  85.69   Mean   :30.16            Mean   :58.93   
+ 3rd Qu.:31.25     3rd Qu.:  93.00   3rd Qu.:30.31            3rd Qu.:76.00   
+ Max.   :94.00     Max.   :1000.00   Max.   :30.88            Max.   :96.00   
+ NA&#39;s   :6                                                                    
+ Max.VisibilityMiles Max.Wind.SpeedMPH Mean.Humidity  
+ Min.   : 2.000      Min.   : 8.00     Min.   :28.00  
+ 1st Qu.:10.000      1st Qu.:16.00     1st Qu.:56.00  
+ Median :10.000      Median :20.00     Median :66.00  
+ Mean   : 9.907      Mean   :20.62     Mean   :66.02  
+ 3rd Qu.:10.000      3rd Qu.:24.00     3rd Qu.:76.75  
+ Max.   :10.000      Max.   :38.00     Max.   :98.00  
+                                                      
+ Mean.Sea.Level.PressureIn Mean.TemperatureF Mean.VisibilityMiles
+ Min.   :29.49             Min.   : 8.00     Min.   :-1.000      
+ 1st Qu.:29.87             1st Qu.:36.25     1st Qu.: 8.000      
+ Median :30.03             Median :53.50     Median :10.000      
+ Mean   :30.04             Mean   :51.40     Mean   : 8.861      
+ 3rd Qu.:30.19             3rd Qu.:68.00     3rd Qu.:10.000      
+ Max.   :30.77             Max.   :84.00     Max.   :10.000      
+                                                                 
+ Mean.Wind.SpeedMPH MeanDew.PointF   Min.DewpointF     Min.Humidity  
+ Min.   : 4.00      Min.   :-11.00   Min.   :-18.00   Min.   :16.00  
+ 1st Qu.: 8.00      1st Qu.: 24.00   1st Qu.: 16.25   1st Qu.:35.00  
+ Median :10.00      Median : 41.00   Median : 35.00   Median :46.00  
+ Mean   :10.68      Mean   : 38.96   Mean   : 32.25   Mean   :48.31  
+ 3rd Qu.:13.00      3rd Qu.: 56.00   3rd Qu.: 51.00   3rd Qu.:60.00  
+ Max.   :22.00      Max.   : 71.00   Max.   : 68.00   Max.   :96.00  
+                                                                     
+ Min.Sea.Level.PressureIn Min.TemperatureF Min.VisibilityMiles PrecipitationIn 
+ Min.   :29.16            Min.   :-3.00    Min.   : 0.000      Min.   :0.0000  
+ 1st Qu.:29.76            1st Qu.:30.00    1st Qu.: 2.000      1st Qu.:0.0000  
+ Median :29.94            Median :46.00    Median :10.000      Median :0.0000  
+ Mean   :29.93            Mean   :43.33    Mean   : 6.716      Mean   :0.1016  
+ 3rd Qu.:30.09            3rd Qu.:60.00    3rd Qu.:10.000      3rd Qu.:0.0400  
+ Max.   :30.64            Max.   :74.00    Max.   :10.000      Max.   :2.9000  
+                                                                               
+ WindDirDegrees 
+ Min.   :  1.0  
+ 1st Qu.:113.0  
+ Median :222.0  
+ Mean   :200.1  
+ 3rd Qu.:275.0  
+ Max.   :360.0  
+                </pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th></th><th scope="col">date</th><th scope="col">Events</th><th scope="col">CloudCover</th><th scope="col">Max.Dew.PointF</th><th scope="col">Max.Gust.SpeedMPH</th><th scope="col">Max.Humidity</th><th scope="col">Max.Sea.Level.PressureIn</th><th scope="col">Max.TemperatureF</th><th scope="col">Max.VisibilityMiles</th><th scope="col">Max.Wind.SpeedMPH</th><th scope="col">...</th><th scope="col">Mean.VisibilityMiles</th><th scope="col">Mean.Wind.SpeedMPH</th><th scope="col">MeanDew.PointF</th><th scope="col">Min.DewpointF</th><th scope="col">Min.Humidity</th><th scope="col">Min.Sea.Level.PressureIn</th><th scope="col">Min.TemperatureF</th><th scope="col">Min.VisibilityMiles</th><th scope="col">PrecipitationIn</th><th scope="col">WindDirDegrees</th></tr></thead>
+<tbody>
+	<tr><th scope="row">135</th><td>2015-04-21           </td><td>Fog-Rain-Thunderstorm</td><td>6                    </td><td>57                   </td><td>94                   </td><td>1000                 </td><td>29.75                </td><td>65                   </td><td>10                   </td><td>20                   </td><td>...                  </td><td>5                    </td><td>10                   </td><td>49                   </td><td>36                   </td><td>42                   </td><td>29.53                </td><td>46                   </td><td>0                    </td><td>0.54                 </td><td>184                  </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Once you find obvious errors, it's not too hard to fix them if you know which values they should take.</p>
+<h2 id="Another-obvious-error">Another obvious error<a class="anchor-link" href="#Another-obvious-error"> </a></h2><p>We've discovered and repaired one obvious error in the data, but it appears that there's another. Sometimes we get lucky and can infer the correct or intended value from the other data. For example, if you know the minimum and maximum values of a particular metric on a given day...</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Look at summary of Mean.VisibilityMiles</span>
+<span class="n">summary</span><span class="p">(</span><span class="n">weather6</span><span class="err">$</span><span class="n">Mean</span><span class="o">.</span><span class="n">VisibilityMiles</span><span class="p">)</span>
+
+<span class="c1"># Get index of row with -1 value</span>
+<span class="n">ind</span> <span class="o">&lt;-</span> <span class="n">which</span><span class="p">(</span><span class="n">weather6</span><span class="err">$</span><span class="n">Mean</span><span class="o">.</span><span class="n">VisibilityMiles</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Look at full row</span>
+<span class="n">weather6</span><span class="p">[</span><span class="n">ind</span><span class="p">,]</span>
+
+<span class="c1"># Set Mean.VisibilityMiles to the appropriate value</span>
+<span class="n">weather6</span><span class="err">$</span><span class="n">Mean</span><span class="o">.</span><span class="n">VisibilityMiles</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="mi">10</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ -1.000   8.000  10.000   8.861  10.000  10.000 </pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th></th><th scope="col">date</th><th scope="col">Events</th><th scope="col">CloudCover</th><th scope="col">Max.Dew.PointF</th><th scope="col">Max.Gust.SpeedMPH</th><th scope="col">Max.Humidity</th><th scope="col">Max.Sea.Level.PressureIn</th><th scope="col">Max.TemperatureF</th><th scope="col">Max.VisibilityMiles</th><th scope="col">Max.Wind.SpeedMPH</th><th scope="col">...</th><th scope="col">Mean.VisibilityMiles</th><th scope="col">Mean.Wind.SpeedMPH</th><th scope="col">MeanDew.PointF</th><th scope="col">Min.DewpointF</th><th scope="col">Min.Humidity</th><th scope="col">Min.Sea.Level.PressureIn</th><th scope="col">Min.TemperatureF</th><th scope="col">Min.VisibilityMiles</th><th scope="col">PrecipitationIn</th><th scope="col">WindDirDegrees</th></tr></thead>
+<tbody>
+	<tr><th scope="row">192</th><td>2015-06-18</td><td>          </td><td>5         </td><td>54        </td><td>23        </td><td>72        </td><td>30.14     </td><td>76        </td><td>10        </td><td>17        </td><td>...       </td><td>-1        </td><td>10        </td><td>49        </td><td>45        </td><td>46        </td><td>29.93     </td><td>57        </td><td>10        </td><td>0         </td><td>189       </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Our data are looking tidy. Just a quick sanity check left!</p>
+<h2 id="Check-other-extreme-values">Check other extreme values<a class="anchor-link" href="#Check-other-extreme-values"> </a></h2><p>In addition to dealing with obvious errors in the data, we want to see if there are other extreme values. In addition to the trusty <code>summary()</code> function, <code>hist()</code> is useful for quickly getting a feel for how different variables are distributed.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Review summary of full data once more</span>
+<span class="n">summary</span><span class="p">(</span><span class="n">weather6</span><span class="p">)</span>
+
+<span class="c1"># Look at histogram for MeanDew.PointF</span>
+<span class="n">hist</span><span class="p">(</span><span class="n">weather6</span><span class="err">$</span><span class="n">MeanDew</span><span class="o">.</span><span class="n">PointF</span><span class="p">)</span>
+
+<span class="c1"># Look at histogram for Min.TemperatureF</span>
+<span class="n">hist</span><span class="p">(</span><span class="n">weather6</span><span class="err">$</span><span class="n">Min</span><span class="o">.</span><span class="n">TemperatureF</span><span class="p">)</span>
+
+<span class="c1"># Compare to histogram for Mean.TemperatureF</span>
+<span class="n">hist</span><span class="p">(</span><span class="n">weather6</span><span class="err">$</span><span class="n">Mean</span><span class="o">.</span><span class="n">TemperatureF</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>      date               Events            CloudCover    Max.Dew.PointF 
+ Min.   :2014-12-01   Length:366         Min.   :0.000   Min.   :-6.00  
+ 1st Qu.:2015-03-02   Class :character   1st Qu.:3.000   1st Qu.:32.00  
+ Median :2015-06-01   Mode  :character   Median :5.000   Median :47.50  
+ Mean   :2015-06-01                      Mean   :4.708   Mean   :45.48  
+ 3rd Qu.:2015-08-31                      3rd Qu.:7.000   3rd Qu.:61.00  
+ Max.   :2015-12-01                      Max.   :8.000   Max.   :75.00  
+                                                                        
+ Max.Gust.SpeedMPH  Max.Humidity    Max.Sea.Level.PressureIn Max.TemperatureF
+ Min.   : 0.00     Min.   : 39.00   Min.   :29.58            Min.   :18.00   
+ 1st Qu.:21.00     1st Qu.: 73.25   1st Qu.:30.00            1st Qu.:42.00   
+ Median :25.50     Median : 86.00   Median :30.14            Median :60.00   
+ Mean   :26.99     Mean   : 83.23   Mean   :30.16            Mean   :58.93   
+ 3rd Qu.:31.25     3rd Qu.: 93.00   3rd Qu.:30.31            3rd Qu.:76.00   
+ Max.   :94.00     Max.   :100.00   Max.   :30.88            Max.   :96.00   
+ NA&#39;s   :6                                                                   
+ Max.VisibilityMiles Max.Wind.SpeedMPH Mean.Humidity  
+ Min.   : 2.000      Min.   : 8.00     Min.   :28.00  
+ 1st Qu.:10.000      1st Qu.:16.00     1st Qu.:56.00  
+ Median :10.000      Median :20.00     Median :66.00  
+ Mean   : 9.907      Mean   :20.62     Mean   :66.02  
+ 3rd Qu.:10.000      3rd Qu.:24.00     3rd Qu.:76.75  
+ Max.   :10.000      Max.   :38.00     Max.   :98.00  
+                                                      
+ Mean.Sea.Level.PressureIn Mean.TemperatureF Mean.VisibilityMiles
+ Min.   :29.49             Min.   : 8.00     Min.   : 1.000      
+ 1st Qu.:29.87             1st Qu.:36.25     1st Qu.: 8.000      
+ Median :30.03             Median :53.50     Median :10.000      
+ Mean   :30.04             Mean   :51.40     Mean   : 8.891      
+ 3rd Qu.:30.19             3rd Qu.:68.00     3rd Qu.:10.000      
+ Max.   :30.77             Max.   :84.00     Max.   :10.000      
+                                                                 
+ Mean.Wind.SpeedMPH MeanDew.PointF   Min.DewpointF     Min.Humidity  
+ Min.   : 4.00      Min.   :-11.00   Min.   :-18.00   Min.   :16.00  
+ 1st Qu.: 8.00      1st Qu.: 24.00   1st Qu.: 16.25   1st Qu.:35.00  
+ Median :10.00      Median : 41.00   Median : 35.00   Median :46.00  
+ Mean   :10.68      Mean   : 38.96   Mean   : 32.25   Mean   :48.31  
+ 3rd Qu.:13.00      3rd Qu.: 56.00   3rd Qu.: 51.00   3rd Qu.:60.00  
+ Max.   :22.00      Max.   : 71.00   Max.   : 68.00   Max.   :96.00  
+                                                                     
+ Min.Sea.Level.PressureIn Min.TemperatureF Min.VisibilityMiles PrecipitationIn 
+ Min.   :29.16            Min.   :-3.00    Min.   : 0.000      Min.   :0.0000  
+ 1st Qu.:29.76            1st Qu.:30.00    1st Qu.: 2.000      1st Qu.:0.0000  
+ Median :29.94            Median :46.00    Median :10.000      Median :0.0000  
+ Mean   :29.93            Mean   :43.33    Mean   : 6.716      Mean   :0.1016  
+ 3rd Qu.:30.09            3rd Qu.:60.00    3rd Qu.:10.000      3rd Qu.:0.0400  
+ Max.   :30.64            Max.   :74.00    Max.   :10.000      Max.   :2.9000  
+                                                                               
+ WindDirDegrees 
+ Min.   :  1.0  
+ 1st Qu.:113.0  
+ Median :222.0  
+ Mean   :200.1  
+ 3rd Qu.:275.0  
+ Max.   :360.0  
+                </pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA0gAAANICAMAAADKOT/pAAAAMFBMVEUAAABNTU1oaGh8fHyM
+jIyampqnp6eysrK9vb3Hx8fQ0NDZ2dnh4eHp6enw8PD////QFLu4AAAACXBIWXMAABJ0AAAS
+dAHeZh94AAAgAElEQVR4nO2di5qiOhAGw0VUBHz/t10SBIP3ic12Yqq+c3ackZ8O2CXXGc0Z
+AL7GaA8A4BdAJAABEAlAAEQCEACRAARAJAABEAlAAEQCEACRAARAJAABEAlAAEQCEACRAARA
+JAABEAlAAEQCEACRAARAJAABEAlAAEQCEACRAARAJAABEAlAAEQCEACRAARAJAABEAlAAEQC
+EACRAARAJAABEAlAAEQCEACRAARAJAABEAlAAEQCEACRAARAJAABEAlAAEQCEACRfhbDa/sf
++cmVbZYeujwyD5tq918Gsy+MCa40BR8P/462NqY6eGXLwxw3pncPe/f4T0MwF6qmD8oVdfvk
+6YexZYkX/lRVjUSG+Tc+EulU/Jdl39teCBRpHuJn3VRPfde4byrvG/fo6H58DBdp5KERH+Sa
+x08/+Km3xIikz0ci/aeXqDSmC83OQ/xoqHu/3Q/zN9350pWVm6j6SiRzkss9Hoa3xIikz51I
+ryf6T2MJz34yj2HciRoVaqbN36jv0f23O89dOc8pQCQ3/3acZxEw+PYvu7Z/euuIitTG+xHP
+tkjD3r4j18fz8pbnJmp3du9r3m/pd+5I45rsS7dvcrS7TuV0oGCfPJSmHN9pD4Wpbt5wV/Nb
+tUQ5vTmPTW+GsztiKe23TWGK+QjkWuY6RPvvaRz67jKNH5gHeJg2RYOp60vC/VdM39TTs617
+ZO5mcrdwra3W3SxAedm5uyYfL8/NgncP17P3yizF1kucFqmN9yOeiNQXl1eqWol0OZwwtUuc
+LpNck6ULzFO5zrlMMPZwc7/r4s/vZu9kPx0vjP3sjlnGLcb+OqyTHx6/W7XVVKdwnb4KzAOs
+V61XTCItK+EwbRV27pG5m8ntwk3Vpn3S6/DbaSZe8uHyPHsR1uv5un6vxRApMp6ItHMv9zC+
+oAfvNavnJppe4WL5dk66Lhn7rxrcnpPnx9jZfm9MrOZ3I9LlLdu9M59da/XXinbj4ZdZtdWF
+nT/Ewh9gYcquXjYjY4XdSqTaTV2YehbpWdW7atfhD9PoveTD5bl9EbqpyM16Xq3fSzFEigzj
+c/nB9K99nS/9cHnKvpsehnGvz7gdl+N0qHEsrknbY3Ynpl/Nafyp7cmyOx9Wr/rN/G5aonT7
+QNd2KecuHibL78rMy1OcXKNf2/4SWAa4SO12nabT3JcTz+Oj7mC3IOPW9nDZ0Xpd1a6C3Wrd
+nZeHt8nb5VlNfF6OkZ6slyfFbl6/BEhlnH/iiUi205ZDofk1s3s77vvpMP1yMOHOE1+mam9m
+Pf17Wn25TnAzvxuR9rb9pr3Hk+2tvas4THP2tmt3Ik3HP/Mm1AvMA7wusNsmnSatqstTXW9r
+jdX77tFMbqt61e5EWiUfLM+jF6F7ul6eFEOkKHgi0uUE8W55n758cX3h3sSng4uHT48THJtq
+ees157svS86f341Ive2ixp1Pa+zX3h9s8aTMzdd1wCx97TYU1XKKbLpk1ExPdXbXb9x+FPOh
+/+dVb0VaJR8sz4MXoX2+Xp4UQ6QouK7+9evTzB3Q3z11vrbJo+TYl6X3yr4WafXophVsL9v/
+bV8XswnenB+VeSrSzTS2UQe/frfsxHZ2i+BOFtyJ9K7qdYbTPvE6eb883opwVM2wns2HIp3T
+IrXxfsQzkc7DcTp1VK2eWt4pi4dbJPetfX8vd4fuURfciuTP77YlGtfPzfLVq/i0zM3XVWB5
+rvanKewgjLn2bGfnbC8uzSJ9XvW6ANNZu3X5++W5fxFerRdEipmnIlna3apf6rfHSO7Z8noo
+cjfb1atevzxGuhxPtMtxxbXi8zI3X1eB5bn9dHA0uDbd2aOVtUjT6Yf+3D2Yycuq1wWo3GTr
+8vfLc/8ivFoviBQzT0Qql8OJ+S1xeHrWzjx+Zd9vkV6ftbucPJ5+Pu0JHadTcsf58tZNmeFu
+EKvA8lznziAO9XKKbPy/Xybp3dLbPbP+wUweLtzt0p3qacDr8vfLc/8ivFovD4oN9+EESG28
+H/FEpPG1rPrlKqLtAPt1uRi5vkhz80JXbuK2eCvS7fxuW6Ixy7XRy57QUvF0W2Ye4k23+YHr
+/JfrNJ3/zXGZpFnP7HnV+95eaO/K3y/PTfzNenmwaM2DcPykNt6PeCLScrLBvZXu5geV//q6
+d06zurPB/fhyw4O9WHN6LdLN/G5b4nTp7nbuxLmia6B1mXmIN93mB9Z7Xkuzz99U10las9oU
+PK/6XKT2brwPlueZSI/Xy83Ut0ucDqmN9yOeiTQdH82/slMv7uwK7wJTZ++1a+8ksT8udvZ6
+TP1GpPX87lqiuJ6vvvxkaMrl4umqzDzE2970A978D+VyZ8P0zfX3kc7XG+IezeTRwt2KdDn7
+dpO8X56nIj1cL7dT1w+PLBMgtfH+L4a/3eocI8n1YtKwstdcdlS6an0DXYog0v+Elb3mekj8
+t98HhcxBpDXLr1o8/P1ogCcg0g3D3p46LnZsj+AvIBKAAIgEIAAiAQiASAACIBKAAIgEIAAi
+AQiASAACIBKAAIgEIAAiAQiASAACIBKAAIgEIAAiAQiASAACIBKAAIgEIAAiAQiASAACIBKA
+AIgEIAAiAQiASAACIBKAAIgEIAAiAQiASAACIBKAAIgEIAAiAQiASAACIBKAAIgEIAAiAQiA
+SAACIBKAAIgEIAAiAQiASAACIBKAAIgEIAAiAQiASAACIBKAAIgEIAAiAQiASAACIBKAAIgE
+IAAiAQiASAACIBKAAIgEIAAiAQiASAACIBKAAIgEoZhv0V4ASX5qYeC/8m3v/FTv/dTCwH8F
+kTx+amHgv4JIHj+1MPBfQSSPn1oY+K8gkkf4wpz2tTv1UjcnwfFAOiCSR+jCDKV3GrMSHRIk
+AiJ5hC5MY4pj5x71bWEauQFBMiCSR+jCFKZbHnemkBkMJAUieYQuzOqy9G9do4YPQSQPtkgQ
+CiJ5fHGM1PbuEcdIuYJIHsELU3ln7cpBckiQCIjk8cV1pMZdRyrqPdeR8gSRPH5qYeC/gkge
+Gy3Mz/7aCVxBJI/g09/Fxzt0P7W+4AoieYRfRzL1h6cYfmp9wRVE8ggXyZ71/kiln1pfcAWR
+PL64s2Gojdm125WAyEEkj69uEersCfD60L3eMP3U+oIriOTx5b12XVO8PTH3U+sLriCSx/c3
+rXaHukSkHEEkD5G7v7cpAZGDSB6IBKEgksd/WJifWl9wBZE8EAlCQSQPRIJQEMkDkSAURPJA
+JAgFkTwQCUJBJA9EglAQyQORIBRE8kAkCAWRPBAJQkEkD0SCUBDJA5EgFETyQCQIBZE8EAlC
+QSQPRIJQEMkDkSAURPJAJAgFkTwQCUJBJA9EglAQyQORIBRE8kAkCAWRPBAJQkEkD0SCUBDJ
+A5EgFETyQCQIBZE8EAlCQSQPRIJQEMkDkSAURPJAJAgFkTwQCUJBJA9EglAQyQORIBRE8kAk
+CAWRPBAJQkEkD0SCUBDJA5EgFETyQCQIBZE8EAlCQSQPRIJQEMkDkSAURPJAJAgFkTwQCUJB
+JA9EglAQyQORIBRE8kAkCAWRPBAJQkEkD0SCUBDJA5EgFETyQCQIBZE8EAlCQSQPRIJQEMkD
+kSAURPJAJAgFkTwQCUJBJA9EglAQyQORIBRE8kAkCAWRPBAJQkEkD0SCUBDJI3xhTvvaWOrm
+tFUJiBpE8ghdmKE0V6pNSkDkIJJH6MI0pjh27lHfFqbZogREDiJ5hC5MYbrlcWeKLUpA5CCS
+R+jCGPPsG7ESEDmI5MEWCUJBJI8vjpHa3j3iGClXEMkjeGEq76xdOWxSAuIGkTy+uI7UuOtI
+Rb3nOlKeIJIHdzZAKIjksdHCGJ9tSoA2iOQRvDBDY0/V7UtjquNGJSBuEMkjdGH6YtzSDAW3
+CGUMInmELszO1MP4z64fndpx+jtLEMkj/M6G4fLPuJfHBdksQSSPr24RKoz3jXgJiBxE8gjf
+tevO5/10n9Dw+iDpp9YXXEEkj9CF6UzRdOe6GE1qS9NuUQIiB5E8ghemLa4XivbblIC4QSSP
+LxbmuHO/JVvv+81KQMwgkge3CEEoiOSBSBAKInkgEoSCSB6IBKEgkgciQSiI5IFIEAoieSBS
+vphv+ba+yFJEAiLli7YIP9UYiJQv2iL8VGMgUr5oi/BTjYFI+aItwk81BiLli7YIP9UYiJQv
+2iL8VGMgUr5oi/BTjYFI6ZL6daCfagxEShftRtbORwUipYt2I2vnowKR0kW7kbXzUYFI6aLd
+yNr5qECkdNFuZO18VCBSumg3snY+KhApXbQbWTsfFYiULtqNrJ2PCkRKF+1G1s5HBSKli3Yj
+a+ejApHSRbuRtfNRgUjpot3I2vmoQKR00W5k7XxUIFK6aDeydj4qECldtBtZOx8ViJQu2o38
+dV7596lEQaR0URch8bwoiJQu2o2Yel4UREoX7UZMPS8KIqWLdiOmnhcFkdJFuxFTz4uCSOmi
+3Yip50VBpHTRbsTU86IgUrpoN2LqeVEQKV20GzH1vCiIlC7ajZh6XhREShftRkw9LwoipYt2
+I6aeFwWR0kW7EVPPi4JI6aLdiKnnRUGkdNFuxNTzoiBSumg3Yup5URApXbQbMfW8KIiULtqN
+mHpeFERKF+1GTD0vCiKli3Yjpp4XBZHSRbsRU8+Lgkjpot2IqedFQaR00W7E1POiIFK6aDdi
+6nlRECldtBsx9bwoiJQu2o2Yel4UREoX7UZMPS8KIqWLdiOmnhcFkdJFuxFTz4sSPpjTvnYf
+CVA3p61KwEu0GzH1vCihgxlK7+M1qk1KwBu0GzH1vCihg2lMcezco74tTLNFCXiDdiOmnhcl
+dDCF6ZbHnSm2KAFv0G7E1POihA5m9XFprz87Larl/SW0GzH1vChskdJFuxFTz4vyxTFS27tH
+HCNpod2IqedFCR5M5Z21K4dNSsBrtBsx9bwoX1xHatx1pKLecx1JB+1GTD0vCnc2pIt2I6ae
+F2WjwRifbUqAdiOmnhfly8EcSmPqdtMS8AztRkw9L8p315EuZxxenrSLa3l/Ce1GTD0vylci
+NaYZzue+MYctSsAbtBsx9bwoX4lUGHfeezDlFiXgDdqNmHpelK9Ems8jcIuQCtqNmHpelK9E
+2s0icYuQBtqNmHpelHCR6v2hNcfx4dBwi5AK2o2Yel6UcJGWa0TGFNwipIF2I6aeFyV4MF13
+ONS1O+XQvPQoruX9JbQbMfW8KNwilC7ajZh6XhREShftRkw9LwoipYt2I6aeFwWR0kW7EVPP
+i4JI6aLdiKnnRUGkdNFuxNTzoiBSumg3Yup5URApXbQbMfW8KIiULtqNmHpeFERKF+1GTD0v
+CiKli3Yjpp4XBZHSRbsRU8+Lgkjpot2IqedFQaR00W7E1POiIFK6aDdi6nlRECldtBsx9bwo
+iJQu2o2Yel4UREoX7UZMPS8KIqWLdiOmnhcFkdJFuxFTz4uCSOmi3Yip50VBpHTRbsTU86Ig
+UrpoN2LqeVEQKV20GzH1vCiIlC7ajZh6XhREShftRkw9LwoipYt2I6aeFwWR0kW7EVPPi4JI
+6aLdiKnnRUGkdNFuxNTzoiBSumg3Yup5URApXbQbMfW8KIiULtqNmHpeFERKF+1GTD0vCiKl
+i3Yjpp4XBZHSRbsRU8+Lgkjpot2IqedFQaR00W7E1POiIFI4Rptvx595XhRECke7EchHBCKF
+o90I5CMCkcLRbgTyEYFI4Wg3AvmIQKRwtBuBfEQgUjjajUA+IhApHO1GIB8RiBSOdiOQjwhE
+Cke7EchHBCKFo90I5CMCkcLRbgTyEYFI4Wg3AvmIQKRwtBuBfEQgUjjajUA+IhApHO1GIB8R
+/mDKfb91iZ9CuxHIR4Q/GGPMFi5FtbySaDcC+YjwBzMcd1u4FNXySqLdCOQj4nYwp30p7VJU
+yyuJdiOQj4gHg+mKcbt02LTEb6DdCOQj4n4wbeX+sEa1YYkfQbsRyEfEzWCG/bg5KtthtKl+
+kzzta2dc3Zz+VOJ30G4E8hGxGszJnmxouumJ18McSu/PQr3eekW1vJJoNwL5iFhdRxo3Rodh
+fqJ4mWtMcZyM69vCNJ+W+Cm0G4F8RKyuI9Xtx7nCdMvj7rV0US2vJNqNQD4iVteR/pIzz755
+WeKn0G4E8hGxGszQ2E1L0XxgFFsk/UYgHxH+YPrCbVqMKd5fjx2PkdppKo6RyKeZF8UfTGV2
+dls0NG9PfbuJr5QvN2FRLa8k2o1APiIeHup89DkHp8ZdRyrqPdeRyKeYF8UfTGGmLcvw9QeG
+PC3xU2g3AvmI8AfTmMpuXE7V62Oej2Yr+DE+0aLdCOQjYjWY6qM7FW7n8G55olpeSbQbgXxE
+rAdztIc91d/u/EYk8mnmRQkdzB8+hDGq5ZVEuxHIR0ToYE4FImk3AvmICB7MUJvKXZFl1458
+mnlRVoPZl59sYWaOxhzPiEQ+1bwo/mD2fzxj3VemHhCJfKJ5UdYXZP/6lxr2pmgRiXyaeVEe
+3iL0OV35fvMV1fJKot0I5CPCH0xt/vIbSRd2iEQ+zbwo/mD6onpz/+nXJX4K7UYgHxHrXbtN
+bo+Lankl0W4E8hGBSOFoNwL5iPgPg4lqeSXRbgTyEYFI4Wg3AvmIWA+mre1eXS37cRRRLa8k
+2o1APiJWg6mmw6NP/vhJaIlfQrsRyEeEP5iDqdxvmR/MbqsSP4V2I5CPiPUtQpc75zhr9xHa
+jUA+Im5vEUKkz9FuBPIR4Q+mvGyROlNuVeKn0G4E8hHx4Bip/ftd4B+X+Cm0G4F8RKwGU4f8
+FaG/lfgltBuBfETcX0cy9XHLEj+EdiOQjwjubAhHuxHIRwQihaPdCOQjApHC0W4E8hGxvo7E
+r1H8Be1GIB8RiBSOdiOQj4gHgzlVH3zO2HclfgPtRiAfEY8GM3DT6kdoNwL5iHg4GHbtPkK7
+EchHxKPBHF5/SrlEiZ9AuxHIR8Tjkw37rUr8FNqNQD4iHolUit6zGtfySqLdCOQjgguy4Wg3
+AvmIQKRwtBuBfEQ8uSAreVE2quWVRLsRyEcEIoWj3QjkI2I1mH3Rnu3Hw/KLfR+h3QjkI8If
+zN507mtnRO8Rimp5JdFuBPIRsd61u30gXuKn0G4E8hHhD6ZYtkj8FaFP0G4E8hHhD6Yx7hiJ
+vyL0IdqNQD4iVoOpLufrmu1K/BLajUA+ItaDObq/ItRuWeKH0G4E8hHBnQ3haDcC+YhApHC0
+G4F8RKwHwweN/QXtRiAfEfcnG8580NiHaDcC+YjwB8MHjf0N7UYgHxHrC7J80Nhf0G4E8hFx
+e4sQIn2OdiOQjwh/MHzQ2N/QbgTyEfHgGIlbhD5EuxHIR8RqMHzQ2J/QbgTyEXF/HYkPGvsU
+7UYgHxHc2RCOdiOQjwh/MLXsXd+PSvwU2o1APiJuT39vXOKn0G4E8hFxe/p74xI/hXYjkI8I
+fzBDXZ02LvFTaDcC+YhY79rxiX1/QbsRyEcEIoWj3QjkI4LT3+FoNwL5iECkcLQbgXxEzIPZ
+6NS3X+Ln0G4E8hGxFmkTnaJaXkm0G4F8RISLdNpP97jWzZtz5lEtryTajUA+IkJFGkrvHN/r
+u8WjWl5JtBuBfESEitSY4jj9pfC+LV7/adaollcS7UYgHxGhIs1/cN/SmeKTEj+HdiOQj4hQ
+kVZTvo5FtbySaDcC+Yi4ivS3j71ki6TfCOQjIlQk+xEw05+R5BiJfJp5UYIHU3nalS9//SKq
+5ZVEuxHIR0T4YE6Nu45U1HuuI5FPMS8K99qFo90I5CNio8H87YArUbQbgXxEfDuYQ2HKN39O
+MqrllUS7EchHRPBgutoUh/OeW4TIp5oXJXQw3fSpzWY3nPv69Z84jmp5JdFuBPIRETqYnb12
+1ExXYofXf3Q/quWVRLsRyEdE6GAutxTV3jfSJaJHuxHIR8R3Ih2nfTpuESKfYF6U8F273Xw7
+w7DjFiHyCeZFCR3MUCz7c+b1Bimu5ZVEuxHIR0T4YJpZn+LN396Pankl0W4E8hHBLULhaDcC
++YhApHC0G4F8RCBSONqNQD4iECkc7UYgHxGIFI52I5CPCEQKR7sRyEcEIoWj3QjkIwKRwtFu
+BPIRgUjhaDcC+YhApHC0G4F8RCBSONqNQD4iECkc7UYgHxGIFI52I5CPCEQKR7sRyEcEIoWj
+3QjkIwKRwtFuBPIRgUjhaDcC+YhApHC0G4F8RCBSONqNQD4iECkc7UYgHxGIFI52I5CPCEQK
+R7sRyEcEIoWj3QjkIwKRwtFuBPIRgUjhaDcC+YhApHC0G4F8RCBSONqNQD4iECkc7UYgHxGI
+FI52I5CPCEQKR7sRyEcEIoWj3QjkIwKRwtFuBPIRgUjhaDcC+YhApHC0G4F8RCBSONqNQD4i
+ECkc7UYgHxGIFI52I5CPCEQKR7sRyEcEIoWj3QjkIwKRwtFuBPIRgUjhaDcC+YhApHC0G4F8
+RCBSONqNQD4iECkc7UYgHxGIFI52I5CPCEQKR7sRyEcEIoWj3QjkIwKRwtFuBPIRgUjhaDcC
++YhApHC0G4F8RCBSONqNQD4iECkc7UYgHxGIFI52I5CPCEQKR7sRyEdEziKZb/m2PnnVvChZ
+i0Q+67woiEQ+17woiEQ+17woiEQ+17woiEQ+17wo4YM57Wt36qpuTluV2BjtF5K8bl6U0MEM
+pXcauNqkxOZov5DkdfOihA6mMcWxc4/6tjDNFiU2R/uFJK+bFyV0MIXplsedKbYosTnaLyR5
+3bwooYNZXdZ/fY0/quX10X4hyevmRWGLRD7XvChfHCO1vXvEMRL5NPOiBA+m8s7alcMmJbZG
++4Ukr5sX5YvrSI27jlTUe64jkU8xLwp3NpDPNS/KRoOR/LWdzdB+Icnr5kUJHsywM6ZqLzPh
+9Df59PKiBN8iVEw32k0zQSTy6eVFCT/9fRhtOhTuNjtEIp9gXpTwC7LuS1+UPSKRTzIvyre3
+CA1VhUjkk8yLEjqY0swXYcsKkcinmBcldDAHs7s86k2FSOQTzIsSPJhmsad9c6koquX10X4h
+yevmRQkfTFfPj/odIpFPLy8KtwiRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUv
+CiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUv
+CiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUv
+CiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUv
+CiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUv
+CiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUvCiKRzzUv
+CiKRzzUvCiKRzzUvCiKRzzUvSsoimW/5tj75pPOiJC0SefKxgEjkc82Lgkjkc82Lgkjkc82L
+gkjkc82LEj6Y0752p77q5rRViTdovxDk086LEjqYofROI1eblHiL9gtBPu28KKGDaUxx7Nyj
+vi1Ms0WJt2i/EOTTzosSOpjCdMvjzhRblHiL9gtBPu28KKGDWd0W8PoeAUQiH2VeFLZI5HPN
+i/LFMVLbu0ccI5FPMy9K8GAq76xdOWxS4h3aLwT5tPOifHEdqXHXkYp6z3Uk8inmReHOBvK5
+5kXZaDCSv/bzvAh58rHAFol8rnlREIl8rnlREIl8rnlRwu9s+PgwCJHIR5kXJXQwB0Qin3he
+lODBdMXrX54QKLH1jMnnnRclfDDd6xuDJEpsPGPyeedF+WIwB+++1Y1KbDtj8nnnReGsHflc
+86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc
+86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc
+86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc
+86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc
+86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc
+86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc
+86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86IgEvlc86JoimS+ZauBkU8j
+r9w/68FIzuyPJdRfCPLkpUAk8uQFQCTy5AUIn9lpX7sdzbo5BZbQXhHkyYsROrOh9A7aqrAS
+2iuCPHkxQmfWmOLYuUd9W5gmqIT2iiBPXozQmRWmWx53pggqob0iyJMXI3Rmq5Pw92fkPzpd
+//V1AIBvCOz9x80cmPvDFgng9/niGKnt3aO3x0gAv0/w5q3yNpHlIDkkgPT44jpS464jFfX+
+zXUkgN8nqjtoAVIFkQAEQCQAARAJQABEAhAAkQAEQCQAARAJQABEAhAAkQAEQCQAARAJQABE
+AhAAkQAEQCQAARAJQABEAhAAkQAE0BRJ6Y8wAUyINrPkzBKqTX3qIxL1qR9bfUSiPvVjm1lC
+talPfUSiPvVjq49I1Kd+bDNLqDb1qY9I1Kd+bPURifrUj21mCdWmPvURifrUj60+IlGf+rHN
+DCBXEAlAAEQCEACRAARAJAABEAlAAEQCEACRAARAJAABEAlAAEQCEACRAARAJAABEAlAAEQC
+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
+SUVORK5CYII=" />
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+YII=" />
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+LKOJrpFCkDq8ZhlNdI0UgtThNctoomukEKQOr1lGE10jhSB1eM0ymugaKQSpw2uW0UTXSCFI
+HV6zjCa6RgpB6vCaZTTRNVIIUofXLKOJrpFCkDq8ZhlNdI0UgtThNctoomukEKQOr1lGE10j
+hSB1eM0ymugaKQSpw2uW0UTXSCFIHV6zjCa6RgpB6vCaZTTRNVIIUofXLKOJrpFCkDq8ZhlN
+dI0UgtThNctoomukEKQOr1lGE10jhSB1eM0ymugaKb8QpCBCVA2aL9FI+YkgoUEzNQQJTa4a
+KQQJTa4aKQQJTa4aKQQJTa4aKQQJTa4aKe/XtFstmpPGi3IXa4gn8ZoeNN+ikfJuTdWsdwFm
+HmWIp/GaHjTfopHybk1lKDb75tFhW4QyxhBP4zU9aL5FI+Xdmoqw7x7vQxFjiKfxmh4036KR
+8m5Ngxtq/r67hiChsdRIYYuEJleNlA+OkbaH5hHHSGi+UyPl7ZrmvbN2syrKEM/iNT1ovkUj
+5YPrSGVzHalYrLiOhOYbNVK4swFNrhopkWqK8AtzfwyGBs3UvF1TtQxhvj1LOP2N5vs0Ut6+
+Rahob7RrJQQJzfdppLx/+nt9StO6aG6zI0hovlAj5f0Lss2HQzE7ECQ0X6mR8uktQtV8TpDQ
+fKVGyrs1zcLlIuxsTpDQfKNGyrs1rcPy/OgQ5gQJzRdqpLxdU9mlZ/ufS0UECY2lRsr7Ne0X
+l0eHJUFC830aKdwihCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSC
+hCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSC
+hCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSC
+hCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSC
+hCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSC
+hCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSC
+hCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSChCZXjRSC
+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" />
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It looks like you have sufficiently tidied your data!</p>
+<h1 id="Finishing-touches">Finishing touches<a class="anchor-link" href="#Finishing-touches"> </a></h1><p>Before officially calling our weather data clean, we want to put a couple of finishing touches on the data. These are a bit more subjective and may not be necessary for analysis, but they will make the data easier for others to interpret, which is generally a good thing.</p>
+<p>There are a number of stylistic conventions in the R language. Depending on who you ask, these conventions may vary. Because the period (<code>.</code>) has special meaning in certain situations, we will be using underscores (<code>_</code>) to separate words in variable names. We also prefer all lowercase letters so that no one has to remember which letters are uppercase or lowercase.</p>
+<p>Finally, the <code>events</code> column (renamed to be all lowercase in the first instruction) contains an empty string ("") for any day on which there was no significant weather event such as rain, fog, a thunderstorm, etc. However, if it's the first time you're seeing these data, it may not be obvious that this is the case, so it's best for us to be explicit and replace the empty strings with something more meaningful.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">new_colnames</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">&quot;date&quot;</span><span class="p">,</span> <span class="s2">&quot;events&quot;</span><span class="p">,</span> 
+                 <span class="s2">&quot;cloud_cover&quot;</span><span class="p">,</span> <span class="s2">&quot;max_dew_point_f&quot;</span><span class="p">,</span> 
+                 <span class="s2">&quot;max_gust_speed_mph&quot;</span><span class="p">,</span> <span class="s2">&quot;max_humidity&quot;</span><span class="p">,</span> 
+                 <span class="s2">&quot;max_sea_level_pressure_in&quot;</span><span class="p">,</span> <span class="s2">&quot;max_temperature_f&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;max_visibility_miles&quot;</span><span class="p">,</span> <span class="s2">&quot;max_wind_speed_mph&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;mean_humidity&quot;</span><span class="p">,</span> <span class="s2">&quot;mean_sea_level_pressure_in&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;mean_temperature_f&quot;</span><span class="p">,</span> <span class="s2">&quot;mean_visibility_miles&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;mean_wind_speed_mph&quot;</span><span class="p">,</span> <span class="s2">&quot;mean_dew_point_f&quot;</span><span class="p">,</span> 
+                 <span class="s2">&quot;min_dew_point_f&quot;</span><span class="p">,</span> <span class="s2">&quot;min_humidity&quot;</span><span class="p">,</span> 
+                 <span class="s2">&quot;min_sea_level_pressure_in&quot;</span><span class="p">,</span> <span class="s2">&quot;min_temperature_f&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;min_visibility_miles&quot;</span><span class="p">,</span> <span class="s2">&quot;precipitation_in&quot;</span><span class="p">,</span><span class="s2">&quot;wind_dir_degrees&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Clean up column names</span>
+<span class="n">names</span><span class="p">(</span><span class="n">weather6</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">new_colnames</span>
+
+<span class="c1"># Replace empty cells in events column</span>
+<span class="n">weather6</span><span class="err">$</span><span class="n">events</span><span class="p">[</span><span class="n">weather6</span><span class="err">$</span><span class="n">events</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="s2">&quot;None&quot;</span>
+    
+<span class="c1"># Print the first 6 rows of weather6</span>
+<span class="n">head</span><span class="p">(</span><span class="n">weather6</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th scope="col">date</th><th scope="col">events</th><th scope="col">cloud_cover</th><th scope="col">max_dew_point_f</th><th scope="col">max_gust_speed_mph</th><th scope="col">max_humidity</th><th scope="col">max_sea_level_pressure_in</th><th scope="col">max_temperature_f</th><th scope="col">max_visibility_miles</th><th scope="col">max_wind_speed_mph</th><th scope="col">...</th><th scope="col">mean_visibility_miles</th><th scope="col">mean_wind_speed_mph</th><th scope="col">mean_dew_point_f</th><th scope="col">min_dew_point_f</th><th scope="col">min_humidity</th><th scope="col">min_sea_level_pressure_in</th><th scope="col">min_temperature_f</th><th scope="col">min_visibility_miles</th><th scope="col">precipitation_in</th><th scope="col">wind_dir_degrees</th></tr></thead>
+<tbody>
+	<tr><td>2014-12-01</td><td>Rain      </td><td>6         </td><td>46        </td><td>29        </td><td> 74       </td><td>30.45     </td><td>64        </td><td>10        </td><td>22        </td><td>...       </td><td>10        </td><td>13        </td><td>40        </td><td>26        </td><td>52        </td><td>30.01     </td><td>39        </td><td>10        </td><td>0.01      </td><td>268       </td></tr>
+	<tr><td>2014-12-10</td><td>Rain      </td><td>8         </td><td>45        </td><td>29        </td><td>100       </td><td>29.58     </td><td>48        </td><td>10        </td><td>23        </td><td>...       </td><td> 3        </td><td>13        </td><td>39        </td><td>37        </td><td>89        </td><td>29.43     </td><td>38        </td><td> 1        </td><td>0.28      </td><td>357       </td></tr>
+	<tr><td>2014-12-11</td><td>Rain-Snow </td><td>8         </td><td>37        </td><td>28        </td><td> 92       </td><td>29.81     </td><td>39        </td><td>10        </td><td>21        </td><td>...       </td><td> 7        </td><td>13        </td><td>31        </td><td>27        </td><td>82        </td><td>29.44     </td><td>32        </td><td> 1        </td><td>0.02      </td><td>230       </td></tr>
+	<tr><td>2014-12-12</td><td>Snow      </td><td>7         </td><td>28        </td><td>21        </td><td> 85       </td><td>29.88     </td><td>39        </td><td>10        </td><td>16        </td><td>...       </td><td>10        </td><td>11        </td><td>27        </td><td>25        </td><td>64        </td><td>29.81     </td><td>31        </td><td> 7        </td><td>0.00      </td><td>286       </td></tr>
+	<tr><td>2014-12-13</td><td>None      </td><td>5         </td><td>28        </td><td>23        </td><td> 75       </td><td>29.86     </td><td>42        </td><td>10        </td><td>17        </td><td>...       </td><td>10        </td><td>12        </td><td>26        </td><td>24        </td><td>55        </td><td>29.78     </td><td>32        </td><td>10        </td><td>0.00      </td><td>298       </td></tr>
+	<tr><td>2014-12-14</td><td>None      </td><td>4         </td><td>29        </td><td>20        </td><td> 82       </td><td>29.91     </td><td>45        </td><td>10        </td><td>15        </td><td>...       </td><td>10        </td><td>10        </td><td>27        </td><td>25        </td><td>53        </td><td>29.78     </td><td>33        </td><td>10        </td><td>0.00      </td><td>306       </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tail</span><span class="p">(</span><span class="n">weather6</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<table>
+<thead><tr><th></th><th scope="col">date</th><th scope="col">events</th><th scope="col">cloud_cover</th><th scope="col">max_dew_point_f</th><th scope="col">max_gust_speed_mph</th><th scope="col">max_humidity</th><th scope="col">max_sea_level_pressure_in</th><th scope="col">max_temperature_f</th><th scope="col">max_visibility_miles</th><th scope="col">max_wind_speed_mph</th><th scope="col">...</th><th scope="col">mean_visibility_miles</th><th scope="col">mean_wind_speed_mph</th><th scope="col">mean_dew_point_f</th><th scope="col">min_dew_point_f</th><th scope="col">min_humidity</th><th scope="col">min_sea_level_pressure_in</th><th scope="col">min_temperature_f</th><th scope="col">min_visibility_miles</th><th scope="col">precipitation_in</th><th scope="col">wind_dir_degrees</th></tr></thead>
+<tbody>
+	<tr><th scope="row">361</th><td>2015-11-05</td><td>None      </td><td>4         </td><td>61        </td><td>31        </td><td>100       </td><td>30.30     </td><td>76        </td><td>10        </td><td>22        </td><td>...       </td><td> 9        </td><td>12        </td><td>55        </td><td>48        </td><td>53        </td><td>30.09     </td><td>50        </td><td> 5        </td><td>0.00      </td><td>224       </td></tr>
+	<tr><th scope="row">362</th><td>2015-11-06</td><td>None      </td><td>4         </td><td>62        </td><td>32        </td><td> 93       </td><td>30.07     </td><td>73        </td><td>10        </td><td>26        </td><td>...       </td><td>10        </td><td>15        </td><td>61        </td><td>54        </td><td>64        </td><td>29.71     </td><td>62        </td><td>10        </td><td>0.00      </td><td>222       </td></tr>
+	<tr><th scope="row">363</th><td>2015-11-07</td><td>None      </td><td>6         </td><td>45        </td><td>33        </td><td> 57       </td><td>30.02     </td><td>69        </td><td>10        </td><td>25        </td><td>...       </td><td>10        </td><td>13        </td><td>38        </td><td>33        </td><td>39        </td><td>29.83     </td><td>50        </td><td>10        </td><td>0.00      </td><td>280       </td></tr>
+	<tr><th scope="row">364</th><td>2015-11-08</td><td>None      </td><td>0         </td><td>34        </td><td>25        </td><td> 65       </td><td>30.38     </td><td>56        </td><td>10        </td><td>18        </td><td>...       </td><td>10        </td><td>12        </td><td>30        </td><td>24        </td><td>30        </td><td>30.04     </td><td>44        </td><td>10        </td><td>0.00      </td><td>283       </td></tr>
+	<tr><th scope="row">365</th><td>2015-11-09</td><td>None      </td><td>2         </td><td>36        </td><td>20        </td><td> 70       </td><td>30.43     </td><td>60        </td><td>10        </td><td>16        </td><td>...       </td><td>10        </td><td> 9        </td><td>32        </td><td>30        </td><td>33        </td><td>30.32     </td><td>41        </td><td>10        </td><td>0.00      </td><td>237       </td></tr>
+	<tr><th scope="row">366</th><td>2015-12-01</td><td>Rain      </td><td>7         </td><td>43        </td><td>17        </td><td> 96       </td><td>30.40     </td><td>45        </td><td>10        </td><td>15        </td><td>...       </td><td> 8        </td><td> 6        </td><td>35        </td><td>25        </td><td>69        </td><td>30.01     </td><td>32        </td><td> 1        </td><td>0.14      </td><td>109       </td></tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">str</span><span class="p">(</span><span class="n">weather6</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&#39;data.frame&#39;:	366 obs. of  23 variables:
+ $ date                      : Date, format: &#34;2014-12-01&#34; &#34;2014-12-10&#34; ...
+ $ events                    : chr  &#34;Rain&#34; &#34;Rain&#34; &#34;Rain-Snow&#34; &#34;Snow&#34; ...
+ $ cloud_cover               : num  6 8 8 7 5 4 2 8 8 7 ...
+ $ max_dew_point_f           : num  46 45 37 28 28 29 33 42 46 34 ...
+ $ max_gust_speed_mph        : num  29 29 28 21 23 20 21 10 26 30 ...
+ $ max_humidity              : num  74 100 92 85 75 82 89 96 100 89 ...
+ $ max_sea_level_pressure_in : num  30.4 29.6 29.8 29.9 29.9 ...
+ $ max_temperature_f         : num  64 48 39 39 42 45 42 44 49 44 ...
+ $ max_visibility_miles      : num  10 10 10 10 10 10 10 10 10 10 ...
+ $ max_wind_speed_mph        : num  22 23 21 16 17 15 15 8 20 23 ...
+ $ mean_humidity             : num  63 95 87 75 65 68 75 85 85 73 ...
+ $ mean_sea_level_pressure_in: num  30.1 29.5 29.6 29.9 29.8 ...
+ $ mean_temperature_f        : num  52 43 36 35 37 39 37 40 45 40 ...
+ $ mean_visibility_miles     : num  10 3 7 10 10 10 10 9 6 10 ...
+ $ mean_wind_speed_mph       : num  13 13 13 11 12 10 6 4 11 14 ...
+ $ mean_dew_point_f          : num  40 39 31 27 26 27 29 36 41 30 ...
+ $ min_dew_point_f           : num  26 37 27 25 24 25 27 30 32 26 ...
+ $ min_humidity              : num  52 89 82 64 55 53 60 73 70 57 ...
+ $ min_sea_level_pressure_in : num  30 29.4 29.4 29.8 29.8 ...
+ $ min_temperature_f         : num  39 38 32 31 32 33 32 35 41 36 ...
+ $ min_visibility_miles      : num  10 1 1 7 10 10 10 5 1 10 ...
+ $ precipitation_in          : num  0.01 0.28 0.02 0 0 0 0 0 0.43 0.01 ...
+ $ wind_dir_degrees          : num  268 357 230 286 298 306 324 79 311 281 ...
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">glimpse</span><span class="p">(</span><span class="n">weather6</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Rows: 366
+Columns: 23
+$ date                       &lt;date&gt; 2014-12-01, 2014-12-10, 2014-12-11, 201...
+$ events                     &lt;chr&gt; &#34;Rain&#34;, &#34;Rain&#34;, &#34;Rain-Snow&#34;, &#34;Snow&#34;, &#34;No...
+$ cloud_cover                &lt;dbl&gt; 6, 8, 8, 7, 5, 4, 2, 8, 8, 7, 4, 7, 6, 8...
+$ max_dew_point_f            &lt;dbl&gt; 46, 45, 37, 28, 28, 29, 33, 42, 46, 34, ...
+$ max_gust_speed_mph         &lt;dbl&gt; 29, 29, 28, 21, 23, 20, 21, 10, 26, 30, ...
+$ max_humidity               &lt;dbl&gt; 74, 100, 92, 85, 75, 82, 89, 96, 100, 89...
+$ max_sea_level_pressure_in  &lt;dbl&gt; 30.45, 29.58, 29.81, 29.88, 29.86, 29.91...
+$ max_temperature_f          &lt;dbl&gt; 64, 48, 39, 39, 42, 45, 42, 44, 49, 44, ...
+$ max_visibility_miles       &lt;dbl&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, ...
+$ max_wind_speed_mph         &lt;dbl&gt; 22, 23, 21, 16, 17, 15, 15, 8, 20, 23, 1...
+$ mean_humidity              &lt;dbl&gt; 63, 95, 87, 75, 65, 68, 75, 85, 85, 73, ...
+$ mean_sea_level_pressure_in &lt;dbl&gt; 30.13, 29.50, 29.61, 29.85, 29.82, 29.83...
+$ mean_temperature_f         &lt;dbl&gt; 52, 43, 36, 35, 37, 39, 37, 40, 45, 40, ...
+$ mean_visibility_miles      &lt;dbl&gt; 10, 3, 7, 10, 10, 10, 10, 9, 6, 10, 10, ...
+$ mean_wind_speed_mph        &lt;dbl&gt; 13, 13, 13, 11, 12, 10, 6, 4, 11, 14, 11...
+$ mean_dew_point_f           &lt;dbl&gt; 40, 39, 31, 27, 26, 27, 29, 36, 41, 30, ...
+$ min_dew_point_f            &lt;dbl&gt; 26, 37, 27, 25, 24, 25, 27, 30, 32, 26, ...
+$ min_humidity               &lt;dbl&gt; 52, 89, 82, 64, 55, 53, 60, 73, 70, 57, ...
+$ min_sea_level_pressure_in  &lt;dbl&gt; 30.01, 29.43, 29.44, 29.81, 29.78, 29.78...
+$ min_temperature_f          &lt;dbl&gt; 39, 38, 32, 31, 32, 33, 32, 35, 41, 36, ...
+$ min_visibility_miles       &lt;dbl&gt; 10, 1, 1, 7, 10, 10, 10, 5, 1, 10, 10, 2...
+$ precipitation_in           &lt;dbl&gt; 0.01, 0.28, 0.02, 0.00, 0.00, 0.00, 0.00...
+$ wind_dir_degrees           &lt;dbl&gt; 268, 357, 230, 286, 298, 306, 324, 79, 3...
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">summary</span><span class="p">(</span><span class="n">weather6</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>      date               events           cloud_cover    max_dew_point_f
+ Min.   :2014-12-01   Length:366         Min.   :0.000   Min.   :-6.00  
+ 1st Qu.:2015-03-02   Class :character   1st Qu.:3.000   1st Qu.:32.00  
+ Median :2015-06-01   Mode  :character   Median :5.000   Median :47.50  
+ Mean   :2015-06-01                      Mean   :4.708   Mean   :45.48  
+ 3rd Qu.:2015-08-31                      3rd Qu.:7.000   3rd Qu.:61.00  
+ Max.   :2015-12-01                      Max.   :8.000   Max.   :75.00  
+                                                                        
+ max_gust_speed_mph  max_humidity    max_sea_level_pressure_in
+ Min.   : 0.00      Min.   : 39.00   Min.   :29.58            
+ 1st Qu.:21.00      1st Qu.: 73.25   1st Qu.:30.00            
+ Median :25.50      Median : 86.00   Median :30.14            
+ Mean   :26.99      Mean   : 83.23   Mean   :30.16            
+ 3rd Qu.:31.25      3rd Qu.: 93.00   3rd Qu.:30.31            
+ Max.   :94.00      Max.   :100.00   Max.   :30.88            
+ NA&#39;s   :6                                                    
+ max_temperature_f max_visibility_miles max_wind_speed_mph mean_humidity  
+ Min.   :18.00     Min.   : 2.000       Min.   : 8.00      Min.   :28.00  
+ 1st Qu.:42.00     1st Qu.:10.000       1st Qu.:16.00      1st Qu.:56.00  
+ Median :60.00     Median :10.000       Median :20.00      Median :66.00  
+ Mean   :58.93     Mean   : 9.907       Mean   :20.62      Mean   :66.02  
+ 3rd Qu.:76.00     3rd Qu.:10.000       3rd Qu.:24.00      3rd Qu.:76.75  
+ Max.   :96.00     Max.   :10.000       Max.   :38.00      Max.   :98.00  
+                                                                          
+ mean_sea_level_pressure_in mean_temperature_f mean_visibility_miles
+ Min.   :29.49              Min.   : 8.00      Min.   : 1.000       
+ 1st Qu.:29.87              1st Qu.:36.25      1st Qu.: 8.000       
+ Median :30.03              Median :53.50      Median :10.000       
+ Mean   :30.04              Mean   :51.40      Mean   : 8.891       
+ 3rd Qu.:30.19              3rd Qu.:68.00      3rd Qu.:10.000       
+ Max.   :30.77              Max.   :84.00      Max.   :10.000       
+                                                                    
+ mean_wind_speed_mph mean_dew_point_f min_dew_point_f   min_humidity  
+ Min.   : 4.00       Min.   :-11.00   Min.   :-18.00   Min.   :16.00  
+ 1st Qu.: 8.00       1st Qu.: 24.00   1st Qu.: 16.25   1st Qu.:35.00  
+ Median :10.00       Median : 41.00   Median : 35.00   Median :46.00  
+ Mean   :10.68       Mean   : 38.96   Mean   : 32.25   Mean   :48.31  
+ 3rd Qu.:13.00       3rd Qu.: 56.00   3rd Qu.: 51.00   3rd Qu.:60.00  
+ Max.   :22.00       Max.   : 71.00   Max.   : 68.00   Max.   :96.00  
+                                                                      
+ min_sea_level_pressure_in min_temperature_f min_visibility_miles
+ Min.   :29.16             Min.   :-3.00     Min.   : 0.000      
+ 1st Qu.:29.76             1st Qu.:30.00     1st Qu.: 2.000      
+ Median :29.94             Median :46.00     Median :10.000      
+ Mean   :29.93             Mean   :43.33     Mean   : 6.716      
+ 3rd Qu.:30.09             3rd Qu.:60.00     3rd Qu.:10.000      
+ Max.   :30.64             Max.   :74.00     Max.   :10.000      
+                                                                 
+ precipitation_in wind_dir_degrees
+ Min.   :0.0000   Min.   :  1.0   
+ 1st Qu.:0.0000   1st Qu.:113.0   
+ Median :0.0000   Median :222.0   
+ Mean   :0.1016   Mean   :200.1   
+ 3rd Qu.:0.0400   3rd Qu.:275.0   
+ Max.   :2.9000   Max.   :360.0   
+                                  </pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><a class="u-url" href="/blog/2020/06/18/Exploring-Boston-Weather-Data.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>I created this blog so that I can add all that I am working on, sharing tips and anything that I feel might be of impact to my fellow developers.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" title="fastai"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
