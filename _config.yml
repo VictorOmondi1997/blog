@@ -7,7 +7,7 @@
 # https://learnxinyminutes.com/docs/yaml/
 
 title: Victor Omondi | Blog
-description: I created this blog so that I can add all that I am working on, sharing tips and anything that I feel might be of impact to my fellow developers.
+description: Thank you for stoping by and reading my articles. I created this blog in order to share knowledge and impact others, you too can contribute. Enjoy reading.
 github_username: VictorOmondi1997
 # you can comment the below line out if your repo name is not different than your baseurl
 github_repo: "blog"
@@ -39,8 +39,8 @@ baseurl: "/blog" # the subpath of your site, e.g. "/blog".
 # Github and twitter are optional:
 minima:
   social_links:
-    twitter: fastdotai
-    github: fastai
+    twitter: VictorOmondi197
+    github: VictorOmondi1997
 
 # Set this to true to get LaTeX math equation support
 use_math: true
@@ -49,7 +49,7 @@ use_math: true
 show_description: true
 
 # Set this to true to display image previews on home page, if they exist
-show_image: false
+show_image: true
 
 # Set this to true to display tags on each post
 show_tags: true
