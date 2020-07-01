@@ -39,8 +39,24 @@ baseurl: "/blog" # the subpath of your site, e.g. "/blog".
 # Github and twitter are optional:
 minima:
   social_links:
-    twitter: VictorOmondi197
-    github: VictorOmondi1997
+    twitter: "VictorOmondi197"
+    github: "VictorOmondi1997"
+    stackoverflow: "9713351"
+    dribbble: "VictorOmondi1997"
+    facebook: "VictorOmondi1997"
+    flickr: "victoromondi1997"
+    instagram: "victoromondi1997"
+    linkedin: "victoromondi1997"
+    pinterest: "victoromondi1997"
+    telegram: "victoromondi1997"
+    telegram: "VickTheGeek"
+    microdotblog: "VictorOmondi1997"
+    keybase: "VictorOmondi1997"
+    mastodon:
+     - username: "VictorOmondi1997"
+       instance: freeradical.zone
+    youtube_channel: UCwk-x5YuGrNBNGZNpb1CX3Q
+    youtube_channel_name: "VICTOR OMONDI"
 
 # Set this to true to get LaTeX math equation support
 use_math: true
