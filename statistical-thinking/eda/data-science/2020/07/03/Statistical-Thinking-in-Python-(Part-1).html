@@ -2072,10 +2072,12 @@ Given this extra efficiency, we will take $10,000$ samples instead of $1000$. Af
 <h3 id="Plotting-the-Binomial-PMF">
 <a class="anchor" href="#Plotting-the-Binomial-PMF" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plotting the Binomial PMF<a class="anchor-link" href="#Plotting-the-Binomial-PMF"> </a>
 </h3>
-<blockquote>
-<p>Warn:plotting a nice looking PMF requires a bit of matplotlib trickery that we will not go into here.
-we will plot the PMF of the Binomial distribution as a histogram. The trick is setting up the edges of the <code>bins</code> to pass to <code>plt.hist()</code> via the <code>bins</code> keyword argument. We want the bins centered on the integers. So, the edges of the bins should be $-0.5, 0.5, 1.5, 2.5, ...$ up to <code>max(n_defaults) + 1.5</code>. We can generate an array like this using <code>np.arange()</code>and then subtracting <code>0.5</code> from the array.</p>
-</blockquote>
+<p></p>
+<div class="flash flash-error">
+    <svg class="octicon octicon-alert octicon octicon-alert octicon octicon-alert octicon octicon-alert octicon octicon-alert" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg>
+    <strong>Warning: </strong>plotting a nice looking PMF requires a bit of matplotlib trickery that we will not go into here.
+</div>
+we will plot the PMF of the Binomial distribution as a histogram. The trick is setting up the edges of the <code>bins</code> to pass to <code>plt.hist()</code> via the <code>bins</code> keyword argument. We want the bins centered on the integers. So, the edges of the bins should be $-0.5, 0.5, 1.5, 2.5, ...$ up to <code>max(n_defaults) + 1.5</code>. We can generate an array like this using <code>np.arange()</code>and then subtracting <code>0.5</code> from the array.
 
 </div>
 </div>
