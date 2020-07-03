@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Write Markdown and LaTeX Math Equation in The Jupyter Notebook | Victor Omondi Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Write Markdown and LaTeX Math Equation in The Jupyter Notebook" />
+<meta name="author" content="Victor Omondi" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="How to write Markdown and Latex in Jupyter notebook Read this article for more details." />
+<meta property="og:description" content="How to write Markdown and Latex in Jupyter notebook Read this article for more details." />
+<link rel="canonical" href="https://victoromondi1997.github.io/blog/latex/markdown/2020/07/02/_07_03_Markdown_LaTeX_Medium.html" />
+<meta property="og:url" content="https://victoromondi1997.github.io/blog/latex/markdown/2020/07/02/_07_03_Markdown_LaTeX_Medium.html" />
+<meta property="og:site_name" content="Victor Omondi Blog" />
+<meta property="og:image" content="https://victoromondi1997.github.io/blog/images/logo.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-07-02T00:00:00-05:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Victor Omondi"},"description":"How to write Markdown and Latex in Jupyter notebook Read this article for more details.","@type":"BlogPosting","headline":"Write Markdown and LaTeX Math Equation in The Jupyter Notebook","dateModified":"2020-07-02T00:00:00-05:00","datePublished":"2020-07-02T00:00:00-05:00","image":"https://victoromondi1997.github.io/blog/images/logo.png","url":"https://victoromondi1997.github.io/blog/latex/markdown/2020/07/02/_07_03_Markdown_LaTeX_Medium.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://victoromondi1997.github.io/blog/latex/markdown/2020/07/02/_07_03_Markdown_LaTeX_Medium.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://victoromondi1997.github.io/blog/feed.xml" title="Victor Omondi | Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-170138117-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Write Markdown and LaTeX Math Equation in The Jupyter Notebook | Victor Omondi Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Write Markdown and LaTeX Math Equation in The Jupyter Notebook" />
+<meta name="author" content="Victor Omondi" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="How to write Markdown and Latex in Jupyter notebook Read this article for more details." />
+<meta property="og:description" content="How to write Markdown and Latex in Jupyter notebook Read this article for more details." />
+<link rel="canonical" href="https://victoromondi1997.github.io/blog/latex/markdown/2020/07/02/_07_03_Markdown_LaTeX_Medium.html" />
+<meta property="og:url" content="https://victoromondi1997.github.io/blog/latex/markdown/2020/07/02/_07_03_Markdown_LaTeX_Medium.html" />
+<meta property="og:site_name" content="Victor Omondi Blog" />
+<meta property="og:image" content="https://victoromondi1997.github.io/blog/images/logo.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-07-02T00:00:00-05:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Victor Omondi"},"description":"How to write Markdown and Latex in Jupyter notebook Read this article for more details.","@type":"BlogPosting","headline":"Write Markdown and LaTeX Math Equation in The Jupyter Notebook","dateModified":"2020-07-02T00:00:00-05:00","datePublished":"2020-07-02T00:00:00-05:00","image":"https://victoromondi1997.github.io/blog/images/logo.png","url":"https://victoromondi1997.github.io/blog/latex/markdown/2020/07/02/_07_03_Markdown_LaTeX_Medium.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://victoromondi1997.github.io/blog/latex/markdown/2020/07/02/_07_03_Markdown_LaTeX_Medium.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://victoromondi1997.github.io/blog/feed.xml" title="Victor Omondi | Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-170138117-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Victor Omondi | Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Write Markdown and LaTeX Math Equation in The Jupyter Notebook</h1><p class="page-description">How to write Markdown and Latex in Jupyter notebook <a href='https://towardsdatascience.com/write-markdown-latex-in-the-jupyter-notebook-10985edb91fd "Medium"'>Read this article for more details.</a></p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-07-02T00:00:00-05:00" itemprop="datePublished">
+        Jul 2, 2020
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Victor Omondi</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      6 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#latex">latex</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#markdown">markdown</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/VictorOmondi1997/blog/tree/master/_notebooks/2020_07_03_Markdown_LaTeX_Medium.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/VictorOmondi1997/blog/master?filepath=_notebooks%2F2020_07_03_Markdown_LaTeX_Medium.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/VictorOmondi1997/blog/blob/master/_notebooks/2020_07_03_Markdown_LaTeX_Medium.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Markdown">Markdown </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Headings">Headings </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Heading-1">Heading 1 </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Heading-2">Heading 2 </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Heading-3">Heading 3 </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Heading-4">Heading 4 </a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#Heading-5">Heading 5 </a>
+<ul>
+<li class="toc-entry toc-h6"><a href="#Heading-6">Heading 6 </a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Paragraph">Paragraph </a></li>
+<li class="toc-entry toc-h2"><a href="#Line-breaks">Line breaks </a></li>
+<li class="toc-entry toc-h2"><a href="#Mark-emphasis">Mark emphasis </a></li>
+<li class="toc-entry toc-h2"><a href="#Lists">Lists </a></li>
+<li class="toc-entry toc-h2"><a href="#Links-and Images">Links and Images </a></li>
+<li class="toc-entry toc-h2"><a href="#Horizontal-Rule">Horizontal Rule </a></li>
+<li class="toc-entry toc-h2"><a href="#Table">Table </a></li>
+<li class="toc-entry toc-h2"><a href="#Code-and-Syntax-Highlighting">Code and Syntax Highlighting </a></li>
+<li class="toc-entry toc-h2"><a href="#Blockquotes">Blockquotes </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#LaTeX">LaTeX </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Important-Note">Important Note </a></li>
+<li class="toc-entry toc-h2"><a href="#Greek-Letters:">Greek Letters: </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Important-Note:">Important Note: </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Roman-Names:">Roman Names: </a></li>
+<li class="toc-entry toc-h1"><a href="#Other-Symbols">Other Symbols </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Angles:">Angles: </a></li>
+<li class="toc-entry toc-h2"><a href="#Sets-and logic">Sets and logic </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Vertical-curly braces:">Vertical curly braces: </a></li>
+<li class="toc-entry toc-h1"><a href="#Horizontal-curly braces-$\underbrace{}$">Horizontal curly braces $\underbrace{}$ </a></li>
+<li class="toc-entry toc-h1"><a href="#Horizontal-curly braces-$\underbrace{}$">Horizontal curly braces $\underbrace{}$ </a></li>
+<li class="toc-entry toc-h1"><a href="#Derivate">Derivate </a></li>
+<li class="toc-entry toc-h1"><a href="#Limit-$\lim$">Limit $\lim$ </a></li>
+<li class="toc-entry toc-h1"><a href="#Limit-$\lim$">Limit $\lim$ </a></li>
+<li class="toc-entry toc-h1"><a href="#Sum-$\sum$">Sum $\sum$ </a></li>
+<li class="toc-entry toc-h1"><a href="#Sum-$\sum$">Sum $\sum$ </a></li>
+<li class="toc-entry toc-h1"><a href="#Product-$\prod$">Product $\prod$ </a></li>
+<li class="toc-entry toc-h1"><a href="#Product-$\prod$">Product $\prod$ </a></li>
+<li class="toc-entry toc-h1"><a href="#Integral-:-$\int$">Integral : $\int$ </a></li>
+<li class="toc-entry toc-h1"><a href="#Integral-:-$\int$">Integral : $\int$ </a></li>
+<li class="toc-entry toc-h1"><a href="#Matrix">Matrix </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020_07_03_Markdown_LaTeX_Medium.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Markdown">
+<a class="anchor" href="#Markdown" aria-hidden="true"><span class="octicon octicon-link"></span></a>Markdown<a class="anchor-link" href="#Markdown"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Headings">
+<a class="anchor" href="#Headings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Headings<a class="anchor-link" href="#Headings"> </a>
+</h2>
+<div class="highlight"><pre><span></span><span class="c1"># Heading 1</span>
+<span class="c1">## Heading 2</span>
+<span class="c1">### Heading 3</span>
+<span class="c1">#### Heading 4</span>
+<span class="c1">##### Heading 5</span>
+<span class="c1">###### Heading 6</span>
+</pre></div>
+<h1 id="Heading-1">
+<a class="anchor" href="#Heading-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Heading 1<a class="anchor-link" href="#Heading-1"> </a>
+</h1>
+<h2 id="Heading-2">
+<a class="anchor" href="#Heading-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Heading 2<a class="anchor-link" href="#Heading-2"> </a>
+</h2>
+<h3 id="Heading-3">
+<a class="anchor" href="#Heading-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Heading 3<a class="anchor-link" href="#Heading-3"> </a>
+</h3>
+<h4 id="Heading-4">
+<a class="anchor" href="#Heading-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Heading 4<a class="anchor-link" href="#Heading-4"> </a>
+</h4>
+<h5 id="Heading-5">
+<a class="anchor" href="#Heading-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Heading 5<a class="anchor-link" href="#Heading-5"> </a>
+</h5>
+<h6 id="Heading-6">
+<a class="anchor" href="#Heading-6" aria-hidden="true"><span class="octicon octicon-link"></span></a>Heading 6<a class="anchor-link" href="#Heading-6"> </a>
+</h6>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Paragraph">
+<a class="anchor" href="#Paragraph" aria-hidden="true"><span class="octicon octicon-link"></span></a>Paragraph<a class="anchor-link" href="#Paragraph"> </a>
+</h2>
+<div class="highlight"><pre><span></span><span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">paragraph</span> <span class="n">of</span> <span class="n">text</span><span class="o">.</span>   
+
+<span class="n">This</span> <span class="ow">is</span> <span class="n">another</span> <span class="n">paragraph</span> <span class="n">of</span> <span class="n">text</span><span class="o">.</span>
+</pre></div>
+<p>This is a paragraph of text.</p>
+<p>This is another paragraph of text.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Line-breaks">
+<a class="anchor" href="#Line-breaks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Line breaks<a class="anchor-link" href="#Line-breaks"> </a>
+</h2>
+<div class="highlight"><pre><span></span><span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">text</span><span class="o">.</span>     
+<span class="n">This</span> <span class="ow">is</span> <span class="n">another</span> <span class="n">text</span><span class="o">.</span>
+</pre></div>
+<p>This is a text.<br>
+This is another text.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Mark-emphasis">
+<a class="anchor" href="#Mark-emphasis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mark emphasis<a class="anchor-link" href="#Mark-emphasis"> </a>
+</h2>
+<div class="highlight"><pre><span></span><span class="n">Emphasis</span><span class="p">,</span> <span class="n">aka</span> <span class="n">italics</span><span class="p">,</span> <span class="k">with</span> <span class="o">*</span><span class="n">asterisks</span><span class="o">*</span> <span class="ow">or</span> <span class="n">_underscores_</span><span class="o">.</span>
+
+<span class="n">Strong</span> <span class="n">emphasis</span><span class="p">,</span> <span class="n">aka</span> <span class="n">bold</span><span class="p">,</span> <span class="k">with</span> <span class="o">**</span><span class="n">asterisks</span><span class="o">**</span> <span class="ow">or</span> <span class="n">__underscores__</span><span class="o">.</span>
+
+<span class="n">Combined</span> <span class="n">emphasis</span> <span class="k">with</span> <span class="o">**</span><span class="n">asterisks</span> <span class="ow">and</span> <span class="n">_underscores_</span><span class="o">**.</span>
+
+<span class="n">Strikethrough</span> <span class="n">uses</span> <span class="n">two</span> <span class="n">tildes</span> <span class="o">~</span> <span class="o">.</span> <span class="o">~~</span><span class="n">Scratch</span> <span class="n">this</span><span class="o">.~~</span>
+</pre></div>
+<p>Emphasis, aka italics, with <em>asterisks</em> or <em>underscores</em>.</p>
+<p>Strong emphasis, aka bold, with <strong>asterisks</strong> or <strong>underscores</strong>.</p>
+<p>Combined emphasis with <strong>asterisks and <em>underscores</em></strong>.</p>
+<p>Strikethrough uses two tildes ~ . <del>Scratch this.</del></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Lists">
+<a class="anchor" href="#Lists" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lists<a class="anchor-link" href="#Lists"> </a>
+</h2>
+<pre><code>1. Item 1
+2. Item 2 ( we can type 1. and the markdown will automatically numerate them) 
+* First Item
+  * Nested item 1
+  * Nested item 2
+    1. Keep going
+    1. Yes
+
+* Second Item
+- First Item
+- Second Item</code></pre>
+<ol>
+<li>Item 1</li>
+<li>Item 2 ( we can type 1. and the markdown will automatically numerate them) </li>
+</ol>
+<ul>
+<li>
+<p>First Item</p>
+<ul>
+<li>Nested item 1</li>
+<li>Nested item 2<ol>
+<li>Keep going</li>
+<li>Yes</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>Second Item</p>
+</li>
+<li>First Item</li>
+<li>Second Item</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Links-and Images">
+<a class="anchor" href="#Links-and%C2%A0Images" aria-hidden="true"><span class="octicon octicon-link"></span></a>Links and Images<a class="anchor-link" href="#Links-and%C2%A0Images"> </a>
+</h2>
+<pre><code>&lt;!-- [Text](link) --&gt;
+[Link Text](https://medium.com/@ahmedazizkhelifi "Optional Title")
+&lt;!-- ![Alt Text](image path "title") --&gt;
+![Alt Text](https://miro.medium.com/max/80/0*PRNVc7bjff0Jj1pm.png "Optional Title")
+&lt;!-- [![Alt Text](image path "title")](link) --&gt;
+[![Alt Text](https://miro.medium.com/max/80/0*PRNVc7bjff0Jj1pm.png "Optional Title")](https://medium.com/@ahmedazizkhelifi)</code></pre>
+<p><!-- [Text](link) -->
+<a href="https://medium.com/@ahmedazizkhelifi" title="Optional Title">Link Text</a>
+<!-- ![Alt Text](image path "title") -->
+<img src="https://miro.medium.com/max/80/0*PRNVc7bjff0Jj1pm.png" alt="Alt Text" title="Optional Title">
+<!-- [![Alt Text](image path "title")](link) -->
+<a href="https://medium.com/@ahmedazizkhelifi"><img src="https://miro.medium.com/max/80/0*PRNVc7bjff0Jj1pm.png" alt="Alt Text" title="Optional Title"></a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Horizontal-Rule">
+<a class="anchor" href="#Horizontal-Rule" aria-hidden="true"><span class="octicon octicon-link"></span></a>Horizontal Rule<a class="anchor-link" href="#Horizontal-Rule"> </a>
+</h2>
+<pre><code>Reading articles on Medium is awesome.
+
+---
+Sure !!</code></pre>
+<p>Reading articles on Medium is awesome.</p>
+<hr>
+<p>Sure !!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Table">
+<a class="anchor" href="#Table" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table<a class="anchor-link" href="#Table"> </a>
+</h2>
+<pre><code>| Id | Label    | Price |
+|--- |----------| ------|
+| 01 | Markdown | \$1600 |
+| 02 | is       |   \$12 |
+| 03 | AWESOME  |  \$999 |</code></pre>
+<table>
+<thead>
+<tr>
+<th>Id</th>
+<th>Label</th>
+<th>Price</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>01</td>
+<td>Markdown</td>
+<td>\$1600</td>
+</tr>
+<tr>
+<td>02</td>
+<td>is</td>
+<td>\$12</td>
+</tr>
+<tr>
+<td>03</td>
+<td>AWESOME</td>
+<td>\$999</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Code-and-Syntax-Highlighting">
+<a class="anchor" href="#Code-and-Syntax-Highlighting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code and Syntax Highlighting<a class="anchor-link" href="#Code-and-Syntax-Highlighting"> </a>
+</h2>
+<pre><code>```python
+def staySafe(Coronavirus)
+  if not home:
+    return home</code></pre>
+
+<pre><code>
+```python
+def staySafe(Coronavirus)
+  if not home:
+    return home</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Blockquotes">
+<a class="anchor" href="#Blockquotes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Blockquotes<a class="anchor-link" href="#Blockquotes"> </a>
+</h2>
+<pre><code>&gt; This is a blockquote.
+&gt;  
+&gt; This is part of the same blockquote.
+
+Quote break
+&gt; This is a new blockquote.</code></pre>
+<blockquote>
+<p>This is a blockquote.
+ 
+This is part of the same blockquote.</p>
+</blockquote>
+<p>Quote break</p>
+<blockquote>
+<p>This is a new blockquote.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="LaTeX">
+<a class="anchor" href="#LaTeX" aria-hidden="true"><span class="octicon octicon-link"></span></a>LaTeX<a class="anchor-link" href="#LaTeX"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To insert a mathematical formula we use the dollar symbol <code>$</code>, as follows:</p>
+
+<pre><code>Euler's identity: $ e^{i \pi} + 1 = 0 $
+
+To isolate and center the formulas and enter in math display mode, we use 2 dollars symbol:
+$$
+...
+$$
+
+
+Euler's identity: $$ e^{i \pi} + 1 = 0 $$</code></pre>
+<p>Euler's identity: $ e^{i \pi} + 1 = 0 $</p>
+<p>To isolate and center the formulas and enter in math display mode, we use 2 dollars symbol:
+$$
+...
+$$</p>
+<p>Euler's identity: $$ e^{i \pi} + 1 = 0 $$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Important-Note">
+<a class="anchor" href="#Important-Note" aria-hidden="true"><span class="octicon octicon-link"></span></a>Important Note<a class="anchor-link" href="#Important-Note"> </a>
+</h2>
+<pre><code>$$
+\frac{arg 1}{arg 2} \\
+x^2\\
+e^{i\pi}\\
+A_i\\
+B_{ij}\\
+\sqrt[n]{arg}   
+$$</code></pre>
+$$
+\frac{arg 1}{arg 2} \\
+x^2\\
+e^{i\pi}\\
+A_i\\
+B_{ij}\\
+\sqrt[n]{arg}   
+$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Greek-Letters:">
+<a class="anchor" href="#Greek-Letters:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Greek Letters:<a class="anchor-link" href="#Greek-Letters:"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+
+<pre><code>Given : $\pi = 3.14$ , $\alpha = \frac{3\pi}{4}\, rad$
+$$
+\omega = 2\pi f \\
+f = \frac{c}{\lambda}\\
+\lambda_0=\theta^2+\delta\\
+\Delta\lambda = \frac{1}{\lambda^2}
+$$</code></pre>
+<p>Given : $\pi = 3.14$ , $\alpha = \frac{3\pi}{4}\, rad$
+$$
+\omega = 2\pi f \\
+f = \frac{c}{\lambda}\\
+\lambda_0=\theta^2+\delta\\
+\Delta\lambda = \frac{1}{\lambda^2}
+$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Important-Note:">
+<a class="anchor" href="#Important-Note:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Important Note:<a class="anchor-link" href="#Important-Note:"> </a>
+</h3>
+<pre><code>|Uppercase| LaTeX |Lowercase| LaTeX | 
+|---------|-------|---------|-------|
+|$\Delta$ |\\Delta|$\delta$ |\\delta|
+|$\Omega$ |\\Omega|$\omega$ |\\omega|</code></pre>
+<table>
+<thead>
+<tr>
+<th>Uppercase</th>
+<th>LaTeX</th>
+<th>Lowercase</th>
+<th>LaTeX</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$\Delta$</td>
+<td>\Delta</td>
+<td>$\delta$</td>
+<td>\delta</td>
+</tr>
+<tr>
+<td>$\Omega$</td>
+<td>\Omega</td>
+<td>$\omega$</td>
+<td>\omega</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Roman-Names:">
+<a class="anchor" href="#Roman-Names:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Roman Names:<a class="anchor-link" href="#Roman-Names:"> </a>
+</h1>
+<pre><code>$$
+\sin(-\alpha)=-\sin(\alpha)\\
+\arccos(x)=\arcsin(u)\\
+\log_n(n)=1\\
+\tan(x) = \frac{\sin(x)}{\cos(x)}
+$$</code></pre>
+$$
+\sin(-\alpha)=-\sin(\alpha)\\
+\arccos(x)=\arcsin(u)\\
+\log_n(n)=1\\
+\tan(x) = \frac{\sin(x)}{\cos(x)}
+$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Other-Symbols">
+<a class="anchor" href="#Other-Symbols" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other Symbols<a class="anchor-link" href="#Other-Symbols"> </a>
+</h1>
+<h2 id="Angles:">
+<a class="anchor" href="#Angles:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Angles:<a class="anchor-link" href="#Angles:"> </a>
+</h2>
+<pre><code>Left angle : $\langle$
+
+Right angle : $\rangle$
+
+Angle between two vectors u and v   : $\langle \vec{u},\vec{v}\rangle$  
+
+
+$$ \vec{AB} \, \cdot \, \vec{CD} =0  \Rightarrow  \vec{AB} \, \perp\, \vec{CD}$$
+
+
+##Sets and logic
+
+$$\mathbb{N} \subset \mathbb{Z} \subset \mathbb{D} \subset \mathbb{Q} \subset \mathbb{R} \subset \mathbb{C}$$
+</code></pre>
+<p>Left angle : $\langle$</p>
+<p>Right angle : $\rangle$</p>
+<p>Angle between two vectors u and v   : $\langle \vec{u},\vec{v}\rangle$</p>
+<p>
+$$ \vec{AB} \, \cdot \, \vec{CD} =0  \Rightarrow  \vec{AB} \, \perp\, \vec{CD}$$
+</p>
+<h2 id="Sets-and logic">
+<a class="anchor" href="#Sets-and%C2%A0logic" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sets and logic<a class="anchor-link" href="#Sets-and%C2%A0logic"> </a>
+</h2>
+<p>
+$$\mathbb{N} \subset \mathbb{Z} \subset \mathbb{D} \subset \mathbb{Q} \subset \mathbb{R} \subset \mathbb{C}$$
+</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Vertical-curly braces:">
+<a class="anchor" href="#Vertical-curly%C2%A0braces:" aria-hidden="true"><span class="octicon octicon-link"></span></a>Vertical curly braces:<a class="anchor-link" href="#Vertical-curly%C2%A0braces:"> </a>
+</h1>
+<pre><code>$$
+sign(x) = \left\{
+    \begin{array}\\
+        1 &amp; \mbox{if } \ x \in \mathbf{N}^* \\
+        0 &amp; \mbox{if } \ x = 0 \\
+        -1 &amp; \mbox{else.}
+    \end{array}
+\right.
+$$
+
+\\
+
+$$
+ \left.
+    \begin{array} \\
+        \alpha^2 = \sqrt5 \\
+        \alpha \geq 0 
+    \end{array}
+\right \} \alpha = 5 
+$$</code></pre>
+$$
+sign(x) = \left\{
+    \begin{array}\\
+        1 &amp; \mbox{if } \ x \in \mathbf{N}^* \\
+        0 &amp; \mbox{if } \ x = 0 \\
+        -1 &amp; \mbox{else.}
+    \end{array}
+\right.
+$$<p>\</p>
+$$
+ \left.
+    \begin{array} \\
+        \alpha^2 = \sqrt5 \\
+        \alpha \geq 0 
+    \end{array}
+\right \} \alpha = 5 
+$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Horizontal-curly braces-$\underbrace{}$">
+<a class="anchor" href="#Horizontal-curly%C2%A0braces-%24%5Cunderbrace%7B%7D%24" aria-hidden="true"><span class="octicon octicon-link"></span></a>Horizontal curly braces <code>$\underbrace{}$</code><a class="anchor-link" href="#Horizontal-curly%C2%A0braces-%24%5Cunderbrace%7B%7D%24"> </a>
+</h1>
+<h1 id="Horizontal-curly braces-$\underbrace{}$">
+<a class="anchor" href="#Horizontal-curly%C2%A0braces-%24%5Cunderbrace%7B%7D%24" aria-hidden="true"><span class="octicon octicon-link"></span></a>Horizontal curly braces $\underbrace{}$<a class="anchor-link" href="#Horizontal-curly%C2%A0braces-%24%5Cunderbrace%7B%7D%24"> </a>
+</h1>
+<pre><code>$$
+\underbrace{\ln \left( \frac{5}{6} \right)}_{\simeq -0.1823}
+&lt; \overbrace{\exp (2)}^{\simeq 7.3890}
+$$</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Derivate">
+<a class="anchor" href="#Derivate" aria-hidden="true"><span class="octicon octicon-link"></span></a>Derivate<a class="anchor-link" href="#Derivate"> </a>
+</h1>
+<pre><code>First order derivative : $$f'(x)$$ 
+K-th order derivative  : $$f^{(k)}(x)$$
+Partial firt order derivative   : $$\frac{\partial f}{\partial x}$$
+Partial k-th order derivative   : $$\frac{\partial^{k} f}{\partial x^k}$$</code></pre>
+<p>First order derivative : $$f'(x)$$ 
+K-th order derivative  : $$f^{(k)}(x)$$
+Partial firt order derivative   : $$\frac{\partial f}{\partial x}$$
+Partial k-th order derivative   : $$\frac{\partial^{k} f}{\partial x^k}$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Limit-$\lim$">
+<a class="anchor" href="#Limit-%24%5Clim%24" aria-hidden="true"><span class="octicon octicon-link"></span></a>Limit <code>$\lim$</code><a class="anchor-link" href="#Limit-%24%5Clim%24"> </a>
+</h1>
+<h1 id="Limit-$\lim$">
+<a class="anchor" href="#Limit-%24%5Clim%24" aria-hidden="true"><span class="octicon octicon-link"></span></a>Limit $\lim$<a class="anchor-link" href="#Limit-%24%5Clim%24"> </a>
+</h1>
+<pre><code>Limit at plus infinity  : $$\lim_{x \to +\infty} f(x)$$ 
+Limit at minus infinity : $$\lim_{x \to -\infty} f(x)$$ 
+Limit at $\alpha$  : $$\lim_{x \to \alpha} f(x)$$
+
+Max : $$\max_{x \in [a,b]}f(x)$$    
+Min : $$\min_{x \in [\alpha,\beta]}f(x)$$   
+Sup : $$\sup_{x \in \mathbb{R}}f(x)$$   
+Inf : $$\inf_{x &gt; s}f(x)$$</code></pre>
+<p>Limit at plus infinity  : $$\lim_{x \to +\infty} f(x)$$ 
+Limit at minus infinity : $$\lim_{x \to -\infty} f(x)$$ 
+Limit at $\alpha$  : $$\lim_{x \to \alpha} f(x)$$</p>
+<p>Max : $$\max_{x \in [a,b]}f(x)$$<br>
+Min : $$\min_{x \in [\alpha,\beta]}f(x)$$<br>
+Sup : $$\sup_{x \in \mathbb{R}}f(x)$$<br>
+Inf : $$\inf_{x &gt; s}f(x)$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Sum-$\sum$">
+<a class="anchor" href="#Sum-%24%5Csum%24" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sum <code>$\sum$</code><a class="anchor-link" href="#Sum-%24%5Csum%24"> </a>
+</h1>
+<h1 id="Sum-$\sum$">
+<a class="anchor" href="#Sum-%24%5Csum%24" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sum $\sum$<a class="anchor-link" href="#Sum-%24%5Csum%24"> </a>
+</h1>
+<pre><code>Sum from 0 to +inf:
+
+
+$$\sum_{j=0}^{+\infty} A_{j}$$
+
+
+Double sum:
+$$\sum^k_{i=1}\sum^{l+1}_{j=1}\,A_i A_j$$   
+
+
+Taylor expansion of $e^x$:
+$$ e^x  = \sum_{k=0}^{n}\, \frac{x^k}{k!} + o(x^n) $$</code></pre>
+<p>Sum from 0 to +inf:</p>
+<p>
+$$\sum_{j=0}^{+\infty} A_{j}$$
+</p>
+<p>Double sum:
+$$\sum^k_{i=1}\sum^{l+1}_{j=1}\,A_i A_j$$</p>
+<p>Taylor expansion of $e^x$:
+
+$$ e^x  = \sum_{k=0}^{n}\, \frac{x^k}{k!} + o(x^n) $$
+</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Product-$\prod$">
+<a class="anchor" href="#Product-%24%5Cprod%24" aria-hidden="true"><span class="octicon octicon-link"></span></a>Product <code>$\prod$</code><a class="anchor-link" href="#Product-%24%5Cprod%24"> </a>
+</h1>
+<h1 id="Product-$\prod$">
+<a class="anchor" href="#Product-%24%5Cprod%24" aria-hidden="true"><span class="octicon octicon-link"></span></a>Product $\prod$<a class="anchor-link" href="#Product-%24%5Cprod%24"> </a>
+</h1>
+<pre><code>Product:
+
+$$\prod_{j=1}^k A_{\alpha_j}$$
+
+Double product:
+$$\prod^k_{i=1}\prod^l_{j=1}\,A_i A_j$$</code></pre>
+<p>Product:
+
+$$\prod_{j=1}^k A_{\alpha_j}$$
+
+Double product:
+
+$$\prod^k_{i=1}\prod^l_{j=1}\,A_i A_j$$
+</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Integral-:-$\int$">
+<a class="anchor" href="#Integral-:-%24%5Cint%24" aria-hidden="true"><span class="octicon octicon-link"></span></a>Integral : <code>$\int$</code><a class="anchor-link" href="#Integral-:-%24%5Cint%24"> </a>
+</h1>
+<h1 id="Integral-:-$\int$">
+<a class="anchor" href="#Integral-:-%24%5Cint%24" aria-hidden="true"><span class="octicon octicon-link"></span></a>Integral : $\int$<a class="anchor-link" href="#Integral-:-%24%5Cint%24"> </a>
+</h1>
+<pre><code>Simple integral:
+
+$$\int_{a}^b f(x)dx$$
+
+
+Double integral:
+$$\int_{a}^b\int_{c}^d f(x,y)\,dxdy$$   
+
+Triple integral:
+$$\iiint$$  
+
+Quadruple integral:
+$$\iiiint$$ 
+
+Multiple integral :
+
+$$\idotsint$$
+
+
+Contour integral:
+$$\oint$$</code></pre>
+<p>Simple integral:
+
+$$\int_{a}^b f(x)dx$$
+</p>
+<p>Double integral:
+$$\int_{a}^b\int_{c}^d f(x,y)\,dxdy$$</p>
+<p>Triple integral:
+$$\iiint$$</p>
+<p>Quadruple integral:
+$$\iiiint$$</p>
+<p>Multiple integral :
+
+$$\idotsint$$
+</p>
+<p>Contour integral:
+$$\oint$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Matrix">
+<a class="anchor" href="#Matrix" aria-hidden="true"><span class="octicon octicon-link"></span></a>Matrix<a class="anchor-link" href="#Matrix"> </a>
+</h1>
+<pre><code>Plain:
+
+\begin{matrix}
+1 &amp; 2 &amp; 3\\
+a &amp; b &amp; c
+\end{matrix}
+
+Round brackets:
+\begin{pmatrix}
+1 &amp; 2 &amp; 3\\
+a &amp; b &amp; c
+\end{pmatrix}
+
+Curly brackets:
+\begin{Bmatrix}
+1 &amp; 2 &amp; 3\\
+a &amp; b &amp; c
+\end{Bmatrix}   
+
+Pipes:
+\begin{vmatrix}
+1 &amp; 2 &amp; 3\\
+a &amp; b &amp; c
+\end{vmatrix}
+
+Double pipes
+\begin{Vmatrix}
+1 &amp; 2 &amp; 3\\
+a &amp; b &amp; c
+\end{Vmatrix}</code></pre>
+<p>Plain:</p>
+\begin{matrix}
+1 &amp; 2 &amp; 3\\
+a &amp; b &amp; c
+\end{matrix}<p>Round brackets:
+\begin{pmatrix}
+1 &amp; 2 &amp; 3\\
+a &amp; b &amp; c
+\end{pmatrix}</p>
+<p>Curly brackets:
+\begin{Bmatrix}
+1 &amp; 2 &amp; 3\
+a &amp; b &amp; c
+\end{Bmatrix}</p>
+<p>Pipes:
+\begin{vmatrix}
+1 &amp; 2 &amp; 3\\
+a &amp; b &amp; c
+\end{vmatrix}</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="VictorOmondi1997/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/latex/markdown/2020/07/02/_07_03_Markdown_LaTeX_Medium.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Hello! Thanks for visiting my blog, I&#39;m Victor Omondi, Data Scientist with industry experience analyzing, visualizing and modeling data. I specialize in Python &amp; R and have professional experience working with C++ and JavaScript|, currently am a student at Multimedia University of Kenya pursuing Bachelor of Science (Computer Technology)</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://dribbble.com/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#dribbble"></use></svg></a></li><li><a rel="me" href="https://www.facebook.com/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#facebook"></use></svg></a></li><li><a rel="me" href="https://www.flickr.com/photos/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#flickr"></use></svg></a></li><li><a rel="me" href="https://github.com/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://stackoverflow.com/users/9713351" title="9713351"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#stackoverflow"></use></svg></a></li><li><a rel="me" href="https://www.instagram.com/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#instagram"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://www.pinterest.com/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#pinterest"></use></svg></a></li><li><a rel="me" href="https://freeradical.zone/@VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#mastodon"></use></svg></a></li><li><a rel="me" href="https://twitter.com/VictorOmondi197" title="VictorOmondi197"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li><li><a rel="me" href="https://www.youtube.com/channel/UCwk-x5YuGrNBNGZNpb1CX3Q" title="VICTOR OMONDI"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#youtube"></use></svg></a></li><li><a rel="me" href="https://t.me/VickTheGeek" title="VickTheGeek"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#telegram"></use></svg></a></li><li><a rel="me" href="https://keybase.io/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#keybase"></use></svg></a></li><li><a rel="me" href="https://micro.blog/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#microdotblog"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
