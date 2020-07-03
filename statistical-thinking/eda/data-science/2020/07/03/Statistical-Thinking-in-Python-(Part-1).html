@@ -244,6 +244,11 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#Probabilistic-logic-and-statistical-inference">Probabilistic logic and statistical inference </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#the-goal-of-statistical-inference">the goal of statistical inference </a></li>
+<li class="toc-entry toc-h3"><a href="#Why-we-use-the-probabilistic-language-in-statistical-inference">Why we use the probabilistic language in statistical inference </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Random-number-generators-and-hacker-statistics">Random number generators and hacker statistics </a>
+<ul>
 <li class="toc-entry toc-h3"><a href="#Hacker-statistics">Hacker statistics </a></li>
 <li class="toc-entry toc-h3"><a href="#The-np.random-module">The np.random module </a></li>
 <li class="toc-entry toc-h3"><a href="#Random-number-seed">Random number seed </a></li>
@@ -1654,33 +1659,36 @@ $$
 <ul>
 <li>To draw probabilistic conclusions about what we might expect if we collected the same data again.</li>
 <li>To draw actionable conclusions from data.</li>
-<li>
-<p>To draw more general conclusions from relatively few data or observations.
-</p>
+<li>To draw more general conclusions from relatively few data or observations.
 <div class="flash">
     <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
     <strong>Note: </strong>Statistical inference involves taking your data to probabilistic conclusions about what you would expect if you took even more data, and you can make decisions based on these conclusions.
 </div>
-### Why we use the probabilistic language in statistical inference
 </li>
-<li>
-<p>Probability provides a measure of uncertainty and this is crucial because we can quantify what we might expect if the data were acquired again.</p>
-</li>
+</ul>
+<h3 id="Why-we-use-the-probabilistic-language-in-statistical-inference">
+<a class="anchor" href="#Why-we-use-the-probabilistic-language-in-statistical-inference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why we use the probabilistic language in statistical inference<a class="anchor-link" href="#Why-we-use-the-probabilistic-language-in-statistical-inference"> </a>
+</h3>
+<ul>
+<li>Probability provides a measure of uncertainty and this is crucial because we can quantify what we might expect if the data were acquired again.</li>
 <li>Data are almost never exactly the same when acquired again, and probability allows us to say how much we expect them to vary. We need probability to say how data might vary if acquired again.
 <div class="flash">
     <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
     <strong>Note: </strong>Probabilistic language is in fact very precise. It precisely describes uncertainty.
 </div>
-## Random number generators and hacker statistics<blockquote>
+</li>
+</ul>
+<h2 id="Random-number-generators-and-hacker-statistics">
+<a class="anchor" href="#Random-number-generators-and-hacker-statistics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Random number generators and hacker statistics<a class="anchor-link" href="#Random-number-generators-and-hacker-statistics"> </a>
+</h2>
+<blockquote>
 <h3 id="Hacker-statistics">
 <a class="anchor" href="#Hacker-statistics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hacker statistics<a class="anchor-link" href="#Hacker-statistics"> </a>
 </h3>
-</blockquote>
-</li>
+<ul>
 <li>Uses simulated repeated measurements to compute
 probabilities.</li>
 </ul>
-<blockquote>
 <h3 id="The-np.random-module">
 <a class="anchor" href="#The-np.random-module" aria-hidden="true"><span class="octicon octicon-link"></span></a>The np.random module<a class="anchor-link" href="#The-np.random-module"> </a>
 </h3>
