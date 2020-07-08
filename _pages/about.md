@@ -8,7 +8,7 @@ permalink: /about/
 
 ## Twitter
 
-{% twitter https://twitter.com/VictorOmondi1997 maxwidth=500 limit=5 %}
+{% twitter https://twitter.com/VictorOmondi197 maxwidth=500 limit=5 %}
 
 This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].
 
