@@ -4,7 +4,7 @@ title: About Me
 permalink: /about/
 ---
 
-"Hello! Thanks for visiting my blog, I'm Victor Omondi, Data Scientist with industry experience analyzing, visualizing and modeling data. I specialize in Python & R and have professional experience working with C++ and JavaScript|, currently am a student at Multimedia University of Kenya pursuing Bachelor of Science (Computer Technology)"
+"Hello! Thanks for visiting my blog, I'm Victor Omondi, Data Scientist with industry experience analyzing, visualizing and modeling data. I specialize in Python & R and have professional experience working with C++ and JavaScript\|, currently am a student at Multimedia University of Kenya pursuing Bachelor of Science (Computer Technology)"
 
 ## Twitter
 
