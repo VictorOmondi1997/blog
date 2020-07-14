@@ -7,6 +7,8 @@ _site
 .jekyll-metadata
 vendor
 _notebooks/.ipynb_checkpoints
+_notebooks/datasets/.ipynb_checkpoints
+.ipynb_checkpoints/
 # Local Netlify folder
 .netlify
 .tweet-cache
