@@ -1,0 +1,3494 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Writing Functions in Python | Victor Omondi Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Writing Functions in Python" />
+<meta name="author" content="Victor Omondi" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="useful tricks, like how to write context managers and decorators" />
+<meta property="og:description" content="useful tricks, like how to write context managers and decorators" />
+<link rel="canonical" href="https://victoromondi1997.github.io/blog/functions/python/2020/07/26/Writing-Functions-in-Python.html" />
+<meta property="og:url" content="https://victoromondi1997.github.io/blog/functions/python/2020/07/26/Writing-Functions-in-Python.html" />
+<meta property="og:site_name" content="Victor Omondi Blog" />
+<meta property="og:image" content="https://victoromondi1997.github.io/blog/images/wfp-shield.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-07-26T00:00:00-05:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Victor Omondi"},"description":"useful tricks, like how to write context managers and decorators","@type":"BlogPosting","headline":"Writing Functions in Python","dateModified":"2020-07-26T00:00:00-05:00","datePublished":"2020-07-26T00:00:00-05:00","image":"https://victoromondi1997.github.io/blog/images/wfp-shield.png","url":"https://victoromondi1997.github.io/blog/functions/python/2020/07/26/Writing-Functions-in-Python.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://victoromondi1997.github.io/blog/functions/python/2020/07/26/Writing-Functions-in-Python.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://victoromondi1997.github.io/blog/feed.xml" title="Victor Omondi | Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-170138117-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Writing Functions in Python | Victor Omondi Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Writing Functions in Python" />
+<meta name="author" content="Victor Omondi" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="useful tricks, like how to write context managers and decorators" />
+<meta property="og:description" content="useful tricks, like how to write context managers and decorators" />
+<link rel="canonical" href="https://victoromondi1997.github.io/blog/functions/python/2020/07/26/Writing-Functions-in-Python.html" />
+<meta property="og:url" content="https://victoromondi1997.github.io/blog/functions/python/2020/07/26/Writing-Functions-in-Python.html" />
+<meta property="og:site_name" content="Victor Omondi Blog" />
+<meta property="og:image" content="https://victoromondi1997.github.io/blog/images/wfp-shield.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-07-26T00:00:00-05:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"Victor Omondi"},"description":"useful tricks, like how to write context managers and decorators","@type":"BlogPosting","headline":"Writing Functions in Python","dateModified":"2020-07-26T00:00:00-05:00","datePublished":"2020-07-26T00:00:00-05:00","image":"https://victoromondi1997.github.io/blog/images/wfp-shield.png","url":"https://victoromondi1997.github.io/blog/functions/python/2020/07/26/Writing-Functions-in-Python.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://victoromondi1997.github.io/blog/functions/python/2020/07/26/Writing-Functions-in-Python.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://victoromondi1997.github.io/blog/feed.xml" title="Victor Omondi | Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-170138117-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Victor Omondi | Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Writing Functions in Python</h1><p class="page-description">useful tricks, like how to write context managers and decorators</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-07-26T00:00:00-05:00" itemprop="datePublished">
+        Jul 26, 2020
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Victor Omondi</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      27 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#functions">functions</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/VictorOmondi1997/blog/tree/master/_notebooks/2020-07-26-Writing Functions in Python.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/VictorOmondi1997/blog/master?filepath=_notebooks%2F2020-07-26-Writing+Functions+in+Python.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/VictorOmondi1997/blog/blob/master/_notebooks/2020-07-26-Writing Functions in Python.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Best-Practices">Best Practices </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Docstrings">Docstrings </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Crafting-a-docstring">Crafting a docstring </a></li>
+<li class="toc-entry toc-h3"><a href="#Retrieving-docstrings">Retrieving docstrings </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#DRY-and-"Do-one-thing"">DRY and &quot;Do one thing&quot; </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Split-up-a-function">Split up a function </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Pass-by-assignment">Pass by assignment </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Best-practice-for-default-arguments">Best practice for default arguments </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Context-Managers">Context Managers </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Using-context-managers">Using context managers </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#The-speed-of-cats">The speed of cats </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Writing-context-managers">Writing context managers </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#The-timer()-context-manager">The timer() context manager </a></li>
+<li class="toc-entry toc-h3"><a href="#A-read-only-open()-context-manager">A read-only open() context manager </a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Scraping-the-NASDAQ">Scraping the NASDAQ </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Changing-the-working-directory">Changing the working directory </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Decorators">Decorators </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Functions-are-objects">Functions are objects </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Building-a-command-line-data-app">Building a command line data app </a></li>
+<li class="toc-entry toc-h3"><a href="#Reviewing-our-co-worker's-code">Reviewing our co-worker&#39;s code </a></li>
+<li class="toc-entry toc-h3"><a href="#Returning-functions-for-a-math-game">Returning functions for a math game </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Scope">Scope </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Modifying-variables-outside-local-scope">Modifying variables outside local scope </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Closures">Closures </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Checking-for-closures">Checking for closures </a></li>
+<li class="toc-entry toc-h3"><a href="#Closures-keep-your-values-safe">Closures keep your values safe </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Decorators">Decorators </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Using-decorator-syntax">Using decorator syntax </a></li>
+<li class="toc-entry toc-h3"><a href="#Defining-a-decorator">Defining a decorator </a></li>
+<li class="toc-entry toc-h3"><a href="#Print-the-return-type">Print the return type </a></li>
+<li class="toc-entry toc-h3"><a href="#Counter">Counter </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Decorators-and-metadata">Decorators and metadata </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Preserving-docstrings-when-decorating-functions">Preserving docstrings when decorating functions </a></li>
+<li class="toc-entry toc-h3"><a href="#Measuring-decorator-overhead">Measuring decorator overhead </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Decorators-that-take-arguments">Decorators that take arguments </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Run_n_times()">Run_n_times() </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#HTML-Generator">HTML Generator </a></li>
+<li class="toc-entry toc-h2"><a href="#Timeout():-a-real-world-example">Timeout(): a real world example </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Tag-your-functions">Tag your functions </a></li>
+<li class="toc-entry toc-h3"><a href="#Check-the-return-type">Check the return type </a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-07-26-Writing Functions in Python.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Best-Practices">
+<a class="anchor" href="#Best-Practices" aria-hidden="true"><span class="octicon octicon-link"></span></a>Best Practices<a class="anchor-link" href="#Best-Practices"> </a>
+</h1>
+<p>Best practices when writing functions. We'll cover docstrings and why they matter and how to know when you need to turn a chunk of code into a function. We will also code how Python passes arguments to functions, as well as some common gotchas that can cause debugging headaches when calling functions.</p>
+<h2 id="Docstrings">
+<a class="anchor" href="#Docstrings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docstrings<a class="anchor-link" href="#Docstrings"> </a>
+</h2>
+<h3 id="Crafting-a-docstring">
+<a class="anchor" href="#Crafting-a-docstring" aria-hidden="true"><span class="octicon octicon-link"></span></a>Crafting a docstring<a class="anchor-link" href="#Crafting-a-docstring"> </a>
+</h3>
+<p>The first function is <code>count_letter()</code>. It takes a string and a single letter and returns the number of times the letter appears in the string. We want the users of our open-source package to be able to understand how this function works easily, so we will need to give it a docstring.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">contextlib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">count_letter</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">letter</span><span class="p">):</span>
+    <span class="sd">"""Count the number of times `letter` appears in `content`.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        content (str): The string to search.</span>
+<span class="sd">        letter (str): The letter to search for.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        int</span>
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If `letter` is not a one-character string.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">letter</span><span class="p">,</span> <span class="nb">str</span><span class="p">))</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">letter</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'`letter` must be a single character string.'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">([</span><span class="n">char</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">content</span> <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="n">letter</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">count_letter</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Help on function count_letter in module __main__:
+
+count_letter(content, letter)
+    Count the number of times `letter` appears in `content`.
+    
+    Args:
+        content (str): The string to search.
+        letter (str): The letter to search for.
+        
+    Returns:
+        int
+    Raises:
+        ValueError: If `letter` is not a one-character string.
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Retrieving-docstrings">
+<a class="anchor" href="#Retrieving-docstrings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Retrieving docstrings<a class="anchor-link" href="#Retrieving-docstrings"> </a>
+</h3>
+<p>My friends and I are working on building an amazing new Python IDE (integrated development environment -- like PyCharm, Spyder, Eclipse, Visual Studio, etc.). Our team wants to add a feature that displays a tooltip with a function's docstring whenever the user starts typing the function name. That way, the user doesn't have to go elsewhere to look up the documentation for the function they are trying to use. We've been asked to complete the <code>build_tooltip()</code> function that retrieves a docstring from an arbitrary function.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get the docstring with an attribute of count_letter()</span>
+<span class="n">docstring</span> <span class="o">=</span> <span class="n">count_letter</span><span class="o">.</span><span class="vm">__doc__</span>
+
+<span class="n">border</span> <span class="o">=</span> <span class="s1">'#'</span> <span class="o">*</span> <span class="mi">28</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">border</span><span class="p">,</span> <span class="n">docstring</span><span class="p">,</span> <span class="n">border</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>############################
+Count the number of times `letter` appears in `content`.
+    
+    Args:
+        content (str): The string to search.
+        letter (str): The letter to search for.
+        
+    Returns:
+        int
+    Raises:
+        ValueError: If `letter` is not a one-character string.
+    
+############################
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get the docstring with a function from the inspect module</span>
+<span class="n">docstring</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getdoc</span><span class="p">(</span><span class="n">count_letter</span><span class="p">)</span>
+
+<span class="n">border</span> <span class="o">=</span> <span class="s1">'#'</span> <span class="o">*</span> <span class="mi">28</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">border</span><span class="p">,</span> <span class="n">docstring</span><span class="p">,</span> <span class="n">border</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>############################
+Count the number of times `letter` appears in `content`.
+
+Args:
+    content (str): The string to search.
+    letter (str): The letter to search for.
+    
+Returns:
+    int
+Raises:
+    ValueError: If `letter` is not a one-character string.
+############################
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">build_tooltip</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
+    <span class="sd">"""Create a tooltip for any function that shows the function's docstring.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        function (callable): The function we want a tooltip for.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        str</span>
+<span class="sd">    """</span>
+    <span class="c1"># Use 'inspect' to get the docstring</span>
+    <span class="n">docstring</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getdoc</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
+    <span class="n">border</span> <span class="o">=</span> <span class="s1">'#'</span> <span class="o">*</span> <span class="mi">28</span>
+    
+    <span class="k">return</span> <span class="s1">'</span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">border</span><span class="p">,</span> <span class="n">docstring</span><span class="p">,</span> <span class="n">border</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">build_tooltip</span><span class="p">(</span><span class="n">count_letter</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">build_tooltip</span><span class="p">(</span><span class="nb">range</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">build_tooltip</span><span class="p">(</span><span class="nb">print</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>############################
+Count the number of times `letter` appears in `content`.
+
+Args:
+    content (str): The string to search.
+    letter (str): The letter to search for.
+    
+Returns:
+    int
+Raises:
+    ValueError: If `letter` is not a one-character string.
+############################
+############################
+range(stop) -&gt; range object
+range(start, stop[, step]) -&gt; range object
+
+Return an object that produces a sequence of integers from start (inclusive)
+to stop (exclusive) by step.  range(i, j) produces i, i+1, i+2, ..., j-1.
+start defaults to 0, and stop is omitted!  range(4) produces 0, 1, 2, 3.
+These are exactly the valid indices for a list of 4 elements.
+When step is given, it specifies the increment (or decrement).
+############################
+############################
+print(value, ..., sep=' ', end='\n', file=sys.stdout, flush=False)
+
+Prints the values to a stream, or to sys.stdout by default.
+Optional keyword arguments:
+file:  a file-like object (stream); defaults to the current sys.stdout.
+sep:   string inserted between values, default a space.
+end:   string appended after the last value, default a newline.
+flush: whether to forcibly flush the stream.
+############################
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id='DRY-and-"Do-one-thing"'>
+<a class="anchor" href="#DRY-and-" do-one-thing aria-hidden="true"><span class="octicon octicon-link"></span></a>DRY and "Do one thing"<a class="anchor-link" href="#DRY-and-%22Do-one-thing%22"> </a>
+</h2>
+<p>While we were developing a model to predict the likelihood of a student graduating from college, we wrote this bit of code to get the <code>z-scores</code> of students' yearly GPAs. Now we're ready to turn it into a production-quality system, so we need to do something about the repetition. Writing a function to calculate the z-scores would improve this code.</p>
+<div class="highlight"><pre><span></span><span class="c1"># Standardize the GPAs for each year</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'y1_z'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">y1_gpa</span> <span class="o">-</span> <span class="n">df</span><span class="o">.</span><span class="n">y1_gpa</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">df</span><span class="o">.</span><span class="n">y1_gpa</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'y2_z'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">y2_gpa</span> <span class="o">-</span> <span class="n">df</span><span class="o">.</span><span class="n">y2_gpa</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">df</span><span class="o">.</span><span class="n">y2_gpa</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'y3_z'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">y3_gpa</span> <span class="o">-</span> <span class="n">df</span><span class="o">.</span><span class="n">y3_gpa</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">df</span><span class="o">.</span><span class="n">y3_gpa</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'y4_z'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">y4_gpa</span> <span class="o">-</span> <span class="n">df</span><span class="o">.</span><span class="n">y4_gpa</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">df</span><span class="o">.</span><span class="n">y4_gpa</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+<blockquote>
+<p><strong>Note:</strong> <code>df</code> is a pandas DataFrame where each row is a student with <code>4</code> columns of yearly student GPAs: <code>y1_gpa</code>, <code>y2_gpa</code>, <code>y3_gpa</code>, <code>y4_gpa</code></p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'students.csv'</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>y1_gpa</th>
+      <th>y2_gpa</th>
+      <th>y3_gpa</th>
+      <th>y4_gpa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2.785877</td>
+      <td>2.052513</td>
+      <td>2.170544</td>
+      <td>0.065570</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.144557</td>
+      <td>2.666498</td>
+      <td>0.267098</td>
+      <td>2.884737</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.907406</td>
+      <td>0.423634</td>
+      <td>2.613459</td>
+      <td>0.030950</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2.205259</td>
+      <td>0.523580</td>
+      <td>3.984345</td>
+      <td>0.339289</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2.877876</td>
+      <td>1.287922</td>
+      <td>3.077589</td>
+      <td>0.901994</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">standardize</span><span class="p">(</span><span class="n">column</span><span class="p">):</span>
+    <span class="sd">"""Standardize the values in a column.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        column (pandas Series): The data to standardize.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        pandas Series: the values as z-scores</span>
+<span class="sd">    """</span>
+    <span class="c1"># Finish the function so that it returns the z-scores</span>
+    <span class="n">z_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+    
+    <span class="k">return</span> <span class="n">z_score</span>
+
+<span class="c1"># Use the standardize() function to calculate the z-scores</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'y1_z'</span><span class="p">]</span> <span class="o">=</span> <span class="n">standardize</span><span class="p">(</span><span class="s2">"y1_gpa"</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'y2_z'</span><span class="p">]</span> <span class="o">=</span> <span class="n">standardize</span><span class="p">(</span><span class="s2">"y2_gpa"</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'y3_z'</span><span class="p">]</span> <span class="o">=</span> <span class="n">standardize</span><span class="p">(</span><span class="s2">"y3_gpa"</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">'y4_z'</span><span class="p">]</span> <span class="o">=</span> <span class="n">standardize</span><span class="p">(</span><span class="s2">"y4_gpa"</span><span class="p">)</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>y1_gpa</th>
+      <th>y2_gpa</th>
+      <th>y3_gpa</th>
+      <th>y4_gpa</th>
+      <th>y1_z</th>
+      <th>y2_z</th>
+      <th>y3_z</th>
+      <th>y4_z</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2.785877</td>
+      <td>2.052513</td>
+      <td>2.170544</td>
+      <td>0.065570</td>
+      <td>0.790863</td>
+      <td>0.028021</td>
+      <td>0.172322</td>
+      <td>-1.711179</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.144557</td>
+      <td>2.666498</td>
+      <td>0.267098</td>
+      <td>2.884737</td>
+      <td>-0.872971</td>
+      <td>0.564636</td>
+      <td>-1.347122</td>
+      <td>0.824431</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.907406</td>
+      <td>0.423634</td>
+      <td>2.613459</td>
+      <td>0.030950</td>
+      <td>-1.113376</td>
+      <td>-1.395595</td>
+      <td>0.525883</td>
+      <td>-1.742317</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2.205259</td>
+      <td>0.523580</td>
+      <td>3.984345</td>
+      <td>0.339289</td>
+      <td>0.202281</td>
+      <td>-1.308243</td>
+      <td>1.620206</td>
+      <td>-1.464991</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2.877876</td>
+      <td>1.287922</td>
+      <td>3.077589</td>
+      <td>0.901994</td>
+      <td>0.884124</td>
+      <td>-0.640219</td>
+      <td>0.896379</td>
+      <td>-0.958885</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>standardize()</code> will probably be useful in other places in our code, and now it is easy to use, test, and update if we need to. It's also easier to tell what the code is doing because of the docstring and the name of the function.</p>
+<h3 id="Split-up-a-function">
+<a class="anchor" href="#Split-up-a-function" aria-hidden="true"><span class="octicon octicon-link"></span></a>Split up a function<a class="anchor-link" href="#Split-up-a-function"> </a>
+</h3>
+<p>Another engineer on our team has written this function to calculate the mean and median of a list. We want to show them how to split it into two simpler functions: <code>mean()</code> and <code>median()</code></p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mean_and_median</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+  <span class="sd">"""Get the mean and median of a list of `values`</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    values (iterable of float): A list of numbers</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    tuple (float, float): The mean and median</span>
+<span class="sd">  """</span>
+  <span class="n">mean</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+  <span class="n">midpoint</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">median</span> <span class="o">=</span> <span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">midpoint</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">values</span><span class="p">[</span><span class="n">midpoint</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">median</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">midpoint</span><span class="p">]</span>
+
+  <span class="k">return</span> <span class="n">mean</span><span class="p">,</span> <span class="n">median</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">mean</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+    <span class="sd">"""Get the mean of a list of values</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        values (iterable of float): A list of numbers</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float</span>
+<span class="sd">    """</span>
+    <span class="c1"># Write the mean() function</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">mean</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">median</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+    <span class="sd">"""Get the median of a list of values</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        values (iterable of float): A list of numbers</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float</span>
+<span class="sd">    """</span>
+    <span class="c1"># Write the median() function</span>
+    <span class="n">midpoint</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">median</span> <span class="o">=</span> <span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">midpoint</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">values</span><span class="p">[</span><span class="n">midpoint</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">median</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">midpoint</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">median</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Each function does one thing and does it well. Using, testing, and maintaining these will be a breeze (although we'll probably just use <code>numpy.mean()</code> and <code>numpy.median()</code> for this in real life).</p>
+<h2 id="Pass-by-assignment">
+<a class="anchor" href="#Pass-by-assignment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pass by assignment<a class="anchor-link" href="#Pass-by-assignment"> </a>
+</h2>
+<h3 id="Best-practice-for-default-arguments">
+<a class="anchor" href="#Best-practice-for-default-arguments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Best practice for default arguments<a class="anchor-link" href="#Best-practice-for-default-arguments"> </a>
+</h3>
+<p>One of our co-workers has written this function for adding a column to a panda's DataFrame. Unfortunately, they used a mutable variable as a default argument value!</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">add_column</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()):</span>
+  <span class="sd">"""Add a column of `values` to a DataFrame `df`.</span>
+<span class="sd">  The column will be named "col_&lt;n&gt;" where "n" is</span>
+<span class="sd">  the numerical index of the column.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    values (iterable): The values of the new column</span>
+<span class="sd">    df (DataFrame, optional): The DataFrame to update.</span>
+<span class="sd">      If no DataFrame is passed, one is created by default.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    DataFrame</span>
+<span class="sd">  """</span>
+  <span class="n">df</span><span class="p">[</span><span class="s1">'col_</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">))]</span> <span class="o">=</span> <span class="n">values</span>
+  <span class="k">return</span> <span class="n">df</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Use an immutable variable for the default argument </span>
+<span class="k">def</span> <span class="nf">better_add_column</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">"""Add a column of `values` to a DataFrame `df`. The column will be named "col_&lt;n&gt;" where "n" is the numerical index of the column.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        values (iterable): The values of the new column</span>
+<span class="sd">        df (DataFrame, optional): The DataFrame to update.</span>
+<span class="sd">          If no DataFrame is passed, one is created by default.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DataFrame</span>
+<span class="sd">    """</span>
+    <span class="c1"># Update the function to create a default DataFrame</span>
+    <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">'col_</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">))]</span> <span class="o">=</span> <span class="n">values</span>
+    <span class="k">return</span> <span class="n">df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<p>When you need to set a mutable variable as a default argument, always use <code>None</code> and then set the value in the body of the function. This prevents unexpected behavior like adding multiple columns if you call the function more than once.</p>
+</blockquote>
+<h1 id="Context-Managers">
+<a class="anchor" href="#Context-Managers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Context Managers<a class="anchor-link" href="#Context-Managers"> </a>
+</h1>
+<h2 id="Using-context-managers">
+<a class="anchor" href="#Using-context-managers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using context managers<a class="anchor-link" href="#Using-context-managers"> </a>
+</h2>
+<p>We are working on a natural language processing project to determine what makes great writers so great. Our current hypothesis is that great writers talk about cats a lot. To prove it, we will count the number of times the word <code>"cat"</code> appears in "Alice's Adventures in Wonderland" by Lewis Carroll. We have already downloaded a text file, <code>alice.txt</code>, with the entire contents of this great book.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Open "alice.txt" and assign the file to "file"</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'alice.txt'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'cat'</span><span class="p">,</span> <span class="s1">'cats'</span><span class="p">]:</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Lewis Carroll uses the word "cat" </span><span class="si">{}</span><span class="s1"> times'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Lewis Carroll uses the word "cat" 24 times
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="The-speed-of-cats">
+<a class="anchor" href="#The-speed-of-cats" aria-hidden="true"><span class="octicon octicon-link"></span></a>The speed of cats<a class="anchor-link" href="#The-speed-of-cats"> </a>
+</h3>
+<p>We're working on a new web service that processes Instagram feeds to identify which pictures contain cats (don't ask why -- it's the internet). The code that processes the data is slower than we would like it to be, so we are working on tuning it up to run faster. Given an image, <code>image</code>, we have two functions that can process it:</p>
+<ul>
+<li><code>process_with_numpy(image)</code></li>
+<li><code>process_with_pytorch(image)</code></li>
+</ul>
+<p>Our colleague wrote a context manager, <code>timer()</code>, that will print out how long the code inside the context block takes to run. She is suggesting we use it to see which of the two options is faster. Time each function to determine which one to use in your web service.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">get_image_from_instagram</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">84</span><span class="p">,</span> <span class="mi">84</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Writing-context-managers">
+<a class="anchor" href="#Writing-context-managers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing context managers<a class="anchor-link" href="#Writing-context-managers"> </a>
+</h2>
+<h3 id="The-timer()-context-manager">
+<a class="anchor" href="#The-timer()-context-manager" aria-hidden="true"><span class="octicon octicon-link"></span></a>The timer() context manager<a class="anchor-link" href="#The-timer()-context-manager"> </a>
+</h3>
+<p>A colleague of ours is working on a web service that processes Instagram photos. Customers are complaining that the service takes too long to identify whether or not an image has a cat in it, so our colleague has come to us for help. We decided to write a context manager that they can use to time how long their functions take to run.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span> <span class="nf">timer</span><span class="p">():</span>
+    <span class="sd">"""Time how long code in the context block takes to run."""</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'Elapsed: </span><span class="si">{:.2f}</span><span class="s1"> seconds'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>our colleague can now use our <code>timer()</code> context manager to figure out which of their functions is running too slow. The three elements of a context manager are all here:</p>
+<ul>
+<li>a function definition, </li>
+<li>a yield statement, and the </li>
+<li>
+<code>@contextlib.contextmanager</code> decorator. 
+<code>timer()</code> is a context manager that does not return an explicit value, so yield is written by itself without specifying anything to return.</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">process_with_numpy</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="n">_process_pic</span><span class="p">(</span><span class="mf">0.1521</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">_process_pic</span><span class="p">(</span><span class="n">n_sec</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Processing'</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'.'</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">''</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">9</span> <span class="k">else</span> <span class="s1">'done!</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">n_sec</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">process_with_pytorch</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="n">_process_pic</span><span class="p">(</span><span class="mf">0.0328</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">get_image_from_instagram</span><span class="p">()</span>
+
+<span class="c1"># Time how long process_with_numpy(image) takes to run</span>
+<span class="k">with</span> <span class="n">timer</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Numpy version'</span><span class="p">)</span>
+    <span class="n">process_with_numpy</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+<span class="c1"># Time how long process_with_pytorch(image) takes to run</span>
+<span class="k">with</span> <span class="n">timer</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Pytorch version'</span><span class="p">)</span>
+    <span class="n">process_with_pytorch</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Numpy version
+Processing..........done!
+Elapsed: 1.66 seconds
+Pytorch version
+Processing..........done!
+Elapsed: 0.49 seconds
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we know the pytorch version is faster, we can use it in our web service to ensure our users get the rapid response time they expect.</p>
+<blockquote>
+<p>There is no as <code>&lt;variable name&gt;</code> at the end of the with statement in <code>timer()</code> context manager. That is because <code>timer()</code> is a context manager that does not return a value, so the as <code>&lt;variable name&gt;</code> at the end of the with statement isn't necessary.</p>
+</blockquote>
+<h3 id="A-read-only-open()-context-manager">
+<a class="anchor" href="#A-read-only-open()-context-manager" aria-hidden="true"><span class="octicon octicon-link"></span></a>A read-only open() context manager<a class="anchor-link" href="#A-read-only-open()-context-manager"> </a>
+</h3>
+<p>We have a bunch of data files for our next deep learning project that took us months to collect and clean. It would be terrible if we accidentally overwrote one of those files when trying to read it in for training, so we decided to create a read-only version of the <code>open()</code> context manager to use in our project.</p>
+<p>The regular <code>open()</code> context manager:<em> takes a filename and a mode (<code>'r'</code> for read, <code>'w'</code> for write, or <code>'a'</code> for append)</em> opens the file for reading, writing, or appending</p>
+<ul>
+<li>sends control back to the context, along with a reference to the file</li>
+<li>waits for the context to finish</li>
+<li>and then closes the file before exiting</li>
+</ul>
+<p>Our context manager will do the same thing, except it will only take the filename as an argument and it will only open the file for reading.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span> <span class="nf">open_read_only</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">"""Open a file in read-only mode.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): The location of the file to read</span>
+
+<span class="sd">    Yields:</span>
+<span class="sd">    file object</span>
+<span class="sd">    """</span>
+    <span class="n">read_only_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'r'</span><span class="p">)</span>
+    <span class="c1"># Yield read_only_file so it can be assigned to my_file</span>
+    <span class="k">yield</span> <span class="n">read_only_file</span>
+    <span class="c1"># Close read_only_file</span>
+    <span class="n">read_only_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">open_read_only</span><span class="p">(</span><span class="s1">'my_file.txt'</span><span class="p">)</span> <span class="k">as</span> <span class="n">my_file</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">my_file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>    Congratulations! You wrote a context manager that acts like "open()" but operates in read-only mode!
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Scraping-the-NASDAQ">
+<a class="anchor" href="#Scraping-the-NASDAQ" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scraping the NASDAQ<a class="anchor-link" href="#Scraping-the-NASDAQ"> </a>
+</h1>
+<p>Training deep neural nets is expensive! We might as well invest in NVIDIA stock since we're spending so much on GPUs. To pick the best time to invest, we are going to collect and analyze some data on how their stock is doing. The context manager <code>stock('NVDA')</code> will connect to the NASDAQ and return an object that you can use to get the latest price by calling its .price() method.</p>
+<p>You want to connect to stock('NVDA') and record 10 timesteps of price data by writing it to the file NVDA.txt</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">MockStock</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loc</span> <span class="o">=</span> <span class="n">loc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recent</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">laplace</span><span class="p">(</span><span class="n">loc</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">price</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">sign</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recent</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">recent</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># 70% chance of going same direction</span>
+        <span class="n">sign</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">sign</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">(</span><span class="n">sign</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.3</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">sign</span><span class="p">)</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recent</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">sign</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">/</span> <span class="mf">10.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recent</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">recent</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">new</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">new</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span> <span class="nf">stock</span><span class="p">(</span><span class="n">symbol</span><span class="p">):</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="mf">140.00</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">mock</span> <span class="o">=</span> <span class="n">MockStock</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Opening stock ticker for </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">symbol</span><span class="p">))</span>
+    <span class="k">yield</span> <span class="n">mock</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Closing stock ticker'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Use the "stock('NVDA')" context manager</span>
+<span class="c1"># and assign the result to the variable "nvda"</span>
+<span class="k">with</span> <span class="n">stock</span><span class="p">(</span><span class="s1">'NVDA'</span><span class="p">)</span> <span class="k">as</span> <span class="n">nvda</span><span class="p">:</span>
+    <span class="c1"># Open "NVDA.txt" for writing as f_out</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'NVDA.txt'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_out</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+              <span class="n">value</span> <span class="o">=</span> <span class="n">nvda</span><span class="o">.</span><span class="n">price</span><span class="p">()</span>
+              <span class="nb">print</span><span class="p">(</span><span class="s1">'Logging $</span><span class="si">{:.2f}</span><span class="s1"> for NVDA'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+              <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">'</span><span class="si">{:.2f}</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Opening stock ticker for NVDA
+Logging $140.25 for NVDA
+Logging $140.17 for NVDA
+Logging $140.12 for NVDA
+Logging $140.04 for NVDA
+Logging $140.01 for NVDA
+Logging $139.93 for NVDA
+Logging $139.86 for NVDA
+Logging $139.80 for NVDA
+Logging $139.89 for NVDA
+Logging $139.89 for NVDA
+Closing stock ticker
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we can monitor the NVIDIA stock price and decide when is the exact right time to buy. Nesting context managers like this allows us to connect to the stock market (the <strong>CONNECT/DISCONNECT</strong> pattern) and write to a file (the <strong>OPEN/CLOSE</strong> pattern) at the same time.</p>
+<h3 id="Changing-the-working-directory">
+<a class="anchor" href="#Changing-the-working-directory" aria-hidden="true"><span class="octicon octicon-link"></span></a>Changing the working directory<a class="anchor-link" href="#Changing-the-working-directory"> </a>
+</h3>
+<p>We are using an open-source library that lets us train deep neural networks on our data. Unfortunately, during training, this library writes out checkpoint models (i.e., models that have been trained on a portion of the data) to the current working directory. We found that behavior frustrating because we don't want to have to launch the script from the directory where the models will be saved.</p>
+<p>We decided that one way to fix this is to write a context manager that changes the current working directory, lets us build our models, and then resets the working directory to its original location. We'll want to be sure that any errors that occur during model training don't prevent you from resetting the working directory to its original location.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">in_dir</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+    <span class="sd">"""Change current working directory to `directory`, allow the user to run some code, and change back.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        directory (str): The path to a directory to work in.</span>
+<span class="sd">    """</span>
+    <span class="n">current_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+
+    <span class="c1"># Add code that lets you handle errors</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="c1"># Ensure the directory is reset,</span>
+    <span class="c1"># whether there was an error or not</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">current_dir</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now, even if someone writes buggy code when using our context manager, we will be sure to change the current working directory back to what it was when they called <code>in_dir()</code>. This is important to do because our users might be relying on their working directory being what it was when they started the script. <code>in_dir()</code> is a great example of the <strong>CHANGE/RESET</strong> pattern that indicates you should use a context manager.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Decorators">
+<a class="anchor" href="#Decorators" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decorators<a class="anchor-link" href="#Decorators"> </a>
+</h1>
+<p>Decorators are an extremely powerful concept in Python. They allow us to modify the behavior of a function without changing the code of the function itself.</p>
+<h2 id="Functions-are-objects">
+<a class="anchor" href="#Functions-are-objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>Functions are objects<a class="anchor-link" href="#Functions-are-objects"> </a>
+</h2>
+<h3 id="Building-a-command-line-data-app">
+<a class="anchor" href="#Building-a-command-line-data-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building a command line data app<a class="anchor-link" href="#Building-a-command-line-data-app"> </a>
+</h3>
+<p>We are building a command line tool that lets a user interactively explore a data set. We've defined four functions: <code>mean()</code>, <code>std()</code>, <code>minimum()</code>, and <code>maximum()</code> that users can call to analyze their data. users can call any of these functions by typing the function name at the input prompt.</p>
+<blockquote>
+<p><strong>Note</strong>:The function <code>get_user_input()</code> in this exercise is a mock version of asking the user to enter a command. It randomly returns one of the four function names. In real life, we would ask for input and wait until the user entered a value.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="k">def</span> <span class="nf">get_user_input</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="s1">'Type a command: '</span><span class="p">):</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">'mean'</span><span class="p">,</span> <span class="s1">'std'</span><span class="p">,</span> <span class="s1">'minimum'</span><span class="p">,</span> <span class="s1">'maximum'</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'&gt; </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">command</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">mean</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">std</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">minimum</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">maximum</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">load_data</span><span class="p">():</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">'height'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">72.1</span><span class="p">,</span> <span class="mf">69.8</span><span class="p">,</span> <span class="mf">63.2</span><span class="p">,</span> <span class="mf">64.7</span><span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">'weight'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">198</span><span class="p">,</span> <span class="mi">204</span><span class="p">,</span> <span class="mi">164</span><span class="p">,</span> <span class="mi">238</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Add the missing function references to the function map</span>
+<span class="n">function_map</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'mean'</span><span class="p">:</span> <span class="n">mean</span><span class="p">,</span>
+  <span class="s1">'std'</span><span class="p">:</span> <span class="n">std</span><span class="p">,</span>
+  <span class="s1">'minimum'</span><span class="p">:</span> <span class="n">minimum</span><span class="p">,</span>
+  <span class="s1">'maximum'</span><span class="p">:</span> <span class="n">maximum</span>
+<span class="p">}</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">func_name</span> <span class="o">=</span> <span class="n">get_user_input</span><span class="p">()</span>
+
+<span class="c1"># Call the chosen function and pass "data" as an argument</span>
+<span class="n">function_map</span><span class="p">[</span><span class="n">func_name</span><span class="p">](</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>   height  weight
+0    72.1     198
+1    69.8     204
+2    63.2     164
+3    64.7     238
+Type a command: 
+&gt; std
+height     4.194043
+weight    30.309514
+dtype: float64
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Reviewing-our-co-worker's-code">
+<a class="anchor" href="#Reviewing-our-co-worker's-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reviewing our co-worker's code<a class="anchor-link" href="#Reviewing-our-co-worker's-code"> </a>
+</h3>
+<p>Our co-worker is asking us to review some code that they've written and give them some tips on how to get it ready for production. We know that having a docstring is considered best practice for maintainable, reusable functions, so as a sanity check we decided to run this <code>has_docstring()</code> function on all of their functions.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">has_docstring</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">"""Check to see if the function </span>
+<span class="sd">    `func` has a docstring.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        func (callable): A function.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">func</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">load_and_plot_data</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">"""Load a data frame and plot each column.</span>
+<span class="sd">  </span>
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): Path to a CSV file of data.</span>
+<span class="sd">  </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        pandas.DataFrame</span>
+<span class="sd">    """</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">load_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">hist</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Call has_docstring() on the load_and_plot_data() function</span>
+<span class="n">ok</span> <span class="o">=</span> <span class="n">has_docstring</span><span class="p">(</span><span class="n">load_and_plot_data</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"load_and_plot_data() doesn't have a docstring!"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"load_and_plot_data() looks ok"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>load_and_plot_data() looks ok
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">as_2D</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+    <span class="sd">"""Reshape an array to 2 dimensions"""</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Call has_docstring() on the as_2D() function</span>
+<span class="n">ok</span> <span class="o">=</span> <span class="n">has_docstring</span><span class="p">(</span><span class="n">as_2D</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"as_2D() doesn't have a docstring!"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"as_2D() looks ok"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>as_2D() looks ok
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">log_product</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">arr</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Call has_docstring() on the log_product() function</span>
+<span class="n">ok</span> <span class="o">=</span> <span class="n">has_docstring</span><span class="p">(</span><span class="n">log_product</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"log_product() doesn't have a docstring!"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"log_product() looks ok"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>log_product() doesn't have a docstring!
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Returning-functions-for-a-math-game">
+<a class="anchor" href="#Returning-functions-for-a-math-game" aria-hidden="true"><span class="octicon octicon-link"></span></a>Returning functions for a math game<a class="anchor-link" href="#Returning-functions-for-a-math-game"> </a>
+</h3>
+<p>We are building an educational math game where the player enters a math term, and our program returns a function that matches that term. For instance, if the user types "add", our program returns a function that adds two numbers. So far we've only implemented the "add" function. Now we want to include a "subtract" function.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">create_math_function</span><span class="p">(</span><span class="n">func_name</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">func_name</span> <span class="o">==</span> <span class="s1">'add'</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+        <span class="k">return</span> <span class="n">add</span>
+    <span class="k">elif</span> <span class="n">func_name</span> <span class="o">==</span> <span class="s1">'subtract'</span><span class="p">:</span>
+        <span class="c1"># Define the subtract() function</span>
+        <span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">a</span><span class="o">-</span><span class="n">b</span>
+        <span class="k">return</span> <span class="n">subtract</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"I don't know that one"</span><span class="p">)</span>
+    
+<span class="n">add</span> <span class="o">=</span> <span class="n">create_math_function</span><span class="p">(</span><span class="s1">'add'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'5 + 2 = </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+
+<span class="n">subtract</span> <span class="o">=</span> <span class="n">create_math_function</span><span class="p">(</span><span class="s1">'subtract'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'5 - 2 = </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subtract</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>5 + 2 = 7
+5 - 2 = 3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Scope">
+<a class="anchor" href="#Scope" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scope<a class="anchor-link" href="#Scope"> </a>
+</h2>
+<h3 id="Modifying-variables-outside-local-scope">
+<a class="anchor" href="#Modifying-variables-outside-local-scope" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modifying variables outside local scope<a class="anchor-link" href="#Modifying-variables-outside-local-scope"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">call_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
+    <span class="c1"># Use a keyword that lets us update call_count </span>
+    <span class="k">global</span> <span class="n">call_count</span>
+    <span class="n">call_count</span> <span class="o">+=</span> <span class="mi">1</span>
+  
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"You've called my_function() </span><span class="si">{}</span><span class="s2"> times!"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">call_count</span>
+    <span class="p">))</span>
+  
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">my_function</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>You've called my_function() 1 times!
+You've called my_function() 2 times!
+You've called my_function() 3 times!
+You've called my_function() 4 times!
+You've called my_function() 5 times!
+You've called my_function() 6 times!
+You've called my_function() 7 times!
+You've called my_function() 8 times!
+You've called my_function() 9 times!
+You've called my_function() 10 times!
+You've called my_function() 11 times!
+You've called my_function() 12 times!
+You've called my_function() 13 times!
+You've called my_function() 14 times!
+You've called my_function() 15 times!
+You've called my_function() 16 times!
+You've called my_function() 17 times!
+You've called my_function() 18 times!
+You've called my_function() 19 times!
+You've called my_function() 20 times!
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">read_files</span><span class="p">():</span>
+    <span class="n">file_contents</span> <span class="o">=</span> <span class="kc">None</span>
+  
+    <span class="k">def</span> <span class="nf">save_contents</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="c1"># Add a keyword that lets us modify file_contents</span>
+        <span class="k">nonlocal</span> <span class="n">file_contents</span>
+        <span class="k">if</span> <span class="n">file_contents</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">file_contents</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
+            <span class="n">file_contents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fin</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+      
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'1984.txt'</span><span class="p">,</span> <span class="s1">'MobyDick.txt'</span><span class="p">,</span> <span class="s1">'CatsEye.txt'</span><span class="p">]:</span>
+        <span class="n">save_contents</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">file_contents</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">read_files</span><span class="p">()))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>It was a bright day in April, and the clocks were striking thirteen.
+Call me Ishmael.
+Time is not a line but a dimension, like the dimensions of space.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">wait_until_done</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">check_is_done</span><span class="p">():</span>
+        <span class="c1"># Add a keyword so that wait_until_done() </span>
+        <span class="c1"># doesn't run forever</span>
+        <span class="k">global</span> <span class="n">done</span>
+        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
+            <span class="n">done</span> <span class="o">=</span> <span class="kc">True</span>
+      
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+        <span class="n">check_is_done</span><span class="p">()</span>
+
+<span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">wait_until_done</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Work done? </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">done</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Work done? True
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Closures">
+<a class="anchor" href="#Closures" aria-hidden="true"><span class="octicon octicon-link"></span></a>Closures<a class="anchor-link" href="#Closures"> </a>
+</h2>
+<h3 id="Checking-for-closures">
+<a class="anchor" href="#Checking-for-closures" aria-hidden="true"><span class="octicon octicon-link"></span></a>Checking for closures<a class="anchor-link" href="#Checking-for-closures"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">return_a_func</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">new_func</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'arg1 was </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">arg1</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'arg2 was </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">arg2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">new_func</span>
+    
+<span class="n">my_func</span> <span class="o">=</span> <span class="n">return_a_func</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">17</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">my_func</span><span class="o">.</span><span class="vm">__closure__</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">my_func</span><span class="o">.</span><span class="vm">__closure__</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Get the values of the variables in the closure</span>
+<span class="n">closure_values</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="n">my_func</span><span class="o">.</span><span class="vm">__closure__</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">cell_contents</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">closure_values</span> <span class="o">==</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">17</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>True
+True
+True
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Closures-keep-your-values-safe">
+<a class="anchor" href="#Closures-keep-your-values-safe" aria-hidden="true"><span class="octicon octicon-link"></span></a>Closures keep your values safe<a class="anchor-link" href="#Closures-keep-your-values-safe"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">my_special_function</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'You are running my_special_function()'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_new_func</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">call_func</span><span class="p">():</span>
+        <span class="n">func</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">call_func</span>
+
+<span class="n">new_func</span> <span class="o">=</span> <span class="n">get_new_func</span><span class="p">(</span><span class="n">my_special_function</span><span class="p">)</span>
+
+<span class="c1"># Redefine my_special_function() to just print "hello"</span>
+<span class="k">def</span> <span class="nf">my_special_function</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"hello"</span><span class="p">)</span>
+
+<span class="n">new_func</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>You are running my_special_function()
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">my_special_function</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'You are running my_special_function()'</span><span class="p">)</span>
+  
+<span class="k">def</span> <span class="nf">get_new_func</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">call_func</span><span class="p">():</span>
+        <span class="n">func</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">call_func</span>
+
+<span class="n">new_func</span> <span class="o">=</span> <span class="n">get_new_func</span><span class="p">(</span><span class="n">my_special_function</span><span class="p">)</span>
+
+<span class="c1"># Delete my_special_function()</span>
+<span class="k">del</span><span class="p">(</span><span class="n">my_special_function</span><span class="p">)</span>
+
+<span class="n">new_func</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>You are running my_special_function()
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">my_special_function</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'You are running my_special_function()'</span><span class="p">)</span>
+  
+<span class="k">def</span> <span class="nf">get_new_func</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">call_func</span><span class="p">():</span>
+        <span class="n">func</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">call_func</span>
+
+<span class="c1"># Overwrite `my_special_function` with the new function</span>
+<span class="n">my_special_function</span> <span class="o">=</span> <span class="n">get_new_func</span><span class="p">(</span><span class="n">my_special_function</span><span class="p">)</span>
+
+<span class="n">my_special_function</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>You are running my_special_function()
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Decorators">
+<a class="anchor" href="#Decorators" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decorators<a class="anchor-link" href="#Decorators"> </a>
+</h2>
+<h3 id="Using-decorator-syntax">
+<a class="anchor" href="#Using-decorator-syntax" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using decorator syntax<a class="anchor-link" href="#Using-decorator-syntax"> </a>
+</h3>
+<p><code>print_args</code> prints out all of the arguments and their values any time a function that it is decorating gets called.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">print_args</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">bound</span> <span class="o">=</span> <span class="n">sig</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">arguments</span>
+        <span class="n">str_args</span> <span class="o">=</span> <span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">'</span><span class="si">{}</span><span class="s1">=</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">bound</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="s1"> was called with </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">str_args</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="c1"># Decorate my_function() with the print_args() decorator</span>
+<span class="n">my_function</span> <span class="o">=</span> <span class="n">print_args</span><span class="p">(</span><span class="n">my_function</span><span class="p">)</span>
+
+<span class="n">my_function</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>my_function was called with a=1, b=2, c=3
+6
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Decorate my_function() with the print_args() decorator</span>
+<span class="nd">@print_args</span>
+<span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="n">my_function</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>my_function was called with a=1, b=2, c=3
+6
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>even though decorators are functions themselves, when you use decorator syntax with the<code>@</code> symbol we do not include the parentheses after the decorator name.</p>
+<h3 id="Defining-a-decorator">
+<a class="anchor" href="#Defining-a-decorator" aria-hidden="true"><span class="octicon octicon-link"></span></a>Defining a decorator<a class="anchor-link" href="#Defining-a-decorator"> </a>
+</h3>
+<p>Our buddy has been working on a decorator that prints a "before" message before the decorated function is called and prints an "after" message after the decorated function is called. They are having trouble remembering how wrapping the decorated function is supposed to work.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">print_before_and_after</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Before </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+    <span class="c1"># Call the function being decorated with *args</span>
+    <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'After </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+  <span class="c1"># Return the nested function</span>
+  <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nd">@print_before_and_after</span>
+<span class="k">def</span> <span class="nf">multiply</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="n">multiply</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Before multiply
+50
+After multiply
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Print-the-return-type">
+<a class="anchor" href="#Print-the-return-type" aria-hidden="true"><span class="octicon octicon-link"></span></a>Print the return type<a class="anchor-link" href="#Print-the-return-type"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">print_return_type</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+  <span class="c1"># Define wrapper(), the decorated function</span>
+  <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="c1"># Call the function being decorated</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="s1">() returned type </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+      <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="p">))</span>
+    <span class="k">return</span> <span class="n">result</span>
+  <span class="c1"># Return the decorated function</span>
+  <span class="k">return</span> <span class="n">wrapper</span>
+  
+<span class="nd">@print_return_type</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">value</span>
+  
+<span class="nb">print</span><span class="p">(</span><span class="n">foo</span><span class="p">(</span><span class="mi">42</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">foo</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">foo</span><span class="p">({</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">42</span><span class="p">}))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>foo() returned type &lt;class 'int'&gt;
+42
+foo() returned type &lt;class 'list'&gt;
+[1, 2, 3]
+foo() returned type &lt;class 'dict'&gt;
+{'a': 42}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Counter">
+<a class="anchor" href="#Counter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Counter<a class="anchor-link" href="#Counter"> </a>
+</h3>
+<p>how many times each of the functions in it gets called in a web app</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">counter</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">wrapper</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="c1"># Call the function being decorated and return the result</span>
+    <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="n">wrapper</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="c1"># Return the new decorated function</span>
+  <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="c1"># Decorate foo() with the counter() decorator</span>
+<span class="nd">@counter</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">'calling foo()'</span><span class="p">)</span>
+  
+<span class="n">foo</span><span class="p">()</span>
+<span class="n">foo</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'foo() was called </span><span class="si">{}</span><span class="s1"> times.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="n">count</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>calling foo()
+calling foo()
+foo() was called 2 times.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Decorators-and-metadata">
+<a class="anchor" href="#Decorators-and-metadata" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decorators and metadata<a class="anchor-link" href="#Decorators-and-metadata"> </a>
+</h2>
+<h3 id="Preserving-docstrings-when-decorating-functions">
+<a class="anchor" href="#Preserving-docstrings-when-decorating-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Preserving docstrings when decorating functions<a class="anchor-link" href="#Preserving-docstrings-when-decorating-functions"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">add_hello</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Hello'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="c1"># Decorate print_sum() with the add_hello() decorator</span>
+<span class="nd">@add_hello</span>
+<span class="k">def</span> <span class="nf">print_sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+  <span class="sd">"""Adds two numbers and prints the sum"""</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+  
+<span class="n">print_sum</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">print_sum</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello
+30
+None
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">add_hello</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+  <span class="c1"># Add a docstring to wrapper</span>
+  <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">"""Print 'hello' and then call the decorated function."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Hello'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nd">@add_hello</span>
+<span class="k">def</span> <span class="nf">print_sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+  <span class="sd">"""Adds two numbers and prints the sum"""</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+  
+<span class="n">print_sum</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">print_sum</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello
+30
+Print 'hello' and then call the decorated function.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="k">def</span> <span class="nf">add_hello</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+  <span class="c1"># Decorate wrapper() so that it keeps func()'s metadata</span>
+  <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">"""Print 'hello' and then call the decorated function."""</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Hello'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">wrapper</span>
+  
+<span class="nd">@add_hello</span>
+<span class="k">def</span> <span class="nf">print_sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+  <span class="sd">"""Adds two numbers and prints the sum"""</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+  
+<span class="n">print_sum</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">print_sum</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello
+30
+Adds two numbers and prints the sum
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Measuring-decorator-overhead">
+<a class="anchor" href="#Measuring-decorator-overhead" aria-hidden="true"><span class="octicon octicon-link"></span></a>Measuring decorator overhead<a class="anchor-link" href="#Measuring-decorator-overhead"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">check_inputs</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">'Finished checking inputs'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">check_outputs</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">'Finished checking outputs'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">check_everything</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+  <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">check_inputs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">check_outputs</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+  <span class="k">return</span> <span class="n">wrapper</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@check_everything</span>
+<span class="k">def</span> <span class="nf">duplicate</span><span class="p">(</span><span class="n">my_list</span><span class="p">):</span>
+  <span class="sd">"""Return a new list that repeats the input twice"""</span>
+  <span class="k">return</span> <span class="n">my_list</span> <span class="o">+</span> <span class="n">my_list</span>
+
+<span class="n">t_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">duplicated_list</span> <span class="o">=</span> <span class="n">duplicate</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">)))</span>
+<span class="n">t_end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">decorated_time</span> <span class="o">=</span> <span class="n">t_end</span> <span class="o">-</span> <span class="n">t_start</span>
+
+<span class="n">t_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="c1"># Call the original function instead of the decorated one</span>
+<span class="n">duplicated_list</span> <span class="o">=</span> <span class="n">duplicate</span><span class="o">.</span><span class="n">__wrapped__</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">)))</span>
+<span class="n">t_end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">undecorated_time</span> <span class="o">=</span> <span class="n">t_end</span> <span class="o">-</span> <span class="n">t_start</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Decorated time: </span><span class="si">{:.5f}</span><span class="s1">s'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">decorated_time</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Undecorated time: </span><span class="si">{:.5f}</span><span class="s1">s'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">undecorated_time</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Finished checking inputs
+Finished checking outputs
+Decorated time: 2.40551s
+Undecorated time: 0.00000s
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Decorators-that-take-arguments">
+<a class="anchor" href="#Decorators-that-take-arguments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decorators that take arguments<a class="anchor-link" href="#Decorators-that-take-arguments"> </a>
+</h2>
+<h3 id="Run_n_times()">
+<a class="anchor" href="#Run_n_times()" aria-hidden="true"><span class="octicon octicon-link"></span></a>Run_n_times()<a class="anchor-link" href="#Run_n_times()"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">run_n_times</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+  <span class="sd">"""Define and return a decorator"""</span>
+  <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+  <span class="k">return</span> <span class="n">decorator</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Make print_sum() run 10 times with the run_n_times() decorator</span>
+<span class="nd">@run_n_times</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">print_sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+  
+<span class="n">print_sum</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>35
+35
+35
+35
+35
+35
+35
+35
+35
+35
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Use run_n_times() to create the run_five_times() decorator</span>
+<span class="n">run_five_times</span> <span class="o">=</span> <span class="n">run_n_times</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="nd">@run_five_times</span>
+<span class="k">def</span> <span class="nf">print_sum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+  
+<span class="n">print_sum</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>104
+104
+104
+104
+104
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Modify the print() function to always run 20 times</span>
+<span class="nb">print</span> <span class="o">=</span> <span class="n">run_n_times</span><span class="p">(</span><span class="mi">20</span><span class="p">)(</span><span class="nb">print</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">'What is happening?!?!'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+What is happening?!?!
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span> <span class="o">=</span> <span class="n">run_n_times</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="nb">print</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="HTML-Generator">
+<a class="anchor" href="#HTML-Generator" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML Generator<a class="anchor-link" href="#HTML-Generator"> </a>
+</h2>
+<p>a script that generates HTML for a webpage on the fly.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">html</span><span class="p">(</span><span class="n">open_tag</span><span class="p">,</span> <span class="n">close_tag</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+      <span class="n">msg</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="k">return</span> <span class="s1">'</span><span class="si">{}{}{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">open_tag</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">close_tag</span><span class="p">)</span>
+    <span class="c1"># Return the decorated function</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+  <span class="c1"># Return the decorator</span>
+  <span class="k">return</span> <span class="n">decorator</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Make hello() return bolded text</span>
+<span class="nd">@html</span><span class="p">(</span><span class="s2">"&lt;b&gt;"</span><span class="p">,</span> <span class="s2">"&lt;/b&gt;"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+  <span class="k">return</span> <span class="s1">'Hello </span><span class="si">{}</span><span class="s1">!'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+  
+<span class="nb">print</span><span class="p">(</span><span class="n">hello</span><span class="p">(</span><span class="s1">'Alice'</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;b&gt;Hello Alice!&lt;/b&gt;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%html</span>
+
+<span class="p">&lt;</span><span class="nt">b</span><span class="p">&gt;</span>Hello Alice!<span class="p">&lt;/</span><span class="nt">b</span><span class="p">&gt;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+
+<b>Hello Alice!</b>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Make goodbye() return italicized text</span>
+<span class="nd">@html</span><span class="p">(</span><span class="s2">"&lt;i&gt;"</span><span class="p">,</span> <span class="s2">"&lt;/i&gt;"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">goodbye</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+  <span class="k">return</span> <span class="s1">'Goodbye </span><span class="si">{}</span><span class="s1">.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+  
+<span class="nb">print</span><span class="p">(</span><span class="n">goodbye</span><span class="p">(</span><span class="s1">'Alice'</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;i&gt;Goodbye Alice.&lt;/i&gt;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%html</span>
+<span class="p">&lt;</span><span class="nt">i</span><span class="p">&gt;</span>Goodbye Alice.<span class="p">&lt;/</span><span class="nt">i</span><span class="p">&gt;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<i>Goodbye Alice.</i>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Wrap the result of hello_goodbye() in &lt;div&gt; and &lt;/div&gt;</span>
+<span class="nd">@html</span><span class="p">(</span><span class="s2">"&lt;div&gt;"</span><span class="p">,</span> <span class="s2">"&lt;/div"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello_goodbye</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+  <span class="k">return</span> <span class="s1">'</span><span class="se">\n</span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hello</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">goodbye</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+  
+<span class="nb">print</span><span class="p">(</span><span class="n">hello_goodbye</span><span class="p">(</span><span class="s1">'Alice'</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;div&gt;
+&lt;b&gt;Hello Alice!&lt;/b&gt;
+&lt;i&gt;Goodbye Alice.&lt;/i&gt;
+&lt;/div
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%html</span>
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">b</span><span class="p">&gt;</span>Hello Alice!<span class="p">&lt;/</span><span class="nt">b</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">i</span><span class="p">&gt;</span>Goodbye Alice.<span class="p">&lt;/</span><span class="nt">i</span><span class="p">&gt;</span>
+<span class="err">&lt;</span>/div
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<b>Hello Alice!</b>
+<i>Goodbye Alice.</i>
+&lt;/div
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Timeout():-a-real-world-example">
+<a class="anchor" href="#Timeout():-a-real-world-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Timeout(): a real world example<a class="anchor-link" href="#Timeout():-a-real-world-example"> </a>
+</h2>
+<h3 id="Tag-your-functions">
+<a class="anchor" href="#Tag-your-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tag your functions<a class="anchor-link" href="#Tag-your-functions"> </a>
+</h3>
+<p>Tagging something means that you have given that thing one or more strings that act as labels. For instance, we often tag emails or photos so that we can search for them later. You've decided to write a decorator that will let you tag your functions with an arbitrary list of tags. You could use these tags for many things:</p>
+<ul>
+<li>Adding information about who has worked on the function, so a user can look up who to ask if they run into trouble using it.</li>
+<li>Labeling functions as "experimental" so that users know that the inputs and outputs might change in the future.</li>
+<li>Marking any functions that you plan to remove in a future version of the code.</li>
+<li>Etc.</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">tag</span><span class="p">(</span><span class="o">*</span><span class="n">tags</span><span class="p">):</span>
+  <span class="c1"># Define a new decorator, named "decorator", to return</span>
+  <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="c1"># Ensure the decorated function keeps its metadata</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+      <span class="c1"># Call the function being decorated and return the result</span>
+      <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">wrapper</span><span class="o">.</span><span class="n">tags</span> <span class="o">=</span> <span class="n">tags</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+  <span class="c1"># Return the new decorator</span>
+  <span class="k">return</span> <span class="n">decorator</span>
+
+<span class="nd">@tag</span><span class="p">(</span><span class="s1">'test'</span><span class="p">,</span> <span class="s1">'this is a tag'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+  <span class="k">pass</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="n">tags</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>('test', 'this is a tag')
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Check-the-return-type">
+<a class="anchor" href="#Check-the-return-type" aria-hidden="true"><span class="octicon octicon-link"></span></a>Check the return type<a class="anchor-link" href="#Check-the-return-type"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">returns</span><span class="p">(</span><span class="n">return_type</span><span class="p">):</span>
+  <span class="c1"># Complete the returns() decorator</span>
+  <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+      <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="k">assert</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="n">return_type</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">result</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+  <span class="k">return</span> <span class="n">decorator</span>
+  
+<span class="nd">@returns</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">value</span>
+
+<span class="k">try</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">foo</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]))</span>
+<span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">'foo() did not return a dict!'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>foo() did not return a dict!
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+ 
+
+</div>
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="VictorOmondi1997/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/functions/python/2020/07/26/Writing-Functions-in-Python.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Hello! Thanks for visiting my blog, I&#39;m Victor Omondi, Data Scientist with industry experience analyzing, visualizing and modeling data. I specialize in Python &amp; R and have professional experience working with C++ and JavaScript|, currently am a student at Multimedia University of Kenya pursuing Bachelor of Science (Computer Technology)</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://dribbble.com/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#dribbble"></use></svg></a></li><li><a rel="me" href="https://www.facebook.com/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#facebook"></use></svg></a></li><li><a rel="me" href="https://www.flickr.com/photos/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#flickr"></use></svg></a></li><li><a rel="me" href="https://github.com/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://stackoverflow.com/users/9713351" title="9713351"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#stackoverflow"></use></svg></a></li><li><a rel="me" href="https://www.instagram.com/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#instagram"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://www.pinterest.com/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#pinterest"></use></svg></a></li><li><a rel="me" href="https://freeradical.zone/@VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#mastodon"></use></svg></a></li><li><a rel="me" href="https://twitter.com/VictorOmondi197" title="VictorOmondi197"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li><li><a rel="me" href="https://www.youtube.com/channel/UCwk-x5YuGrNBNGZNpb1CX3Q" title="VICTOR OMONDI"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#youtube"></use></svg></a></li><li><a rel="me" href="https://t.me/VickTheGeek" title="VickTheGeek"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#telegram"></use></svg></a></li><li><a rel="me" href="https://keybase.io/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#keybase"></use></svg></a></li><li><a rel="me" href="https://micro.blog/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#microdotblog"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
