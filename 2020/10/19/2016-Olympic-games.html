@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Comparing the distribution of “Weight” in mens_rowing and mens_gymnastics | Victor Omondi Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Comparing the distribution of “Weight” in mens_rowing and mens_gymnastics" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Hello! Thanks for visiting my blog, I’m Victor Omondi, Data Scientist with industry experience analyzing, visualizing and modeling data. I specialize in Python &amp; R and have professional experience working with C++ and JavaScript , currently am a student at Multimedia University of Kenya pursuing Bachelor of Science (Computer Technology)" />
+<meta property="og:description" content="Hello! Thanks for visiting my blog, I’m Victor Omondi, Data Scientist with industry experience analyzing, visualizing and modeling data. I specialize in Python &amp; R and have professional experience working with C++ and JavaScript , currently am a student at Multimedia University of Kenya pursuing Bachelor of Science (Computer Technology)" />
+<link rel="canonical" href="https://victoromondi1997.github.io/blog/2020/10/19/2016-Olympic-games.html" />
+<meta property="og:url" content="https://victoromondi1997.github.io/blog/2020/10/19/2016-Olympic-games.html" />
+<meta property="og:site_name" content="Victor Omondi Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-10-19T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Comparing the distribution of “Weight” in mens_rowing and mens_gymnastics","description":"Hello! Thanks for visiting my blog, I’m Victor Omondi, Data Scientist with industry experience analyzing, visualizing and modeling data. I specialize in Python &amp; R and have professional experience working with C++ and JavaScript , currently am a student at Multimedia University of Kenya pursuing Bachelor of Science (Computer Technology)","datePublished":"2020-10-19T00:00:00-05:00","dateModified":"2020-10-19T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://victoromondi1997.github.io/blog/2020/10/19/2016-Olympic-games.html"},"url":"https://victoromondi1997.github.io/blog/2020/10/19/2016-Olympic-games.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://victoromondi1997.github.io/blog/feed.xml" title="Victor Omondi | Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-170138117-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Comparing the distribution of “Weight” in mens_rowing and mens_gymnastics | Victor Omondi Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Comparing the distribution of “Weight” in mens_rowing and mens_gymnastics" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Hello! Thanks for visiting my blog, I’m Victor Omondi, Data Scientist with industry experience analyzing, visualizing and modeling data. I specialize in Python &amp; R and have professional experience working with C++ and JavaScript , currently am a student at Multimedia University of Kenya pursuing Bachelor of Science (Computer Technology)" />
+<meta property="og:description" content="Hello! Thanks for visiting my blog, I’m Victor Omondi, Data Scientist with industry experience analyzing, visualizing and modeling data. I specialize in Python &amp; R and have professional experience working with C++ and JavaScript , currently am a student at Multimedia University of Kenya pursuing Bachelor of Science (Computer Technology)" />
+<link rel="canonical" href="https://victoromondi1997.github.io/blog/2020/10/19/2016-Olympic-games.html" />
+<meta property="og:url" content="https://victoromondi1997.github.io/blog/2020/10/19/2016-Olympic-games.html" />
+<meta property="og:site_name" content="Victor Omondi Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-10-19T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Comparing the distribution of “Weight” in mens_rowing and mens_gymnastics","description":"Hello! Thanks for visiting my blog, I’m Victor Omondi, Data Scientist with industry experience analyzing, visualizing and modeling data. I specialize in Python &amp; R and have professional experience working with C++ and JavaScript , currently am a student at Multimedia University of Kenya pursuing Bachelor of Science (Computer Technology)","datePublished":"2020-10-19T00:00:00-05:00","dateModified":"2020-10-19T00:00:00-05:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://victoromondi1997.github.io/blog/2020/10/19/2016-Olympic-games.html"},"url":"https://victoromondi1997.github.io/blog/2020/10/19/2016-Olympic-games.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://victoromondi1997.github.io/blog/feed.xml" title="Victor Omondi | Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-170138117-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Victor Omondi | Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Comparing the distribution of &quot;Weight&quot; in mens_rowing and mens_gymnastics</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-10-19T00:00:00-05:00" itemprop="datePublished">
+        Oct 19, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/VictorOmondi1997/blog/tree/master/_notebooks/2020-10-19-2016 Olympic games.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/VictorOmondi1997/blog/master?filepath=_notebooks%2F2020-10-19-2016+Olympic+games.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/VictorOmondi1997/blog/blob/master/_notebooks/2020-10-19-2016 Olympic games.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-10-19-2016 Olympic games.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The distribution of weights of medalists in gymnastics and in rowing in the 2016 Olympic games for a comparison between them</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mens_rowing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/mens-rowing.csv&#39;</span><span class="p">)</span>
+<span class="n">mens_gymnastics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/mens_gymnastics.csv&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mens_rowing</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>Height</th>
+      <th>Weight</th>
+      <th>Team</th>
+      <th>NOC</th>
+      <th>Games</th>
+      <th>Year</th>
+      <th>Season</th>
+      <th>City</th>
+      <th>Sport</th>
+      <th>Event</th>
+      <th>Medal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>158</td>
+      <td>62</td>
+      <td>Giovanni Abagnale</td>
+      <td>M</td>
+      <td>21.0</td>
+      <td>198.0</td>
+      <td>90.0</td>
+      <td>Italy</td>
+      <td>ITA</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Rowing</td>
+      <td>Rowing Men's Coxless Pairs</td>
+      <td>Bronze</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>11648</td>
+      <td>6346</td>
+      <td>Jrmie Azou</td>
+      <td>M</td>
+      <td>27.0</td>
+      <td>178.0</td>
+      <td>71.0</td>
+      <td>France</td>
+      <td>FRA</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Rowing</td>
+      <td>Rowing Men's Lightweight Double Sculls</td>
+      <td>Gold</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>14871</td>
+      <td>8025</td>
+      <td>Thomas Gabriel Jrmie Baroukh</td>
+      <td>M</td>
+      <td>28.0</td>
+      <td>183.0</td>
+      <td>70.0</td>
+      <td>France</td>
+      <td>FRA</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Rowing</td>
+      <td>Rowing Men's Lightweight Coxless Fours</td>
+      <td>Bronze</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>15215</td>
+      <td>8214</td>
+      <td>Jacob Jepsen Barse</td>
+      <td>M</td>
+      <td>27.0</td>
+      <td>188.0</td>
+      <td>73.0</td>
+      <td>Denmark</td>
+      <td>DEN</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Rowing</td>
+      <td>Rowing Men's Lightweight Coxless Fours</td>
+      <td>Silver</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>18441</td>
+      <td>9764</td>
+      <td>Alexander Belonogoff</td>
+      <td>M</td>
+      <td>26.0</td>
+      <td>187.0</td>
+      <td>90.0</td>
+      <td>Australia</td>
+      <td>AUS</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Rowing</td>
+      <td>Rowing Men's Quadruple Sculls</td>
+      <td>Silver</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mens_gymnastics</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>Height</th>
+      <th>Weight</th>
+      <th>Team</th>
+      <th>NOC</th>
+      <th>Games</th>
+      <th>Year</th>
+      <th>Season</th>
+      <th>City</th>
+      <th>Sport</th>
+      <th>Event</th>
+      <th>Medal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>794</td>
+      <td>455</td>
+      <td>Denis Mikhaylovich Ablyazin</td>
+      <td>M</td>
+      <td>24.0</td>
+      <td>161.0</td>
+      <td>62.0</td>
+      <td>Russia</td>
+      <td>RUS</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Gymnastics</td>
+      <td>Gymnastics Men's Team All-Around</td>
+      <td>Silver</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>796</td>
+      <td>455</td>
+      <td>Denis Mikhaylovich Ablyazin</td>
+      <td>M</td>
+      <td>24.0</td>
+      <td>161.0</td>
+      <td>62.0</td>
+      <td>Russia</td>
+      <td>RUS</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Gymnastics</td>
+      <td>Gymnastics Men's Horse Vault</td>
+      <td>Silver</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>797</td>
+      <td>455</td>
+      <td>Denis Mikhaylovich Ablyazin</td>
+      <td>M</td>
+      <td>24.0</td>
+      <td>161.0</td>
+      <td>62.0</td>
+      <td>Russia</td>
+      <td>RUS</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Gymnastics</td>
+      <td>Gymnastics Men's Rings</td>
+      <td>Bronze</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>18577</td>
+      <td>9829</td>
+      <td>David Sagitovich Belyavsky</td>
+      <td>M</td>
+      <td>24.0</td>
+      <td>165.0</td>
+      <td>55.0</td>
+      <td>Russia</td>
+      <td>RUS</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Gymnastics</td>
+      <td>Gymnastics Men's Team All-Around</td>
+      <td>Silver</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>18579</td>
+      <td>9829</td>
+      <td>David Sagitovich Belyavsky</td>
+      <td>M</td>
+      <td>24.0</td>
+      <td>165.0</td>
+      <td>55.0</td>
+      <td>Russia</td>
+      <td>RUS</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Gymnastics</td>
+      <td>Gymnastics Men's Parallel Bars</td>
+      <td>Bronze</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mens_rowing</span><span class="o">.</span><span class="n">Weight</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Rowing&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mens_gymnastics</span><span class="o">.</span><span class="n">Weight</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Gymnastics&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Weight (kg)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;# of observations&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+" />
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Selecting groups from the Summer 2016 Olympic Games medalist dataset to compare the height of medalist athletes in two different sports.</p>
+<h1 id="Adding-error-bars">Adding error bars<a class="anchor-link" href="#Adding-error-bars"> </a></h1>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="s1">&#39;Rowing&#39;</span><span class="p">,</span> <span class="n">mens_rowing</span><span class="o">.</span><span class="n">Height</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">yerr</span><span class="o">=</span><span class="n">mens_rowing</span><span class="o">.</span><span class="n">Height</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="s1">&#39;Gymnastics&#39;</span><span class="p">,</span> <span class="n">mens_gymnastics</span><span class="o">.</span><span class="n">Height</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">yerr</span><span class="o">=</span><span class="n">mens_gymnastics</span><span class="o">.</span><span class="n">Height</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Height (cm)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+" />
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Boxplot">Boxplot<a class="anchor-link" href="#Boxplot"> </a></h1>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">boxplot</span><span class="p">([</span><span class="n">mens_rowing</span><span class="o">.</span><span class="n">Height</span><span class="p">,</span> <span class="n">mens_gymnastics</span><span class="o">.</span><span class="n">Height</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="s1">&#39;Rowing&#39;</span><span class="p">,</span> <span class="s1">&#39;Gymnastics&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Height (cm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAmcAAAFpCAYAAADZUI/8AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADl0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uIDIuMi4yLCBodHRwOi8vbWF0cGxvdGxpYi5vcmcvhp/UCwAAGm9JREFUeJzt3XGU52VdL/D3x11gQ0WXw9pV0NAu5uKkqJPXbDURT5qVlPembN2ymiNRtGVZUcw9oeeG16Nk6VYiR0i8N8estLRjlsUkTlm0mOLC6pHUYqMLa3DFQGjF5/4x34Vh3d0ZZH7ze2bm9Tpnznx/z/f5feczHM5v3/N8n+f5VmstAAD04UHjLgAAgHsJZwAAHRHOAAA6IpwBAHREOAMA6IhwBgDQEeEMAKAjwhkAQEeEMwCAjghnAAAd2TjuAh6IE044oZ188snjLgMAYFFXX33151trWxbrt6rD2cknn5xdu3aNuwwAgEVV1T8tpZ/bmgAAHRHOAAA6IpwBAHREOAMA6IhwBgDQEeEMAKAjwhkAQEeEMwCAjghnAAAdEc4AADoinAEAdEQ4AwDoyKp+8DlU1Uiu21obyXUBYDHCGava/QlRVSV0AdA9tzUBADoinAEAdEQ4AwDoiHAGANAR4QwAoCPCGQBAR4QzAICOCGcAAB0RzgAAOiKcAQB0RDgDAOiIcAYA0BHhDACgI8IZAEBHhDMAgI4IZwAAHRHOAAA6IpwBAHREOAMA6IhwBgDQEeEMAKAjwhkAQEeEMwCAjghnAAAdEc4AADoinAEAdEQ4AwDoiHAGANAR4QwAoCPCGQBAR4QzAICOCGcAAB0RzgAAOiKcAQB0ZGThrKoeXVWzVbWnqq6tqp8Z2o+vqg9W1aeH75uH9qqqN1XV9VV1TVU9dVS1AQD0apQjZ19O8srW2tYkz0hyblWdmuSXkvxla+2UJH85vE6S70xyyvB1dpI3j7A2AIAujSyctdb+tbX20eH4i0n2JDkxyZlJLh+6XZ7ke4fjM5O8vc372yQPr6pHjqo+AIAercics6o6OclTkvxdkq9vrf1rMh/gkjxi6HZikhsWvG3v0AYAsG6MPJxV1UOS/GGSV7TWbjtS10O0tUNc7+yq2lVVu/bt27dcZQIAdGGk4ayqjsp8MPvd1tq7h+abDtyuHL7fPLTvTfLoBW8/KcmNB1+ztXZJa22ytTa5ZcuW0RUPADAGo1ytWUkuTbKntfaGBafem+Rlw/HLkvzxgvYfHlZtPiPJFw7c/gQAWC82jvDa35bkh5J8oqo+NrSdn+S1Sd5VVVNJ/jnJ9w/n3p/khUmuT3JHkh8dYW0AAF0aWThrrc3l0PPIkuSMQ/RvSc4dVT0AAKuBJwQAAHREOAMA6IhwBgDQEeEMAKAjwhkAQEeEMwCAjghnAAAdEc4AADoinAEAdEQ4AwDoiHAGANAR4QwAoCPCGQBAR4QzAICOCGcAAB0RzgAAOiKcAQB0RDgDAOjIxnEXAIdy/PHH59Zbb13261bVsl5v8+bNueWWW5b1mgCsb8IZXbr11lvTWht3GYta7rAHAG5rAgB0RDgDAOiIcAYA0BHhDACgI8IZAEBHhDMAgI4IZwAAHRHOAAA6IpwBAHREOAMA6IhwBgDQEeEMAKAjwhkAQEeEMwCAjghnAAAdEc4AADoinAEAdEQ4AwDoyMZxFwCH0i44LnnVw8ZdxqLaBceNuwQA1hjhjC7Vq29La23cZSyqqtJeNe4qAFhL3NYEAOiIcAYA0BHhDACgI8IZAEBHhDMAgI4IZwAAHRHOAAA6IpwBAHRkZOGsqi6rqpuraveCtidX1Ueq6hNV9b6qOm7BuV+uquur6lNV9fxR1QUA0LNRjpy9LckLDmp7a5Jfaq19c5L3JPmFJKmqU5OcleSJw3t+u6o2jLA2AIAujSyctdauTHLLQc3flOTK4fiDSf7rcHxmkne21u5qrX02yfVJnj6q2gAAerXSc852J3nRcPz9SR49HJ+Y5IYF/fYObQAA68pKh7MfS3JuVV2d5KFJ/mNor0P0PeRTr6vq7KraVVW79u3bN6IyAQDGY0XDWWvtk62172itPS3JTJJ/HE7tzb2jaElyUpIbD3ONS1prk621yS1btoy2YACAFbai4ayqHjF8f1CS/5Hk4uHUe5OcVVXHVNVjk5yS5KqVrA0AoAcbR3XhqppJ8pwkJ1TV3iQXJHlIVZ07dHl3kt9JktbatVX1riTXJflyknNba3ePqjYAgF5Va4ec2rUqTE5Otl27do27DEagqrIa/t9cLXUCMH5VdXVrbXKxfp4QAADQEeEMAKAjwhkAQEeEMwCAjghnAAAdEc4AADoinAEAdEQ4AwDoiHAGANAR4QwAoCPCGQBAR4QzAICOCGcAAB3ZOO4C4HCqatwlLGrz5s3jLgGANUY4o0uttWW/ZlWN5LoAsJzc1gQA6IhwBgDQEeEMAKAji845q6oHJXlykkcl+VKSa1trN426MACA9eiw4ayqvjHJeUmel+TTSfYl2ZTk8VV1R5K3JLm8tfaVlSgUAGA9ONLI2a8meXOSH28HLXGrqkck+YEkP5Tk8tGVBwCwvhw2nLXWth/h3M1JfmMkFQEArGNLmXO2Icl3JTl5Yf/W2htGVxYAwPq0lE1o35fkziSfSGJ+GQDACC0lnJ3UWnvSyCsBAGBJ+5z9aVV9x8grAQBgSSNnf5vkPcN+Z/uTVJLWWjtupJUBAKxDSxk5+7Uk35rk2Nbaca21hwpmAKx3MzMzmZiYyIYNGzIxMZGZmZlxl8QasZSRs08n2X3wXmcAsF7NzMxkeno6l156abZt25a5ublMTU0lSbZvP+xOVLAktVjmqqq3JXlckj9NcteB9h620picnGy7du0adxmsElUVf2MAy2FiYiI7d+7M6aeffk/b7OxsduzYkd27d4+xMnpWVVe31iYX67eUkbPPDl9HD18AsK7t2bMn27Ztu0/btm3bsmfPnjFVxFqyaDhrrb16JQoBgNVi69atmZubu8/I2dzcXLZu3TrGqlgrFl0QUFUfrKqHL3i9uar+bLRlAUC/pqenMzU1ldnZ2ezfvz+zs7OZmprK9PT0uEtjDVjKbc0trbX/d+BFa+3W4cHnALAuHZj0v2PHjuzZsydbt27NhRdeaDEAy2Ip4ezuqnpMa+2fk6SqviGJWdUArGvbt28XxhiJpYSz6SRzVfWh4fWzk5w9upIAANavpSwI+EBVPTXJMzL/dICfba19fuSVAQCsQ4cNZ1V1cmvtc0kyhLE/Oeh8JTmxtbZ3pBUCAKwjRxo5e/3wPM0/TnJ1kn1JNiX5z0lOT3JGkguSCGcAAMvksOGstfb9VXVqkh9M8mNJHpnkjiR7krw/yYWttTtXpEoAgHXiiHPOWmvXZX5BAAAAK2DRTWgBAFg5whkAQEeEMwCAjizl2Zp/uZQ2AAAeuCPtc7YpybFJTqiqzZnfgDZJjkvyqBWoDQBg3TnSas0fT/KKzAexq3NvOLstyW+NuC4AgHXpSPucvTHJG6tqR2tt5wrWBACwbi3l2Zo7q+qZSU5e2L+19vYjva+qLkvy3Ulubq1NDG2nJbk4808a+HKSn2ytXTU8CuqNSV6Y+Y1uf6S19tGv6TcCAFjFlrIg4H8nuSjJtiTfMnxNLuHab0vygoPaXpfk1a2105L8yvA6Sb4zySnD19lJ3ryE6wMArDmLjpxlPoid2lpr9+fCrbUrq+rkg5szv6AgSR6W5Mbh+Mwkbx9+xt9W1cOr6pGttX+9Pz8TAGC1W0o4253kPyVZjqD0iiR/VlUXZX7U7plD+4lJbljQb+/QJpwBAOvKkbbSeF/mR7oemuS6qroqyV0HzrfWXvQ1/LyfSPKzrbU/rKqXJLk0yfNy70rQhQ45UldVZ2f+1mce85jHfA0lAAD060gjZxeN4Oe9LMnPDMe/n+Stw/HeJI9e0O+k3HvL8z5aa5ckuSRJJicn79etVgCA3h1pK40PjeDn3Zjk25P8VZLnJvn00P7eJD9VVe9M8l+SfMF8MwBgPVp0zllVfTFffYvxC0l2JXlla+0zh3nfTJLnZP4JA3uTXJDk5ZnfO21jkjsz3J5M8v7Mb6Nxfea30vjR+/2bAACsAUtZEPCGzI94vSPzc8POyvwCgU8luSzzAeyrtNa2H+Z6TztE35bk3CXUAgCwpi26z1mSF7TW3tJa+2Jr7bZhztcLW2u/l2TziOsDAFhXlhLOvlJVL6mqBw1fL1lwzoR8AIBltJRw9oNJfijJzUluGo7/e1V9XZKfGmFtAADrzlKerfmZJN9zmNNzy1sOAMD6dqRNaH+xtfa6qtqZQ9y+bK399EgrAwBYh440crZn+L5rJQoBAODIm9C+b/h+eZJU1YNba7evVGEAAOvRogsCqupbq+q6DCNpVfXkqvrtkVcGALAOLWW15m8keX6Sf0uS1trHkzx7lEUBAKxXSwlnaa3dcFDT3SOoBQBg3VvK45tuqKpnJmlVdXSSn869iwUAAFhGSxk5Oyfzz708McneJKfFczABAEZiKZvQfj7zTwkAAGDEjrQJ7SE3nz3AJrQAAMvvSCNnCzeffXWSC0ZcCwDAunekTWgvP3BcVa9Y+BoAgNFY0lYaOcLtTQAAls9SwxkAACvgSAsCvph7R8yOrarbDpxK0lprx426OACA9eZIc84eupKFAADgtiYAQFeEMwCAjghnAAAdEc4AADqy6LM1oWdVNZL+rdnaD4DxEM5Y1YQoANYatzUBADoinAEAdEQ4AwDoiHAGANAR4QwAoCPCGQBAR4Qz1ryZmZlMTExkw4YNmZiYyMzMzLhLAoDDss8Za9rMzEymp6dz6aWXZtu2bZmbm8vU1FSSZPv27WOuDgC+Wq3mTTwnJyfbrl27xl0GHZuYmMjOnTtz+umn39M2OzubHTt2ZPfu3WOsDID1pqqubq1NLtpPOGMt27BhQ+68884cddRR97Tt378/mzZtyt133z3GyoCe3d9Hwy3Vav43lwduqeHMnDPWtK1bt2Zubu4+bXNzc9m6deuYKgJWg9bakr/uT39YCuGMNW16ejpTU1OZnZ3N/v37Mzs7m6mpqUxPT4+7NAA4JOGMNW379u055ZRTcsYZZ+Too4/OGWeckVNOOcViAAC6JZyxpu3YsSNXXHFFLrrootx+++256KKLcsUVV2THjh3jLg0ADsmCANa0TZs25TWveU1+7ud+7p62N7zhDTn//PNz5513jrEyYK2oKvPJWBKrNSHzH5q33357jj322Hva7rjjjjz4wQ/2YQosC+GMpbJaE5Icc8wxufjii+/TdvHFF+eYY44ZU0UAcGSeEMCa9vKXvzznnXdekuScc87JxRdfnPPOOy/nnHPOmCsDgEMTzljTdu7cmSQ5//zz88pXvjLHHHNMzjnnnHvaAaA35pwBwANgzhlLZc4ZAMAqJJwBAHREOAMA6MjIwllVXVZVN1fV7gVtv1dVHxu+PldVH1tw7per6vqq+lRVPX9UdQEA9GyUqzXfluQ3k7z9QENr7aUHjqvq15J8YTg+NclZSZ6Y5FFJ/qKqHt9au3uE9QEAdGdkI2ettSuT3HKoc1VVSV6SZGZoOjPJO1trd7XWPpvk+iRPH1VtAAC9Gtecs2cluam19unh9YlJblhwfu/Q9lWq6uyq2lVVu/bt2zfiMgEAVta4wtn23DtqliR1iD6H3DSmtXZJa22ytTa5ZcuWkRQHADAuK/6EgKramOTFSZ62oHlvkkcveH1SkhtXsi4AgB6MY+TseUk+2Vrbu6DtvUnOqqpjquqxSU5JctUYamMNmpmZycTERDZs2JCJiYnMzMws/iYAGJORjZxV1UyS5yQ5oar2JrmgtXZp5ldl3udfx9batVX1riTXJflyknOt1GQ5zMzMZHp6Opdeemm2bduWubm5TE1NJUm2b98+5uoA4Kt5tiZr2sTERHbu3JnTTz/9nrbZ2dns2LEju3fvPsI7AZbGszVZqqU+W1M4Y03bsGFD7rzzzhx11FH3tO3fvz+bNm3K3XcbnAUeOOGMpfLgc0iydevWzM3N3adtbm4uW7duHVNFAHBkwhlr2vT0dKampjI7O5v9+/dndnY2U1NTmZ6eHndpAHBIK76VBqykA5P+d+zYkT179mTr1q258MILLQYAoFvmnAHAA2DOGUtlzhkAwCoknAEAdEQ4AwDoiHAGANARqzUBWDeOP/743Hrrrct+3apa1utt3rw5t9xyy7Jek9VDOANg3bj11ltXxcrK5Q57rC5uawIAdEQ4AwDoiHAGANAR4QwAoCPCGQBAR4QzAICOCGcAAB0RzgAAOiKcAQB0RDgDAOiIcAYA0BHhDACgI8IZAEBHhDMAgI4IZwAAHRHOAAA6IpwBAHREOAMA6MjGcRcAACulXXBc8qqHjbuMRbULjht3CYyRcAbAulGvvi2ttXGXsaiqSnvVuKtgXNzWBADoiHAGANAR4QwAoCPCGQBAR4QzAICOCGcAAB0RzgAAOiKcAQB0RDgDAOiIcAYA0BHhDACgI8IZAEBHhDMAgI4IZwAAHRHOAAA6snHcBQDASqqqcZewqM2bN4+7BMZIOANg3WitLfs1q2ok12X9Gtltzaq6rKpurqrdB7XvqKpPVdW1VfW6Be2/XFXXD+eeP6q6AAB6NsqRs7cl+c0kbz/QUFWnJzkzyZNaa3dV1SOG9lOTnJXkiUkeleQvqurxrbW7R1gfAEB3RjZy1lq7MsktBzX/RJLXttbuGvrcPLSfmeSdrbW7WmufTXJ9kqePqjYAgF6t9GrNxyd5VlX9XVV9qKq+ZWg/MckNC/rtHdq+SlWdXVW7qmrXvn37RlwuAMDKWulwtjHJ5iTPSPILSd5V88tmDrV05pCzK1trl7TWJltrk1u2bBldpQAAY7DS4Wxvkne3eVcl+UqSE4b2Ry/od1KSG1e4NgCAsVvpcPZHSZ6bJFX1+CRHJ/l8kvcmOauqjqmqxyY5JclVK1wbAMDYjWy1ZlXNJHlOkhOqam+SC5JcluSyYXuN/0jysja/Ocy1VfWuJNcl+XKSc63UBADWo1rNG+dNTk62Xbt2jbsMANYxm9CyVFV1dWttcrF+nq0JANAR4QwAoCPCGQBAR4QzAICOCGcAAB0RzgAAOiKcAQB0RDgDAOiIcAYA0BHhDACgI8IZAEBHhDMAgI4IZwAAHRHOAAA6IpwBAHREOAMA6IhwBgDQEeEMAKAjwhkAQEeEMwCAjghnAAAdEc4AADoinAEAdGTjuAsAgN5U1Uj6t9a+lnJYZ4QzADiIEMU4ua0JANAR4QwAoCPCGQBAR4QzAICOCGcAAB0RzgAAOiKcAQB0RDgDAOiIcAYA0BHhDACgI8IZAEBHhDMAgI4IZwAAHanW2rhr+JpV1b4k/zTuOlg1Tkjy+XEXAaw5PltYqm9orW1ZrNOqDmdwf1TVrtba5LjrANYWny0sN7c1AQA6IpwBAHREOGM9uWTcBQBrks8WlpU5ZwAAHTFyBgDQEeGM7lXV3VX1saraXVXvq6qHL8M1/2Y5agP6U1VfX1XvqKrPVNXVVfWRqvq+cdeVJFX18Kr6yQWvH1VVfzDOmuiPcMZq8KXW2mmttYkktyQ594FesLX2zAdeFtCbqqokf5Tkytba41prT0tyVpKTxlvZPR6e5J5w1lq7sbX238ZYDx0SzlhtPpLkxGT+Q7iqXj+MqH2iql46tP92Vb1oOH5PVV02HE9V1a8Ox/8+fH9OVf1VVf1BVX2yqn53+HBPVb1waJurqjdV1Z+M4fcF7p/nJvmP1trFBxpaa//UWttZVR+uqtMOtFfVX1fVk6rqVVV1eVX9eVV9rqpeXFWvGz5XPlBVRw39P1dVr66qjw7nnjC0P72q/qaq/mH4/k1D+xOr6qph5P+aqjolyWuTfOPQ9vqqOrmqdg/9N1TVRcO1r6mqHUP7a6vquqHtohX7L8nYCGesGlW1IckZSd47NL04yWlJnpzkeUleX1WPTHJlkmcNfU5McupwvC3Jhw9x6ackecXQ73FJvq2qNiV5S5LvbK1tS7Lojs5AF56Y5KOHOffWJD+SJFX1+CTHtNauGc59Y5LvSnJmkv+TZLa19s1JvjS0H/D51tpTk7w5yc8PbZ9M8uzW2lOS/EqS1wzt5yR5Y2vttCSTSfYm+aUk/zjcDfiFg+o7O8ljkzyltfakJL9bVccn+b4kTxzafvX+/MdgdRLOWA2+rqo+luTfkhyf5IND+7YkM621u1trNyX5UJJvyXwAe1ZVnZrkuiQ3DaHtW5Mcaq7ZVa21va21ryT5WJKTkzwhyWdaa58d+syM5lcDRqmqfquqPl5Vf5/k95N89zAS9mNJ3rag65+21vYn+USSDUk+MLR/IvOfCQe8e/h+9YL2hyX5/WEE7NczHxCT+ZH+86vqvMw/tudLi5T7vCQXt9a+nCSttVuS3JbkziRvraoXJ7ljib86q5hwxmrwpeEvz29IcnTunXNWh+rcWvuXJJuTvCDzo2gfTvKSJP/eWvviId5y14Lju5NsPNy1ge5dm+SpB1601s7N/Ij7ltbaHZn/4+7MzH8mvGPB++4a+n8lyf527z5TX8n8Z8J9+uXez4ok+Z+ZH2mbSPI9STYN13pHkhdlfvTtz6rquYvUXknus7/VENSenuQPk3xv7g2NrGHCGatGa+0LSX46yc8Pf/lemeSlwzyNLUmeneSqoftHMn+r8kA4+/kc+pbm4XwyyeOq6uTh9Usf8C8ArIQrkmyqqp9Y0HbsguO3JnlTkr8fRqaWw8OS/Mtw/CMHGqvqcZkfgX9T5qdjPCnJF5M89DDX+fMk51TVxuH9x1fVQ5I8rLX2/sx/pp12mPeyhghnrCqttX9I8vHMr756T5JrhtdXJPnF1tr/Hbp+OMnG1tr1mZ9/cnzuRzgbbj/8ZJIPVNVckpuSfGG5fg9gNIYRr+9N8u1V9dmquirJ5UnOG85fnflbhb+zjD/2dUn+V1X9deZviR7w0iS7h2kZT0jy9tbavyX562Eh0+sPus5bk/xzkmuq6uNJfiDzQe5PquqazE/d+NllrJtOeUIAHEZVPaS19u/D6s3fSvLp1tqvj7su4GtXVY9K8ldJnjDcwoTuGDmDw3v58BfvtZm/bfGWMdcDPABV9cNJ/i7JtGBGz4ycAQB0xMgZAEBHhDMAgI4IZwAAHRHOAAA6IpwBAHREOAMA6Mj/B77SskFnNRTpAAAAAElFTkSuQmCC
+" />
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>we can see how many individuals are outliers within their group.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">summer_2016_medals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/summer_2016_medals.csv&#39;</span><span class="p">)</span>
+<span class="n">summer_2016_medals</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>Height</th>
+      <th>Weight</th>
+      <th>Team</th>
+      <th>NOC</th>
+      <th>Games</th>
+      <th>Year</th>
+      <th>Season</th>
+      <th>City</th>
+      <th>Sport</th>
+      <th>Event</th>
+      <th>Medal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>158</td>
+      <td>Giovanni Abagnale</td>
+      <td>M</td>
+      <td>21.0</td>
+      <td>198.0</td>
+      <td>90.0</td>
+      <td>Italy</td>
+      <td>ITA</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Rowing</td>
+      <td>Rowing Men's Coxless Pairs</td>
+      <td>Bronze</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>161</td>
+      <td>Patimat Abakarova</td>
+      <td>F</td>
+      <td>21.0</td>
+      <td>165.0</td>
+      <td>49.0</td>
+      <td>Azerbaijan</td>
+      <td>AZE</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Taekwondo</td>
+      <td>Taekwondo Women's Flyweight</td>
+      <td>Bronze</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>175</td>
+      <td>Luc Abalo</td>
+      <td>M</td>
+      <td>31.0</td>
+      <td>182.0</td>
+      <td>86.0</td>
+      <td>France</td>
+      <td>FRA</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Handball</td>
+      <td>Handball Men's Handball</td>
+      <td>Silver</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>450</td>
+      <td>Saeid Morad Abdevali</td>
+      <td>M</td>
+      <td>26.0</td>
+      <td>170.0</td>
+      <td>80.0</td>
+      <td>Iran</td>
+      <td>IRI</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Wrestling</td>
+      <td>Wrestling Men's Middleweight, Greco-Roman</td>
+      <td>Bronze</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>794</td>
+      <td>Denis Mikhaylovich Ablyazin</td>
+      <td>M</td>
+      <td>24.0</td>
+      <td>161.0</td>
+      <td>62.0</td>
+      <td>Russia</td>
+      <td>RUS</td>
+      <td>2016 Summer</td>
+      <td>2016</td>
+      <td>Summer</td>
+      <td>Rio de Janeiro</td>
+      <td>Gymnastics</td>
+      <td>Gymnastics Men's Team All-Around</td>
+      <td>Silver</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sports</span> <span class="o">=</span> <span class="n">summer_2016_medals</span><span class="o">.</span><span class="n">Sport</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="n">sports</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([&#39;Rowing&#39;, &#39;Taekwondo&#39;, &#39;Handball&#39;, &#39;Wrestling&#39;, &#39;Gymnastics&#39;,
+       &#39;Swimming&#39;, &#39;Basketball&#39;, &#39;Boxing&#39;, &#39;Volleyball&#39;, &#39;Athletics&#39;],
+      dtype=object)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Loop over the different sports branches</span>
+<span class="k">for</span> <span class="n">sport</span> <span class="ow">in</span> <span class="n">sports</span><span class="p">:</span>
+  <span class="c1"># Extract the rows only for this sport</span>
+  <span class="n">sport_df</span> <span class="o">=</span> <span class="n">summer_2016_medals</span><span class="p">[</span><span class="n">summer_2016_medals</span><span class="p">[</span><span class="s1">&#39;Sport&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">sport</span><span class="p">]</span>
+  <span class="c1"># Add a bar for the &quot;Weight&quot; mean with std y error bar</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">sport</span><span class="p">,</span><span class="n">sport_df</span><span class="p">[</span><span class="s1">&#39;Weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">yerr</span><span class="o">=</span><span class="n">sport_df</span><span class="p">[</span><span class="s1">&#39;Weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Weight&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">sports</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+<span class="c1"># Save the figure to file</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;../data/sports_weights.png&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+" />
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><a class="u-url" href="/blog/2020/10/19/2016-Olympic-games.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Hello! Thanks for visiting my blog, I&#39;m Victor Omondi, Data Scientist with industry experience analyzing, visualizing and modeling data. I specialize in Python &amp; R and have professional experience working with C++ and JavaScript|, currently am a student at Multimedia University of Kenya pursuing Bachelor of Science (Computer Technology)</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://dribbble.com/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#dribbble"></use></svg></a></li><li><a rel="me" href="https://www.facebook.com/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#facebook"></use></svg></a></li><li><a rel="me" href="https://www.flickr.com/photos/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#flickr"></use></svg></a></li><li><a rel="me" href="https://github.com/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://stackoverflow.com/users/9713351" title="9713351"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#stackoverflow"></use></svg></a></li><li><a rel="me" href="https://www.instagram.com/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#instagram"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://www.pinterest.com/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#pinterest"></use></svg></a></li><li><a rel="me" href="https://freeradical.zone/@VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#mastodon"></use></svg></a></li><li><a rel="me" href="https://twitter.com/VictorOmondi197" title="VictorOmondi197"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li><li><a rel="me" href="https://www.youtube.com/channel/UCwk-x5YuGrNBNGZNpb1CX3Q" title="VICTOR OMONDI"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#youtube"></use></svg></a></li><li><a rel="me" href="https://t.me/VickTheGeek" title="VickTheGeek"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#telegram"></use></svg></a></li><li><a rel="me" href="https://keybase.io/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#keybase"></use></svg></a></li><li><a rel="me" href="https://micro.blog/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#microdotblog"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
