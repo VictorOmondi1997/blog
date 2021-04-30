@@ -1,0 +1,2262 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Writing Reusable Code using Functions in Python | Victor Omondi Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Writing Reusable Code using Functions in Python" />
+<meta name="author" content="Victor Omondi" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Learn how to create and use functions in python" />
+<meta property="og:description" content="Learn how to create and use functions in python" />
+<link rel="canonical" href="https://victoromondi1997.github.io/blog/python/2021/04/30/python_functions_and_scope.html" />
+<meta property="og:url" content="https://victoromondi1997.github.io/blog/python/2021/04/30/python_functions_and_scope.html" />
+<meta property="og:site_name" content="Victor Omondi Blog" />
+<meta property="og:image" content="https://victoromondi1997.github.io/blog/images/introduction-to-python.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-04-30T00:00:00-05:00" />
+<script type="application/ld+json">
+{"datePublished":"2021-04-30T00:00:00-05:00","author":{"@type":"Person","name":"Victor Omondi"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://victoromondi1997.github.io/blog/python/2021/04/30/python_functions_and_scope.html"},"image":"https://victoromondi1997.github.io/blog/images/introduction-to-python.png","description":"Learn how to create and use functions in python","@type":"BlogPosting","url":"https://victoromondi1997.github.io/blog/python/2021/04/30/python_functions_and_scope.html","headline":"Writing Reusable Code using Functions in Python","dateModified":"2021-04-30T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://victoromondi1997.github.io/blog/feed.xml" title="Victor Omondi | Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-170138117-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Writing Reusable Code using Functions in Python | Victor Omondi Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Writing Reusable Code using Functions in Python" />
+<meta name="author" content="Victor Omondi" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Learn how to create and use functions in python" />
+<meta property="og:description" content="Learn how to create and use functions in python" />
+<link rel="canonical" href="https://victoromondi1997.github.io/blog/python/2021/04/30/python_functions_and_scope.html" />
+<meta property="og:url" content="https://victoromondi1997.github.io/blog/python/2021/04/30/python_functions_and_scope.html" />
+<meta property="og:site_name" content="Victor Omondi Blog" />
+<meta property="og:image" content="https://victoromondi1997.github.io/blog/images/introduction-to-python.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-04-30T00:00:00-05:00" />
+<script type="application/ld+json">
+{"datePublished":"2021-04-30T00:00:00-05:00","author":{"@type":"Person","name":"Victor Omondi"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://victoromondi1997.github.io/blog/python/2021/04/30/python_functions_and_scope.html"},"image":"https://victoromondi1997.github.io/blog/images/introduction-to-python.png","description":"Learn how to create and use functions in python","@type":"BlogPosting","url":"https://victoromondi1997.github.io/blog/python/2021/04/30/python_functions_and_scope.html","headline":"Writing Reusable Code using Functions in Python","dateModified":"2021-04-30T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://victoromondi1997.github.io/blog/feed.xml" title="Victor Omondi | Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-170138117-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Victor Omondi | Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Writing Reusable Code using Functions in Python</h1><p class="page-description">Learn how to create and use functions in python</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-04-30T00:00:00-05:00" itemprop="datePublished">
+        Apr 30, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Victor Omondi</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      19 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/VictorOmondi1997/blog/tree/master/_notebooks/2021-04-30-python_functions_and_scope.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/VictorOmondi1997/blog/master?filepath=_notebooks%2F2021-04-30-python_functions_and_scope.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/VictorOmondi1997/blog/blob/master/_notebooks/2021-04-30-python_functions_and_scope.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Creating-and-using-functions">Creating and using functions </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Function-arguments">Function arguments </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Writing-great-functions-in-Python">Writing great functions in Python </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Local-variables-and-scope">Local variables and scope </a></li>
+<li class="toc-entry toc-h3"><a href="#Return-values">Return values </a></li>
+<li class="toc-entry toc-h3"><a href="#Optional-arguments">Optional arguments </a></li>
+<li class="toc-entry toc-h3"><a href="#Named-arguments">Named arguments </a></li>
+<li class="toc-entry toc-h3"><a href="#Modules-and-library-functions">Modules and library functions </a></li>
+<li class="toc-entry toc-h3"><a href="#Reusing-and-improving-functions">Reusing and improving functions </a></li>
+<li class="toc-entry toc-h3"><a href="#Exceptions-and-try-except">Exceptions and try-except </a></li>
+<li class="toc-entry toc-h3"><a href="#Documenting-functions-using-Docstrings">Documenting functions using Docstrings </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Exercise---Data-Analysis-for-Vacation-Planning">Exercise - Data Analysis for Vacation Planning </a></li>
+<li class="toc-entry toc-h2"><a href="#Summary-and-Further-Reading">Summary and Further Reading </a></li>
+<li class="toc-entry toc-h2"><a href="#Questions-for-Revision">Questions for Revision </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-04-30-python_functions_and_scope.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://colab.research.google.com/github/VictorOmondi1997/blog/blob/master/_notebooks/2021-04-30-python_functions_and_scope.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This tutorial covers the following topics:</p>
+<ul>
+<li>Creating and using functions in Python</li>
+<li>Local variables, return values, and optional arguments</li>
+<li>Reusing functions and using Python library functions</li>
+<li>Exception handling using <code>try</code>-<code>except</code> blocks</li>
+<li>Documenting functions using docstrings</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Creating-and-using-functions">
+<a class="anchor" href="#Creating-and-using-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating and using functions<a class="anchor-link" href="#Creating-and-using-functions"> </a>
+</h2>
+<p>A function is a reusable set of instructions that takes one or more inputs, performs some operations, and often returns an output. Python contains many in-built functions like <code>print</code>, <code>len</code>, etc., and provides the ability to define new ones.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">today</span> <span class="o">=</span> <span class="s2">"Friday"</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Today is"</span><span class="p">,</span> <span class="n">today</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Today is Friday
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can define a new function using the <code>def</code> keyword.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">say_hello</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Hello there!'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'How are you?'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note the round brackets or parentheses <code>()</code> and colon <code>:</code> after the function's name. Both are essential parts of the syntax. The function's <em>body</em> contains an indented block of statements. The statements inside a function's body are not executed when the function is defined. To execute the statements, we need to <em>call</em> or <em>invoke</em> the function.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">say_hello</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello there!
+How are you?
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Function-arguments">
+<a class="anchor" href="#Function-arguments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Function arguments<a class="anchor-link" href="#Function-arguments"> </a>
+</h3>
+<p>Functions can accept zero or more values as <em>inputs</em> (also knows as <em>arguments</em> or <em>parameters</em>). Arguments help us write flexible functions that can perform the same operations on different values. Further, functions can return a result that can be stored in a variable or used in other expressions.</p>
+<p>Here's a function that filters out the even numbers from a list and returns a new list using the <code>return</code> keyword.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">filter_even</span><span class="p">(</span><span class="n">number_list</span><span class="p">):</span>
+    <span class="n">result_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">number_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">result_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result_list</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Can you understand what the function does by looking at the code? If not, try executing each line of the function's body separately within a code cell with an actual list of numbers in place of <code>number_list</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">even_list</span> <span class="o">=</span> <span class="n">filter_even</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">even_list</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[2, 4, 6]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Writing-great-functions-in-Python">
+<a class="anchor" href="#Writing-great-functions-in-Python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Writing great functions in Python<a class="anchor-link" href="#Writing-great-functions-in-Python"> </a>
+</h2>
+<p>As a programmer, you will spend most of your time writing and using functions. Python offers many features to make your functions powerful and flexible. Let's explore some of these by solving a problem:</p>
+<blockquote>
+<p>Radha is planning to buy a house that costs <code>$1,260,000</code>. She considering two options to finance her purchase:&gt;&gt; <em> Option 1:Make an immediate down payment of <code>$300,000</code>, and take loan 8-year loan with an interest rate of 10% (compounded monthly) for the remaining amount.&gt; </em> Option 2:Take a 10-year loan with an interest rate of 8% (compounded monthly) for the entire amount.&gt;
+Both these loans have to be paid back in equal monthly installments (EMIs). Which loan has a lower EMI among the two?</p>
+</blockquote>
+<p>Since we need to compare the EMIs for two loan options, defining a function to calculate the EMI for a loan would be a great idea.  The inputs to the function would be cost of the house, the down payment, duration of the loan, rate of interest etc. We'll build this function step by step.</p>
+<p>First, let's write a simple function that calculates the EMI on the entire cost of the house, assuming that the loan must be paid back in one year, and there is no interest or down payment.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="p">):</span>
+    <span class="n">emi</span> <span class="o">=</span> <span class="n">amount</span> <span class="o">/</span> <span class="mi">12</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'The EMI is $</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">emi</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">loan_emi</span><span class="p">(</span><span class="mi">1260000</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The EMI is $105000.0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Local-variables-and-scope">
+<a class="anchor" href="#Local-variables-and-scope" aria-hidden="true"><span class="octicon octicon-link"></span></a>Local variables and scope<a class="anchor-link" href="#Local-variables-and-scope"> </a>
+</h3>
+<p>Let's add a second argument to account for the duration of the loan in months.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="n">duration</span><span class="p">):</span>
+    <span class="n">emi</span> <span class="o">=</span> <span class="n">amount</span> <span class="o">/</span> <span class="n">duration</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'The EMI is $</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">emi</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that the variable <code>emi</code> defined inside the function is not accessible outside. The same is true for the parameters <code>amount</code> and <code>duration</code>. These are all <em>local variables</em> that lie within the <em>scope</em> of the function.</p>
+<blockquote>
+<p><strong>Scope</strong>:Scope refers to the region within the code where a particular variable is visible. Every function (or class definition) defines a scope within Python. Variables defined in this scope are called <em>local variables</em>. Variables that are available everywhere are called <em>global variables</em>. Scope rules allow you to use the same variable names in different functions without sharing values from one to the other.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-10-e5795bfcf3c1&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>emi
+
+<span class="ansi-red-fg">NameError</span>: name 'emi' is not defined</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">amount</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-11-9b8f90fabac0&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>amount
+
+<span class="ansi-red-fg">NameError</span>: name 'amount' is not defined</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">duration</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-12-5b6659652103&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>duration
+
+<span class="ansi-red-fg">NameError</span>: name 'duration' is not defined</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can now compare a 6-year loan vs. a 10-year loan (assuming no down payment or interest).</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">loan_emi</span><span class="p">(</span><span class="mi">1260000</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The EMI is $13125.0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">loan_emi</span><span class="p">(</span><span class="mi">1260000</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The EMI is $10500.0
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Return-values">
+<a class="anchor" href="#Return-values" aria-hidden="true"><span class="octicon octicon-link"></span></a>Return values<a class="anchor-link" href="#Return-values"> </a>
+</h3>
+<p>As you might expect, the EMI for the 6-year loan is higher compared to the 10-year loan. Right now, we're printing out the result. It would be better to return it and store the results in variables for easier comparison. We can do this using the <code>return</code> statement</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="n">duration</span><span class="p">):</span>
+    <span class="n">emi</span> <span class="o">=</span> <span class="n">amount</span> <span class="o">/</span> <span class="n">duration</span>
+    <span class="k">return</span> <span class="n">emi</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi1</span> <span class="o">=</span> <span class="n">loan_emi</span><span class="p">(</span><span class="mi">1260000</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi2</span> <span class="o">=</span> <span class="n">loan_emi</span><span class="p">(</span><span class="mi">1260000</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>13125.0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>10500.0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Optional-arguments">
+<a class="anchor" href="#Optional-arguments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Optional arguments<a class="anchor-link" href="#Optional-arguments"> </a>
+</h3>
+<p>Next, let's add another argument to account for the immediate down payment. We'll make this an <em>optional argument</em> with a default value of 0.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">down_payment</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">loan_amount</span> <span class="o">=</span> <span class="n">amount</span> <span class="o">-</span> <span class="n">down_payment</span>
+    <span class="n">emi</span> <span class="o">=</span> <span class="n">loan_amount</span> <span class="o">/</span> <span class="n">duration</span>
+    <span class="k">return</span> <span class="n">emi</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi1</span> <span class="o">=</span> <span class="n">loan_emi</span><span class="p">(</span><span class="mi">1260000</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="mi">12</span><span class="p">,</span> <span class="mf">3e5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>10000.0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi2</span> <span class="o">=</span> <span class="n">loan_emi</span><span class="p">(</span><span class="mi">1260000</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>10500.0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next, let's add the interest calculation into the function. Here's the formula used to calculate the EMI for a loan:</p>
+<p><img src="https://i.imgur.com/iKujHGK.png" alt="Img"></p>
+<p>where:</p>
+<ul>
+<li>
+<code>P</code> is the loan amount (principal)</li>
+<li>
+<code>n</code> is the no. of months</li>
+<li>
+<code>r</code> is the rate of interest per month</li>
+</ul>
+<p>The derivation of this formula is beyond the scope of this tutorial. See this video for an explanation: <a href="https://youtu.be/Coxza9ugW4E">https://youtu.be/Coxza9ugW4E</a> .</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">rate</span><span class="p">,</span> <span class="n">down_payment</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">loan_amount</span> <span class="o">=</span> <span class="n">amount</span> <span class="o">-</span> <span class="n">down_payment</span>
+    <span class="n">emi</span> <span class="o">=</span> <span class="n">loan_amount</span> <span class="o">*</span> <span class="n">rate</span> <span class="o">*</span> <span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="n">rate</span><span class="p">)</span><span class="o">**</span><span class="n">duration</span><span class="p">)</span> <span class="o">/</span> <span class="p">(((</span><span class="mi">1</span><span class="o">+</span><span class="n">rate</span><span class="p">)</span><span class="o">**</span><span class="n">duration</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">emi</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that while defining the function, required arguments like <code>cost</code>, <code>duration</code> and <code>rate</code> must appear before optional arguments like <code>down_payment</code>.</p>
+<p>Let's calculate the EMI for Option 1</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">loan_emi</span><span class="p">(</span><span class="mi">1260000</span><span class="p">,</span> <span class="mi">8</span><span class="o">*</span><span class="mi">12</span><span class="p">,</span> <span class="mf">0.1</span><span class="o">/</span><span class="mi">12</span><span class="p">,</span> <span class="mf">3e5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>14567.19753389219</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>While calculating the EMI for Option 2, we need not include the <code>down_payment</code> argument.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">loan_emi</span><span class="p">(</span><span class="mi">1260000</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="mi">12</span><span class="p">,</span> <span class="mf">0.08</span><span class="o">/</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>15287.276888775077</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Named-arguments">
+<a class="anchor" href="#Named-arguments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Named arguments<a class="anchor-link" href="#Named-arguments"> </a>
+</h3>
+<p>Invoking a function with many arguments can often get confusing and is prone to human errors. Python provides the option of invoking functions with <em>named</em> arguments for better clarity. You can also split function invocation into multiple lines.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi1</span> <span class="o">=</span> <span class="n">loan_emi</span><span class="p">(</span>
+    <span class="n">amount</span><span class="o">=</span><span class="mi">1260000</span><span class="p">,</span> 
+    <span class="n">duration</span><span class="o">=</span><span class="mi">8</span><span class="o">*</span><span class="mi">12</span><span class="p">,</span> 
+    <span class="n">rate</span><span class="o">=</span><span class="mf">0.1</span><span class="o">/</span><span class="mi">12</span><span class="p">,</span> 
+    <span class="n">down_payment</span><span class="o">=</span><span class="mf">3e5</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>14567.19753389219</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi2</span> <span class="o">=</span> <span class="n">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="mi">1260000</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="o">*</span><span class="mi">12</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mf">0.08</span><span class="o">/</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>15287.276888775077</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Modules-and-library-functions">
+<a class="anchor" href="#Modules-and-library-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modules and library functions<a class="anchor-link" href="#Modules-and-library-functions"> </a>
+</h3>
+<p>We can already see that the EMI for Option 1 is lower than the EMI for Option 2. However, it would be nice to round up the amount to full dollars, rather than showing digits after the decimal. To achieve this, we might want to write a function that can take a number and round it up to the next integer (e.g., 1.2 is rounded up to 2). That would be a great exercise to try out!</p>
+<p>However, since rounding numbers is a fairly common operation, Python provides a function for it (along with thousands of other functions) as part of the <a href="https://docs.python.org/3/library/">Python Standard Library</a>. Functions are organized into <em>modules</em> that need to be imported to use the functions they contain.</p>
+<blockquote>
+<p><strong>Modules</strong>:Modules are files containing Python code (variables, functions, classes, etc.). They provide a way of organizing the code for large Python projects into files and folders. The key benefit of using modules is <em>namespaces</em>: you must import the module to use its functions within a Python script or notebook. Namespaces provide encapsulation and avoid naming conflicts between your code and a module or across modules.
+We can use the <code>ceil</code> function (short for <em>ceiling</em>) from the <code>math</code> module to round up numbers. Let's import the module and use it to round up the number <code>1.2</code>.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Help on built-in function ceil in module math:
+
+ceil(x, /)
+    Return the ceiling of x as an Integral.
+    
+    This is the smallest integer &gt;= x.
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="mf">1.2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>2</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's now use the <code>math.ceil</code> function within the <code>home_loan_emi</code> function to round up the EMI amount.</p>
+<blockquote>
+<p>Using functions to build other functions is a great way to reuse code and implement complex business logic while still keeping the code small, understandable, and manageable. Ideally, a function should do one thing and one thing only. If you find yourself writing a function that does too many things, consider splitting it into multiple smaller, independent functions. As a rule of thumb, try to limit your functions to 10 lines of code or less. Good programmers always write short, simple, and readable functions.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">rate</span><span class="p">,</span> <span class="n">down_payment</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">loan_amount</span> <span class="o">=</span> <span class="n">amount</span> <span class="o">-</span> <span class="n">down_payment</span>
+    <span class="n">emi</span> <span class="o">=</span> <span class="n">loan_amount</span> <span class="o">*</span> <span class="n">rate</span> <span class="o">*</span> <span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="n">rate</span><span class="p">)</span><span class="o">**</span><span class="n">duration</span><span class="p">)</span> <span class="o">/</span> <span class="p">(((</span><span class="mi">1</span><span class="o">+</span><span class="n">rate</span><span class="p">)</span><span class="o">**</span><span class="n">duration</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">emi</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">emi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">emi</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi1</span> <span class="o">=</span> <span class="n">loan_emi</span><span class="p">(</span>
+    <span class="n">amount</span><span class="o">=</span><span class="mi">1260000</span><span class="p">,</span> 
+    <span class="n">duration</span><span class="o">=</span><span class="mi">8</span><span class="o">*</span><span class="mi">12</span><span class="p">,</span> 
+    <span class="n">rate</span><span class="o">=</span><span class="mf">0.1</span><span class="o">/</span><span class="mi">12</span><span class="p">,</span> 
+    <span class="n">down_payment</span><span class="o">=</span><span class="mf">3e5</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>14568</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi2</span> <span class="o">=</span> <span class="n">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="mi">1260000</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="o">*</span><span class="mi">12</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mf">0.08</span><span class="o">/</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>15288</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's compare the EMIs and display a message for the option with the lower EMI.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="n">emi1</span> <span class="o">&lt;</span> <span class="n">emi2</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Option 1 has the lower EMI: $</span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">emi1</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Option 2 has the lower EMI: $</span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">emi2</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Option 1 has the lower EMI: $14568
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Reusing-and-improving-functions">
+<a class="anchor" href="#Reusing-and-improving-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reusing and improving functions<a class="anchor-link" href="#Reusing-and-improving-functions"> </a>
+</h3>
+<p>Now we know for sure that "Option 1" has the lower EMI among the two options. But what's even better is that we now have a handy function <code>loan_emi</code> that we can use to solve many other similar problems with just a few lines of code. Let's try it with a couple more questions.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<p><strong>Q</strong>:Shaun is currently paying back a home loan for a house he bought a few years ago. The cost of the house was <code>$800,000</code>. Shaun made a down payment of <code>25%</code> of the price. He financed the remaining amount using a 6-year loan with an interest rate of <code>7%</code> per annum (compounded monthly). Shaun is now buying a car worth <code>$60,000</code>, which he is planning to finance using a 1-year loan with an interest rate of <code>12%</code> per annum. Both loans are paid back in EMIs. What is the total monthly payment Shaun makes towards loan repayment?
+This question is now straightforward to solve, using the <code>loan_emi</code> function we've already defined.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cost_of_house</span> <span class="o">=</span> <span class="mi">800000</span>
+<span class="n">home_loan_duration</span> <span class="o">=</span> <span class="mi">6</span><span class="o">*</span><span class="mi">12</span> <span class="c1"># months</span>
+<span class="n">home_loan_rate</span> <span class="o">=</span> <span class="mf">0.07</span><span class="o">/</span><span class="mi">12</span> <span class="c1"># monthly</span>
+<span class="n">home_down_payment</span> <span class="o">=</span> <span class="o">.</span><span class="mi">25</span> <span class="o">*</span> <span class="mi">800000</span>
+
+<span class="n">emi_house</span> <span class="o">=</span> <span class="n">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="n">cost_of_house</span><span class="p">,</span>
+                     <span class="n">duration</span><span class="o">=</span><span class="n">home_loan_duration</span><span class="p">,</span>
+                     <span class="n">rate</span><span class="o">=</span><span class="n">home_loan_rate</span><span class="p">,</span> 
+                     <span class="n">down_payment</span><span class="o">=</span><span class="n">home_down_payment</span><span class="p">)</span>
+
+<span class="n">emi_house</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>10230</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cost_of_car</span> <span class="o">=</span> <span class="mi">60000</span>
+<span class="n">car_loan_duration</span> <span class="o">=</span> <span class="mi">1</span><span class="o">*</span><span class="mi">12</span> <span class="c1"># months</span>
+<span class="n">car_loan_rate</span> <span class="o">=</span> <span class="o">.</span><span class="mi">12</span><span class="o">/</span><span class="mi">12</span> <span class="c1"># monthly</span>
+
+<span class="n">emi_car</span> <span class="o">=</span> <span class="n">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="n">cost_of_car</span><span class="p">,</span> 
+                   <span class="n">duration</span><span class="o">=</span><span class="n">car_loan_duration</span><span class="p">,</span> 
+                   <span class="n">rate</span><span class="o">=</span><span class="n">car_loan_rate</span><span class="p">)</span>
+
+<span class="n">emi_car</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>5331</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Shaun makes a total monthly payment of $</span><span class="si">{}</span><span class="s2"> towards loan repayments."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">emi_house</span><span class="o">+</span><span class="n">emi_car</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Shaun makes a total monthly payment of $15561 towards loan repayments.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Exceptions-and-try-except">
+<a class="anchor" href="#Exceptions-and-try-except" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exceptions and <code>try</code>-<code>except</code><a class="anchor-link" href="#Exceptions-and-try-except"> </a>
+</h3>
+<blockquote>
+<p>Q:If you borrow <code>$100,000</code> using a 10-year loan with an interest rate of 9% per annum, what is the total amount you end up paying as interest?
+One way to solve this problem is to compare the EMIs for two loans: one with the given rate of interest and another with a 0% rate of interest. The total interest paid is then simply the sum of monthly differences over the duration of the loan.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi_with_interest</span> <span class="o">=</span> <span class="n">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="o">*</span><span class="mi">12</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mf">0.09</span><span class="o">/</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">emi_with_interest</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1267</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi_without_interest</span> <span class="o">=</span> <span class="n">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="o">*</span><span class="mi">12</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mf">0.</span><span class="o">/</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">emi_without_interest</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ZeroDivisionError</span>                         Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-47-b684ffbee02d&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>emi_without_interest <span class="ansi-blue-fg">=</span> loan_emi<span class="ansi-blue-fg">(</span>amount<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">100000</span><span class="ansi-blue-fg">,</span> duration<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">10</span><span class="ansi-blue-fg">*</span><span class="ansi-cyan-fg">12</span><span class="ansi-blue-fg">,</span> rate<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0.</span><span class="ansi-blue-fg">/</span><span class="ansi-cyan-fg">12</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> emi_without_interest
+
+<span class="ansi-green-fg">&lt;ipython-input-37-ad16168becb0&gt;</span> in <span class="ansi-cyan-fg">loan_emi</span><span class="ansi-blue-fg">(amount, duration, rate, down_payment)</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-green-fg">def</span> loan_emi<span class="ansi-blue-fg">(</span>amount<span class="ansi-blue-fg">,</span> duration<span class="ansi-blue-fg">,</span> rate<span class="ansi-blue-fg">,</span> down_payment<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span>     loan_amount <span class="ansi-blue-fg">=</span> amount <span class="ansi-blue-fg">-</span> down_payment
+<span class="ansi-green-fg">----&gt; 3</span><span class="ansi-red-fg">     </span>emi <span class="ansi-blue-fg">=</span> loan_amount <span class="ansi-blue-fg">*</span> rate <span class="ansi-blue-fg">*</span> <span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">+</span>rate<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">**</span>duration<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">/</span> <span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">+</span>rate<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">**</span>duration<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">-</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span>     emi <span class="ansi-blue-fg">=</span> math<span class="ansi-blue-fg">.</span>ceil<span class="ansi-blue-fg">(</span>emi<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span>     <span class="ansi-green-fg">return</span> emi
+
+<span class="ansi-red-fg">ZeroDivisionError</span>: float division by zero</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Something seems to have gone wrong! If you look at the error message above carefully, Python tells us precisely what is wrong. Python <em>throws</em> a <code>ZeroDivisionError</code> with a message indicating that we're trying to divide a number by zero. <code>ZeroDivisonError</code> is an <em>exception</em> that stops further execution of the program.</p>
+<blockquote>
+<p><strong>Exception</strong>:Even if a statement or expression is syntactically correct, it may cause an error when the Python interpreter tries to execute it. Errors detected during execution are called exceptions. Exceptions typically stop further execution of the program unless handled within the program using <code>try</code>-<code>except</code> statements.
+Python provides many built-in exceptions <em>thrown</em> when built-in operators, functions, or methods are used incorrectly: <a href="https://docs.python.org/3/library/exceptions.html#built-in-exceptions">https://docs.python.org/3/library/exceptions.html#built-in-exceptions</a>. You can also define your custom exception by extending the <code>Exception</code> class (more on that later).</p>
+</blockquote>
+<p>You can use the <code>try</code> and <code>except</code> statements to <em>handle</em> an exception. Here's an example:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Now computing the result.."</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">/</span> <span class="mi">0</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Computation was completed successfully"</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Failed to compute result because you were trying to divide by zero"</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Now computing the result..
+Failed to compute result because you were trying to divide by zero
+None
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>When an exception occurs inside a <code>try</code> block, the block's remaining statements are skipped. The <code>except</code> block is executed if the type of exception thrown matches that of the exception being handled. After executing the <code>except</code> block, the program execution returns to the normal flow.</p>
+<p>You can also handle more than one type of exception using multiple <code>except</code> statements. Learn more about exceptions here: <a href="https://www.w3schools.com/python/python_try_except.asp">https://www.w3schools.com/python/python_try_except.asp</a> .</p>
+<p>Let's enhance the <code>loan_emi</code> function to use <code>try</code>-<code>except</code> to handle the scenario where the interest rate is 0%. It's common practice to make changes/enhancements to functions over time as new scenarios and use cases come up. It makes functions more robust &amp; versatile.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">rate</span><span class="p">,</span> <span class="n">down_payment</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">loan_amount</span> <span class="o">=</span> <span class="n">amount</span> <span class="o">-</span> <span class="n">down_payment</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">emi</span> <span class="o">=</span> <span class="n">loan_amount</span> <span class="o">*</span> <span class="n">rate</span> <span class="o">*</span> <span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="n">rate</span><span class="p">)</span><span class="o">**</span><span class="n">duration</span><span class="p">)</span> <span class="o">/</span> <span class="p">(((</span><span class="mi">1</span><span class="o">+</span><span class="n">rate</span><span class="p">)</span><span class="o">**</span><span class="n">duration</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+        <span class="n">emi</span> <span class="o">=</span> <span class="n">loan_amount</span> <span class="o">/</span> <span class="n">duration</span>
+    <span class="n">emi</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">emi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">emi</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can use the updated <code>loan_emi</code> function to solve our problem.</p>
+<blockquote>
+<p><strong>Q</strong>:If you borrow <code>$100,000</code> using a 10-year loan with an interest rate of 9% per annum, what is the total amount you end up paying as interest?</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi_with_interest</span> <span class="o">=</span> <span class="n">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="o">*</span><span class="mi">12</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mf">0.09</span><span class="o">/</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">emi_with_interest</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1267</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">emi_without_interest</span> <span class="o">=</span> <span class="n">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">10</span><span class="o">*</span><span class="mi">12</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">emi_without_interest</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>834</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">total_interest</span> <span class="o">=</span> <span class="p">(</span><span class="n">emi_with_interest</span> <span class="o">-</span> <span class="n">emi_without_interest</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span><span class="o">*</span><span class="mi">12</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"The total interest paid is $</span><span class="si">{}</span><span class="s2">."</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">total_interest</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The total interest paid is $51960.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Documenting-functions-using-Docstrings">
+<a class="anchor" href="#Documenting-functions-using-Docstrings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documenting functions using Docstrings<a class="anchor-link" href="#Documenting-functions-using-Docstrings"> </a>
+</h3>
+<p>We can add some documentation within our function using a <em>docstring</em>. A docstring is simply a string that appears as the first statement within the function body, and is used by the <code>help</code> function. A good docstring describes what the function does, and provides some explanation about the arguments.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">loan_emi</span><span class="p">(</span><span class="n">amount</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">rate</span><span class="p">,</span> <span class="n">down_payment</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">"""Calculates the equal montly installment (EMI) for a loan.</span>
+<span class="sd">    </span>
+<span class="sd">    Arguments:</span>
+<span class="sd">        amount - Total amount to be spent (loan + down payment)</span>
+<span class="sd">        duration - Duration of the loan (in months)</span>
+<span class="sd">        rate - Rate of interest (monthly)</span>
+<span class="sd">        down_payment (optional) - Optional intial payment (deducted from amount)</span>
+<span class="sd">    """</span>
+    <span class="n">loan_amount</span> <span class="o">=</span> <span class="n">amount</span> <span class="o">-</span> <span class="n">down_payment</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">emi</span> <span class="o">=</span> <span class="n">loan_amount</span> <span class="o">*</span> <span class="n">rate</span> <span class="o">*</span> <span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="n">rate</span><span class="p">)</span><span class="o">**</span><span class="n">duration</span><span class="p">)</span> <span class="o">/</span> <span class="p">(((</span><span class="mi">1</span><span class="o">+</span><span class="n">rate</span><span class="p">)</span><span class="o">**</span><span class="n">duration</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+        <span class="n">emi</span> <span class="o">=</span> <span class="n">loan_amount</span> <span class="o">/</span> <span class="n">duration</span>
+    <span class="n">emi</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">emi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">emi</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the docstring above, we've provided some additional information that the <code>duration</code> and <code>rate</code> are measured in months. You might even consider naming the arguments <code>duration_months</code> and <code>rate_monthly</code>, to avoid any confusion whatsoever. Can you think of some other ways to improve the function?</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">loan_emi</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Help on function loan_emi in module __main__:
+
+loan_emi(amount, duration, rate, down_payment=0)
+    Calculates the equal montly installment (EMI) for a loan.
+    
+    Arguments:
+        amount - Total amount to be spent (loan + down payment)
+        duration - Duration of the loan (in months)
+        rate - Rate of interest (monthly)
+        down_payment (optional) - Optional intial payment (deducted from amount)
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Exercise---Data-Analysis-for-Vacation-Planning">
+<a class="anchor" href="#Exercise---Data-Analysis-for-Vacation-Planning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exercise - Data Analysis for Vacation Planning<a class="anchor-link" href="#Exercise---Data-Analysis-for-Vacation-Planning"> </a>
+</h2>
+<p>You're planning a vacation, and you need to decide which city you want to visit. You have shortlisted four cities and identified the return flight cost, daily hotel cost, and weekly car rental cost. While renting a car, you need to pay for entire weeks, even if you return the car sooner.</p>
+<table>
+<thead>
+<tr>
+<th>City</th>
+<th>Return Flight (<code>$</code>)</th>
+<th>Hotel per day (<code>$</code>)</th>
+<th>Weekly Car Rental  (<code>$</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Paris</td>
+<td>200</td>
+<td>20</td>
+<td>200</td>
+</tr>
+<tr>
+<td>London</td>
+<td>250</td>
+<td>30</td>
+<td>120</td>
+</tr>
+<tr>
+<td>Dubai</td>
+<td>370</td>
+<td>15</td>
+<td>80</td>
+</tr>
+<tr>
+<td>Mumbai</td>
+<td>450</td>
+<td>10</td>
+<td>70</td>
+</tr>
+</tbody>
+</table>
+<p>Answer the following questions using the data above:</p>
+<ol>
+<li>If you're planning a 1-week long trip, which city should you visit to spend the least amount of money?</li>
+<li>How does the answer to the previous question change if you change the trip's duration to four days, ten days or two weeks?</li>
+<li>If your total budget for the trip is <code>$1000</code>, which city should you visit to maximize the duration of your trip? Which city should you visit if you want to minimize the duration?</li>
+<li>How does the answer to the previous question change if your budget is <code>$600</code>, <code>$2000</code>, or <code>$1500</code>?</li>
+</ol>
+<p><em>Hint: To answer these questions, it will help to define a function <code>cost_of_trip</code> with relevant inputs like flight cost, hotel rate, car rental rate, and duration of the trip. You may find the <code>math.ceil</code> function useful for calculating the total cost of car rental.</em></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Use these cells to answer the question - build the function step-by-step</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Summary-and-Further-Reading">
+<a class="anchor" href="#Summary-and-Further-Reading" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary and Further Reading<a class="anchor-link" href="#Summary-and-Further-Reading"> </a>
+</h2>
+<p>With this, we complete our discussion of functions in Python. We've covered the following topics in this tutorial:</p>
+<ul>
+<li>Creating and using functions</li>
+<li>Functions with one or more arguments</li>
+<li>Local variables and scope</li>
+<li>Returning values using <code>return</code>
+</li>
+<li>Using default arguments to make a function flexible</li>
+<li>Using named arguments while invoking a function</li>
+<li>Importing modules and using library functions</li>
+<li>Reusing and improving functions to handle new use cases</li>
+<li>Handling exceptions with <code>try</code>-<code>except</code>
+</li>
+<li>Documenting functions using docstrings</li>
+</ul>
+<p>This tutorial on functions in Python is by no means exhaustive. Here are a few more topics to learn about:</p>
+<ul>
+<li>Functions with an arbitrary number of arguments using (<code>*args</code> and <code>**kwargs</code>)</li>
+<li>Defining functions inside functions (and closures)</li>
+<li>A function that invokes itself (recursion)</li>
+<li>Functions that accept other functions as arguments or return other functions</li>
+<li>Functions that enhance other functions (decorators)</li>
+</ul>
+<p>Following are some resources to learn about more functions in Python:</p>
+<ul>
+<li>Python Tutorial at W3Schools: <a href="https://www.w3schools.com/python/">https://www.w3schools.com/python/</a>
+</li>
+<li>Practical Python Programming: <a href="https://dabeaz-course.github.io/practical-python/Notes/Contents.html">https://dabeaz-course.github.io/practical-python/Notes/Contents.html</a>
+</li>
+<li>Python official documentation: <a href="https://docs.python.org/3/tutorial/index.html">https://docs.python.org/3/tutorial/index.html</a>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Questions-for-Revision">
+<a class="anchor" href="#Questions-for-Revision" aria-hidden="true"><span class="octicon octicon-link"></span></a>Questions for Revision<a class="anchor-link" href="#Questions-for-Revision"> </a>
+</h2>
+<p>Try answering the following questions to test your understanding of the topics covered in this notebook:</p>
+<ol>
+<li>What is a function?</li>
+<li>What are the benefits of using functions?</li>
+<li>What are some built-in functions in Python?</li>
+<li>How do you define a function in Python? Give an example.</li>
+<li>What is the body of a function?</li>
+<li>When are the statements in the body of a function executed?</li>
+<li>What is meant by calling or invoking a function? Give an example.</li>
+<li>What are function arguments? How are they useful?</li>
+<li>How do you store the result of a function in a variable?</li>
+<li>What is the purpose of the <code>return</code> keyword in Python?</li>
+<li>Can you return multiple values from a function?</li>
+<li>Can a <code>return</code> statement be used inside an <code>if</code> block or a <code>for</code> loop?</li>
+<li>Can the <code>return</code> keyword be used outside a function?</li>
+<li>What is scope in a programming region? </li>
+<li>How do you define a variable inside a function?</li>
+<li>What are local &amp; global variables?</li>
+<li>Can you access the variables defined inside a function outside its body? Why or why not?</li>
+<li>What do you mean by the statement "a function defines a scope within Python"?</li>
+<li>Do for and while loops define a scope, like functions?</li>
+<li>Do if-else blocks define a scope, like functions?</li>
+<li>What are optional function arguments &amp; default values? Give an example.</li>
+<li>Why should the required arguments appear before the optional arguments in a function definition?</li>
+<li>How do you invoke a function with named arguments? Illustrate with an example.</li>
+<li>Can you split a function invocation into multiple lines?</li>
+<li>Write a function that takes a number and rounds it up to the nearest integer.</li>
+<li>What are modules in Python?</li>
+<li>What is a Python library?</li>
+<li>What is the Python Standard Library?</li>
+<li>Where can you learn about the modules and functions available in the Python standard library?</li>
+<li>How do you install a third-party library?</li>
+<li>What is a module namespace? How is it useful?</li>
+<li>What problems would you run into if Python modules did not provide namespaces?</li>
+<li>How do you import a module?</li>
+<li>How do you use a function from an imported module? Illustrate with an example.</li>
+<li>Can you invoke a function inside the body of another function? Give an example.</li>
+<li>What is the single responsibility principle, and how does it apply while writing functions?</li>
+<li>What some characteristics of well-written functions?</li>
+<li>Can you use if statements or while loops within a function? Illustrate with an example.</li>
+<li>What are exceptions in Python? When do they occur?</li>
+<li>How are exceptions different from syntax errors?</li>
+<li>What are the different types of in-built exceptions in Python? Where can you learn about them?</li>
+<li>How do you prevent the termination of a program due to an exception?</li>
+<li>What is the purpose of the <code>try</code>-<code>except</code> statements in Python?</li>
+<li>What is the syntax of the <code>try</code>-<code>except</code> statements? Give an example.</li>
+<li>What happens if an exception occurs inside a <code>try</code> block?</li>
+<li>How do you handle two different types of exceptions using <code>except</code>? Can you have multiple <code>except</code> blocks under a single <code>try</code> block?</li>
+<li>How do you create an <code>except</code> block to handle any type of exception?</li>
+<li>Illustrate the usage of <code>try</code>-<code>except</code> inside a function with an example.</li>
+<li>What is a docstring? Why is it useful?</li>
+<li>How do you display the docstring for a function?</li>
+<li>What are *args and **kwargs? How are they useful? Give an example.</li>
+<li>Can you define functions inside functions? </li>
+<li>What is function closure in Python? How is it useful? Give an example.</li>
+<li>What is recursion? Illustrate with an example.</li>
+<li>Can functions accept other functions as arguments? Illustrate with an example.</li>
+<li>Can functions return other functions as results? Illustrate with an example.</li>
+<li>What are decorators? How are they useful?</li>
+<li>Implement a function decorator which prints the arguments and result of wrapped functions.</li>
+<li>What are some in-built decorators in Python?</li>
+<li>What are some popular Python libraries?</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="VictorOmondi1997/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/python/2021/04/30/python_functions_and_scope.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Hello! Thanks for visiting my blog, I&#39;m Victor Omondi, Data Scientist with industry experience analyzing, visualizing and modeling data. I specialize in Python &amp; R and have professional experience working with C++ and JavaScript|, currently am a student at Multimedia University of Kenya pursuing Bachelor of Science (Computer Technology)</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://dribbble.com/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#dribbble"></use></svg></a></li><li><a rel="me" href="https://www.facebook.com/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#facebook"></use></svg></a></li><li><a rel="me" href="https://www.flickr.com/photos/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#flickr"></use></svg></a></li><li><a rel="me" href="https://github.com/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://stackoverflow.com/users/9713351" title="9713351"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#stackoverflow"></use></svg></a></li><li><a rel="me" href="https://www.instagram.com/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#instagram"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://www.pinterest.com/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#pinterest"></use></svg></a></li><li><a rel="me" href="https://freeradical.zone/@VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#mastodon"></use></svg></a></li><li><a rel="me" href="https://twitter.com/VictorOmondi197" title="VictorOmondi197"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li><li><a rel="me" href="https://www.youtube.com/channel/UCwk-x5YuGrNBNGZNpb1CX3Q" title="VICTOR OMONDI"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#youtube"></use></svg></a></li><li><a rel="me" href="https://t.me/VickTheGeek" title="VickTheGeek"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#telegram"></use></svg></a></li><li><a rel="me" href="https://keybase.io/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#keybase"></use></svg></a></li><li><a rel="me" href="https://micro.blog/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#microdotblog"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
