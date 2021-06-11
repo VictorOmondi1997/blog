@@ -1,0 +1,5117 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Data Wrangling in Python | Victor Omondi Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Data Wrangling in Python" />
+<meta name="author" content="Victor Omondi" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="CIT Club event blog &amp; Notebook. The aim of this blog/notebook was to introduce CIT Club members in data wrangling." />
+<meta property="og:description" content="CIT Club event blog &amp; Notebook. The aim of this blog/notebook was to introduce CIT Club members in data wrangling." />
+<link rel="canonical" href="https://victoromondi1997.github.io/blog/data-wrangling/python/cit-club/2021/11/06/data_wrangling_cit.html" />
+<meta property="og:url" content="https://victoromondi1997.github.io/blog/data-wrangling/python/cit-club/2021/11/06/data_wrangling_cit.html" />
+<meta property="og:site_name" content="Victor Omondi Blog" />
+<meta property="og:image" content="https://victoromondi1997.github.io/blog/images/event_banner.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-11-06T00:00:00-05:00" />
+<script type="application/ld+json">
+{"dateModified":"2021-11-06T00:00:00-05:00","datePublished":"2021-11-06T00:00:00-05:00","author":{"@type":"Person","name":"Victor Omondi"},"description":"CIT Club event blog &amp; Notebook. The aim of this blog/notebook was to introduce CIT Club members in data wrangling.","image":"https://victoromondi1997.github.io/blog/images/event_banner.png","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://victoromondi1997.github.io/blog/data-wrangling/python/cit-club/2021/11/06/data_wrangling_cit.html"},"url":"https://victoromondi1997.github.io/blog/data-wrangling/python/cit-club/2021/11/06/data_wrangling_cit.html","headline":"Data Wrangling in Python","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://victoromondi1997.github.io/blog/feed.xml" title="Victor Omondi | Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-170138117-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Data Wrangling in Python | Victor Omondi Blog</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Data Wrangling in Python" />
+<meta name="author" content="Victor Omondi" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="CIT Club event blog &amp; Notebook. The aim of this blog/notebook was to introduce CIT Club members in data wrangling." />
+<meta property="og:description" content="CIT Club event blog &amp; Notebook. The aim of this blog/notebook was to introduce CIT Club members in data wrangling." />
+<link rel="canonical" href="https://victoromondi1997.github.io/blog/data-wrangling/python/cit-club/2021/11/06/data_wrangling_cit.html" />
+<meta property="og:url" content="https://victoromondi1997.github.io/blog/data-wrangling/python/cit-club/2021/11/06/data_wrangling_cit.html" />
+<meta property="og:site_name" content="Victor Omondi Blog" />
+<meta property="og:image" content="https://victoromondi1997.github.io/blog/images/event_banner.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-11-06T00:00:00-05:00" />
+<script type="application/ld+json">
+{"dateModified":"2021-11-06T00:00:00-05:00","datePublished":"2021-11-06T00:00:00-05:00","author":{"@type":"Person","name":"Victor Omondi"},"description":"CIT Club event blog &amp; Notebook. The aim of this blog/notebook was to introduce CIT Club members in data wrangling.","image":"https://victoromondi1997.github.io/blog/images/event_banner.png","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://victoromondi1997.github.io/blog/data-wrangling/python/cit-club/2021/11/06/data_wrangling_cit.html"},"url":"https://victoromondi1997.github.io/blog/data-wrangling/python/cit-club/2021/11/06/data_wrangling_cit.html","headline":"Data Wrangling in Python","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://victoromondi1997.github.io/blog/feed.xml" title="Victor Omondi | Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-170138117-1','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Victor Omondi | Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Data Wrangling in Python</h1><p class="page-description">CIT Club event blog & Notebook. The aim of this blog/notebook was to introduce CIT Club members in data wrangling.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-06T00:00:00-05:00" itemprop="datePublished">
+        Nov 6, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Victor Omondi</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      19 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#data-wrangling">data-wrangling</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#cit-club">cit-club</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/VictorOmondi1997/blog/tree/master/_notebooks/2021-11-06-data_wrangling_cit.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/VictorOmondi1997/blog/master?filepath=_notebooks%2F2021-11-06-data_wrangling_cit.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/VictorOmondi1997/blog/blob/master/_notebooks/2021-11-06-data_wrangling_cit.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Introductions">Introductions </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Data-Sets">Data Sets </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#1.-Prerequisites">1. Prerequisites </a></li>
+<li class="toc-entry toc-h1"><a href="#2.-Reading-Data">2. Reading Data </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#EXERCISE">EXERCISE </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#3.-Data-Exploration">3. Data Exploration </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#3.1-First-few-rows">3.1 First few rows </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#EXERCISE">EXERCISE </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#3.2-Last-few-rows">3.2 Last few rows </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#EXERCISE">EXERCISE </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#3.3-sample">3.3 sample </a></li>
+<li class="toc-entry toc-h2"><a href="#3.4.-Number-of-Rows-and-columns">3.4. Number of Rows and columns </a></li>
+<li class="toc-entry toc-h2"><a href="#3.5-Info">3.5 Info </a></li>
+<li class="toc-entry toc-h2"><a href="#3.6.-Describe">3.6. Describe </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#4.-Reshaping-Data">4. Reshaping Data </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#4.1.-Droping-Irrelevant-Data.">4.1. Droping Irrelevant Data. </a></li>
+<li class="toc-entry toc-h2"><a href="#4.2.-Set-Index">4.2. Set Index </a></li>
+<li class="toc-entry toc-h2"><a href="#4.3.-Duplicates">4.3. Duplicates </a></li>
+<li class="toc-entry toc-h2"><a href="#4.4.-Drop-Duplicates">4.4. Drop Duplicates </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#5.-Advanced-Data-Wrangling">5. Advanced Data Wrangling </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#5.1.-Value-counts">5.1. Value counts </a></li>
+<li class="toc-entry toc-h2"><a href="#5.2.-Data-Filteration">5.2. Data Filteration </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#5.2.1.-Multiple-conditions-filterring">5.2.1. Multiple conditions filterring </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#5.3.-Grouping-Data">5.3. Grouping Data </a></li>
+<li class="toc-entry toc-h2"><a href="#5.4.-Combining-Data">5.4. Combining Data </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#6.-More-Resources">6. More Resources </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-11-06-data_wrangling_cit.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="https://github.com/VictorOmondi1997/data_wrangling_cit/blob/master/img/wikipedia_def.gif?raw=true" alt="Wikipedia Definition"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Introductions">
+<a class="anchor" href="#Introductions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introductions<a class="anchor-link" href="#Introductions"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img style="float: left;margin:5px 20px 5px 1px;width:500px" src="https://github.com/VictorOmondi1997/data_wrangling_cit/blob/master/img/event_banner.png?raw=true"></p>
+<p>Data wrangling is the process of gathering, selecting, and transforming data to answer an analytical question. Also known as data cleaning or “munging”, legend has it that this wrangling costs analytics professionals as much as 80% of their time, leaving only 20% for exploration and modeling.</p>
+<p>Hello and welcome to <strong>Data Wrangling in Python</strong>. This is a notebook/presentatation/blog used in <em>Data Science CIT club event</em>, it depends on how you've accessed it. Depending on how you got this notebook, this is how to work around with it to access the data sets and the entire project.</p>
+<ul>
+<li>
+<strong>Github</strong><ul>
+<li>clone the entire project, instructions are on the <code>README.md</code> file</li>
+</ul>
+</li>
+<li>
+<strong>Blog</strong><ul>
+<li>click on any of the banners shown at the top of the project</li>
+</ul>
+</li>
+</ul>
+<h2 id="Data-Sets">
+<a class="anchor" href="#Data-Sets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Sets<a class="anchor-link" href="#Data-Sets"> </a>
+</h2>
+<ul>
+<li>
+<code>client status</code>: Shows the client status and loan status at the end of the month their status remained the same.</li>
+<li>
+<code>kenya_subcounties</code>: shows the county name and sub counties</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="1.-Prerequisites">
+<a class="anchor" href="#1.-Prerequisites" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Prerequisites<a class="anchor-link" href="#1.-Prerequisites"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Before starting data wrangling, we need to first install the necessary libraries needed.</p>
+<ul>
+<li>Pandas: Pandas is the popular library used for data analysis and data transformation</li>
+<li>numpy: Numpy is a popular library for scientific computing</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For the purpose of viewing, some datasets might be having very long or very many columns, therefore we need to make sure pandas will be able to show all columns
+</p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <strong>Note: </strong>Pandas usually truncates columns if they are many
+</div>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">'display.max_columns'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">'display.max_colwidth'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="2.-Reading-Data">
+<a class="anchor" href="#2.-Reading-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Reading Data<a class="anchor-link" href="#2.-Reading-Data"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Data might come in very many formats. But mainly, for many data scientists data, the popular used are CSV files. We will use CSV file for our data. Below is how to read CSV with pandas. In pandas, we use <code>pd.read_csv</code> to create pandas dataframes from csv. You pass the csv location as a string/variablestring as the first argument. e.g. <code>pd.read_csv("file.csv")</code></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'data/client_status.csv'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="EXERCISE">
+<a class="anchor" href="#EXERCISE" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>EXERCISE</strong><a class="anchor-link" href="#EXERCISE"> </a>
+</h3>
+<p><strong>Create a dataframe known as <code>counties</code>, the csv location is <a href="https://raw.githubusercontent.com/VictorOmondi1997/data_wrangling_cit/master/data/kenya_subcounty.csv">https://raw.githubusercontent.com/VictorOmondi1997/data_wrangling_cit/master/data/kenya_subcounty.csv</a></strong></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="3.-Data-Exploration">
+<a class="anchor" href="#3.-Data-Exploration" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Data Exploration<a class="anchor-link" href="#3.-Data-Exploration"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Before doing data wrangling or any data cleaning, it is important as a data scientist/analyst to explore your data. This will help you know how the data looks like, how many rows and columns it has. To check the first few rows we use <code>df.head(n)</code> where df is the dataframe name and <code>n</code> is the number of rows you want to be returned. The same is for <code>df.tail</code> and <code>df.sample</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.1-First-few-rows">
+<a class="anchor" href="#3.1-First-few-rows" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1 First few rows<a class="anchor-link" href="#3.1-First-few-rows"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By Default, without passing any argument in <code>head()</code>, it will return the first <code>5</code> rows.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#colapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>South Rift AgriBiz</td>
+      <td>Ndunyu Njeru</td>
+      <td>85119.0</td>
+      <td>New</td>
+      <td>P+I Current</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>2005.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>44.83</td>
+      <td>2018-09-30</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Eastern Region</td>
+      <td>Wote</td>
+      <td>69865.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>50.65</td>
+      <td>2020-11-30</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Western Region</td>
+      <td>Bungoma</td>
+      <td>55339.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>60.71</td>
+      <td>2020-07-31</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>South Rift Region</td>
+      <td>Kericho</td>
+      <td>38049.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.15</td>
+      <td>2019-06-30</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Passing the number of rows you want</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>South Rift AgriBiz</td>
+      <td>Ndunyu Njeru</td>
+      <td>85119.0</td>
+      <td>New</td>
+      <td>P+I Current</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>2005.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>44.83</td>
+      <td>2018-09-30</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Eastern Region</td>
+      <td>Wote</td>
+      <td>69865.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>50.65</td>
+      <td>2020-11-30</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Western Region</td>
+      <td>Bungoma</td>
+      <td>55339.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>60.71</td>
+      <td>2020-07-31</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>South Rift Region</td>
+      <td>Kericho</td>
+      <td>38049.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.15</td>
+      <td>2019-06-30</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>South Rift Region</td>
+      <td>Narok</td>
+      <td>33391.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.94</td>
+      <td>2019-04-30</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>North Rift Region</td>
+      <td>Iten</td>
+      <td>53675.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>35.24</td>
+      <td>2020-05-31</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>North Rift Region</td>
+      <td>Eldoret3</td>
+      <td>16893.0</td>
+      <td>Active</td>
+      <td>Penalties</td>
+      <td>26.21</td>
+      <td>2020-12-31</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Nairobi Region</td>
+      <td>Kiambu</td>
+      <td>35681.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>46.78</td>
+      <td>2019-05-31</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>24807.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>36.94</td>
+      <td>2019-02-28</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="EXERCISE">
+<a class="anchor" href="#EXERCISE" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>EXERCISE</strong><a class="anchor-link" href="#EXERCISE"> </a>
+</h3>
+<p><strong>For the dataframe we created (<code>counties</code>) return the first 15 rows.</strong></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.2-Last-few-rows">
+<a class="anchor" href="#3.2-Last-few-rows" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2 Last few rows<a class="anchor-link" href="#3.2-Last-few-rows"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>tail</code> method returns the last rows of a dataframe, by default it returns the 5 last rows, but you can specify the number of last rows that you need to return.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>40019</th>
+      <td>Eastern Region</td>
+      <td>Matuu</td>
+      <td>66991.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>33.38</td>
+      <td>2020-09-30</td>
+    </tr>
+    <tr>
+      <th>40020</th>
+      <td>Report Title: Client Status (Monthly)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40021</th>
+      <td>Generated By: Victor Omondi</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40022</th>
+      <td>Generated Time: 2021-03-26 02:44:32</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40023</th>
+      <td>Report Parameters:Office: Head Office month: 2 year: 2021</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash flash-success">
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z"></path></svg>
+    <strong>Tip: </strong>As you can see the last <code>4</code> rows have metadata on when the data was generated. We will hand this situation in the Reshaping data part.
+</div>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>40014</th>
+      <td>South Rift AgriBiz</td>
+      <td>Maili Nne</td>
+      <td>48513.0</td>
+      <td>Active</td>
+      <td>Penalties</td>
+      <td>56.17</td>
+      <td>2021-01-31</td>
+    </tr>
+    <tr>
+      <th>40015</th>
+      <td>North Rift Region</td>
+      <td>Iten</td>
+      <td>42221.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>44.50</td>
+      <td>2019-08-31</td>
+    </tr>
+    <tr>
+      <th>40016</th>
+      <td>Western Region</td>
+      <td>Mbale</td>
+      <td>54391.0</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>56.98</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>40017</th>
+      <td>Coast Region</td>
+      <td>Mariakani</td>
+      <td>67944.0</td>
+      <td>Dormant</td>
+      <td>P+I In Default</td>
+      <td>0.15</td>
+      <td>2020-10-31</td>
+    </tr>
+    <tr>
+      <th>40018</th>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>6888.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>32.42</td>
+      <td>2020-11-30</td>
+    </tr>
+    <tr>
+      <th>40019</th>
+      <td>Eastern Region</td>
+      <td>Matuu</td>
+      <td>66991.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>33.38</td>
+      <td>2020-09-30</td>
+    </tr>
+    <tr>
+      <th>40020</th>
+      <td>Report Title: Client Status (Monthly)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40021</th>
+      <td>Generated By: Victor Omondi</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40022</th>
+      <td>Generated Time: 2021-03-26 02:44:32</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40023</th>
+      <td>Report Parameters:Office: Head Office month: 2 year: 2021</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="EXERCISE">
+<a class="anchor" href="#EXERCISE" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>EXERCISE</strong><a class="anchor-link" href="#EXERCISE"> </a>
+</h3>
+<p><strong>For the dataframe (<code>counties</code>) we created return the last 15 rows.</strong></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.3-sample">
+<a class="anchor" href="#3.3-sample" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.3 sample<a class="anchor-link" href="#3.3-sample"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>df.sample</code> mainly is used during sampling techniques.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>24567</th>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>15932.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>37.29</td>
+      <td>2018-07-31</td>
+    </tr>
+    <tr>
+      <th>11340</th>
+      <td>Eastern Region</td>
+      <td>Matuu</td>
+      <td>53632.0</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2019-03-31</td>
+    </tr>
+    <tr>
+      <th>11385</th>
+      <td>Nairobi Region</td>
+      <td>Kahawa</td>
+      <td>40027.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.15</td>
+      <td>2019-12-31</td>
+    </tr>
+    <tr>
+      <th>6789</th>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>45263.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>4.13</td>
+      <td>2019-10-31</td>
+    </tr>
+    <tr>
+      <th>23298</th>
+      <td>South Rift AgriBiz</td>
+      <td>Keringet</td>
+      <td>77150.0</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>39.29</td>
+      <td>2021-02-28</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.4.-Number-of-Rows-and-columns">
+<a class="anchor" href="#3.4.-Number-of-Rows-and-columns" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.4. Number of Rows and columns<a class="anchor-link" href="#3.4.-Number-of-Rows-and-columns"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(40024, 7)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.5-Info">
+<a class="anchor" href="#3.5-Info" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.5 Info<a class="anchor-link" href="#3.5-Info"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 40024 entries, 0 to 40023
+Data columns (total 7 columns):
+ #   Column         Non-Null Count  Dtype  
+---  ------         --------------  -----  
+ 0   Region         39944 non-null  object 
+ 1   Office         40020 non-null  object 
+ 2   Client ID      40020 non-null  float64
+ 3   Client Status  40020 non-null  object 
+ 4   Loan Status    40020 non-null  object 
+ 5   Client Score   36720 non-null  float64
+ 6   Status Date    40020 non-null  object 
+dtypes: float64(2), object(5)
+memory usage: 2.1+ MB
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.6.-Describe">
+<a class="anchor" href="#3.6.-Describe" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.6. Describe<a class="anchor-link" href="#3.6.-Describe"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We use <code>df.describe()</code> to get summary statistics.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Client ID</th>
+      <th>Client Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>40020.000000</td>
+      <td>36720.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>43747.996652</td>
+      <td>35.593555</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>24860.118889</td>
+      <td>20.538354</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>2.000000</td>
+      <td>0.150000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>22291.750000</td>
+      <td>21.887500</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>44105.000000</td>
+      <td>36.700000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>65170.500000</td>
+      <td>49.822500</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>86654.000000</td>
+      <td>92.540000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">'all'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>39944</td>
+      <td>40020</td>
+      <td>40020.000000</td>
+      <td>40020</td>
+      <td>40020</td>
+      <td>36720.000000</td>
+      <td>40020</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>12</td>
+      <td>57</td>
+      <td>NaN</td>
+      <td>4</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>67</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>Nairobi Region</td>
+      <td>Embakasi</td>
+      <td>NaN</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>9860</td>
+      <td>1561</td>
+      <td>NaN</td>
+      <td>30535</td>
+      <td>28071</td>
+      <td>NaN</td>
+      <td>8430</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>43747.996652</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>35.593555</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>24860.118889</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>20.538354</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.150000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>22291.750000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21.887500</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>44105.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>36.700000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>65170.500000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>49.822500</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>86654.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>92.540000</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="4.-Reshaping-Data">
+<a class="anchor" href="#4.-Reshaping-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Reshaping Data<a class="anchor-link" href="#4.-Reshaping-Data"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>From the tail that we looked above, we saw that the last 4 rows have the metadata on the generation of the data. Those metadata are not very important in our analysis. We will first remove them.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.1.-Droping-Irrelevant-Data.">
+<a class="anchor" href="#4.1.-Droping-Irrelevant-Data." aria-hidden="true"><span class="octicon octicon-link"></span></a>4.1. Droping Irrelevant Data.<a class="anchor-link" href="#4.1.-Droping-Irrelevant-Data."> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>40019</th>
+      <td>Eastern Region</td>
+      <td>Matuu</td>
+      <td>66991.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>33.38</td>
+      <td>2020-09-30</td>
+    </tr>
+    <tr>
+      <th>40020</th>
+      <td>Report Title: Client Status (Monthly)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40021</th>
+      <td>Generated By: Victor Omondi</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40022</th>
+      <td>Generated Time: 2021-03-26 02:44:32</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40023</th>
+      <td>Report Parameters:Office: Head Office month: 2 year: 2021</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status_2</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">40020</span><span class="p">,</span> <span class="mi">40021</span><span class="p">,</span> <span class="mi">40022</span><span class="p">,</span> <span class="mi">40023</span><span class="p">])</span>
+<span class="n">status_2</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>40015</th>
+      <td>North Rift Region</td>
+      <td>Iten</td>
+      <td>42221.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>44.50</td>
+      <td>2019-08-31</td>
+    </tr>
+    <tr>
+      <th>40016</th>
+      <td>Western Region</td>
+      <td>Mbale</td>
+      <td>54391.0</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>56.98</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>40017</th>
+      <td>Coast Region</td>
+      <td>Mariakani</td>
+      <td>67944.0</td>
+      <td>Dormant</td>
+      <td>P+I In Default</td>
+      <td>0.15</td>
+      <td>2020-10-31</td>
+    </tr>
+    <tr>
+      <th>40018</th>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>6888.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>32.42</td>
+      <td>2020-11-30</td>
+    </tr>
+    <tr>
+      <th>40019</th>
+      <td>Eastern Region</td>
+      <td>Matuu</td>
+      <td>66991.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>33.38</td>
+      <td>2020-09-30</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <strong>Note: </strong>We can also drop inplace, no need of assigning it to a variable. This can be done by specifying the <code>inplace</code> argument to <code>True</code>
+</div>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">40020</span><span class="p">,</span> <span class="mi">40021</span><span class="p">,</span> <span class="mi">40022</span><span class="p">,</span> <span class="mi">40023</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">status</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>40015</th>
+      <td>North Rift Region</td>
+      <td>Iten</td>
+      <td>42221.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>44.50</td>
+      <td>2019-08-31</td>
+    </tr>
+    <tr>
+      <th>40016</th>
+      <td>Western Region</td>
+      <td>Mbale</td>
+      <td>54391.0</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>56.98</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>40017</th>
+      <td>Coast Region</td>
+      <td>Mariakani</td>
+      <td>67944.0</td>
+      <td>Dormant</td>
+      <td>P+I In Default</td>
+      <td>0.15</td>
+      <td>2020-10-31</td>
+    </tr>
+    <tr>
+      <th>40018</th>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>6888.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>32.42</td>
+      <td>2020-11-30</td>
+    </tr>
+    <tr>
+      <th>40019</th>
+      <td>Eastern Region</td>
+      <td>Matuu</td>
+      <td>66991.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>33.38</td>
+      <td>2020-09-30</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.2.-Set-Index">
+<a class="anchor" href="#4.2.-Set-Index" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.2. Set Index<a class="anchor-link" href="#4.2.-Set-Index"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'Client ID'</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">status</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+    <tr>
+      <th>Client ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>85119.0</th>
+      <td>South Rift AgriBiz</td>
+      <td>Ndunyu Njeru</td>
+      <td>New</td>
+      <td>P+I Current</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>2005.0</th>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>44.83</td>
+      <td>2018-09-30</td>
+    </tr>
+    <tr>
+      <th>69865.0</th>
+      <td>Eastern Region</td>
+      <td>Wote</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>50.65</td>
+      <td>2020-11-30</td>
+    </tr>
+    <tr>
+      <th>55339.0</th>
+      <td>Western Region</td>
+      <td>Bungoma</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>60.71</td>
+      <td>2020-07-31</td>
+    </tr>
+    <tr>
+      <th>38049.0</th>
+      <td>South Rift Region</td>
+      <td>Kericho</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.15</td>
+      <td>2019-06-30</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">status</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+    <tr>
+      <th>Client ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2.0</th>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>37.98</td>
+      <td>2020-04-30</td>
+    </tr>
+    <tr>
+      <th>7.0</th>
+      <td>NaN</td>
+      <td>Head Office</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2015-02-28</td>
+    </tr>
+    <tr>
+      <th>10.0</th>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>Active</td>
+      <td>Penalties</td>
+      <td>42.19</td>
+      <td>2020-12-31</td>
+    </tr>
+    <tr>
+      <th>12.0</th>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>65.34</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>13.0</th>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>Dormant</td>
+      <td>Pending Renewal</td>
+      <td>57.59</td>
+      <td>2016-02-29</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status_date_sorted</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'Status Date'</span><span class="p">)</span>
+<span class="n">status_date_sorted</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+    <tr>
+      <th>Client ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7.0</th>
+      <td>NaN</td>
+      <td>Head Office</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2015-02-28</td>
+    </tr>
+    <tr>
+      <th>2598.0</th>
+      <td>Nairobi Region</td>
+      <td>Rongai</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2015-02-28</td>
+    </tr>
+    <tr>
+      <th>1201.0</th>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2015-02-28</td>
+    </tr>
+    <tr>
+      <th>2859.0</th>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2015-06-30</td>
+    </tr>
+    <tr>
+      <th>1058.0</th>
+      <td>Nairobi Region</td>
+      <td>Kahawa</td>
+      <td>Dormant</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2015-10-31</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.3.-Duplicates">
+<a class="anchor" href="#4.3.-Duplicates" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.3. Duplicates<a class="anchor-link" href="#4.3.-Duplicates"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0        False
+1        False
+2        False
+3        False
+4        False
+         ...  
+40015    False
+40016    False
+40017    False
+40018    False
+40019    False
+Length: 40020, dtype: bool</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="p">[</span><span class="n">status</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Client ID</th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5051</th>
+      <td>11331.0</td>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>23.84</td>
+      <td>2018-02-28</td>
+    </tr>
+    <tr>
+      <th>5052</th>
+      <td>11331.0</td>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>23.84</td>
+      <td>2018-02-28</td>
+    </tr>
+    <tr>
+      <th>5053</th>
+      <td>11331.0</td>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>23.84</td>
+      <td>2018-02-28</td>
+    </tr>
+    <tr>
+      <th>5054</th>
+      <td>11331.0</td>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>23.84</td>
+      <td>2018-02-28</td>
+    </tr>
+    <tr>
+      <th>9624</th>
+      <td>21440.0</td>
+      <td>North Rift Region</td>
+      <td>Eldoret1</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>16.01</td>
+      <td>2018-08-31</td>
+    </tr>
+    <tr>
+      <th>9625</th>
+      <td>21440.0</td>
+      <td>North Rift Region</td>
+      <td>Eldoret1</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>16.01</td>
+      <td>2018-08-31</td>
+    </tr>
+    <tr>
+      <th>9626</th>
+      <td>21440.0</td>
+      <td>North Rift Region</td>
+      <td>Eldoret1</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>16.01</td>
+      <td>2018-08-31</td>
+    </tr>
+    <tr>
+      <th>9627</th>
+      <td>21440.0</td>
+      <td>North Rift Region</td>
+      <td>Eldoret1</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>16.01</td>
+      <td>2018-08-31</td>
+    </tr>
+    <tr>
+      <th>11194</th>
+      <td>24807.0</td>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>36.94</td>
+      <td>2019-02-28</td>
+    </tr>
+    <tr>
+      <th>11195</th>
+      <td>24807.0</td>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>36.94</td>
+      <td>2019-02-28</td>
+    </tr>
+    <tr>
+      <th>11196</th>
+      <td>24807.0</td>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>36.94</td>
+      <td>2019-02-28</td>
+    </tr>
+    <tr>
+      <th>11197</th>
+      <td>24807.0</td>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>36.94</td>
+      <td>2019-02-28</td>
+    </tr>
+    <tr>
+      <th>22397</th>
+      <td>49227.0</td>
+      <td>Coast Region</td>
+      <td>Voi</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.24</td>
+      <td>2020-02-29</td>
+    </tr>
+    <tr>
+      <th>22398</th>
+      <td>49227.0</td>
+      <td>Coast Region</td>
+      <td>Voi</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.24</td>
+      <td>2020-02-29</td>
+    </tr>
+    <tr>
+      <th>22399</th>
+      <td>49227.0</td>
+      <td>Coast Region</td>
+      <td>Voi</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.24</td>
+      <td>2020-02-29</td>
+    </tr>
+    <tr>
+      <th>22400</th>
+      <td>49227.0</td>
+      <td>Coast Region</td>
+      <td>Voi</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.24</td>
+      <td>2020-02-29</td>
+    </tr>
+    <tr>
+      <th>35401</th>
+      <td>76644.0</td>
+      <td>Western Region</td>
+      <td>Kisumu</td>
+      <td>Active</td>
+      <td>Penalties</td>
+      <td>48.92</td>
+      <td>2020-09-30</td>
+    </tr>
+    <tr>
+      <th>35402</th>
+      <td>76644.0</td>
+      <td>Western Region</td>
+      <td>Kisumu</td>
+      <td>Active</td>
+      <td>Penalties</td>
+      <td>48.92</td>
+      <td>2020-09-30</td>
+    </tr>
+    <tr>
+      <th>35403</th>
+      <td>76644.0</td>
+      <td>Western Region</td>
+      <td>Kisumu</td>
+      <td>Active</td>
+      <td>Penalties</td>
+      <td>48.92</td>
+      <td>2020-09-30</td>
+    </tr>
+    <tr>
+      <th>35404</th>
+      <td>76644.0</td>
+      <td>Western Region</td>
+      <td>Kisumu</td>
+      <td>Active</td>
+      <td>Penalties</td>
+      <td>48.92</td>
+      <td>2020-09-30</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.4.-Drop-Duplicates">
+<a class="anchor" href="#4.4.-Drop-Duplicates" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.4. Drop Duplicates<a class="anchor-link" href="#4.4.-Drop-Duplicates"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Client ID</th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2.0</td>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>37.98</td>
+      <td>2020-04-30</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7.0</td>
+      <td>NaN</td>
+      <td>Head Office</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2015-02-28</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10.0</td>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>Active</td>
+      <td>Penalties</td>
+      <td>42.19</td>
+      <td>2020-12-31</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>12.0</td>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>65.34</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>13.0</td>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>Dormant</td>
+      <td>Pending Renewal</td>
+      <td>57.59</td>
+      <td>2016-02-29</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>40015</th>
+      <td>86301.0</td>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>New</td>
+      <td>P+I Current</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>40016</th>
+      <td>86303.0</td>
+      <td>Nairobi Region</td>
+      <td>Kahawa</td>
+      <td>New</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>40017</th>
+      <td>86308.0</td>
+      <td>Nairobi Region</td>
+      <td>Kahawa</td>
+      <td>New</td>
+      <td>P+I Current</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>40018</th>
+      <td>86313.0</td>
+      <td>North Rift Region</td>
+      <td>Eldoret2</td>
+      <td>New</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>40019</th>
+      <td>86654.0</td>
+      <td>Western Region</td>
+      <td>Bondo</td>
+      <td>New</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+  </tbody>
+</table>
+<p>40000 rows × 7 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="5.-Advanced-Data-Wrangling">
+<a class="anchor" href="#5.-Advanced-Data-Wrangling" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. Advanced Data Wrangling<a class="anchor-link" href="#5.-Advanced-Data-Wrangling"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="5.1.-Value-counts">
+<a class="anchor" href="#5.1.-Value-counts" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.1. Value counts<a class="anchor-link" href="#5.1.-Value-counts"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="p">[</span><span class="s1">'Region'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Nairobi Region        9860
+North Rift Region     8514
+South Rift Region     6781
+Coast Region          4665
+South Rift AgriBiz    3848
+Western Region        3364
+Eastern Region        2252
+Central AgriBiz        656
+Name: Region, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="p">[</span><span class="s1">'Region'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Nairobi Region        9860
+North Rift Region     8514
+South Rift Region     6781
+Coast Region          4665
+South Rift AgriBiz    3848
+Western Region        3364
+Eastern Region        2252
+Central AgriBiz        656
+NaN                     80
+Name: Region, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="5.2.-Data-Filteration">
+<a class="anchor" href="#5.2.-Data-Filteration" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.2. Data Filteration<a class="anchor-link" href="#5.2.-Data-Filteration"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In pandas</p>
+<ul>
+<li>we can use comparison operators to filter data meeting a certain condition, </li>
+<li>to filter columns we can use <code>df[[col1....coln]</code>, </li>
+<li>to filter rows based on their index we can use <ul>
+<li>
+<code>iloc[i]</code> or <code>loc[strn]</code> for integer based or label based indexing respectively.</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="p">[</span><span class="n">status</span><span class="p">[</span><span class="s1">'Region'</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Client ID</th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>7.0</td>
+      <td>NaN</td>
+      <td>Head Office</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2015-02-28</td>
+    </tr>
+    <tr>
+      <th>1993</th>
+      <td>4700.0</td>
+      <td>NaN</td>
+      <td>Head Office</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>15.15</td>
+      <td>2020-09-30</td>
+    </tr>
+    <tr>
+      <th>2156</th>
+      <td>5064.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>23.38</td>
+      <td>2020-08-31</td>
+    </tr>
+    <tr>
+      <th>2279</th>
+      <td>5322.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>23.96</td>
+      <td>2020-08-31</td>
+    </tr>
+    <tr>
+      <th>2407</th>
+      <td>5621.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>13.77</td>
+      <td>2020-08-31</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>38004</th>
+      <td>82121.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>NaN</td>
+      <td>2020-12-31</td>
+    </tr>
+    <tr>
+      <th>38100</th>
+      <td>82284.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>NaN</td>
+      <td>2020-12-31</td>
+    </tr>
+    <tr>
+      <th>38227</th>
+      <td>82560.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>NaN</td>
+      <td>2020-12-31</td>
+    </tr>
+    <tr>
+      <th>38296</th>
+      <td>82709.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>NaN</td>
+      <td>2020-12-31</td>
+    </tr>
+    <tr>
+      <th>38503</th>
+      <td>83150.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>NaN</td>
+      <td>2020-12-31</td>
+    </tr>
+  </tbody>
+</table>
+<p>80 rows × 7 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="p">[</span><span class="s1">'Client Score'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">90</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0        False
+1        False
+2        False
+3        False
+4        False
+         ...  
+40015    False
+40016    False
+40017    False
+40018    False
+40019    False
+Name: Client Score, Length: 40020, dtype: bool</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="p">[</span><span class="n">status</span><span class="p">[</span><span class="s1">'Client Score'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">90</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Client ID</th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2641</th>
+      <td>6150.0</td>
+      <td>South Rift Region</td>
+      <td>Kericho</td>
+      <td>Active</td>
+      <td>Pending Renewal</td>
+      <td>90.59</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>8535</th>
+      <td>19100.0</td>
+      <td>South Rift Region</td>
+      <td>Litein</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>90.85</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>12657</th>
+      <td>27981.0</td>
+      <td>South Rift AgriBiz</td>
+      <td>Ndunyu Njeru</td>
+      <td>Active</td>
+      <td>Pending Renewal</td>
+      <td>90.58</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>12876</th>
+      <td>28468.0</td>
+      <td>North Rift Region</td>
+      <td>Kapenguria</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>92.54</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>14405</th>
+      <td>31851.0</td>
+      <td>Nairobi Region</td>
+      <td>Rongai</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>91.34</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>22443</th>
+      <td>49324.0</td>
+      <td>South Rift AgriBiz</td>
+      <td>Maili Nne</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>91.21</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>26438</th>
+      <td>57810.0</td>
+      <td>South Rift AgriBiz</td>
+      <td>Maili Nne</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>90.92</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>29804</th>
+      <td>64738.0</td>
+      <td>Eastern Region</td>
+      <td>Mwingi</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>92.02</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>30564</th>
+      <td>66344.0</td>
+      <td>Central AgriBiz</td>
+      <td>Githunguri</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>90.33</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>32576</th>
+      <td>70685.0</td>
+      <td>South Rift AgriBiz</td>
+      <td>Londiani</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>90.77</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>34593</th>
+      <td>74947.0</td>
+      <td>South Rift AgriBiz</td>
+      <td>Ndunyu Njeru</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>92.17</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>35239</th>
+      <td>76301.0</td>
+      <td>Nairobi Region</td>
+      <td>Kiambu</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>90.04</td>
+      <td>2021-02-28</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="5.2.1.-Multiple-conditions-filterring">
+<a class="anchor" href="#5.2.1.-Multiple-conditions-filterring" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.2.1. Multiple conditions filterring<a class="anchor-link" href="#5.2.1.-Multiple-conditions-filterring"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can use logical conditions to support two or more expressions. In pandas we we can use the following operators:</p>
+<ul>
+<li>
+<code>&amp;</code>: for logical <strong>and</strong>
+</li>
+<li>
+<code>|</code>: for logical <strong>or</strong>
+</li>
+<li>
+<code>~</code>: for logical <strong>not</strong>
+<div class="flash flash-warn">
+    <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
+    <strong>Important: </strong>Paranthesis are very important. enclose expressions in a paranthesis <code>(.....)</code>
+</div>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="p">[(</span><span class="n">status</span><span class="p">[</span><span class="s1">'Client Score'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">90</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">status</span><span class="p">[</span><span class="s1">'Loan Status'</span><span class="p">]</span><span class="o">==</span><span class="s1">'P+I In Default'</span><span class="p">)]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Client ID</th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>26438</th>
+      <td>57810.0</td>
+      <td>South Rift AgriBiz</td>
+      <td>Maili Nne</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>90.92</td>
+      <td>2021-02-28</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="5.3.-Grouping-Data">
+<a class="anchor" href="#5.3.-Grouping-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.3. Grouping Data<a class="anchor-link" href="#5.3.-Grouping-Data"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f1bded33c70&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">'sum'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Client ID</th>
+      <th>Client Score</th>
+    </tr>
+    <tr>
+      <th>Region</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Central AgriBiz</th>
+      <td>36163955.0</td>
+      <td>20355.84</td>
+    </tr>
+    <tr>
+      <th>Coast Region</th>
+      <td>223911774.0</td>
+      <td>157344.06</td>
+    </tr>
+    <tr>
+      <th>Eastern Region</th>
+      <td>151738957.0</td>
+      <td>61644.78</td>
+    </tr>
+    <tr>
+      <th>Nairobi Region</th>
+      <td>306960319.0</td>
+      <td>309210.99</td>
+    </tr>
+    <tr>
+      <th>North Rift Region</th>
+      <td>326562922.0</td>
+      <td>270440.52</td>
+    </tr>
+    <tr>
+      <th>South Rift AgriBiz</th>
+      <td>201143618.0</td>
+      <td>168818.01</td>
+    </tr>
+    <tr>
+      <th>South Rift Region</th>
+      <td>270779301.0</td>
+      <td>211088.41</td>
+    </tr>
+    <tr>
+      <th>Western Region</th>
+      <td>229462131.0</td>
+      <td>107465.39</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">'mean'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Client ID</th>
+      <th>Client Score</th>
+    </tr>
+    <tr>
+      <th>Region</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Central AgriBiz</th>
+      <td>55127.980183</td>
+      <td>49.527591</td>
+    </tr>
+    <tr>
+      <th>Coast Region</th>
+      <td>47998.236656</td>
+      <td>35.760014</td>
+    </tr>
+    <tr>
+      <th>Eastern Region</th>
+      <td>67379.643428</td>
+      <td>31.244187</td>
+    </tr>
+    <tr>
+      <th>Nairobi Region</th>
+      <td>31131.878195</td>
+      <td>32.835403</td>
+    </tr>
+    <tr>
+      <th>North Rift Region</th>
+      <td>38355.992718</td>
+      <td>34.051942</td>
+    </tr>
+    <tr>
+      <th>South Rift AgriBiz</th>
+      <td>52272.250000</td>
+      <td>53.729475</td>
+    </tr>
+    <tr>
+      <th>South Rift Region</th>
+      <td>39932.060316</td>
+      <td>33.389499</td>
+    </tr>
+    <tr>
+      <th>Western Region</th>
+      <td>68211.097206</td>
+      <td>35.223006</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Region
+Central AgriBiz        656
+Coast Region          4665
+Eastern Region        2252
+Nairobi Region        9860
+North Rift Region     8514
+South Rift AgriBiz    3848
+South Rift Region     6781
+Western Region        3364
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)[</span><span class="s1">'Office'</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Region
+Central AgriBiz       2
+Coast Region          8
+Eastern Region        7
+Nairobi Region        8
+North Rift Region     9
+South Rift AgriBiz    6
+South Rift Region     8
+Western Region        7
+Name: Office, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">'Office'</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">'Region'</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">'Client Score'</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Region</th>
+      <th>Central AgriBiz</th>
+      <th>Coast Region</th>
+      <th>Eastern Region</th>
+      <th>Nairobi Region</th>
+      <th>North Rift Region</th>
+      <th>South Rift AgriBiz</th>
+      <th>South Rift Region</th>
+      <th>Western Region</th>
+    </tr>
+    <tr>
+      <th>Office</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Bomet</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>33.836232</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Bondo</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>54.472500</td>
+    </tr>
+    <tr>
+      <th>Bungoma</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>32.724249</td>
+    </tr>
+    <tr>
+      <th>Busia</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>36.784428</td>
+    </tr>
+    <tr>
+      <th>Changamwe</th>
+      <td>NaN</td>
+      <td>36.532172</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Eldoret1</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>30.403653</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Eldoret2</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>36.187024</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Eldoret3</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>34.155751</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Emali</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>53.730465</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Embakasi</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>31.044524</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Gatundu</th>
+      <td>53.854356</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Githunguri</th>
+      <td>46.683790</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Iten</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>35.201386</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Kahawa</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>33.996787</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Kakamega</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>30.911316</td>
+    </tr>
+    <tr>
+      <th>Kapenguria</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>31.686316</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Kapsabet</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>35.452655</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Kapsowar</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>45.603038</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Kariobangi</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>31.479123</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Kericho</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>37.658102</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Keringet</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>55.316672</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Kiambu</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>33.427367</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Kilifi</th>
+      <td>NaN</td>
+      <td>38.190105</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Kisumu</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>33.997069</td>
+    </tr>
+    <tr>
+      <th>Kitale</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>33.397403</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Kitui</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>28.887249</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Limuru</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>34.805696</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Litein</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>32.331343</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Londiani</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>57.162458</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Machakos</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>28.362899</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Maili Nne</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>54.783107</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Malindi</th>
+      <td>NaN</td>
+      <td>38.334366</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Mariakani</th>
+      <td>NaN</td>
+      <td>35.960600</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Matuu</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>27.157970</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Mbale</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>37.071537</td>
+    </tr>
+    <tr>
+      <th>Molo</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>31.274108</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Mombasa</th>
+      <td>NaN</td>
+      <td>35.224718</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Mtwapa</th>
+      <td>NaN</td>
+      <td>32.824705</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Mumias</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>38.454570</td>
+    </tr>
+    <tr>
+      <th>Mwingi</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>36.266471</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Naivasha</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>34.824824</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Nakuru</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>31.799053</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Nakuru AgriBiz</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>50.092392</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Nandi Hills</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>32.018613</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Narok</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>34.057127</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Ndunyu Njeru</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>49.818569</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Ngong Road</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>31.878455</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Nyahururu</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>28.315857</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Rongai</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>31.828505</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Tala</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>24.995787</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Thika</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>35.859116</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Ukunda</th>
+      <td>NaN</td>
+      <td>38.328651</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Voi</th>
+      <td>NaN</td>
+      <td>27.658777</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Wote</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>36.497002</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">'Status Date'</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">'Region'</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">'Client Score'</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">,</span> <span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Region</th>
+      <th>Central AgriBiz</th>
+      <th>Coast Region</th>
+      <th>Eastern Region</th>
+      <th>Nairobi Region</th>
+      <th>North Rift Region</th>
+      <th>South Rift AgriBiz</th>
+      <th>South Rift Region</th>
+      <th>Western Region</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>Status Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2016-01-31</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>44.733333</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>44.733333</td>
+    </tr>
+    <tr>
+      <th>2016-02-29</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>35.430541</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>37.207143</td>
+      <td>NaN</td>
+      <td>35.713182</td>
+    </tr>
+    <tr>
+      <th>2016-03-31</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>34.614533</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>33.599565</td>
+      <td>NaN</td>
+      <td>34.376327</td>
+    </tr>
+    <tr>
+      <th>2016-04-30</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>30.816381</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>33.833704</td>
+      <td>NaN</td>
+      <td>31.433561</td>
+    </tr>
+    <tr>
+      <th>2016-05-31</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>37.960885</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>41.225000</td>
+      <td>NaN</td>
+      <td>38.681241</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2020-11-30</th>
+      <td>47.642000</td>
+      <td>34.752153</td>
+      <td>31.791702</td>
+      <td>34.263287</td>
+      <td>38.249737</td>
+      <td>50.445581</td>
+      <td>33.603857</td>
+      <td>32.730902</td>
+      <td>34.959187</td>
+    </tr>
+    <tr>
+      <th>2020-12-31</th>
+      <td>43.470714</td>
+      <td>37.190167</td>
+      <td>30.627154</td>
+      <td>35.245165</td>
+      <td>39.696990</td>
+      <td>49.850078</td>
+      <td>34.649405</td>
+      <td>38.350320</td>
+      <td>37.861864</td>
+    </tr>
+    <tr>
+      <th>2021-01-31</th>
+      <td>50.570377</td>
+      <td>36.696154</td>
+      <td>34.157852</td>
+      <td>38.617857</td>
+      <td>41.534072</td>
+      <td>54.294533</td>
+      <td>36.930952</td>
+      <td>35.335667</td>
+      <td>41.915679</td>
+    </tr>
+    <tr>
+      <th>2021-02-28</th>
+      <td>55.504430</td>
+      <td>48.855651</td>
+      <td>41.270897</td>
+      <td>47.413198</td>
+      <td>49.778757</td>
+      <td>56.811797</td>
+      <td>47.444950</td>
+      <td>45.280237</td>
+      <td>49.599350</td>
+    </tr>
+    <tr>
+      <th>All</th>
+      <td>49.527591</td>
+      <td>35.760014</td>
+      <td>31.244187</td>
+      <td>32.835403</td>
+      <td>34.051942</td>
+      <td>53.729475</td>
+      <td>33.389499</td>
+      <td>35.223006</td>
+      <td>35.636641</td>
+    </tr>
+  </tbody>
+</table>
+<p>63 rows × 9 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="5.4.-Combining-Data">
+<a class="anchor" href="#5.4.-Combining-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>5.4. Combining Data<a class="anchor-link" href="#5.4.-Combining-Data"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">counties</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'kenya_subcounty.csv'</span><span class="p">)</span>
+<span class="n">counties</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>subCounty</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mombasa</td>
+      <td>Changamwe</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mombasa</td>
+      <td>Jomvu</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Mombasa</td>
+      <td>Kisauni</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Mombasa</td>
+      <td>Likoni</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Mombasa</td>
+      <td>Mvita</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">combined_</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">counties</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">'Office'</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">'subCounty'</span><span class="p">)</span>
+<span class="n">combined_</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Client ID</th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+      <th>name</th>
+      <th>subCounty</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>33.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>40.00</td>
+      <td>2020-06-30</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>34.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Dormant</td>
+      <td>Pending Renewal</td>
+      <td>40.23</td>
+      <td>2016-03-31</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>206.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>76.87</td>
+      <td>2021-02-28</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>615.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>58.43</td>
+      <td>2021-02-28</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>702.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Dormant</td>
+      <td>Pending Renewal</td>
+      <td>43.73</td>
+      <td>2016-08-31</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Another method is using the <code>pd.merge</code></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">combined_2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">counties</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">'Office'</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">'subCounty'</span><span class="p">)</span>
+<span class="n">combined_2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Client ID</th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+      <th>name</th>
+      <th>subCounty</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>33.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>40.00</td>
+      <td>2020-06-30</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>34.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Dormant</td>
+      <td>Pending Renewal</td>
+      <td>40.23</td>
+      <td>2016-03-31</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>206.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>76.87</td>
+      <td>2021-02-28</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>615.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>58.43</td>
+      <td>2021-02-28</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>702.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Dormant</td>
+      <td>Pending Renewal</td>
+      <td>43.73</td>
+      <td>2016-08-31</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="6.-More-Resources">
+<a class="anchor" href="#6.-More-Resources" aria-hidden="true"><span class="octicon octicon-link"></span></a>6. More Resources<a class="anchor-link" href="#6.-More-Resources"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li><a href="https://pandas.pydata.org/pandas-docs/stable/index.html">https://pandas.pydata.org/pandas-docs/stable/index.html</a></li>
+<li><a href="https://pandas.pydata.org/Pandas_Cheat_Sheet.pdf">https://pandas.pydata.org/Pandas_Cheat_Sheet.pdf</a></li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="VictorOmondi1997/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/data-wrangling/python/cit-club/2021/11/06/data_wrangling_cit.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Hello! Thanks for visiting my blog, I&#39;m Victor Omondi, Data Scientist with industry experience analyzing, visualizing and modeling data. I specialize in Python &amp; R and have professional experience working with C++ and JavaScript|, currently am a student at Multimedia University of Kenya pursuing Bachelor of Science (Computer Technology)</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://dribbble.com/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#dribbble"></use></svg></a></li><li><a rel="me" href="https://www.facebook.com/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#facebook"></use></svg></a></li><li><a rel="me" href="https://www.flickr.com/photos/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#flickr"></use></svg></a></li><li><a rel="me" href="https://github.com/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://stackoverflow.com/users/9713351" title="9713351"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#stackoverflow"></use></svg></a></li><li><a rel="me" href="https://www.instagram.com/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#instagram"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://www.pinterest.com/victoromondi1997" title="victoromondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#pinterest"></use></svg></a></li><li><a rel="me" href="https://freeradical.zone/@VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#mastodon"></use></svg></a></li><li><a rel="me" href="https://twitter.com/VictorOmondi197" title="VictorOmondi197"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li><li><a rel="me" href="https://www.youtube.com/channel/UCwk-x5YuGrNBNGZNpb1CX3Q" title="VICTOR OMONDI"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#youtube"></use></svg></a></li><li><a rel="me" href="https://t.me/VickTheGeek" title="VickTheGeek"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#telegram"></use></svg></a></li><li><a rel="me" href="https://keybase.io/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#keybase"></use></svg></a></li><li><a rel="me" href="https://micro.blog/VictorOmondi1997" title="VictorOmondi1997"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#microdotblog"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
