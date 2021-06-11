@@ -125,7 +125,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      19 min read
+      24 min read
     
 </span></p>
 
@@ -193,23 +193,53 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#EXERCISE">EXERCISE </a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#3.3-sample">3.3 sample </a></li>
-<li class="toc-entry toc-h2"><a href="#3.4.-Number-of-Rows-and-columns">3.4. Number of Rows and columns </a></li>
-<li class="toc-entry toc-h2"><a href="#3.5-Info">3.5 Info </a></li>
-<li class="toc-entry toc-h2"><a href="#3.6.-Describe">3.6. Describe </a></li>
+<li class="toc-entry toc-h2"><a href="#3.3-sample">3.3 sample </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#EXERCISE">EXERCISE </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#3.4.-Number-of-Rows-and-columns">3.4. Number of Rows and columns </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#EXERCISE">EXERCISE </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#3.5-Info">3.5 Info </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#EXERCISE">EXERCISE </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#3.6.-Describe">3.6. Describe </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#EXERCISE">EXERCISE </a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#4.-Reshaping-Data">4. Reshaping Data </a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#4.1.-Droping-Irrelevant-Data.">4.1. Droping Irrelevant Data. </a></li>
 <li class="toc-entry toc-h2"><a href="#4.2.-Set-Index">4.2. Set Index </a></li>
-<li class="toc-entry toc-h2"><a href="#4.3.-Duplicates">4.3. Duplicates </a></li>
+<li class="toc-entry toc-h2"><a href="#4.3.-Sorting">4.3. Sorting </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#EXERCISE">EXERCISE </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#4.3.-Duplicates">4.3. Duplicates </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#EXERCISE">EXERCISE </a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h2"><a href="#4.4.-Drop-Duplicates">4.4. Drop Duplicates </a></li>
+<li class="toc-entry toc-h2"><a href="#4.5.-Missing-Values">4.5. Missing Values </a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#5.-Advanced-Data-Wrangling">5. Advanced Data Wrangling </a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#5.1.-Value-counts">5.1. Value counts </a></li>
+<li class="toc-entry toc-h2"><a href="#5.1.-Value-counts">5.1. Value counts </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#EXERCISE">EXERCISE </a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h2"><a href="#5.2.-Data-Filteration">5.2. Data Filteration </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#5.2.1.-Multiple-conditions-filterring">5.2.1. Multiple conditions filterring </a></li>
@@ -219,6 +249,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#5.4.-Combining-Data">5.4. Combining Data </a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h1"><a href="#7.-Exporting-Data">7. Exporting Data </a></li>
 <li class="toc-entry toc-h1"><a href="#6.-More-Resources">6. More Resources </a></li>
 </ul><!--
 #################################################
@@ -267,7 +298,11 @@ window.onload = wrap_img;
 </li>
 <li>
 <strong>Blog</strong><ul>
-<li>click on any of the banners shown at the top of the project</li>
+<li>click on any of the banners shown at the top of the project<ul>
+<li><a href="https://colab.research.google.com/github/VictorOmondi1997/blog/blob/master/_notebooks/2021-11-06-data_wrangling_cit.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Collab"></a></li>
+<li><a href="https://mybinder.org/v2/gh/VictorOmondi1997/blog/master?filepath=_notebooks%2F2021-11-06-data_wrangling_cit.ipynb"><img src="https://binder.pangeo.io/badge_logo.svg" alt="Binder"></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -301,6 +336,7 @@ window.onload = wrap_img;
 <li>Pandas: Pandas is the popular library used for data analysis and data transformation</li>
 <li>numpy: Numpy is a popular library for scientific computing</li>
 </ul>
+<p>We must import these libraries first, as a convention during importing pandas is aliased to <code>pd</code> and numpy as <code>np</code>.</p>
 
 </div>
 </div>
@@ -337,6 +373,14 @@ window.onload = wrap_img;
     <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
     <strong>Note: </strong>Pandas usually truncates columns if they are many
 </div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="https://github.com/VictorOmondi1997/data_wrangling_cit/blob/master/img/outline.gif?raw=true" alt="outline"></p>
 
 </div>
 </div>
@@ -417,17 +461,21 @@ window.onload = wrap_img;
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 </div>
     
 
@@ -468,11 +516,14 @@ window.onload = wrap_img;
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#colapse-hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
 <span class="n">status</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -480,6 +531,7 @@ window.onload = wrap_img;
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -589,17 +641,22 @@ window.onload = wrap_img;
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -762,17 +819,21 @@ window.onload = wrap_img;
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 </div>
     
 
@@ -796,17 +857,22 @@ window.onload = wrap_img;
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -920,17 +986,22 @@ window.onload = wrap_img;
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -1093,17 +1164,21 @@ window.onload = wrap_img;
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 </div>
     
 
@@ -1119,7 +1194,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><code>df.sample</code> mainly is used during sampling techniques.</p>
+<p><code>df.sample</code> mainly is used during sampling techniques, it a random sample of items from an axis of object.</p>
 
 </div>
 </div>
@@ -1127,17 +1202,22 @@ window.onload = wrap_img;
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -1174,54 +1254,54 @@ window.onload = wrap_img;
   </thead>
   <tbody>
     <tr>
-      <th>24567</th>
-      <td>North Rift Region</td>
-      <td>Kitale</td>
-      <td>15932.0</td>
+      <th>6925</th>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>32817.0</td>
       <td>Dormant</td>
-      <td>Penalties</td>
-      <td>37.29</td>
-      <td>2018-07-31</td>
-    </tr>
-    <tr>
-      <th>11340</th>
-      <td>Eastern Region</td>
-      <td>Matuu</td>
-      <td>53632.0</td>
-      <td>Inactive</td>
       <td>Pending Renewal</td>
+      <td>33.13</td>
+      <td>2019-05-31</td>
+    </tr>
+    <tr>
+      <th>12864</th>
+      <td>Nairobi Region</td>
+      <td>Embakasi</td>
+      <td>2456.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.16</td>
+      <td>2016-04-30</td>
+    </tr>
+    <tr>
+      <th>28764</th>
+      <td>Coast Region</td>
+      <td>Mtwapa</td>
+      <td>85055.0</td>
+      <td>New</td>
+      <td>P+I Current</td>
       <td>NaN</td>
-      <td>2019-03-31</td>
-    </tr>
-    <tr>
-      <th>11385</th>
-      <td>Nairobi Region</td>
-      <td>Kahawa</td>
-      <td>40027.0</td>
-      <td>Dormant</td>
-      <td>Penalties</td>
-      <td>0.15</td>
-      <td>2019-12-31</td>
-    </tr>
-    <tr>
-      <th>6789</th>
-      <td>Nairobi Region</td>
-      <td>Ngong Road</td>
-      <td>45263.0</td>
-      <td>Dormant</td>
-      <td>Penalties</td>
-      <td>4.13</td>
-      <td>2019-10-31</td>
-    </tr>
-    <tr>
-      <th>23298</th>
-      <td>South Rift AgriBiz</td>
-      <td>Keringet</td>
-      <td>77150.0</td>
-      <td>Active</td>
-      <td>P+I In Default</td>
-      <td>39.29</td>
       <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>8346</th>
+      <td>Nairobi Region</td>
+      <td>Kiambu</td>
+      <td>13340.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>37.32</td>
+      <td>2018-04-30</td>
+    </tr>
+    <tr>
+      <th>35055</th>
+      <td>North Rift Region</td>
+      <td>Eldoret1</td>
+      <td>51258.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>35.71</td>
+      <td>2020-04-30</td>
     </tr>
   </tbody>
 </table>
@@ -1239,26 +1319,79 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.4.-Number-of-Rows-and-columns">
-<a class="anchor" href="#3.4.-Number-of-Rows-and-columns" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.4. Number of Rows and columns<a class="anchor-link" href="#3.4.-Number-of-Rows-and-columns"> </a>
-</h2>
+<h3 id="EXERCISE">
+<a class="anchor" href="#EXERCISE" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>EXERCISE</strong><a class="anchor-link" href="#EXERCISE"> </a>
+</h3>
+<p><strong>For the dataframe (<code>counties</code>) we created return a sample of <code>10</code> rows</strong></p>
+
 </div>
 </div>
 </div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">shape</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.4.-Number-of-Rows-and-columns">
+<a class="anchor" href="#3.4.-Number-of-Rows-and-columns" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.4. Number of Rows and columns<a class="anchor-link" href="#3.4.-Number-of-Rows-and-columns"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In pandas, there are various ways to know how many columns (<em>variables</em>) and rows (<em>observations</em>) a dataframe has.</p>
+<ol>
+<li>
+<code>len(df)</code> - returns number of rows</li>
+<li>
+<code>df.shape</code> - returns number of rows and columns as a tuple</li>
+<li>
+<code>df.info()</code> - returns data frame info, non null values, columns and data columns and the data type of columns.</li>
+</ol>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -1281,26 +1414,71 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="3.5-Info">
-<a class="anchor" href="#3.5-Info" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.5 Info<a class="anchor-link" href="#3.5-Info"> </a>
-</h2>
+<h3 id="EXERCISE">
+<a class="anchor" href="#EXERCISE" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>EXERCISE</strong><a class="anchor-link" href="#EXERCISE"> </a>
+</h3>
+<p><strong>For the dataframe (<code>counties</code>) we created how many rows and columns does it have?</strong></p>
+
 </div>
 </div>
 </div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.5-Info">
+<a class="anchor" href="#3.5-Info" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.5 Info<a class="anchor-link" href="#3.5-Info"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>df.info</code> prints a summary of the data frame, ie, number of rows, columns, data column and their non-null values and the dtype</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -1334,6 +1512,38 @@ memory usage: 2.1+ MB
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="EXERCISE">
+<a class="anchor" href="#EXERCISE" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>EXERCISE</strong><a class="anchor-link" href="#EXERCISE"> </a>
+</h3>
+<p><strong>For the dataframe (<code>counties</code>) we created how many missing values are there in the <code>name</code> columns?</strong></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="3.6.-Describe">
 <a class="anchor" href="#3.6.-Describe" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.6. Describe<a class="anchor-link" href="#3.6.-Describe"> </a>
 </h2>
@@ -1343,7 +1553,7 @@ memory usage: 2.1+ MB
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We use <code>df.describe()</code> to get summary statistics.</p>
+<p>We use <code>df.describe()</code> to get summary statistics, by default it returns the summary statistics of the numerical columns.</p>
 
 </div>
 </div>
@@ -1351,17 +1561,22 @@ memory usage: 2.1+ MB
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -1445,20 +1660,33 @@ memory usage: 2.1+ MB
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To show all summary statistics including those for objects (strings) you can pass <code>include="all"</code> to the <code>df.describe</code>.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">'all'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">'all'</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -1620,6 +1848,38 @@ memory usage: 2.1+ MB
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="EXERCISE">
+<a class="anchor" href="#EXERCISE" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>EXERCISE</strong><a class="anchor-link" href="#EXERCISE"> </a>
+</h3>
+<p><strong>For the dataframe (<code>counties</code>) we created how many unique sub counties are there in Kenya?</strong></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="4.-Reshaping-Data">
 <a class="anchor" href="#4.-Reshaping-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Reshaping Data<a class="anchor-link" href="#4.-Reshaping-Data"> </a>
 </h1>
@@ -1643,20 +1903,33 @@ memory usage: 2.1+ MB
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's check some of the irrelevant data.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -1755,14 +2028,31 @@ memory usage: 2.1+ MB
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>we can drop these 4 last columns by using <code>df.drop</code> and assigning the <code>index</code> argument to a list of indeces we want to drop.
+</p>
+<div class="flash flash-warn">
+    <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
+    <strong>Important: </strong>If you want to drop columns, use <code>df.drop(columns=cols)</code> were cols is a list of column names you want to drop.
+</div>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status_2</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">40020</span><span class="p">,</span> <span class="mi">40021</span><span class="p">,</span> <span class="mi">40022</span><span class="p">,</span> <span class="mi">40023</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status_2</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">40020</span><span class="p">,</span> <span class="mi">40021</span><span class="p">,</span> <span class="mi">40022</span><span class="p">,</span> <span class="mi">40023</span><span class="p">])</span>
 <span class="n">status_2</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
 </pre></div>
 
@@ -1770,6 +2060,7 @@ memory usage: 2.1+ MB
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -1883,11 +2174,15 @@ memory usage: 2.1+ MB
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">40020</span><span class="p">,</span> <span class="mi">40021</span><span class="p">,</span> <span class="mi">40022</span><span class="p">,</span> <span class="mi">40023</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">40020</span><span class="p">,</span> <span class="mi">40021</span><span class="p">,</span> <span class="mi">40022</span><span class="p">,</span> <span class="mi">40023</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">status</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
 </pre></div>
 
@@ -1895,6 +2190,7 @@ memory usage: 2.1+ MB
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -2002,14 +2298,26 @@ memory usage: 2.1+ MB
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For our data frame, <code>Client ID</code> column uniquely identifies rows, for our analysis, we won't be doing analysis on this column, we can set <code>Client ID</code> to  be the index of our dataframe.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'Client ID'</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">'Client ID'</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">status</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -2017,6 +2325,7 @@ memory usage: 2.1+ MB
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -2118,14 +2427,35 @@ memory usage: 2.1+ MB
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.3.-Sorting">
+<a class="anchor" href="#4.3.-Sorting" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.3. Sorting<a class="anchor-link" href="#4.3.-Sorting"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Sorting is arranging values/index in data either in ascending or descending order. To sort index we use <code>df.sort_index</code>, to sort values in columns we use <code>df.sort_values(cols)</code> where <code>cols</code> is column name or list of column names we want to sort their values.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">status</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -2133,6 +2463,7 @@ memory usage: 2.1+ MB
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -2237,11 +2568,15 @@ memory usage: 2.1+ MB
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status_date_sorted</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'Status Date'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status_date_sorted</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'Status Date'</span><span class="p">)</span>
 <span class="n">status_date_sorted</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -2249,6 +2584,7 @@ memory usage: 2.1+ MB
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -2353,43 +2689,287 @@ memory usage: 2.1+ MB
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>By defauld the sorting are in ascending order, we can also sort in descending order. To do this, we use <code>ascending=False</code> argument.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'Client Score'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+    <tr>
+      <th>Client ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>28468.0</th>
+      <td>North Rift Region</td>
+      <td>Kapenguria</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>92.54</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>74947.0</th>
+      <td>South Rift AgriBiz</td>
+      <td>Ndunyu Njeru</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>92.17</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>64738.0</th>
+      <td>Eastern Region</td>
+      <td>Mwingi</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>92.02</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>31851.0</th>
+      <td>Nairobi Region</td>
+      <td>Rongai</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>91.34</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>49324.0</th>
+      <td>South Rift AgriBiz</td>
+      <td>Maili Nne</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>91.21</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>86301.0</th>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>New</td>
+      <td>P+I Current</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>86303.0</th>
+      <td>Nairobi Region</td>
+      <td>Kahawa</td>
+      <td>New</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>86308.0</th>
+      <td>Nairobi Region</td>
+      <td>Kahawa</td>
+      <td>New</td>
+      <td>P+I Current</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>86313.0</th>
+      <td>North Rift Region</td>
+      <td>Eldoret2</td>
+      <td>New</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>86654.0</th>
+      <td>Western Region</td>
+      <td>Bondo</td>
+      <td>New</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+  </tbody>
+</table>
+<p>40020 rows × 6 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="EXERCISE">
+<a class="anchor" href="#EXERCISE" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>EXERCISE</strong><a class="anchor-link" href="#EXERCISE"> </a>
+</h3>
+<p><strong>For the dataframe (<code>counties</code>) we created sort the data frame as follows</strong></p>
+<ol>
+<li><strong><code>name</code>: descending</strong></li>
+<li>
+<strong><code>subCounty</code>: ascending</strong>
+<div class="flash flash-success">
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M16 8.5l-6 6-3-3L8.5 10l1.5 1.5L14.5 7 16 8.5zM5.7 12.2l.8.8H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h7c.55 0 1 .45 1 1v6.5l-.8-.8c-.39-.39-1.03-.39-1.42 0L5.7 10.8a.996.996 0 000 1.41v-.01zM4 4h5V3H4v1zm0 2h5V5H4v1zm0 2h3V7H4v1zM3 9H2v1h1V9zm0-2H2v1h1V7zm0-2H2v1h1V5zm0-2H2v1h1V3z"></path></svg>
+    <strong>Tip: </strong>you can use <code>ascending=[False, True]</code>.
+</div>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="4.3.-Duplicates">
 <a class="anchor" href="#4.3.-Duplicates" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.3. Duplicates<a class="anchor-link" href="#4.3.-Duplicates"> </a>
 </h2>
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Duplicates are rows that are identical to each other, ie, they have the same values. to check for duplicates we use <code>df.duplicated</code> this will return a <strong>boolean series</strong> we can use the boolean series to filter out the repeting values and we can use <code>df.drop_duplicates</code> to remove any duplicates in the data frame.
+</p>
+<div class="flash flash-warn">
+    <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
+    <strong>Important: </strong>the first occurence won’t be removed by default.
+</div>
+to check for duplicates, we will first reset the index, this will make <code>Client ID</code> to be a column as it was before.
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 </div>
     
 
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -2423,17 +3003,22 @@ Length: 40020, dtype: bool</pre>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="p">[</span><span class="n">status</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="p">[</span><span class="n">status</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()]</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -2685,9 +3270,121 @@ Length: 40020, dtype: bool</pre>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="EXERCISE">
+<a class="anchor" href="#EXERCISE" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>EXERCISE</strong><a class="anchor-link" href="#EXERCISE"> </a>
+</h3>
+<p><strong>For the dataframe (<code>counties</code>), are there any duplicates in that dataframe</strong></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="4.4.-Drop-Duplicates">
 <a class="anchor" href="#4.4.-Drop-Duplicates" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.4. Drop Duplicates<a class="anchor-link" href="#4.4.-Drop-Duplicates"> </a>
 </h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>df.drop_duplicates</code> removes duplicates keeping first occurence by default.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(40000, 7)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.5.-Missing-Values">
+<a class="anchor" href="#4.5.-Missing-Values" aria-hidden="true"><span class="octicon octicon-link"></span></a>4.5. Missing Values<a class="anchor-link" href="#4.5.-Missing-Values"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Majorly involed during data cleaning. Missing values are values that are missing, alaaa!. In this session we won't go deeper on how to handle missing values. In python, to check for missing values we use <code>df.isnull()</code> or <code>df.isna</code>, to remove missing values we use <code>df.dropna</code></p>
+
 </div>
 </div>
 </div>
@@ -2698,7 +3395,7 @@ Length: 40020, dtype: bool</pre>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -2742,53 +3439,53 @@ Length: 40020, dtype: bool</pre>
   <tbody>
     <tr>
       <th>0</th>
-      <td>2.0</td>
-      <td>Nairobi Region</td>
-      <td>Ngong Road</td>
-      <td>Dormant</td>
-      <td>Penalties</td>
-      <td>37.98</td>
-      <td>2020-04-30</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>7.0</td>
-      <td>NaN</td>
-      <td>Head Office</td>
-      <td>Inactive</td>
-      <td>Pending Renewal</td>
-      <td>NaN</td>
-      <td>2015-02-28</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>10.0</td>
-      <td>South Rift Region</td>
-      <td>Nakuru</td>
-      <td>Active</td>
-      <td>Penalties</td>
-      <td>42.19</td>
-      <td>2020-12-31</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>12.0</td>
-      <td>South Rift Region</td>
-      <td>Nakuru</td>
-      <td>Active</td>
-      <td>P+I Current</td>
-      <td>65.34</td>
-      <td>2021-02-28</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>13.0</td>
-      <td>South Rift Region</td>
-      <td>Nakuru</td>
-      <td>Dormant</td>
-      <td>Pending Renewal</td>
-      <td>57.59</td>
-      <td>2016-02-29</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2802,53 +3499,53 @@ Length: 40020, dtype: bool</pre>
     </tr>
     <tr>
       <th>40015</th>
-      <td>86301.0</td>
-      <td>Nairobi Region</td>
-      <td>Ngong Road</td>
-      <td>New</td>
-      <td>P+I Current</td>
-      <td>NaN</td>
-      <td>2021-02-28</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
     </tr>
     <tr>
       <th>40016</th>
-      <td>86303.0</td>
-      <td>Nairobi Region</td>
-      <td>Kahawa</td>
-      <td>New</td>
-      <td>Pending Renewal</td>
-      <td>NaN</td>
-      <td>2021-02-28</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
     </tr>
     <tr>
       <th>40017</th>
-      <td>86308.0</td>
-      <td>Nairobi Region</td>
-      <td>Kahawa</td>
-      <td>New</td>
-      <td>P+I Current</td>
-      <td>NaN</td>
-      <td>2021-02-28</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
     </tr>
     <tr>
       <th>40018</th>
-      <td>86313.0</td>
-      <td>North Rift Region</td>
-      <td>Eldoret2</td>
-      <td>New</td>
-      <td>Pending Renewal</td>
-      <td>NaN</td>
-      <td>2021-02-28</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
     </tr>
     <tr>
       <th>40019</th>
-      <td>86654.0</td>
-      <td>Western Region</td>
-      <td>Bondo</td>
-      <td>New</td>
-      <td>Pending Renewal</td>
-      <td>NaN</td>
-      <td>2021-02-28</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
     </tr>
   </tbody>
 </table>
@@ -2867,6 +3564,62 @@ Length: 40020, dtype: bool</pre>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>That returns a dataframe with boolean showing if a value is null</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Client ID           0
+Region             80
+Office              0
+Client Status       0
+Loan Status         0
+Client Score     3300
+Status Date         0
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>df.isnull().sum()</code> is the most widely used way of cheking the number of missing values per column.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="5.-Advanced-Data-Wrangling">
 <a class="anchor" href="#5.-Advanced-Data-Wrangling" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. Advanced Data Wrangling<a class="anchor-link" href="#5.-Advanced-Data-Wrangling"> </a>
 </h1>
@@ -2882,20 +3635,38 @@ Length: 40020, dtype: bool</pre>
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As a data scientist it is good to check the counts of unique values, these is mainly used to check for imbalance at later states. To check for the number of unique values, we use <code>df[col].value_counts()</code> where <code>col</code> is the column name.
+</p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 01-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 01-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg>
+    <strong>Note: </strong><code>df[col]</code> is selecting a column returning a series, where <code>col</code> is the column name
+</div>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="p">[</span><span class="s1">'Region'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="p">[</span><span class="s1">'Region'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -2904,12 +3675,12 @@ Length: 40020, dtype: bool</pre>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>Nairobi Region        9860
-North Rift Region     8514
+<pre>Nairobi Region        9856
+North Rift Region     8506
 South Rift Region     6781
-Coast Region          4665
+Coast Region          4661
 South Rift AgriBiz    3848
-Western Region        3364
+Western Region        3360
 Eastern Region        2252
 Central AgriBiz        656
 Name: Region, dtype: int64</pre>
@@ -2923,20 +3694,33 @@ Name: Region, dtype: int64</pre>
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By default <code>.value_counts</code> drops values which are missing values, we can include the counts of missing values by setting <code>dropna=False</code></p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="p">[</span><span class="s1">'Region'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="p">[</span><span class="s1">'Region'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -2945,12 +3729,12 @@ Name: Region, dtype: int64</pre>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>Nairobi Region        9860
-North Rift Region     8514
+<pre>Nairobi Region        9856
+North Rift Region     8506
 South Rift Region     6781
-Coast Region          4665
+Coast Region          4661
 South Rift AgriBiz    3848
-Western Region        3364
+Western Region        3360
 Eastern Region        2252
 Central AgriBiz        656
 NaN                     80
@@ -2962,6 +3746,38 @@ Name: Region, dtype: int64</pre>
 </div>
 </div>
 
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="EXERCISE">
+<a class="anchor" href="#EXERCISE" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>EXERCISE</strong><a class="anchor-link" href="#EXERCISE"> </a>
+</h3>
+<p><strong>For the dataframe (<code>counties</code>) Show the value counts of the <code>name</code> variable</strong></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
 </div>
     
 
@@ -2994,17 +3810,22 @@ Name: Region, dtype: int64</pre>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="p">[</span><span class="n">status</span><span class="p">[</span><span class="s1">'Region'</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="p">[</span><span class="n">status</span><span class="p">[</span><span class="s1">'Region'</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -3164,20 +3985,47 @@ Name: Region, dtype: int64</pre>
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can use comparison operators for filtering values that meet a certain condition.</p>
+<ul>
+<li>
+<code>&gt;</code> - Greater than</li>
+<li>
+<code>&lt;</code> - Less than</li>
+<li>
+<code>&gt;=</code> - Greater or equal to</li>
+<li>
+<code>&lt;=</code> - Less than or equal to</li>
+<li>
+<code>==</code> equal to</li>
+<li>
+<code>!=</code> not equal to </li>
+</ul>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="p">[</span><span class="s1">'Client Score'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">90</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="p">[</span><span class="s1">'Client Score'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">90</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -3197,7 +4045,7 @@ Name: Region, dtype: int64</pre>
 40017    False
 40018    False
 40019    False
-Name: Client Score, Length: 40020, dtype: bool</pre>
+Name: Client Score, Length: 40000, dtype: bool</pre>
 </div>
 
 </div>
@@ -3208,20 +4056,33 @@ Name: Client Score, Length: 40020, dtype: bool</pre>
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>df[col]&gt;value</code> returns a boolean series, we can use the boolean series to filter out values in dataframe not meeting that condition.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="p">[</span><span class="n">status</span><span class="p">[</span><span class="s1">'Client Score'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">90</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="p">[</span><span class="n">status</span><span class="p">[</span><span class="s1">'Client Score'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">90</span><span class="p">]</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -3413,7 +4274,7 @@ Name: Client Score, Length: 40020, dtype: bool</pre>
 <li>
 <code>~</code>: for logical <strong>not</strong>
 <div class="flash flash-warn">
-    <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
+    <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 10 16" version="1.1" width="10" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10 7H6l3-7-9 9h4l-3 7 9-9z"></path></svg>
     <strong>Important: </strong>Paranthesis are very important. enclose expressions in a paranthesis <code>(.....)</code>
 </div>
 </li>
@@ -3425,17 +4286,22 @@ Name: Client Score, Length: 40020, dtype: bool</pre>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="p">[(</span><span class="n">status</span><span class="p">[</span><span class="s1">'Client Score'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">90</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">status</span><span class="p">[</span><span class="s1">'Loan Status'</span><span class="p">]</span><span class="o">==</span><span class="s1">'P+I In Default'</span><span class="p">)]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="p">[(</span><span class="n">status</span><span class="p">[</span><span class="s1">'Client Score'</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">90</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">status</span><span class="p">[</span><span class="s1">'Loan Status'</span><span class="p">]</span><span class="o">==</span><span class="s1">'P+I In Default'</span><span class="p">)]</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -3503,20 +4369,34 @@ Name: Client Score, Length: 40020, dtype: bool</pre>
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Grouping data is a critical step in data wrangling. in pandas we can group DataFrame using a mapper or by a Series of columns.</p>
+<p>A groupby operation involves some combination of splitting the object, applying a function, and combining the results. This can be used to group large amounts of data and compute operations on these groups.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -3525,7 +4405,7 @@ Name: Client Score, Length: 40020, dtype: bool</pre>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f1bded33c70&gt;</pre>
+<pre>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f12f6adb6a0&gt;</pre>
 </div>
 
 </div>
@@ -3536,20 +4416,33 @@ Name: Client Score, Length: 40020, dtype: bool</pre>
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The groupby returns an object, we can use the object to perform actions in the groups.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">'sum'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">'sum'</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -3592,8 +4485,8 @@ Name: Client Score, Length: 40020, dtype: bool</pre>
     </tr>
     <tr>
       <th>Coast Region</th>
-      <td>223911774.0</td>
-      <td>157344.06</td>
+      <td>223714866.0</td>
+      <td>157343.10</td>
     </tr>
     <tr>
       <th>Eastern Region</th>
@@ -3602,13 +4495,13 @@ Name: Client Score, Length: 40020, dtype: bool</pre>
     </tr>
     <tr>
       <th>Nairobi Region</th>
-      <td>306960319.0</td>
-      <td>309210.99</td>
+      <td>306914995.0</td>
+      <td>309115.63</td>
     </tr>
     <tr>
       <th>North Rift Region</th>
-      <td>326562922.0</td>
-      <td>270440.52</td>
+      <td>326377934.0</td>
+      <td>270228.72</td>
     </tr>
     <tr>
       <th>South Rift AgriBiz</th>
@@ -3622,8 +4515,8 @@ Name: Client Score, Length: 40020, dtype: bool</pre>
     </tr>
     <tr>
       <th>Western Region</th>
-      <td>229462131.0</td>
-      <td>107465.39</td>
+      <td>229155555.0</td>
+      <td>107269.71</td>
     </tr>
   </tbody>
 </table>
@@ -3641,17 +4534,119 @@ Name: Client Score, Length: 40020, dtype: bool</pre>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">'mean'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">'Client Score'</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">})</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Client Score</th>
+    </tr>
+    <tr>
+      <th>Region</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Central AgriBiz</th>
+      <td>20355.84</td>
+    </tr>
+    <tr>
+      <th>Coast Region</th>
+      <td>157343.10</td>
+    </tr>
+    <tr>
+      <th>Eastern Region</th>
+      <td>61644.78</td>
+    </tr>
+    <tr>
+      <th>Nairobi Region</th>
+      <td>309115.63</td>
+    </tr>
+    <tr>
+      <th>North Rift Region</th>
+      <td>270228.72</td>
+    </tr>
+    <tr>
+      <th>South Rift AgriBiz</th>
+      <td>168818.01</td>
+    </tr>
+    <tr>
+      <th>South Rift Region</th>
+      <td>211088.41</td>
+    </tr>
+    <tr>
+      <th>Western Region</th>
+      <td>107269.71</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="s1">'mean'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -3694,8 +4689,8 @@ Name: Client Score, Length: 40020, dtype: bool</pre>
     </tr>
     <tr>
       <th>Coast Region</th>
-      <td>47998.236656</td>
-      <td>35.760014</td>
+      <td>47997.182150</td>
+      <td>35.792334</td>
     </tr>
     <tr>
       <th>Eastern Region</th>
@@ -3704,13 +4699,13 @@ Name: Client Score, Length: 40020, dtype: bool</pre>
     </tr>
     <tr>
       <th>Nairobi Region</th>
-      <td>31131.878195</td>
-      <td>32.835403</td>
+      <td>31139.914265</td>
+      <td>32.839226</td>
     </tr>
     <tr>
       <th>North Rift Region</th>
-      <td>38355.992718</td>
-      <td>34.051942</td>
+      <td>38370.319069</td>
+      <td>34.059582</td>
     </tr>
     <tr>
       <th>South Rift AgriBiz</th>
@@ -3724,8 +4719,8 @@ Name: Client Score, Length: 40020, dtype: bool</pre>
     </tr>
     <tr>
       <th>Western Region</th>
-      <td>68211.097206</td>
-      <td>35.223006</td>
+      <td>68201.058036</td>
+      <td>35.205025</td>
     </tr>
   </tbody>
 </table>
@@ -3740,20 +4735,33 @@ Name: Client Score, Length: 40020, dtype: bool</pre>
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To check for the size of each group, we can use <code>size()</code> method of a groupby object.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -3764,13 +4772,13 @@ Name: Client Score, Length: 40020, dtype: bool</pre>
 <div class="output_text output_subarea output_execute_result">
 <pre>Region
 Central AgriBiz        656
-Coast Region          4665
+Coast Region          4661
 Eastern Region        2252
-Nairobi Region        9860
-North Rift Region     8514
+Nairobi Region        9856
+North Rift Region     8506
 South Rift AgriBiz    3848
 South Rift Region     6781
-Western Region        3364
+Western Region        3360
 dtype: int64</pre>
 </div>
 
@@ -3785,17 +4793,22 @@ dtype: int64</pre>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)[</span><span class="s1">'Office'</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'Region'</span><span class="p">)[</span><span class="s1">'Office'</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -3824,20 +4837,36 @@ Name: Office, dtype: int64</pre>
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pivot table (derived from excel) is an advanced pandas grouping method.
+Here you can decide on the index, columns, values and the aggregate functions. The levels in the pivot table will be stored in MultiIndex objects (hierarchical indexes) on the index and columns of the result DataFrame.</p>
+<p>the aggfunc by default is mean. You can pass string aggregates eg <code>'mean'</code>, <code>'sum'</code> ect or aggregate functions such as <code>np.mean</code>, <code>np.sum</code> etc</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">'Office'</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">'Region'</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">'Client Score'</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">status_pivot</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">'Office'</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">'Region'</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">'Client Score'</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">)</span>
+<span class="n">status_pivot</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -3940,545 +4969,6 @@ Name: Office, dtype: int64</pre>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
-    <tr>
-      <th>Eldoret1</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>30.403653</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Eldoret2</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>36.187024</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Eldoret3</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>34.155751</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Emali</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>53.730465</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Embakasi</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>31.044524</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Gatundu</th>
-      <td>53.854356</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Githunguri</th>
-      <td>46.683790</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Iten</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>35.201386</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Kahawa</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>33.996787</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Kakamega</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>30.911316</td>
-    </tr>
-    <tr>
-      <th>Kapenguria</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>31.686316</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Kapsabet</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>35.452655</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Kapsowar</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>45.603038</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Kariobangi</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>31.479123</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Kericho</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>37.658102</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Keringet</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>55.316672</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Kiambu</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>33.427367</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Kilifi</th>
-      <td>NaN</td>
-      <td>38.190105</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Kisumu</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>33.997069</td>
-    </tr>
-    <tr>
-      <th>Kitale</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>33.397403</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Kitui</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>28.887249</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Limuru</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>34.805696</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Litein</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>32.331343</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Londiani</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>57.162458</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Machakos</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>28.362899</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Maili Nne</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>54.783107</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Malindi</th>
-      <td>NaN</td>
-      <td>38.334366</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Mariakani</th>
-      <td>NaN</td>
-      <td>35.960600</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Matuu</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>27.157970</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Mbale</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>37.071537</td>
-    </tr>
-    <tr>
-      <th>Molo</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>31.274108</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Mombasa</th>
-      <td>NaN</td>
-      <td>35.224718</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Mtwapa</th>
-      <td>NaN</td>
-      <td>32.824705</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Mumias</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>38.454570</td>
-    </tr>
-    <tr>
-      <th>Mwingi</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>36.266471</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Naivasha</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>34.824824</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Nakuru</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>31.799053</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Nakuru AgriBiz</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>50.092392</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Nandi Hills</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>32.018613</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Narok</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>34.057127</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Ndunyu Njeru</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>49.818569</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Ngong Road</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>31.878455</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Nyahururu</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>28.315857</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Rongai</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>31.828505</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Tala</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>24.995787</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Thika</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>35.859116</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Ukunda</th>
-      <td>NaN</td>
-      <td>38.328651</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Voi</th>
-      <td>NaN</td>
-      <td>27.658777</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Wote</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>36.497002</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
   </tbody>
 </table>
 </div>
@@ -4492,20 +4982,33 @@ Name: Office, dtype: int64</pre>
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>setting <code>margins=True</code> will result to row aggregate and column column aggregate.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">'Status Date'</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">'Region'</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">'Client Score'</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">,</span> <span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">'Status Date'</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">'Region'</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">'Client Score'</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -4678,14 +5181,14 @@ Name: Office, dtype: int64</pre>
     <tr>
       <th>All</th>
       <td>49.527591</td>
-      <td>35.760014</td>
+      <td>35.792334</td>
       <td>31.244187</td>
-      <td>32.835403</td>
-      <td>34.051942</td>
+      <td>32.839226</td>
+      <td>34.059582</td>
       <td>53.729475</td>
       <td>33.389499</td>
-      <td>35.223006</td>
-      <td>35.636641</td>
+      <td>35.205025</td>
+      <td>35.642344</td>
     </tr>
   </tbody>
 </table>
@@ -4710,14 +5213,45 @@ Name: Office, dtype: int64</pre>
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>the are varies ways of combining data sets</p>
+<ul>
+<li>append - add rows to the end of the caller.</li>
+<li>concatenate</li>
+<li>merge <ul>
+<li>inner join</li>
+<li>left join</li>
+<li>right join</li>
+</ul>
+</li>
+</ul>
+<p>Type of merge to be performed.</p>
+<ul>
+<li>left: use only keys from left frame, similar to a SQL left outer join; preserve key order.</li>
+<li>right: use only keys from right frame, similar to a SQL right outer join; preserve key order.</li>
+<li>outer: use union of keys from both frames, similar to a SQL full outer join; sort keys lexicographically.</li>
+<li>inner: use intersection of keys from both frames, similar to a SQL inner join; preserve the order of the left keys.</li>
+<li>cross: creates the cartesian product from both frames, preserves the order of the left keys.</li>
+</ul>
+<p>We use <code>df.merge</code>/<code>pd.merge</code> to import columns from other datasets.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">counties</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'kenya_subcounty.csv'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">counties</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'data/kenya_subcounty.csv'</span><span class="p">)</span>
 <span class="n">counties</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -4725,6 +5259,7 @@ Name: Office, dtype: int64</pre>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -4793,14 +5328,27 @@ Name: Office, dtype: int64</pre>
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can merge <code>status</code> and <code>counties</code> using <code>Office</code> and <code>subCounty</code> (this is because that is the key present in both columns. Since we have diffent column names in both data frames, we have to use <code>left_on</code> and <code>right_on</code> to specify the columns.</p>
+<p>if the columns are the same on both columns, we can use <code>on</code> argument.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">combined_</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">counties</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">'Office'</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">'subCounty'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">combined_</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">counties</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">'Office'</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">'subCounty'</span><span class="p">)</span>
 <span class="n">combined_</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -4808,6 +5356,7 @@ Name: Office, dtype: int64</pre>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -4929,11 +5478,15 @@ Name: Office, dtype: int64</pre>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">combined_2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">counties</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">'Office'</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">'subCounty'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="n">combined_2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">counties</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s1">'Office'</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s1">'subCounty'</span><span class="p">)</span>
 <span class="n">combined_2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -4941,6 +5494,7 @@ Name: Office, dtype: int64</pre>
 </div>
 </div>
 
+    </details>
 <div class="output_wrapper">
 <div class="output">
 
@@ -5037,6 +5591,138 @@ Name: Office, dtype: int64</pre>
       <td>2016-08-31</td>
       <td>Nakuru</td>
       <td>Naivasha</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="7.-Exporting-Data">
+<a class="anchor" href="#7.-Exporting-Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>7. Exporting Data<a class="anchor-link" href="#7.-Exporting-Data"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>After finishing data wrangling, it is good to export the data to the right file format for further uses. Let us do some final tweaks and export the final dataset as a csv.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+
+<span class="c1"># We will use the newly combined dataset</span>
+
+<span class="c1"># 1. Rename columns and remove unwanted columns</span>
+<span class="n">combined_2</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">'name'</span><span class="p">:</span><span class="s1">'county'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">combined_2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'subCounty'</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">combined_2</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">combined_3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">combined_2</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">'county'</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">'Loan Status'</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">'Client Score'</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">combined_3</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">combined_3</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'combined.csv'</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Loan Status</th>
+      <th>P+I Current</th>
+      <th>P+I In Default</th>
+      <th>Penalties</th>
+      <th>Pending Renewal</th>
+    </tr>
+    <tr>
+      <th>county</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Busia</th>
+      <td>64.19</td>
+      <td>47.110</td>
+      <td>32.130</td>
+      <td>41.91</td>
+    </tr>
+    <tr>
+      <th>Kericho</th>
+      <td>64.92</td>
+      <td>61.170</td>
+      <td>45.910</td>
+      <td>62.42</td>
+    </tr>
+    <tr>
+      <th>Kiambu</th>
+      <td>60.76</td>
+      <td>48.570</td>
+      <td>32.665</td>
+      <td>50.66</td>
+    </tr>
+    <tr>
+      <th>Kilifi</th>
+      <td>67.01</td>
+      <td>54.220</td>
+      <td>36.005</td>
+      <td>52.41</td>
+    </tr>
+    <tr>
+      <th>Laikipia</th>
+      <td>NaN</td>
+      <td>44.435</td>
+      <td>26.275</td>
+      <td>52.40</td>
     </tr>
   </tbody>
 </table>
