@@ -1,5 +1,6 @@
 ---
 - author: Victor Omondi
+- layout: post
 - toc: true
 - comments: true
 - badges: false
