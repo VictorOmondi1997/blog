@@ -1,12 +1,12 @@
 ---
-- author: Victor Omondi
-- layout: post
-- toc: true
-- comments: true
-- badges: false
-- categories: [hng]
-- title: Priviledged to be Selected as HNG Season 8 Intern
-- description: Today I am happy to share that I was selected to join the HNG 8 intern workspace as a backend engineer, and lot more...
+author: Victor Omondi
+layout: post
+toc: true
+comments: true
+badges: false
+categories: [hng]
+title: Priviledged to be Selected as HNG Season 8 Intern
+description: Today I am happy to share that I was selected to join the HNG 8 intern workspace as a backend engineer, and lot more...
 ---
 
 # What is HNG 8 Internship?
