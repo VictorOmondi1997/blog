@@ -1,4 +1,5 @@
 ---
+hide: true
 author: Victor Omondi
 layout: post
 toc: true
