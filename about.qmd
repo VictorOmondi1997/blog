@@ -1,0 +1,19 @@
+---
+title: "About"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/VictorOmondi197
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/VictorOmondi1997
+    - icon: github
+      text: Github
+      href: https://github.com/VictorOmondi1997
+
+---
+
+About this blog

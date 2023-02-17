@@ -1,0 +1,11 @@
+{
+  "hash": "f8a26ce6ffbd3511ace7386b49c60004",
+  "result": {
+    "markdown": "To preprocess `wikipedia-vectors.csv` into the format in which you used it in the exercises, you have to take its transpose:\n\n::: {.cell execution_count=1}\n``` {.python .cell-code}\nimport pandas as pd\nfrom scipy.sparse import csr_matrix\n\ndf = pd.read_csv('wikipedia-vectors.csv', index_col=0)\narticles = csr_matrix(df.transpose())\ntitles = list(df.columns)\n```\n:::\n\n\nThe reason for taking this transpose is that without it, there would be 13,000 columns (corresponding to the 13,000 words in the file), which is a lot of columns for a CSV to have.\n\n",
+    "supporting": [
+      "preprocessing_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
