@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2020-06-15">
+
+<title>blog - Exploring Boston Weather Data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/VictorOmondi1997"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/VictorOmondi197"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Exploring Boston Weather Data</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 15, 2020</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>weather <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="fu">gzcon</span>(<span class="fu">url</span>(<span class="st">'https://assets.datacamp.com/production/repositories/34/datasets/b3c1036d9a60a9dfe0f99051d2474a54f76055ea/weather.rds'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="libraries" class="level1">
+<h1>Libraries</h1>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(installr)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning message:
+"package 'tidyr' was built under R version 3.6.3"</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify that weather is a data.frame</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(weather)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the dimensions</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(weather)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># View the column names</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(weather)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+'data.frame'
+</div>
+<div class="cell-output cell-output-display">
+<ol class="list-inline">
+    <li>286</li>
+    <li>35</li>
+</ol>
+</div>
+<div class="cell-output cell-output-display">
+<ol class="list-inline">
+    <li>'X'</li>
+    <li>'year'</li>
+    <li>'month'</li>
+    <li>'measure'</li>
+    <li>'X1'</li>
+    <li>'X2'</li>
+    <li>'X3'</li>
+    <li>'X4'</li>
+    <li>'X5'</li>
+    <li>'X6'</li>
+    <li>'X7'</li>
+    <li>'X8'</li>
+    <li>'X9'</li>
+    <li>'X10'</li>
+    <li>'X11'</li>
+    <li>'X12'</li>
+    <li>'X13'</li>
+    <li>'X14'</li>
+    <li>'X15'</li>
+    <li>'X16'</li>
+    <li>'X17'</li>
+    <li>'X18'</li>
+    <li>'X19'</li>
+    <li>'X20'</li>
+    <li>'X21'</li>
+    <li>'X22'</li>
+    <li>'X23'</li>
+    <li>'X24'</li>
+    <li>'X25'</li>
+    <li>'X26'</li>
+    <li>'X27'</li>
+    <li>'X28'</li>
+    <li>'X29'</li>
+    <li>'X30'</li>
+    <li>'X31'</li>
+</ol>
+</div>
+</div>
+<p>We’ve confirmed that the object is a data frame with 286 rows and 35 columns.</p>
+</section>
+<section id="summarize-the-data" class="level1">
+<h1>Summarize the data</h1>
+<p>Next up is to look at some summaries of the data. This is where functions like <code>str()</code>, <code>glimpse()</code> from dplyr, and <code>summary()</code> come in handy.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View the structure of the data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(weather)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the structure using dplyr's glimpse()</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(weather)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># View a summary of the data</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(weather)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   286 obs. of  35 variables:
+ $ X      : int  1 2 3 4 5 6 7 8 9 10 ...
+ $ year   : int  2014 2014 2014 2014 2014 2014 2014 2014 2014 2014 ...
+ $ month  : int  12 12 12 12 12 12 12 12 12 12 ...
+ $ measure: chr  "Max.TemperatureF" "Mean.TemperatureF" "Min.TemperatureF" "Max.Dew.PointF" ...
+ $ X1     : chr  "64" "52" "39" "46" ...
+ $ X2     : chr  "42" "38" "33" "40" ...
+ $ X3     : chr  "51" "44" "37" "49" ...
+ $ X4     : chr  "43" "37" "30" "24" ...
+ $ X5     : chr  "42" "34" "26" "37" ...
+ $ X6     : chr  "45" "42" "38" "45" ...
+ $ X7     : chr  "38" "30" "21" "36" ...
+ $ X8     : chr  "29" "24" "18" "28" ...
+ $ X9     : chr  "49" "39" "29" "49" ...
+ $ X10    : chr  "48" "43" "38" "45" ...
+ $ X11    : chr  "39" "36" "32" "37" ...
+ $ X12    : chr  "39" "35" "31" "28" ...
+ $ X13    : chr  "42" "37" "32" "28" ...
+ $ X14    : chr  "45" "39" "33" "29" ...
+ $ X15    : chr  "42" "37" "32" "33" ...
+ $ X16    : chr  "44" "40" "35" "42" ...
+ $ X17    : chr  "49" "45" "41" "46" ...
+ $ X18    : chr  "44" "40" "36" "34" ...
+ $ X19    : chr  "37" "33" "29" "25" ...
+ $ X20    : chr  "36" "32" "27" "30" ...
+ $ X21    : chr  "36" "33" "30" "30" ...
+ $ X22    : chr  "44" "39" "33" "39" ...
+ $ X23    : chr  "47" "45" "42" "45" ...
+ $ X24    : chr  "46" "44" "41" "46" ...
+ $ X25    : chr  "59" "52" "44" "58" ...
+ $ X26    : chr  "50" "44" "37" "31" ...
+ $ X27    : chr  "52" "45" "38" "34" ...
+ $ X28    : chr  "52" "46" "40" "42" ...
+ $ X29    : chr  "41" "36" "30" "26" ...
+ $ X30    : chr  "30" "26" "22" "10" ...
+ $ X31    : chr  "30" "25" "20" "8" ...
+Rows: 286
+Columns: 35
+$ X       &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, ...
+$ year    &lt;int&gt; 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014,...
+$ month   &lt;int&gt; 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,...
+$ measure &lt;chr&gt; "Max.TemperatureF", "Mean.TemperatureF", "Min.TemperatureF"...
+$ X1      &lt;chr&gt; "64", "52", "39", "46", "40", "26", "74", "63", "52", "30.4...
+$ X2      &lt;chr&gt; "42", "38", "33", "40", "27", "17", "92", "72", "51", "30.7...
+$ X3      &lt;chr&gt; "51", "44", "37", "49", "42", "24", "100", "79", "57", "30....
+$ X4      &lt;chr&gt; "43", "37", "30", "24", "21", "13", "69", "54", "39", "30.5...
+$ X5      &lt;chr&gt; "42", "34", "26", "37", "25", "12", "85", "66", "47", "30.6...
+$ X6      &lt;chr&gt; "45", "42", "38", "45", "40", "36", "100", "93", "85", "30....
+$ X7      &lt;chr&gt; "38", "30", "21", "36", "20", "-3", "92", "61", "29", "30.6...
+$ X8      &lt;chr&gt; "29", "24", "18", "28", "16", "3", "92", "70", "47", "30.77...
+$ X9      &lt;chr&gt; "49", "39", "29", "49", "41", "28", "100", "93", "86", "30....
+$ X10     &lt;chr&gt; "48", "43", "38", "45", "39", "37", "100", "95", "89", "29....
+$ X11     &lt;chr&gt; "39", "36", "32", "37", "31", "27", "92", "87", "82", "29.8...
+$ X12     &lt;chr&gt; "39", "35", "31", "28", "27", "25", "85", "75", "64", "29.8...
+$ X13     &lt;chr&gt; "42", "37", "32", "28", "26", "24", "75", "65", "55", "29.8...
+$ X14     &lt;chr&gt; "45", "39", "33", "29", "27", "25", "82", "68", "53", "29.9...
+$ X15     &lt;chr&gt; "42", "37", "32", "33", "29", "27", "89", "75", "60", "30.1...
+$ X16     &lt;chr&gt; "44", "40", "35", "42", "36", "30", "96", "85", "73", "30.1...
+$ X17     &lt;chr&gt; "49", "45", "41", "46", "41", "32", "100", "85", "70", "29....
+$ X18     &lt;chr&gt; "44", "40", "36", "34", "30", "26", "89", "73", "57", "29.8...
+$ X19     &lt;chr&gt; "37", "33", "29", "25", "22", "20", "69", "63", "56", "30.1...
+$ X20     &lt;chr&gt; "36", "32", "27", "30", "24", "20", "89", "79", "69", "30.3...
+$ X21     &lt;chr&gt; "36", "33", "30", "30", "27", "25", "85", "77", "69", "30.3...
+$ X22     &lt;chr&gt; "44", "39", "33", "39", "34", "25", "89", "79", "69", "30.4...
+$ X23     &lt;chr&gt; "47", "45", "42", "45", "42", "37", "100", "91", "82", "30....
+$ X24     &lt;chr&gt; "46", "44", "41", "46", "44", "41", "100", "98", "96", "30....
+$ X25     &lt;chr&gt; "59", "52", "44", "58", "43", "29", "100", "75", "49", "29....
+$ X26     &lt;chr&gt; "50", "44", "37", "31", "29", "28", "70", "60", "49", "30.1...
+$ X27     &lt;chr&gt; "52", "45", "38", "34", "31", "29", "70", "60", "50", "30.2...
+$ X28     &lt;chr&gt; "52", "46", "40", "42", "35", "27", "76", "65", "53", "29.9...
+$ X29     &lt;chr&gt; "41", "36", "30", "26", "20", "10", "64", "51", "37", "30.2...
+$ X30     &lt;chr&gt; "30", "26", "22", "10", "4", "-6", "50", "38", "26", "30.36...
+$ X31     &lt;chr&gt; "30", "25", "20", "8", "5", "1", "57", "44", "31", "30.32",...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>       X               year          month          measure         
+ Min.   :  1.00   Min.   :2014   Min.   : 1.000   Length:286        
+ 1st Qu.: 72.25   1st Qu.:2015   1st Qu.: 4.000   Class :character  
+ Median :143.50   Median :2015   Median : 7.000   Mode  :character  
+ Mean   :143.50   Mean   :2015   Mean   : 6.923                     
+ 3rd Qu.:214.75   3rd Qu.:2015   3rd Qu.:10.000                     
+ Max.   :286.00   Max.   :2015   Max.   :12.000                     
+      X1                 X2                 X3                 X4           
+ Length:286         Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+      X5                 X6                 X7                 X8           
+ Length:286         Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+      X9                X10                X11                X12           
+ Length:286         Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+     X13                X14                X15                X16           
+ Length:286         Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+     X17                X18                X19                X20           
+ Length:286         Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+     X21                X22                X23                X24           
+ Length:286         Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+     X25                X26                X27                X28           
+ Length:286         Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+     X29                X30                X31           
+ Length:286         Length:286         Length:286        
+ Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character  
+                                                         
+                                                         
+                                                         </code></pre>
+</div>
+</div>
+<p>Now that we have a pretty good feel for how the table is structured, we’ll take a look at some real observations!</p>
+</section>
+<section id="take-a-closer-look" class="level1">
+<h1>Take a closer look</h1>
+<p>After understanding the structure of the data and looking at some brief summaries, it often helps to preview the actual data. The functions <code>head()</code> and <code>tail()</code> allow us to view the top and bottom rows of the data, respectively.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View first 6 rows</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(weather)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># View first 15 rows</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(weather, <span class="at">n=</span><span class="dv">15</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># View the last 6 rows</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(weather)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># View the last 10 rows</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(weather, <span class="at">n=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<table>
+<thead><tr><th scope="col">X</th><th scope="col">year</th><th scope="col">month</th><th scope="col">measure</th><th scope="col">X1</th><th scope="col">X2</th><th scope="col">X3</th><th scope="col">X4</th><th scope="col">X5</th><th scope="col">X6</th><th scope="col">...</th><th scope="col">X22</th><th scope="col">X23</th><th scope="col">X24</th><th scope="col">X25</th><th scope="col">X26</th><th scope="col">X27</th><th scope="col">X28</th><th scope="col">X29</th><th scope="col">X30</th><th scope="col">X31</th></tr></thead>
+<tbody>
+    <tr><td>1                </td><td>2014             </td><td>12               </td><td>Max.TemperatureF </td><td>64               </td><td>42               </td><td>51               </td><td>43               </td><td>42               </td><td>45               </td><td>...              </td><td>44               </td><td>47               </td><td>46               </td><td>59               </td><td>50               </td><td>52               </td><td>52               </td><td>41               </td><td>30               </td><td>30               </td></tr>
+    <tr><td>2                </td><td>2014             </td><td>12               </td><td>Mean.TemperatureF</td><td>52               </td><td>38               </td><td>44               </td><td>37               </td><td>34               </td><td>42               </td><td>...              </td><td>39               </td><td>45               </td><td>44               </td><td>52               </td><td>44               </td><td>45               </td><td>46               </td><td>36               </td><td>26               </td><td>25               </td></tr>
+    <tr><td>3                </td><td>2014             </td><td>12               </td><td>Min.TemperatureF </td><td>39               </td><td>33               </td><td>37               </td><td>30               </td><td>26               </td><td>38               </td><td>...              </td><td>33               </td><td>42               </td><td>41               </td><td>44               </td><td>37               </td><td>38               </td><td>40               </td><td>30               </td><td>22               </td><td>20               </td></tr>
+    <tr><td>4                </td><td>2014             </td><td>12               </td><td>Max.Dew.PointF   </td><td>46               </td><td>40               </td><td>49               </td><td>24               </td><td>37               </td><td>45               </td><td>...              </td><td>39               </td><td>45               </td><td>46               </td><td>58               </td><td>31               </td><td>34               </td><td>42               </td><td>26               </td><td>10               </td><td>8                </td></tr>
+    <tr><td>5                </td><td>2014             </td><td>12               </td><td>MeanDew.PointF   </td><td>40               </td><td>27               </td><td>42               </td><td>21               </td><td>25               </td><td>40               </td><td>...              </td><td>34               </td><td>42               </td><td>44               </td><td>43               </td><td>29               </td><td>31               </td><td>35               </td><td>20               </td><td>4                </td><td>5                </td></tr>
+    <tr><td>6                </td><td>2014             </td><td>12               </td><td>Min.DewpointF    </td><td>26               </td><td>17               </td><td>24               </td><td>13               </td><td>12               </td><td>36               </td><td>...              </td><td>25               </td><td>37               </td><td>41               </td><td>29               </td><td>28               </td><td>29               </td><td>27               </td><td>10               </td><td>-6               </td><td>1                </td></tr>
+</tbody>
+</table>
+</div>
+<div class="cell-output cell-output-display">
+
+<table>
+<thead><tr><th scope="col">X</th><th scope="col">year</th><th scope="col">month</th><th scope="col">measure</th><th scope="col">X1</th><th scope="col">X2</th><th scope="col">X3</th><th scope="col">X4</th><th scope="col">X5</th><th scope="col">X6</th><th scope="col">...</th><th scope="col">X22</th><th scope="col">X23</th><th scope="col">X24</th><th scope="col">X25</th><th scope="col">X26</th><th scope="col">X27</th><th scope="col">X28</th><th scope="col">X29</th><th scope="col">X30</th><th scope="col">X31</th></tr></thead>
+<tbody>
+    <tr><td> 1                       </td><td>2014                     </td><td>12                       </td><td>Max.TemperatureF         </td><td>64                       </td><td>42                       </td><td>51                       </td><td>43                       </td><td>42                       </td><td>45                       </td><td>...                      </td><td>44                       </td><td>47                       </td><td>46                       </td><td>59                       </td><td>50                       </td><td>52                       </td><td>52                       </td><td>41                       </td><td>30                       </td><td>30                       </td></tr>
+    <tr><td> 2                       </td><td>2014                     </td><td>12                       </td><td>Mean.TemperatureF        </td><td>52                       </td><td>38                       </td><td>44                       </td><td>37                       </td><td>34                       </td><td>42                       </td><td>...                      </td><td>39                       </td><td>45                       </td><td>44                       </td><td>52                       </td><td>44                       </td><td>45                       </td><td>46                       </td><td>36                       </td><td>26                       </td><td>25                       </td></tr>
+    <tr><td> 3                       </td><td>2014                     </td><td>12                       </td><td>Min.TemperatureF         </td><td>39                       </td><td>33                       </td><td>37                       </td><td>30                       </td><td>26                       </td><td>38                       </td><td>...                      </td><td>33                       </td><td>42                       </td><td>41                       </td><td>44                       </td><td>37                       </td><td>38                       </td><td>40                       </td><td>30                       </td><td>22                       </td><td>20                       </td></tr>
+    <tr><td> 4                       </td><td>2014                     </td><td>12                       </td><td>Max.Dew.PointF           </td><td>46                       </td><td>40                       </td><td>49                       </td><td>24                       </td><td>37                       </td><td>45                       </td><td>...                      </td><td>39                       </td><td>45                       </td><td>46                       </td><td>58                       </td><td>31                       </td><td>34                       </td><td>42                       </td><td>26                       </td><td>10                       </td><td>8                        </td></tr>
+    <tr><td> 5                       </td><td>2014                     </td><td>12                       </td><td>MeanDew.PointF           </td><td>40                       </td><td>27                       </td><td>42                       </td><td>21                       </td><td>25                       </td><td>40                       </td><td>...                      </td><td>34                       </td><td>42                       </td><td>44                       </td><td>43                       </td><td>29                       </td><td>31                       </td><td>35                       </td><td>20                       </td><td>4                        </td><td>5                        </td></tr>
+    <tr><td> 6                       </td><td>2014                     </td><td>12                       </td><td>Min.DewpointF            </td><td>26                       </td><td>17                       </td><td>24                       </td><td>13                       </td><td>12                       </td><td>36                       </td><td>...                      </td><td>25                       </td><td>37                       </td><td>41                       </td><td>29                       </td><td>28                       </td><td>29                       </td><td>27                       </td><td>10                       </td><td>-6                       </td><td>1                        </td></tr>
+    <tr><td> 7                       </td><td>2014                     </td><td>12                       </td><td>Max.Humidity             </td><td>74                       </td><td>92                       </td><td>100                      </td><td>69                       </td><td>85                       </td><td>100                      </td><td>...                      </td><td>89                       </td><td>100                      </td><td>100                      </td><td>100                      </td><td>70                       </td><td>70                       </td><td>76                       </td><td>64                       </td><td>50                       </td><td>57                       </td></tr>
+    <tr><td> 8                       </td><td>2014                     </td><td>12                       </td><td>Mean.Humidity            </td><td>63                       </td><td>72                       </td><td>79                       </td><td>54                       </td><td>66                       </td><td>93                       </td><td>...                      </td><td>79                       </td><td>91                       </td><td>98                       </td><td>75                       </td><td>60                       </td><td>60                       </td><td>65                       </td><td>51                       </td><td>38                       </td><td>44                       </td></tr>
+    <tr><td> 9                       </td><td>2014                     </td><td>12                       </td><td>Min.Humidity             </td><td>52                       </td><td>51                       </td><td>57                       </td><td>39                       </td><td>47                       </td><td>85                       </td><td>...                      </td><td>69                       </td><td>82                       </td><td>96                       </td><td>49                       </td><td>49                       </td><td>50                       </td><td>53                       </td><td>37                       </td><td>26                       </td><td>31                       </td></tr>
+    <tr><td>10                       </td><td>2014                     </td><td>12                       </td><td>Max.Sea.Level.PressureIn </td><td>30.45                    </td><td>30.71                    </td><td>30.4                     </td><td>30.56                    </td><td>30.68                    </td><td>30.42                    </td><td>...                      </td><td>30.4                     </td><td>30.31                    </td><td>30.13                    </td><td>29.96                    </td><td>30.16                    </td><td>30.22                    </td><td>29.99                    </td><td>30.22                    </td><td>30.36                    </td><td>30.32                    </td></tr>
+    <tr><td>11                       </td><td>2014                     </td><td>12                       </td><td>Mean.Sea.Level.PressureIn</td><td>30.13                    </td><td>30.59                    </td><td>30.07                    </td><td>30.33                    </td><td>30.59                    </td><td>30.24                    </td><td>...                      </td><td>30.35                    </td><td>30.23                    </td><td>29.9                     </td><td>29.63                    </td><td>30.11                    </td><td>30.14                    </td><td>29.87                    </td><td>30.12                    </td><td>30.32                    </td><td>30.25                    </td></tr>
+    <tr><td>12                       </td><td>2014                     </td><td>12                       </td><td>Min.Sea.Level.PressureIn </td><td>30.01                    </td><td>30.4                     </td><td>29.87                    </td><td>30.09                    </td><td>30.45                    </td><td>30.16                    </td><td>...                      </td><td>30.3                     </td><td>30.16                    </td><td>29.55                    </td><td>29.47                    </td><td>29.99                    </td><td>30.03                    </td><td>29.77                    </td><td>30                       </td><td>30.23                    </td><td>30.13                    </td></tr>
+    <tr><td>13                       </td><td>2014                     </td><td>12                       </td><td>Max.VisibilityMiles      </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>...                      </td><td>10                       </td><td>10                       </td><td>2                        </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td></tr>
+    <tr><td>14                       </td><td>2014                     </td><td>12                       </td><td>Mean.VisibilityMiles     </td><td>10                       </td><td>8                        </td><td>5                        </td><td>10                       </td><td>10                       </td><td>4                        </td><td>...                      </td><td>10                       </td><td>5                        </td><td>1                        </td><td>8                        </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td></tr>
+    <tr><td>15                       </td><td>2014                     </td><td>12                       </td><td>Min.VisibilityMiles      </td><td>10                       </td><td>2                        </td><td>1                        </td><td>10                       </td><td>5                        </td><td>0                        </td><td>...                      </td><td>4                        </td><td>1                        </td><td>0                        </td><td>1                        </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td><td>10                       </td></tr>
+</tbody>
+</table>
+</div>
+<div class="cell-output cell-output-display">
+
+<table>
+<thead><tr><th></th><th scope="col">X</th><th scope="col">year</th><th scope="col">month</th><th scope="col">measure</th><th scope="col">X1</th><th scope="col">X2</th><th scope="col">X3</th><th scope="col">X4</th><th scope="col">X5</th><th scope="col">X6</th><th scope="col">...</th><th scope="col">X22</th><th scope="col">X23</th><th scope="col">X24</th><th scope="col">X25</th><th scope="col">X26</th><th scope="col">X27</th><th scope="col">X28</th><th scope="col">X29</th><th scope="col">X30</th><th scope="col">X31</th></tr></thead>
+<tbody>
+    <tr><th scope="row">281</th><td>281               </td><td>2015              </td><td>12                </td><td>Mean.Wind.SpeedMPH</td><td>6                 </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>...               </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td></tr>
+    <tr><th scope="row">282</th><td>282               </td><td>2015              </td><td>12                </td><td>Max.Gust.SpeedMPH </td><td>17                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>...               </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td></tr>
+    <tr><th scope="row">283</th><td>283               </td><td>2015              </td><td>12                </td><td>PrecipitationIn   </td><td>0.14              </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>...               </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td></tr>
+    <tr><th scope="row">284</th><td>284               </td><td>2015              </td><td>12                </td><td>CloudCover        </td><td>7                 </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>...               </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td></tr>
+    <tr><th scope="row">285</th><td>285               </td><td>2015              </td><td>12                </td><td>Events            </td><td>Rain              </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>...               </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td></tr>
+    <tr><th scope="row">286</th><td>286               </td><td>2015              </td><td>12                </td><td>WindDirDegrees    </td><td>109               </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>...               </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td><td>NA                </td></tr>
+</tbody>
+</table>
+</div>
+<div class="cell-output cell-output-display">
+
+<table>
+<thead><tr><th></th><th scope="col">X</th><th scope="col">year</th><th scope="col">month</th><th scope="col">measure</th><th scope="col">X1</th><th scope="col">X2</th><th scope="col">X3</th><th scope="col">X4</th><th scope="col">X5</th><th scope="col">X6</th><th scope="col">...</th><th scope="col">X22</th><th scope="col">X23</th><th scope="col">X24</th><th scope="col">X25</th><th scope="col">X26</th><th scope="col">X27</th><th scope="col">X28</th><th scope="col">X29</th><th scope="col">X30</th><th scope="col">X31</th></tr></thead>
+<tbody>
+    <tr><th scope="row">277</th><td>277                 </td><td>2015                </td><td>12                  </td><td>Max.VisibilityMiles </td><td>10                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+    <tr><th scope="row">278</th><td>278                 </td><td>2015                </td><td>12                  </td><td>Mean.VisibilityMiles</td><td>8                   </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+    <tr><th scope="row">279</th><td>279                 </td><td>2015                </td><td>12                  </td><td>Min.VisibilityMiles </td><td>1                   </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+    <tr><th scope="row">280</th><td>280                 </td><td>2015                </td><td>12                  </td><td>Max.Wind.SpeedMPH   </td><td>15                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+    <tr><th scope="row">281</th><td>281                 </td><td>2015                </td><td>12                  </td><td>Mean.Wind.SpeedMPH  </td><td>6                   </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+    <tr><th scope="row">282</th><td>282                 </td><td>2015                </td><td>12                  </td><td>Max.Gust.SpeedMPH   </td><td>17                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+    <tr><th scope="row">283</th><td>283                 </td><td>2015                </td><td>12                  </td><td>PrecipitationIn     </td><td>0.14                </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+    <tr><th scope="row">284</th><td>284                 </td><td>2015                </td><td>12                  </td><td>CloudCover          </td><td>7                   </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+    <tr><th scope="row">285</th><td>285                 </td><td>2015                </td><td>12                  </td><td>Events              </td><td>Rain                </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+    <tr><th scope="row">286</th><td>286                 </td><td>2015                </td><td>12                  </td><td>WindDirDegrees      </td><td>109                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>...                 </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td><td>NA                  </td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="lets-tidy-the-data" class="level1">
+<h1>Let’s tidy the data</h1>
+<section id="column-names-are-values" class="level2">
+<h2 class="anchored" data-anchor-id="column-names-are-values">Column names are values</h2>
+<p>The <code>weather</code> dataset suffers from one of the five most common symptoms of messy data: column names are values. In particular, the column names <code>X1-X31</code> represent days of the month, which should really be values of a new variable called <code>day</code>.</p>
+<p>The tidyr package provides the <code>gather()</code> function for exactly this scenario.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>gather(df, time, val, t1:t3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><code>gather()</code> allows us to select multiple columns to be gathered by using the <code>:</code> operator.</p>
+</blockquote>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gather the columns</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>weather2 <span class="ot">&lt;-</span> <span class="fu">gather</span>(weather, day, value, X1<span class="sc">:</span>X31, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># View the head</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(weather2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<table>
+<thead><tr><th scope="col">X</th><th scope="col">year</th><th scope="col">month</th><th scope="col">measure</th><th scope="col">day</th><th scope="col">value</th></tr></thead>
+<tbody>
+    <tr><td>1                </td><td>2014             </td><td>12               </td><td>Max.TemperatureF </td><td>X1               </td><td>64               </td></tr>
+    <tr><td>2                </td><td>2014             </td><td>12               </td><td>Mean.TemperatureF</td><td>X1               </td><td>52               </td></tr>
+    <tr><td>3                </td><td>2014             </td><td>12               </td><td>Min.TemperatureF </td><td>X1               </td><td>39               </td></tr>
+    <tr><td>4                </td><td>2014             </td><td>12               </td><td>Max.Dew.PointF   </td><td>X1               </td><td>46               </td></tr>
+    <tr><td>5                </td><td>2014             </td><td>12               </td><td>MeanDew.PointF   </td><td>X1               </td><td>40               </td></tr>
+    <tr><td>6                </td><td>2014             </td><td>12               </td><td>Min.DewpointF    </td><td>X1               </td><td>26               </td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="values-are-variable-names" class="level2">
+<h2 class="anchored" data-anchor-id="values-are-variable-names">Values are variable names</h2>
+<p>Our data suffer from a second common symptom of messy data: values are variable names. Specifically, values in the <code>measure</code> column should be variables (i.e.&nbsp;column names) in our dataset.</p>
+<p>The <code>spread()</code> function from tidyr is designed to help with this.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>spread(df2, time, val)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First remove column of row names</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>without_x <span class="ot">&lt;-</span> weather2[, <span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Spread the data</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>weather3 <span class="ot">&lt;-</span> <span class="fu">spread</span>(without_x, measure, value)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># View the head</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(weather3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<table>
+<thead><tr><th scope="col">year</th><th scope="col">month</th><th scope="col">day</th><th scope="col">CloudCover</th><th scope="col">Events</th><th scope="col">Max.Dew.PointF</th><th scope="col">Max.Gust.SpeedMPH</th><th scope="col">Max.Humidity</th><th scope="col">Max.Sea.Level.PressureIn</th><th scope="col">Max.TemperatureF</th><th scope="col">...</th><th scope="col">Mean.VisibilityMiles</th><th scope="col">Mean.Wind.SpeedMPH</th><th scope="col">MeanDew.PointF</th><th scope="col">Min.DewpointF</th><th scope="col">Min.Humidity</th><th scope="col">Min.Sea.Level.PressureIn</th><th scope="col">Min.TemperatureF</th><th scope="col">Min.VisibilityMiles</th><th scope="col">PrecipitationIn</th><th scope="col">WindDirDegrees</th></tr></thead>
+<tbody>
+    <tr><td>2014     </td><td>12       </td><td>X1       </td><td>6        </td><td>Rain     </td><td>46       </td><td>29       </td><td>74       </td><td>30.45    </td><td>64       </td><td>...      </td><td>10       </td><td>13       </td><td>40       </td><td>26       </td><td>52       </td><td>30.01    </td><td>39       </td><td>10       </td><td>0.01     </td><td>268      </td></tr>
+    <tr><td>2014     </td><td>12       </td><td>X10      </td><td>8        </td><td>Rain     </td><td>45       </td><td>29       </td><td>100      </td><td>29.58    </td><td>48       </td><td>...      </td><td>3        </td><td>13       </td><td>39       </td><td>37       </td><td>89       </td><td>29.43    </td><td>38       </td><td>1        </td><td>0.28     </td><td>357      </td></tr>
+    <tr><td>2014     </td><td>12       </td><td>X11      </td><td>8        </td><td>Rain-Snow</td><td>37       </td><td>28       </td><td>92       </td><td>29.81    </td><td>39       </td><td>...      </td><td>7        </td><td>13       </td><td>31       </td><td>27       </td><td>82       </td><td>29.44    </td><td>32       </td><td>1        </td><td>0.02     </td><td>230      </td></tr>
+    <tr><td>2014     </td><td>12       </td><td>X12      </td><td>7        </td><td>Snow     </td><td>28       </td><td>21       </td><td>85       </td><td>29.88    </td><td>39       </td><td>...      </td><td>10       </td><td>11       </td><td>27       </td><td>25       </td><td>64       </td><td>29.81    </td><td>31       </td><td>7        </td><td>T        </td><td>286      </td></tr>
+    <tr><td>2014     </td><td>12       </td><td>X13      </td><td>5        </td><td>         </td><td>28       </td><td>23       </td><td>75       </td><td>29.86    </td><td>42       </td><td>...      </td><td>10       </td><td>12       </td><td>26       </td><td>24       </td><td>55       </td><td>29.78    </td><td>32       </td><td>10       </td><td>T        </td><td>298      </td></tr>
+    <tr><td>2014     </td><td>12       </td><td>X14      </td><td>4        </td><td>         </td><td>29       </td><td>20       </td><td>82       </td><td>29.91    </td><td>45       </td><td>...      </td><td>10       </td><td>10       </td><td>27       </td><td>25       </td><td>53       </td><td>29.78    </td><td>33       </td><td>10       </td><td>0.00     </td><td>306      </td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>This dataset is looking much better already!</p>
+</section>
+</section>
+<section id="prepare-the-data-for-analysis" class="level1">
+<h1>Prepare the data for analysis</h1>
+<section id="clean-up-dates" class="level2">
+<h2 class="anchored" data-anchor-id="clean-up-dates">Clean up dates</h2>
+<p>Now that the weather dataset adheres to tidy data principles, the next step is to prepare it for analysis. We’ll start by combining the <code>year</code>, <code>month</code>, and <code>day</code> columns and recoding the resulting character column as a <code>date</code>. We can use a combination of base R, stringr, and lubridate to accomplish this task.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove X's from day column</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>weather3<span class="sc">$</span>day <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(weather3<span class="sc">$</span>day, <span class="st">'X'</span>, <span class="st">''</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Unite the year, month, and day columns</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>weather4 <span class="ot">&lt;-</span> <span class="fu">unite</span>(weather3, date, year, month, day, <span class="at">sep =</span> <span class="st">"-"</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert date column to proper date format using lubridates's ymd()</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>weather4<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">ymd</span>(weather4<span class="sc">$</span>date)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Rearrange columns using dplyr's select()</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>weather5 <span class="ot">&lt;-</span> <span class="fu">select</span>(weather4, date, Events, CloudCover<span class="sc">:</span>WindDirDegrees)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># View the head of weather5</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(weather5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<table>
+<thead><tr><th scope="col">date</th><th scope="col">Events</th><th scope="col">CloudCover</th><th scope="col">Max.Dew.PointF</th><th scope="col">Max.Gust.SpeedMPH</th><th scope="col">Max.Humidity</th><th scope="col">Max.Sea.Level.PressureIn</th><th scope="col">Max.TemperatureF</th><th scope="col">Max.VisibilityMiles</th><th scope="col">Max.Wind.SpeedMPH</th><th scope="col">...</th><th scope="col">Mean.VisibilityMiles</th><th scope="col">Mean.Wind.SpeedMPH</th><th scope="col">MeanDew.PointF</th><th scope="col">Min.DewpointF</th><th scope="col">Min.Humidity</th><th scope="col">Min.Sea.Level.PressureIn</th><th scope="col">Min.TemperatureF</th><th scope="col">Min.VisibilityMiles</th><th scope="col">PrecipitationIn</th><th scope="col">WindDirDegrees</th></tr></thead>
+<tbody>
+    <tr><td>2014-12-01</td><td>Rain      </td><td>6         </td><td>46        </td><td>29        </td><td>74        </td><td>30.45     </td><td>64        </td><td>10        </td><td>22        </td><td>...       </td><td>10        </td><td>13        </td><td>40        </td><td>26        </td><td>52        </td><td>30.01     </td><td>39        </td><td>10        </td><td>0.01      </td><td>268       </td></tr>
+    <tr><td>2014-12-10</td><td>Rain      </td><td>8         </td><td>45        </td><td>29        </td><td>100       </td><td>29.58     </td><td>48        </td><td>10        </td><td>23        </td><td>...       </td><td>3         </td><td>13        </td><td>39        </td><td>37        </td><td>89        </td><td>29.43     </td><td>38        </td><td>1         </td><td>0.28      </td><td>357       </td></tr>
+    <tr><td>2014-12-11</td><td>Rain-Snow </td><td>8         </td><td>37        </td><td>28        </td><td>92        </td><td>29.81     </td><td>39        </td><td>10        </td><td>21        </td><td>...       </td><td>7         </td><td>13        </td><td>31        </td><td>27        </td><td>82        </td><td>29.44     </td><td>32        </td><td>1         </td><td>0.02      </td><td>230       </td></tr>
+    <tr><td>2014-12-12</td><td>Snow      </td><td>7         </td><td>28        </td><td>21        </td><td>85        </td><td>29.88     </td><td>39        </td><td>10        </td><td>16        </td><td>...       </td><td>10        </td><td>11        </td><td>27        </td><td>25        </td><td>64        </td><td>29.81     </td><td>31        </td><td>7         </td><td>T         </td><td>286       </td></tr>
+    <tr><td>2014-12-13</td><td>          </td><td>5         </td><td>28        </td><td>23        </td><td>75        </td><td>29.86     </td><td>42        </td><td>10        </td><td>17        </td><td>...       </td><td>10        </td><td>12        </td><td>26        </td><td>24        </td><td>55        </td><td>29.78     </td><td>32        </td><td>10        </td><td>T         </td><td>298       </td></tr>
+    <tr><td>2014-12-14</td><td>          </td><td>4         </td><td>29        </td><td>20        </td><td>82        </td><td>29.91     </td><td>45        </td><td>10        </td><td>15        </td><td>...       </td><td>10        </td><td>10        </td><td>27        </td><td>25        </td><td>53        </td><td>29.78     </td><td>33        </td><td>10        </td><td>0.00      </td><td>306       </td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="a-closer-look-at-column-types" class="level2">
+<h2 class="anchored" data-anchor-id="a-closer-look-at-column-types">A closer look at column types</h2>
+<p>It’s important for analysis that variables are coded appropriately. This is not yet the case with our weather data.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View the structure of weather5</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(weather5)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Examine the first 20 rows of weather5. Are most of the characters numeric?</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(weather5, <span class="dv">20</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># See what happens if we try to convert PrecipitationIn to numeric</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(weather5<span class="sc">$</span>PrecipitationIn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   366 obs. of  23 variables:
+ $ date                     : Date, format: "2014-12-01" "2014-12-10" ...
+ $ Events                   : chr  "Rain" "Rain" "Rain-Snow" "Snow" ...
+ $ CloudCover               : chr  "6" "8" "8" "7" ...
+ $ Max.Dew.PointF           : chr  "46" "45" "37" "28" ...
+ $ Max.Gust.SpeedMPH        : chr  "29" "29" "28" "21" ...
+ $ Max.Humidity             : chr  "74" "100" "92" "85" ...
+ $ Max.Sea.Level.PressureIn : chr  "30.45" "29.58" "29.81" "29.88" ...
+ $ Max.TemperatureF         : chr  "64" "48" "39" "39" ...
+ $ Max.VisibilityMiles      : chr  "10" "10" "10" "10" ...
+ $ Max.Wind.SpeedMPH        : chr  "22" "23" "21" "16" ...
+ $ Mean.Humidity            : chr  "63" "95" "87" "75" ...
+ $ Mean.Sea.Level.PressureIn: chr  "30.13" "29.5" "29.61" "29.85" ...
+ $ Mean.TemperatureF        : chr  "52" "43" "36" "35" ...
+ $ Mean.VisibilityMiles     : chr  "10" "3" "7" "10" ...
+ $ Mean.Wind.SpeedMPH       : chr  "13" "13" "13" "11" ...
+ $ MeanDew.PointF           : chr  "40" "39" "31" "27" ...
+ $ Min.DewpointF            : chr  "26" "37" "27" "25" ...
+ $ Min.Humidity             : chr  "52" "89" "82" "64" ...
+ $ Min.Sea.Level.PressureIn : chr  "30.01" "29.43" "29.44" "29.81" ...
+ $ Min.TemperatureF         : chr  "39" "38" "32" "31" ...
+ $ Min.VisibilityMiles      : chr  "10" "1" "1" "7" ...
+ $ PrecipitationIn          : chr  "0.01" "0.28" "0.02" "T" ...
+ $ WindDirDegrees           : chr  "268" "357" "230" "286" ...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+
+<table>
+<thead><tr><th scope="col">date</th><th scope="col">Events</th><th scope="col">CloudCover</th><th scope="col">Max.Dew.PointF</th><th scope="col">Max.Gust.SpeedMPH</th><th scope="col">Max.Humidity</th><th scope="col">Max.Sea.Level.PressureIn</th><th scope="col">Max.TemperatureF</th><th scope="col">Max.VisibilityMiles</th><th scope="col">Max.Wind.SpeedMPH</th><th scope="col">...</th><th scope="col">Mean.VisibilityMiles</th><th scope="col">Mean.Wind.SpeedMPH</th><th scope="col">MeanDew.PointF</th><th scope="col">Min.DewpointF</th><th scope="col">Min.Humidity</th><th scope="col">Min.Sea.Level.PressureIn</th><th scope="col">Min.TemperatureF</th><th scope="col">Min.VisibilityMiles</th><th scope="col">PrecipitationIn</th><th scope="col">WindDirDegrees</th></tr></thead>
+<tbody>
+    <tr><td>2014-12-01</td><td>Rain      </td><td>6         </td><td>46        </td><td>29        </td><td>74        </td><td>30.45     </td><td>64        </td><td>10        </td><td>22        </td><td>...       </td><td>10        </td><td>13        </td><td>40        </td><td>26        </td><td>52        </td><td>30.01     </td><td>39        </td><td>10        </td><td>0.01      </td><td>268       </td></tr>
+    <tr><td>2014-12-10</td><td>Rain      </td><td>8         </td><td>45        </td><td>29        </td><td>100       </td><td>29.58     </td><td>48        </td><td>10        </td><td>23        </td><td>...       </td><td>3         </td><td>13        </td><td>39        </td><td>37        </td><td>89        </td><td>29.43     </td><td>38        </td><td>1         </td><td>0.28      </td><td>357       </td></tr>
+    <tr><td>2014-12-11</td><td>Rain-Snow </td><td>8         </td><td>37        </td><td>28        </td><td>92        </td><td>29.81     </td><td>39        </td><td>10        </td><td>21        </td><td>...       </td><td>7         </td><td>13        </td><td>31        </td><td>27        </td><td>82        </td><td>29.44     </td><td>32        </td><td>1         </td><td>0.02      </td><td>230       </td></tr>
+    <tr><td>2014-12-12</td><td>Snow      </td><td>7         </td><td>28        </td><td>21        </td><td>85        </td><td>29.88     </td><td>39        </td><td>10        </td><td>16        </td><td>...       </td><td>10        </td><td>11        </td><td>27        </td><td>25        </td><td>64        </td><td>29.81     </td><td>31        </td><td>7         </td><td>T         </td><td>286       </td></tr>
+    <tr><td>2014-12-13</td><td>          </td><td>5         </td><td>28        </td><td>23        </td><td>75        </td><td>29.86     </td><td>42        </td><td>10        </td><td>17        </td><td>...       </td><td>10        </td><td>12        </td><td>26        </td><td>24        </td><td>55        </td><td>29.78     </td><td>32        </td><td>10        </td><td>T         </td><td>298       </td></tr>
+    <tr><td>2014-12-14</td><td>          </td><td>4         </td><td>29        </td><td>20        </td><td>82        </td><td>29.91     </td><td>45        </td><td>10        </td><td>15        </td><td>...       </td><td>10        </td><td>10        </td><td>27        </td><td>25        </td><td>53        </td><td>29.78     </td><td>33        </td><td>10        </td><td>0.00      </td><td>306       </td></tr>
+    <tr><td>2014-12-15</td><td>          </td><td>2         </td><td>33        </td><td>21        </td><td>89        </td><td>30.15     </td><td>42        </td><td>10        </td><td>15        </td><td>...       </td><td>10        </td><td>6         </td><td>29        </td><td>27        </td><td>60        </td><td>29.91     </td><td>32        </td><td>10        </td><td>0.00      </td><td>324       </td></tr>
+    <tr><td>2014-12-16</td><td>Rain      </td><td>8         </td><td>42        </td><td>10        </td><td>96        </td><td>30.17     </td><td>44        </td><td>10        </td><td>8         </td><td>...       </td><td>9         </td><td>4         </td><td>36        </td><td>30        </td><td>73        </td><td>29.92     </td><td>35        </td><td>5         </td><td>T         </td><td>79        </td></tr>
+    <tr><td>2014-12-17</td><td>Rain      </td><td>8         </td><td>46        </td><td>26        </td><td>100       </td><td>29.91     </td><td>49        </td><td>10        </td><td>20        </td><td>...       </td><td>6         </td><td>11        </td><td>41        </td><td>32        </td><td>70        </td><td>29.69     </td><td>41        </td><td>1         </td><td>0.43      </td><td>311       </td></tr>
+    <tr><td>2014-12-18</td><td>Rain      </td><td>7         </td><td>34        </td><td>30        </td><td>89        </td><td>29.87     </td><td>44        </td><td>10        </td><td>23        </td><td>...       </td><td>10        </td><td>14        </td><td>30        </td><td>26        </td><td>57        </td><td>29.71     </td><td>36        </td><td>10        </td><td>0.01      </td><td>281       </td></tr>
+    <tr><td>2014-12-19</td><td>          </td><td>4         </td><td>25        </td><td>23        </td><td>69        </td><td>30.15     </td><td>37        </td><td>10        </td><td>17        </td><td>...       </td><td>10        </td><td>11        </td><td>22        </td><td>20        </td><td>56        </td><td>29.86     </td><td>29        </td><td>10        </td><td>0.00      </td><td>305       </td></tr>
+    <tr><td>2014-12-02</td><td>Rain-Snow </td><td>7         </td><td>40        </td><td>29        </td><td>92        </td><td>30.71     </td><td>42        </td><td>10        </td><td>24        </td><td>...       </td><td>8         </td><td>15        </td><td>27        </td><td>17        </td><td>51        </td><td>30.4      </td><td>33        </td><td>2         </td><td>0.10      </td><td>62        </td></tr>
+    <tr><td>2014-12-20</td><td>Snow      </td><td>6         </td><td>30        </td><td>26        </td><td>89        </td><td>30.31     </td><td>36        </td><td>10        </td><td>21        </td><td>...       </td><td>10        </td><td>10        </td><td>24        </td><td>20        </td><td>69        </td><td>30.17     </td><td>27        </td><td>7         </td><td>T         </td><td>350       </td></tr>
+    <tr><td>2014-12-21</td><td>Snow      </td><td>8         </td><td>30        </td><td>20        </td><td>85        </td><td>30.37     </td><td>36        </td><td>10        </td><td>16        </td><td>...       </td><td>9         </td><td>9         </td><td>27        </td><td>25        </td><td>69        </td><td>30.28     </td><td>30        </td><td>6         </td><td>T         </td><td>2         </td></tr>
+    <tr><td>2014-12-22</td><td>Rain      </td><td>7         </td><td>39        </td><td>22        </td><td>89        </td><td>30.4      </td><td>44        </td><td>10        </td><td>18        </td><td>...       </td><td>10        </td><td>8         </td><td>34        </td><td>25        </td><td>69        </td><td>30.3      </td><td>33        </td><td>4         </td><td>0.05      </td><td>24        </td></tr>
+    <tr><td>2014-12-23</td><td>Rain      </td><td>8         </td><td>45        </td><td>25        </td><td>100       </td><td>30.31     </td><td>47        </td><td>10        </td><td>20        </td><td>...       </td><td>5         </td><td>13        </td><td>42        </td><td>37        </td><td>82        </td><td>30.16     </td><td>42        </td><td>1         </td><td>0.25      </td><td>63        </td></tr>
+    <tr><td>2014-12-24</td><td>Fog-Rain  </td><td>8         </td><td>46        </td><td>15        </td><td>100       </td><td>30.13     </td><td>46        </td><td>2         </td><td>13        </td><td>...       </td><td>1         </td><td>6         </td><td>44        </td><td>41        </td><td>96        </td><td>29.55     </td><td>41        </td><td>0         </td><td>0.56      </td><td>12        </td></tr>
+    <tr><td>2014-12-25</td><td>Rain      </td><td>6         </td><td>58        </td><td>40        </td><td>100       </td><td>29.96     </td><td>59        </td><td>10        </td><td>28        </td><td>...       </td><td>8         </td><td>14        </td><td>43        </td><td>29        </td><td>49        </td><td>29.47     </td><td>44        </td><td>1         </td><td>0.14      </td><td>250       </td></tr>
+    <tr><td>2014-12-26</td><td>          </td><td>1         </td><td>31        </td><td>25        </td><td>70        </td><td>30.16     </td><td>50        </td><td>10        </td><td>18        </td><td>...       </td><td>10        </td><td>11        </td><td>29        </td><td>28        </td><td>49        </td><td>29.99     </td><td>37        </td><td>10        </td><td>0.00      </td><td>255       </td></tr>
+    <tr><td>2014-12-27</td><td>          </td><td>3         </td><td>34        </td><td>21        </td><td>70        </td><td>30.22     </td><td>52        </td><td>10        </td><td>17        </td><td>...       </td><td>10        </td><td>9         </td><td>31        </td><td>29        </td><td>50        </td><td>30.03     </td><td>38        </td><td>10        </td><td>0.00      </td><td>251       </td></tr>
+</tbody>
+</table>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning message in eval(expr, envir, enclos):
+"NAs introduced by coercion"</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<ol class="list-inline">
+    <li>0.01</li>
+    <li>0.28</li>
+    <li>0.02</li>
+    <li>&lt;NA&gt;</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0.43</li>
+    <li>0.01</li>
+    <li>0</li>
+    <li>0.1</li>
+    <li>&lt;NA&gt;</li>
+    <li>&lt;NA&gt;</li>
+    <li>0.05</li>
+    <li>0.25</li>
+    <li>0.56</li>
+    <li>0.14</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.01</li>
+    <li>0</li>
+    <li>0.44</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.11</li>
+    <li>1.09</li>
+    <li>0.13</li>
+    <li>0.03</li>
+    <li>2.9</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.2</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0.12</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.15</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0.71</li>
+    <li>0</li>
+    <li>0.1</li>
+    <li>0.95</li>
+    <li>0.01</li>
+    <li>&lt;NA&gt;</li>
+    <li>0.62</li>
+    <li>0.06</li>
+    <li>0.05</li>
+    <li>0.57</li>
+    <li>0</li>
+    <li>0.02</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0.01</li>
+    <li>0</li>
+    <li>0.05</li>
+    <li>0.01</li>
+    <li>0.03</li>
+    <li>0</li>
+    <li>0.23</li>
+    <li>0.39</li>
+    <li>0</li>
+    <li>0.02</li>
+    <li>0.01</li>
+    <li>0.06</li>
+    <li>0.78</li>
+    <li>0</li>
+    <li>0.17</li>
+    <li>0.11</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0.07</li>
+    <li>0.02</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.09</li>
+    <li>&lt;NA&gt;</li>
+    <li>0.07</li>
+    <li>0.37</li>
+    <li>0.88</li>
+    <li>0.17</li>
+    <li>0.06</li>
+    <li>0.01</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.8</li>
+    <li>0.27</li>
+    <li>0</li>
+    <li>0.14</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.01</li>
+    <li>0.05</li>
+    <li>0.09</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.04</li>
+    <li>0.8</li>
+    <li>0.21</li>
+    <li>0.12</li>
+    <li>0</li>
+    <li>0.26</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0.02</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.09</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.01</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.06</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.61</li>
+    <li>0.54</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.1</li>
+    <li>0.07</li>
+    <li>0</li>
+    <li>0.03</li>
+    <li>0</li>
+    <li>0.39</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.03</li>
+    <li>0.26</li>
+    <li>0.09</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.02</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.27</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.91</li>
+    <li>0</li>
+    <li>0.02</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.38</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0.4</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.74</li>
+    <li>0.04</li>
+    <li>1.72</li>
+    <li>0</li>
+    <li>0.01</li>
+    <li>0</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0.2</li>
+    <li>1.43</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0.09</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>&lt;NA&gt;</li>
+    <li>0.5</li>
+    <li>1.12</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.03</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0.14</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.01</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0.06</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.02</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.02</li>
+    <li>&lt;NA&gt;</li>
+    <li>0.15</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0.83</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.08</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.14</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.63</li>
+    <li>&lt;NA&gt;</li>
+    <li>0.02</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.49</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.17</li>
+    <li>0.66</li>
+    <li>0.01</li>
+    <li>0.38</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.04</li>
+    <li>0.01</li>
+    <li>2.46</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.2</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.12</li>
+    <li>0</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>&lt;NA&gt;</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0.08</li>
+    <li>&lt;NA&gt;</li>
+    <li>0.07</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.03</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.36</li>
+    <li>0.73</li>
+    <li>0.01</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.34</li>
+    <li>&lt;NA&gt;</li>
+    <li>0.07</li>
+    <li>0.54</li>
+    <li>0.04</li>
+    <li>0.01</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>&lt;NA&gt;</li>
+    <li>0</li>
+    <li>0.86</li>
+    <li>0</li>
+    <li>0.3</li>
+    <li>0.04</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.21</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0</li>
+    <li>0.14</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="column-type-conversions" class="level2">
+<h2 class="anchored" data-anchor-id="column-type-conversions">Column type conversions</h2>
+<p><code>"T"</code> was used to denote a trace amount (i.e.&nbsp;too small to be accurately measured) of precipitation in the <code>PrecipitationIn</code> column. In order to coerce this column to numeric, wwe’ll need to deal with this somehow. To keep things simple, we will just replace <code>"T"</code> with zero, as a string (<code>"0"</code>).</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace "T" with "0" (T = trace)</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>weather5<span class="sc">$</span>PrecipitationIn <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(weather5<span class="sc">$</span>PrecipitationIn, <span class="st">"T"</span>, <span class="st">"0"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert characters to numerics</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>weather6 <span class="ot">&lt;-</span> <span class="fu">mutate_at</span>(weather5, <span class="fu">vars</span>(CloudCover<span class="sc">:</span>WindDirDegrees), <span class="fu">funs</span>(as.numeric))</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at result</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(weather6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning message:
+"`funs()` is deprecated as of dplyr 0.8.0.
+Please use a list of either functions or lambdas: 
+
+  # Simple named list: 
+  list(mean = mean, median = median)
+
+  # Auto named with `tibble::lst()`: 
+  tibble::lst(mean, median)
+
+  # Using lambdas
+  list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_warnings()` to see where this warning was generated."</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   366 obs. of  23 variables:
+ $ date                     : Date, format: "2014-12-01" "2014-12-10" ...
+ $ Events                   : chr  "Rain" "Rain" "Rain-Snow" "Snow" ...
+ $ CloudCover               : num  6 8 8 7 5 4 2 8 8 7 ...
+ $ Max.Dew.PointF           : num  46 45 37 28 28 29 33 42 46 34 ...
+ $ Max.Gust.SpeedMPH        : num  29 29 28 21 23 20 21 10 26 30 ...
+ $ Max.Humidity             : num  74 100 92 85 75 82 89 96 100 89 ...
+ $ Max.Sea.Level.PressureIn : num  30.4 29.6 29.8 29.9 29.9 ...
+ $ Max.TemperatureF         : num  64 48 39 39 42 45 42 44 49 44 ...
+ $ Max.VisibilityMiles      : num  10 10 10 10 10 10 10 10 10 10 ...
+ $ Max.Wind.SpeedMPH        : num  22 23 21 16 17 15 15 8 20 23 ...
+ $ Mean.Humidity            : num  63 95 87 75 65 68 75 85 85 73 ...
+ $ Mean.Sea.Level.PressureIn: num  30.1 29.5 29.6 29.9 29.8 ...
+ $ Mean.TemperatureF        : num  52 43 36 35 37 39 37 40 45 40 ...
+ $ Mean.VisibilityMiles     : num  10 3 7 10 10 10 10 9 6 10 ...
+ $ Mean.Wind.SpeedMPH       : num  13 13 13 11 12 10 6 4 11 14 ...
+ $ MeanDew.PointF           : num  40 39 31 27 26 27 29 36 41 30 ...
+ $ Min.DewpointF            : num  26 37 27 25 24 25 27 30 32 26 ...
+ $ Min.Humidity             : num  52 89 82 64 55 53 60 73 70 57 ...
+ $ Min.Sea.Level.PressureIn : num  30 29.4 29.4 29.8 29.8 ...
+ $ Min.TemperatureF         : num  39 38 32 31 32 33 32 35 41 36 ...
+ $ Min.VisibilityMiles      : num  10 1 1 7 10 10 10 5 1 10 ...
+ $ PrecipitationIn          : num  0.01 0.28 0.02 0 0 0 0 0 0.43 0.01 ...
+ $ WindDirDegrees           : num  268 357 230 286 298 306 324 79 311 281 ...</code></pre>
+</div>
+</div>
+<p>It looks like our data are finally in the correct formats and organized in a logical manner! Now that our data are in the right form, we can begin the analysis.</p>
+</section>
+</section>
+<section id="missing-extreme-and-unexpected-values" class="level1">
+<h1>Missing, extreme, and unexpected values</h1>
+<section id="find-missing-values" class="level2">
+<h2 class="anchored" data-anchor-id="find-missing-values">Find missing values</h2>
+<p>Before dealing with missing values in the data, it’s important to find them and figure out why they exist in the first place.</p>
+<blockquote class="blockquote">
+<p>If the dataset is too big to look at all at once, like it is here, we will use <code>sum()</code> and <code>is.na()</code> to quickly size up the situation by counting the number of NA values.</p>
+</blockquote>
+<p>The <code>summary()</code> function also come in handy for identifying which variables contain the missing values. Finally, the <code>which()</code> function is useful for locating the missing values within a particular column.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count missing values</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(weather6))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Find missing values</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(weather6)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Find indices of NAs in Max.Gust.SpeedMPH</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">is.na</span>(weather6<span class="sc">$</span>Max.Gust.SpeedMPH))</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the full rows for records missing Max.Gust.SpeedMPH</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>weather6[ind, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+6
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>      date               Events            CloudCover    Max.Dew.PointF 
+ Min.   :2014-12-01   Length:366         Min.   :0.000   Min.   :-6.00  
+ 1st Qu.:2015-03-02   Class :character   1st Qu.:3.000   1st Qu.:32.00  
+ Median :2015-06-01   Mode  :character   Median :5.000   Median :47.50  
+ Mean   :2015-06-01                      Mean   :4.708   Mean   :45.48  
+ 3rd Qu.:2015-08-31                      3rd Qu.:7.000   3rd Qu.:61.00  
+ Max.   :2015-12-01                      Max.   :8.000   Max.   :75.00  
+                                                                        
+ Max.Gust.SpeedMPH  Max.Humidity     Max.Sea.Level.PressureIn Max.TemperatureF
+ Min.   : 0.00     Min.   :  39.00   Min.   :29.58            Min.   :18.00   
+ 1st Qu.:21.00     1st Qu.:  73.25   1st Qu.:30.00            1st Qu.:42.00   
+ Median :25.50     Median :  86.00   Median :30.14            Median :60.00   
+ Mean   :26.99     Mean   :  85.69   Mean   :30.16            Mean   :58.93   
+ 3rd Qu.:31.25     3rd Qu.:  93.00   3rd Qu.:30.31            3rd Qu.:76.00   
+ Max.   :94.00     Max.   :1000.00   Max.   :30.88            Max.   :96.00   
+ NA's   :6                                                                    
+ Max.VisibilityMiles Max.Wind.SpeedMPH Mean.Humidity  
+ Min.   : 2.000      Min.   : 8.00     Min.   :28.00  
+ 1st Qu.:10.000      1st Qu.:16.00     1st Qu.:56.00  
+ Median :10.000      Median :20.00     Median :66.00  
+ Mean   : 9.907      Mean   :20.62     Mean   :66.02  
+ 3rd Qu.:10.000      3rd Qu.:24.00     3rd Qu.:76.75  
+ Max.   :10.000      Max.   :38.00     Max.   :98.00  
+                                                      
+ Mean.Sea.Level.PressureIn Mean.TemperatureF Mean.VisibilityMiles
+ Min.   :29.49             Min.   : 8.00     Min.   :-1.000      
+ 1st Qu.:29.87             1st Qu.:36.25     1st Qu.: 8.000      
+ Median :30.03             Median :53.50     Median :10.000      
+ Mean   :30.04             Mean   :51.40     Mean   : 8.861      
+ 3rd Qu.:30.19             3rd Qu.:68.00     3rd Qu.:10.000      
+ Max.   :30.77             Max.   :84.00     Max.   :10.000      
+                                                                 
+ Mean.Wind.SpeedMPH MeanDew.PointF   Min.DewpointF     Min.Humidity  
+ Min.   : 4.00      Min.   :-11.00   Min.   :-18.00   Min.   :16.00  
+ 1st Qu.: 8.00      1st Qu.: 24.00   1st Qu.: 16.25   1st Qu.:35.00  
+ Median :10.00      Median : 41.00   Median : 35.00   Median :46.00  
+ Mean   :10.68      Mean   : 38.96   Mean   : 32.25   Mean   :48.31  
+ 3rd Qu.:13.00      3rd Qu.: 56.00   3rd Qu.: 51.00   3rd Qu.:60.00  
+ Max.   :22.00      Max.   : 71.00   Max.   : 68.00   Max.   :96.00  
+                                                                     
+ Min.Sea.Level.PressureIn Min.TemperatureF Min.VisibilityMiles PrecipitationIn 
+ Min.   :29.16            Min.   :-3.00    Min.   : 0.000      Min.   :0.0000  
+ 1st Qu.:29.76            1st Qu.:30.00    1st Qu.: 2.000      1st Qu.:0.0000  
+ Median :29.94            Median :46.00    Median :10.000      Median :0.0000  
+ Mean   :29.93            Mean   :43.33    Mean   : 6.716      Mean   :0.1016  
+ 3rd Qu.:30.09            3rd Qu.:60.00    3rd Qu.:10.000      3rd Qu.:0.0400  
+ Max.   :30.64            Max.   :74.00    Max.   :10.000      Max.   :2.9000  
+                                                                               
+ WindDirDegrees 
+ Min.   :  1.0  
+ 1st Qu.:113.0  
+ Median :222.0  
+ Mean   :200.1  
+ 3rd Qu.:275.0  
+ Max.   :360.0  
+                </code></pre>
+</div>
+<div class="cell-output cell-output-display">
+
+<table>
+<thead><tr><th></th><th scope="col">date</th><th scope="col">Events</th><th scope="col">CloudCover</th><th scope="col">Max.Dew.PointF</th><th scope="col">Max.Gust.SpeedMPH</th><th scope="col">Max.Humidity</th><th scope="col">Max.Sea.Level.PressureIn</th><th scope="col">Max.TemperatureF</th><th scope="col">Max.VisibilityMiles</th><th scope="col">Max.Wind.SpeedMPH</th><th scope="col">...</th><th scope="col">Mean.VisibilityMiles</th><th scope="col">Mean.Wind.SpeedMPH</th><th scope="col">MeanDew.PointF</th><th scope="col">Min.DewpointF</th><th scope="col">Min.Humidity</th><th scope="col">Min.Sea.Level.PressureIn</th><th scope="col">Min.TemperatureF</th><th scope="col">Min.VisibilityMiles</th><th scope="col">PrecipitationIn</th><th scope="col">WindDirDegrees</th></tr></thead>
+<tbody>
+    <tr><th scope="row">161</th><td>2015-05-18</td><td>Fog       </td><td>6         </td><td>52        </td><td>NA        </td><td>100       </td><td>30.30     </td><td>58        </td><td>10        </td><td>16        </td><td>...       </td><td> 8        </td><td>10        </td><td>48        </td><td>43        </td><td>57        </td><td>30.12     </td><td>49        </td><td> 0        </td><td>0         </td><td> 72       </td></tr>
+    <tr><th scope="row">205</th><td>2015-06-03</td><td>          </td><td>7         </td><td>48        </td><td>NA        </td><td> 93       </td><td>30.31     </td><td>56        </td><td>10        </td><td>14        </td><td>...       </td><td>10        </td><td> 7        </td><td>45        </td><td>43        </td><td>71        </td><td>30.19     </td><td>47        </td><td>10        </td><td>0         </td><td> 90       </td></tr>
+    <tr><th scope="row">273</th><td>2015-08-08</td><td>          </td><td>4         </td><td>61        </td><td>NA        </td><td> 87       </td><td>30.02     </td><td>76        </td><td>10        </td><td>14        </td><td>...       </td><td>10        </td><td> 6        </td><td>57        </td><td>54        </td><td>49        </td><td>29.95     </td><td>61        </td><td>10        </td><td>0         </td><td> 45       </td></tr>
+    <tr><th scope="row">275</th><td>2015-09-01</td><td>          </td><td>1         </td><td>63        </td><td>NA        </td><td> 78       </td><td>30.06     </td><td>79        </td><td>10        </td><td>15        </td><td>...       </td><td>10        </td><td> 9        </td><td>62        </td><td>59        </td><td>52        </td><td>29.96     </td><td>69        </td><td>10        </td><td>0         </td><td> 54       </td></tr>
+    <tr><th scope="row">308</th><td>2015-10-12</td><td>          </td><td>0         </td><td>56        </td><td>NA        </td><td> 89       </td><td>29.86     </td><td>76        </td><td>10        </td><td>15        </td><td>...       </td><td>10        </td><td> 8        </td><td>51        </td><td>48        </td><td>41        </td><td>29.74     </td><td>51        </td><td>10        </td><td>0         </td><td>199       </td></tr>
+    <tr><th scope="row">358</th><td>2015-11-03</td><td>          </td><td>1         </td><td>44        </td><td>NA        </td><td> 82       </td><td>30.25     </td><td>73        </td><td>10        </td><td>16        </td><td>...       </td><td>10        </td><td> 8        </td><td>42        </td><td>40        </td><td>31        </td><td>30.06     </td><td>47        </td><td>10        </td><td>0         </td><td>281       </td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>In this situation it’s unclear why these values are missing and there doesn’t appear to be any obvious pattern to their missingness, so we’ll leave them alone for now.</p>
+</section>
+<section id="an-obvious-error" class="level2">
+<h2 class="anchored" data-anchor-id="an-obvious-error">An obvious error</h2>
+<p>Besides missing values, we want to know if there are values in the data that are too extreme or bizarre to be plausible. A great way to start the search for these values is with <code>summary()</code>.</p>
+<p>Once implausible values are identified, they must be dealt with in an intelligent and informed way.</p>
+<blockquote class="blockquote">
+<p>Sometimes the best way forward is obvious and other times it may require some research and/or discussions with the original collectors of the data.</p>
+</blockquote>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Review distributions for all variables</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(weather6)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Find row with Max.Humidity of 1000</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">which</span>(weather6<span class="sc">$</span>Max.Humidity<span class="sc">==</span><span class="dv">1000</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the data for that day</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>weather6[ind, ]</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Change 1000 to 100</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>weather6<span class="sc">$</span>Max.Humidity[ind] <span class="ot">&lt;-</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>      date               Events            CloudCover    Max.Dew.PointF 
+ Min.   :2014-12-01   Length:366         Min.   :0.000   Min.   :-6.00  
+ 1st Qu.:2015-03-02   Class :character   1st Qu.:3.000   1st Qu.:32.00  
+ Median :2015-06-01   Mode  :character   Median :5.000   Median :47.50  
+ Mean   :2015-06-01                      Mean   :4.708   Mean   :45.48  
+ 3rd Qu.:2015-08-31                      3rd Qu.:7.000   3rd Qu.:61.00  
+ Max.   :2015-12-01                      Max.   :8.000   Max.   :75.00  
+                                                                        
+ Max.Gust.SpeedMPH  Max.Humidity     Max.Sea.Level.PressureIn Max.TemperatureF
+ Min.   : 0.00     Min.   :  39.00   Min.   :29.58            Min.   :18.00   
+ 1st Qu.:21.00     1st Qu.:  73.25   1st Qu.:30.00            1st Qu.:42.00   
+ Median :25.50     Median :  86.00   Median :30.14            Median :60.00   
+ Mean   :26.99     Mean   :  85.69   Mean   :30.16            Mean   :58.93   
+ 3rd Qu.:31.25     3rd Qu.:  93.00   3rd Qu.:30.31            3rd Qu.:76.00   
+ Max.   :94.00     Max.   :1000.00   Max.   :30.88            Max.   :96.00   
+ NA's   :6                                                                    
+ Max.VisibilityMiles Max.Wind.SpeedMPH Mean.Humidity  
+ Min.   : 2.000      Min.   : 8.00     Min.   :28.00  
+ 1st Qu.:10.000      1st Qu.:16.00     1st Qu.:56.00  
+ Median :10.000      Median :20.00     Median :66.00  
+ Mean   : 9.907      Mean   :20.62     Mean   :66.02  
+ 3rd Qu.:10.000      3rd Qu.:24.00     3rd Qu.:76.75  
+ Max.   :10.000      Max.   :38.00     Max.   :98.00  
+                                                      
+ Mean.Sea.Level.PressureIn Mean.TemperatureF Mean.VisibilityMiles
+ Min.   :29.49             Min.   : 8.00     Min.   :-1.000      
+ 1st Qu.:29.87             1st Qu.:36.25     1st Qu.: 8.000      
+ Median :30.03             Median :53.50     Median :10.000      
+ Mean   :30.04             Mean   :51.40     Mean   : 8.861      
+ 3rd Qu.:30.19             3rd Qu.:68.00     3rd Qu.:10.000      
+ Max.   :30.77             Max.   :84.00     Max.   :10.000      
+                                                                 
+ Mean.Wind.SpeedMPH MeanDew.PointF   Min.DewpointF     Min.Humidity  
+ Min.   : 4.00      Min.   :-11.00   Min.   :-18.00   Min.   :16.00  
+ 1st Qu.: 8.00      1st Qu.: 24.00   1st Qu.: 16.25   1st Qu.:35.00  
+ Median :10.00      Median : 41.00   Median : 35.00   Median :46.00  
+ Mean   :10.68      Mean   : 38.96   Mean   : 32.25   Mean   :48.31  
+ 3rd Qu.:13.00      3rd Qu.: 56.00   3rd Qu.: 51.00   3rd Qu.:60.00  
+ Max.   :22.00      Max.   : 71.00   Max.   : 68.00   Max.   :96.00  
+                                                                     
+ Min.Sea.Level.PressureIn Min.TemperatureF Min.VisibilityMiles PrecipitationIn 
+ Min.   :29.16            Min.   :-3.00    Min.   : 0.000      Min.   :0.0000  
+ 1st Qu.:29.76            1st Qu.:30.00    1st Qu.: 2.000      1st Qu.:0.0000  
+ Median :29.94            Median :46.00    Median :10.000      Median :0.0000  
+ Mean   :29.93            Mean   :43.33    Mean   : 6.716      Mean   :0.1016  
+ 3rd Qu.:30.09            3rd Qu.:60.00    3rd Qu.:10.000      3rd Qu.:0.0400  
+ Max.   :30.64            Max.   :74.00    Max.   :10.000      Max.   :2.9000  
+                                                                               
+ WindDirDegrees 
+ Min.   :  1.0  
+ 1st Qu.:113.0  
+ Median :222.0  
+ Mean   :200.1  
+ 3rd Qu.:275.0  
+ Max.   :360.0  
+                </code></pre>
+</div>
+<div class="cell-output cell-output-display">
+
+<table>
+<thead><tr><th></th><th scope="col">date</th><th scope="col">Events</th><th scope="col">CloudCover</th><th scope="col">Max.Dew.PointF</th><th scope="col">Max.Gust.SpeedMPH</th><th scope="col">Max.Humidity</th><th scope="col">Max.Sea.Level.PressureIn</th><th scope="col">Max.TemperatureF</th><th scope="col">Max.VisibilityMiles</th><th scope="col">Max.Wind.SpeedMPH</th><th scope="col">...</th><th scope="col">Mean.VisibilityMiles</th><th scope="col">Mean.Wind.SpeedMPH</th><th scope="col">MeanDew.PointF</th><th scope="col">Min.DewpointF</th><th scope="col">Min.Humidity</th><th scope="col">Min.Sea.Level.PressureIn</th><th scope="col">Min.TemperatureF</th><th scope="col">Min.VisibilityMiles</th><th scope="col">PrecipitationIn</th><th scope="col">WindDirDegrees</th></tr></thead>
+<tbody>
+    <tr><th scope="row">135</th><td>2015-04-21           </td><td>Fog-Rain-Thunderstorm</td><td>6                    </td><td>57                   </td><td>94                   </td><td>1000                 </td><td>29.75                </td><td>65                   </td><td>10                   </td><td>20                   </td><td>...                  </td><td>5                    </td><td>10                   </td><td>49                   </td><td>36                   </td><td>42                   </td><td>29.53                </td><td>46                   </td><td>0                    </td><td>0.54                 </td><td>184                  </td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Once you find obvious errors, it’s not too hard to fix them if you know which values they should take.</p>
+</section>
+<section id="another-obvious-error" class="level2">
+<h2 class="anchored" data-anchor-id="another-obvious-error">Another obvious error</h2>
+<p>We’ve discovered and repaired one obvious error in the data, but it appears that there’s another. Sometimes we get lucky and can infer the correct or intended value from the other data. For example, if you know the minimum and maximum values of a particular metric on a given day…</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at summary of Mean.VisibilityMiles</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(weather6<span class="sc">$</span>Mean.VisibilityMiles)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get index of row with -1 value</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">which</span>(weather6<span class="sc">$</span>Mean.VisibilityMiles <span class="sc">==</span> <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at full row</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>weather6[ind,]</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Set Mean.VisibilityMiles to the appropriate value</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>weather6<span class="sc">$</span>Mean.VisibilityMiles[ind] <span class="ot">&lt;-</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ -1.000   8.000  10.000   8.861  10.000  10.000 </code></pre>
+</div>
+<div class="cell-output cell-output-display">
+
+<table>
+<thead><tr><th></th><th scope="col">date</th><th scope="col">Events</th><th scope="col">CloudCover</th><th scope="col">Max.Dew.PointF</th><th scope="col">Max.Gust.SpeedMPH</th><th scope="col">Max.Humidity</th><th scope="col">Max.Sea.Level.PressureIn</th><th scope="col">Max.TemperatureF</th><th scope="col">Max.VisibilityMiles</th><th scope="col">Max.Wind.SpeedMPH</th><th scope="col">...</th><th scope="col">Mean.VisibilityMiles</th><th scope="col">Mean.Wind.SpeedMPH</th><th scope="col">MeanDew.PointF</th><th scope="col">Min.DewpointF</th><th scope="col">Min.Humidity</th><th scope="col">Min.Sea.Level.PressureIn</th><th scope="col">Min.TemperatureF</th><th scope="col">Min.VisibilityMiles</th><th scope="col">PrecipitationIn</th><th scope="col">WindDirDegrees</th></tr></thead>
+<tbody>
+    <tr><th scope="row">192</th><td>2015-06-18</td><td>          </td><td>5         </td><td>54        </td><td>23        </td><td>72        </td><td>30.14     </td><td>76        </td><td>10        </td><td>17        </td><td>...       </td><td>-1        </td><td>10        </td><td>49        </td><td>45        </td><td>46        </td><td>29.93     </td><td>57        </td><td>10        </td><td>0         </td><td>189       </td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Our data are looking tidy. Just a quick sanity check left!</p>
+</section>
+<section id="check-other-extreme-values" class="level2">
+<h2 class="anchored" data-anchor-id="check-other-extreme-values">Check other extreme values</h2>
+<p>In addition to dealing with obvious errors in the data, we want to see if there are other extreme values. In addition to the trusty <code>summary()</code> function, <code>hist()</code> is useful for quickly getting a feel for how different variables are distributed.</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Review summary of full data once more</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(weather6)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at histogram for MeanDew.PointF</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(weather6<span class="sc">$</span>MeanDew.PointF)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at histogram for Min.TemperatureF</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(weather6<span class="sc">$</span>Min.TemperatureF)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to histogram for Mean.TemperatureF</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(weather6<span class="sc">$</span>Mean.TemperatureF)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>      date               Events            CloudCover    Max.Dew.PointF 
+ Min.   :2014-12-01   Length:366         Min.   :0.000   Min.   :-6.00  
+ 1st Qu.:2015-03-02   Class :character   1st Qu.:3.000   1st Qu.:32.00  
+ Median :2015-06-01   Mode  :character   Median :5.000   Median :47.50  
+ Mean   :2015-06-01                      Mean   :4.708   Mean   :45.48  
+ 3rd Qu.:2015-08-31                      3rd Qu.:7.000   3rd Qu.:61.00  
+ Max.   :2015-12-01                      Max.   :8.000   Max.   :75.00  
+                                                                        
+ Max.Gust.SpeedMPH  Max.Humidity    Max.Sea.Level.PressureIn Max.TemperatureF
+ Min.   : 0.00     Min.   : 39.00   Min.   :29.58            Min.   :18.00   
+ 1st Qu.:21.00     1st Qu.: 73.25   1st Qu.:30.00            1st Qu.:42.00   
+ Median :25.50     Median : 86.00   Median :30.14            Median :60.00   
+ Mean   :26.99     Mean   : 83.23   Mean   :30.16            Mean   :58.93   
+ 3rd Qu.:31.25     3rd Qu.: 93.00   3rd Qu.:30.31            3rd Qu.:76.00   
+ Max.   :94.00     Max.   :100.00   Max.   :30.88            Max.   :96.00   
+ NA's   :6                                                                   
+ Max.VisibilityMiles Max.Wind.SpeedMPH Mean.Humidity  
+ Min.   : 2.000      Min.   : 8.00     Min.   :28.00  
+ 1st Qu.:10.000      1st Qu.:16.00     1st Qu.:56.00  
+ Median :10.000      Median :20.00     Median :66.00  
+ Mean   : 9.907      Mean   :20.62     Mean   :66.02  
+ 3rd Qu.:10.000      3rd Qu.:24.00     3rd Qu.:76.75  
+ Max.   :10.000      Max.   :38.00     Max.   :98.00  
+                                                      
+ Mean.Sea.Level.PressureIn Mean.TemperatureF Mean.VisibilityMiles
+ Min.   :29.49             Min.   : 8.00     Min.   : 1.000      
+ 1st Qu.:29.87             1st Qu.:36.25     1st Qu.: 8.000      
+ Median :30.03             Median :53.50     Median :10.000      
+ Mean   :30.04             Mean   :51.40     Mean   : 8.891      
+ 3rd Qu.:30.19             3rd Qu.:68.00     3rd Qu.:10.000      
+ Max.   :30.77             Max.   :84.00     Max.   :10.000      
+                                                                 
+ Mean.Wind.SpeedMPH MeanDew.PointF   Min.DewpointF     Min.Humidity  
+ Min.   : 4.00      Min.   :-11.00   Min.   :-18.00   Min.   :16.00  
+ 1st Qu.: 8.00      1st Qu.: 24.00   1st Qu.: 16.25   1st Qu.:35.00  
+ Median :10.00      Median : 41.00   Median : 35.00   Median :46.00  
+ Mean   :10.68      Mean   : 38.96   Mean   : 32.25   Mean   :48.31  
+ 3rd Qu.:13.00      3rd Qu.: 56.00   3rd Qu.: 51.00   3rd Qu.:60.00  
+ Max.   :22.00      Max.   : 71.00   Max.   : 68.00   Max.   :96.00  
+                                                                     
+ Min.Sea.Level.PressureIn Min.TemperatureF Min.VisibilityMiles PrecipitationIn 
+ Min.   :29.16            Min.   :-3.00    Min.   : 0.000      Min.   :0.0000  
+ 1st Qu.:29.76            1st Qu.:30.00    1st Qu.: 2.000      1st Qu.:0.0000  
+ Median :29.94            Median :46.00    Median :10.000      Median :0.0000  
+ Mean   :29.93            Mean   :43.33    Mean   : 6.716      Mean   :0.1016  
+ 3rd Qu.:30.09            3rd Qu.:60.00    3rd Qu.:10.000      3rd Qu.:0.0400  
+ Max.   :30.64            Max.   :74.00    Max.   :10.000      Max.   :2.9000  
+                                                                               
+ WindDirDegrees 
+ Min.   :  1.0  
+ 1st Qu.:113.0  
+ Median :222.0  
+ Mean   :200.1  
+ 3rd Qu.:275.0  
+ Max.   :360.0  
+                </code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-06-15-Exploring Boston Weather Data_files/figure-html/cell-15-output-2.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-06-15-Exploring Boston Weather Data_files/figure-html/cell-15-output-3.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-06-15-Exploring Boston Weather Data_files/figure-html/cell-15-output-4.png" class="img-fluid"></p>
+</div>
+</div>
+<p>It looks like you have sufficiently tidied your data!</p>
+</section>
+</section>
+<section id="finishing-touches" class="level1">
+<h1>Finishing touches</h1>
+<p>Before officially calling our weather data clean, we want to put a couple of finishing touches on the data. These are a bit more subjective and may not be necessary for analysis, but they will make the data easier for others to interpret, which is generally a good thing.</p>
+<p>There are a number of stylistic conventions in the R language. Depending on who you ask, these conventions may vary. Because the period (<code>.</code>) has special meaning in certain situations, we will be using underscores (<code>_</code>) to separate words in variable names. We also prefer all lowercase letters so that no one has to remember which letters are uppercase or lowercase.</p>
+<p>Finally, the <code>events</code> column (renamed to be all lowercase in the first instruction) contains an empty string (““) for any day on which there was no significant weather event such as rain, fog, a thunderstorm, etc. However, if it’s the first time you’re seeing these data, it may not be obvious that this is the case, so it’s best for us to be explicit and replace the empty strings with something more meaningful.</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>new_colnames <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"date"</span>, <span class="st">"events"</span>, </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"cloud_cover"</span>, <span class="st">"max_dew_point_f"</span>, </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"max_gust_speed_mph"</span>, <span class="st">"max_humidity"</span>, </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"max_sea_level_pressure_in"</span>, <span class="st">"max_temperature_f"</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"max_visibility_miles"</span>, <span class="st">"max_wind_speed_mph"</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"mean_humidity"</span>, <span class="st">"mean_sea_level_pressure_in"</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"mean_temperature_f"</span>, <span class="st">"mean_visibility_miles"</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"mean_wind_speed_mph"</span>, <span class="st">"mean_dew_point_f"</span>, </span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"min_dew_point_f"</span>, <span class="st">"min_humidity"</span>, </span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"min_sea_level_pressure_in"</span>, <span class="st">"min_temperature_f"</span>,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"min_visibility_miles"</span>, <span class="st">"precipitation_in"</span>,<span class="st">"wind_dir_degrees"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean up column names</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(weather6) <span class="ot">&lt;-</span> new_colnames</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace empty cells in events column</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>weather6<span class="sc">$</span>events[weather6<span class="sc">$</span>events <span class="sc">==</span> <span class="st">""</span>] <span class="ot">&lt;-</span> <span class="st">"None"</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the first 6 rows of weather6</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(weather6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<table>
+<thead><tr><th scope="col">date</th><th scope="col">events</th><th scope="col">cloud_cover</th><th scope="col">max_dew_point_f</th><th scope="col">max_gust_speed_mph</th><th scope="col">max_humidity</th><th scope="col">max_sea_level_pressure_in</th><th scope="col">max_temperature_f</th><th scope="col">max_visibility_miles</th><th scope="col">max_wind_speed_mph</th><th scope="col">...</th><th scope="col">mean_visibility_miles</th><th scope="col">mean_wind_speed_mph</th><th scope="col">mean_dew_point_f</th><th scope="col">min_dew_point_f</th><th scope="col">min_humidity</th><th scope="col">min_sea_level_pressure_in</th><th scope="col">min_temperature_f</th><th scope="col">min_visibility_miles</th><th scope="col">precipitation_in</th><th scope="col">wind_dir_degrees</th></tr></thead>
+<tbody>
+    <tr><td>2014-12-01</td><td>Rain      </td><td>6         </td><td>46        </td><td>29        </td><td> 74       </td><td>30.45     </td><td>64        </td><td>10        </td><td>22        </td><td>...       </td><td>10        </td><td>13        </td><td>40        </td><td>26        </td><td>52        </td><td>30.01     </td><td>39        </td><td>10        </td><td>0.01      </td><td>268       </td></tr>
+    <tr><td>2014-12-10</td><td>Rain      </td><td>8         </td><td>45        </td><td>29        </td><td>100       </td><td>29.58     </td><td>48        </td><td>10        </td><td>23        </td><td>...       </td><td> 3        </td><td>13        </td><td>39        </td><td>37        </td><td>89        </td><td>29.43     </td><td>38        </td><td> 1        </td><td>0.28      </td><td>357       </td></tr>
+    <tr><td>2014-12-11</td><td>Rain-Snow </td><td>8         </td><td>37        </td><td>28        </td><td> 92       </td><td>29.81     </td><td>39        </td><td>10        </td><td>21        </td><td>...       </td><td> 7        </td><td>13        </td><td>31        </td><td>27        </td><td>82        </td><td>29.44     </td><td>32        </td><td> 1        </td><td>0.02      </td><td>230       </td></tr>
+    <tr><td>2014-12-12</td><td>Snow      </td><td>7         </td><td>28        </td><td>21        </td><td> 85       </td><td>29.88     </td><td>39        </td><td>10        </td><td>16        </td><td>...       </td><td>10        </td><td>11        </td><td>27        </td><td>25        </td><td>64        </td><td>29.81     </td><td>31        </td><td> 7        </td><td>0.00      </td><td>286       </td></tr>
+    <tr><td>2014-12-13</td><td>None      </td><td>5         </td><td>28        </td><td>23        </td><td> 75       </td><td>29.86     </td><td>42        </td><td>10        </td><td>17        </td><td>...       </td><td>10        </td><td>12        </td><td>26        </td><td>24        </td><td>55        </td><td>29.78     </td><td>32        </td><td>10        </td><td>0.00      </td><td>298       </td></tr>
+    <tr><td>2014-12-14</td><td>None      </td><td>4         </td><td>29        </td><td>20        </td><td> 82       </td><td>29.91     </td><td>45        </td><td>10        </td><td>15        </td><td>...       </td><td>10        </td><td>10        </td><td>27        </td><td>25        </td><td>53        </td><td>29.78     </td><td>33        </td><td>10        </td><td>0.00      </td><td>306       </td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(weather6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<table>
+<thead><tr><th></th><th scope="col">date</th><th scope="col">events</th><th scope="col">cloud_cover</th><th scope="col">max_dew_point_f</th><th scope="col">max_gust_speed_mph</th><th scope="col">max_humidity</th><th scope="col">max_sea_level_pressure_in</th><th scope="col">max_temperature_f</th><th scope="col">max_visibility_miles</th><th scope="col">max_wind_speed_mph</th><th scope="col">...</th><th scope="col">mean_visibility_miles</th><th scope="col">mean_wind_speed_mph</th><th scope="col">mean_dew_point_f</th><th scope="col">min_dew_point_f</th><th scope="col">min_humidity</th><th scope="col">min_sea_level_pressure_in</th><th scope="col">min_temperature_f</th><th scope="col">min_visibility_miles</th><th scope="col">precipitation_in</th><th scope="col">wind_dir_degrees</th></tr></thead>
+<tbody>
+    <tr><th scope="row">361</th><td>2015-11-05</td><td>None      </td><td>4         </td><td>61        </td><td>31        </td><td>100       </td><td>30.30     </td><td>76        </td><td>10        </td><td>22        </td><td>...       </td><td> 9        </td><td>12        </td><td>55        </td><td>48        </td><td>53        </td><td>30.09     </td><td>50        </td><td> 5        </td><td>0.00      </td><td>224       </td></tr>
+    <tr><th scope="row">362</th><td>2015-11-06</td><td>None      </td><td>4         </td><td>62        </td><td>32        </td><td> 93       </td><td>30.07     </td><td>73        </td><td>10        </td><td>26        </td><td>...       </td><td>10        </td><td>15        </td><td>61        </td><td>54        </td><td>64        </td><td>29.71     </td><td>62        </td><td>10        </td><td>0.00      </td><td>222       </td></tr>
+    <tr><th scope="row">363</th><td>2015-11-07</td><td>None      </td><td>6         </td><td>45        </td><td>33        </td><td> 57       </td><td>30.02     </td><td>69        </td><td>10        </td><td>25        </td><td>...       </td><td>10        </td><td>13        </td><td>38        </td><td>33        </td><td>39        </td><td>29.83     </td><td>50        </td><td>10        </td><td>0.00      </td><td>280       </td></tr>
+    <tr><th scope="row">364</th><td>2015-11-08</td><td>None      </td><td>0         </td><td>34        </td><td>25        </td><td> 65       </td><td>30.38     </td><td>56        </td><td>10        </td><td>18        </td><td>...       </td><td>10        </td><td>12        </td><td>30        </td><td>24        </td><td>30        </td><td>30.04     </td><td>44        </td><td>10        </td><td>0.00      </td><td>283       </td></tr>
+    <tr><th scope="row">365</th><td>2015-11-09</td><td>None      </td><td>2         </td><td>36        </td><td>20        </td><td> 70       </td><td>30.43     </td><td>60        </td><td>10        </td><td>16        </td><td>...       </td><td>10        </td><td> 9        </td><td>32        </td><td>30        </td><td>33        </td><td>30.32     </td><td>41        </td><td>10        </td><td>0.00      </td><td>237       </td></tr>
+    <tr><th scope="row">366</th><td>2015-12-01</td><td>Rain      </td><td>7         </td><td>43        </td><td>17        </td><td> 96       </td><td>30.40     </td><td>45        </td><td>10        </td><td>15        </td><td>...       </td><td> 8        </td><td> 6        </td><td>35        </td><td>25        </td><td>69        </td><td>30.01     </td><td>32        </td><td> 1        </td><td>0.14      </td><td>109       </td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(weather6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   366 obs. of  23 variables:
+ $ date                      : Date, format: "2014-12-01" "2014-12-10" ...
+ $ events                    : chr  "Rain" "Rain" "Rain-Snow" "Snow" ...
+ $ cloud_cover               : num  6 8 8 7 5 4 2 8 8 7 ...
+ $ max_dew_point_f           : num  46 45 37 28 28 29 33 42 46 34 ...
+ $ max_gust_speed_mph        : num  29 29 28 21 23 20 21 10 26 30 ...
+ $ max_humidity              : num  74 100 92 85 75 82 89 96 100 89 ...
+ $ max_sea_level_pressure_in : num  30.4 29.6 29.8 29.9 29.9 ...
+ $ max_temperature_f         : num  64 48 39 39 42 45 42 44 49 44 ...
+ $ max_visibility_miles      : num  10 10 10 10 10 10 10 10 10 10 ...
+ $ max_wind_speed_mph        : num  22 23 21 16 17 15 15 8 20 23 ...
+ $ mean_humidity             : num  63 95 87 75 65 68 75 85 85 73 ...
+ $ mean_sea_level_pressure_in: num  30.1 29.5 29.6 29.9 29.8 ...
+ $ mean_temperature_f        : num  52 43 36 35 37 39 37 40 45 40 ...
+ $ mean_visibility_miles     : num  10 3 7 10 10 10 10 9 6 10 ...
+ $ mean_wind_speed_mph       : num  13 13 13 11 12 10 6 4 11 14 ...
+ $ mean_dew_point_f          : num  40 39 31 27 26 27 29 36 41 30 ...
+ $ min_dew_point_f           : num  26 37 27 25 24 25 27 30 32 26 ...
+ $ min_humidity              : num  52 89 82 64 55 53 60 73 70 57 ...
+ $ min_sea_level_pressure_in : num  30 29.4 29.4 29.8 29.8 ...
+ $ min_temperature_f         : num  39 38 32 31 32 33 32 35 41 36 ...
+ $ min_visibility_miles      : num  10 1 1 7 10 10 10 5 1 10 ...
+ $ precipitation_in          : num  0.01 0.28 0.02 0 0 0 0 0 0.43 0.01 ...
+ $ wind_dir_degrees          : num  268 357 230 286 298 306 324 79 311 281 ...</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(weather6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 366
+Columns: 23
+$ date                       &lt;date&gt; 2014-12-01, 2014-12-10, 2014-12-11, 201...
+$ events                     &lt;chr&gt; "Rain", "Rain", "Rain-Snow", "Snow", "No...
+$ cloud_cover                &lt;dbl&gt; 6, 8, 8, 7, 5, 4, 2, 8, 8, 7, 4, 7, 6, 8...
+$ max_dew_point_f            &lt;dbl&gt; 46, 45, 37, 28, 28, 29, 33, 42, 46, 34, ...
+$ max_gust_speed_mph         &lt;dbl&gt; 29, 29, 28, 21, 23, 20, 21, 10, 26, 30, ...
+$ max_humidity               &lt;dbl&gt; 74, 100, 92, 85, 75, 82, 89, 96, 100, 89...
+$ max_sea_level_pressure_in  &lt;dbl&gt; 30.45, 29.58, 29.81, 29.88, 29.86, 29.91...
+$ max_temperature_f          &lt;dbl&gt; 64, 48, 39, 39, 42, 45, 42, 44, 49, 44, ...
+$ max_visibility_miles       &lt;dbl&gt; 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, ...
+$ max_wind_speed_mph         &lt;dbl&gt; 22, 23, 21, 16, 17, 15, 15, 8, 20, 23, 1...
+$ mean_humidity              &lt;dbl&gt; 63, 95, 87, 75, 65, 68, 75, 85, 85, 73, ...
+$ mean_sea_level_pressure_in &lt;dbl&gt; 30.13, 29.50, 29.61, 29.85, 29.82, 29.83...
+$ mean_temperature_f         &lt;dbl&gt; 52, 43, 36, 35, 37, 39, 37, 40, 45, 40, ...
+$ mean_visibility_miles      &lt;dbl&gt; 10, 3, 7, 10, 10, 10, 10, 9, 6, 10, 10, ...
+$ mean_wind_speed_mph        &lt;dbl&gt; 13, 13, 13, 11, 12, 10, 6, 4, 11, 14, 11...
+$ mean_dew_point_f           &lt;dbl&gt; 40, 39, 31, 27, 26, 27, 29, 36, 41, 30, ...
+$ min_dew_point_f            &lt;dbl&gt; 26, 37, 27, 25, 24, 25, 27, 30, 32, 26, ...
+$ min_humidity               &lt;dbl&gt; 52, 89, 82, 64, 55, 53, 60, 73, 70, 57, ...
+$ min_sea_level_pressure_in  &lt;dbl&gt; 30.01, 29.43, 29.44, 29.81, 29.78, 29.78...
+$ min_temperature_f          &lt;dbl&gt; 39, 38, 32, 31, 32, 33, 32, 35, 41, 36, ...
+$ min_visibility_miles       &lt;dbl&gt; 10, 1, 1, 7, 10, 10, 10, 5, 1, 10, 10, 2...
+$ precipitation_in           &lt;dbl&gt; 0.01, 0.28, 0.02, 0.00, 0.00, 0.00, 0.00...
+$ wind_dir_degrees           &lt;dbl&gt; 268, 357, 230, 286, 298, 306, 324, 79, 3...</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(weather6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>      date               events           cloud_cover    max_dew_point_f
+ Min.   :2014-12-01   Length:366         Min.   :0.000   Min.   :-6.00  
+ 1st Qu.:2015-03-02   Class :character   1st Qu.:3.000   1st Qu.:32.00  
+ Median :2015-06-01   Mode  :character   Median :5.000   Median :47.50  
+ Mean   :2015-06-01                      Mean   :4.708   Mean   :45.48  
+ 3rd Qu.:2015-08-31                      3rd Qu.:7.000   3rd Qu.:61.00  
+ Max.   :2015-12-01                      Max.   :8.000   Max.   :75.00  
+                                                                        
+ max_gust_speed_mph  max_humidity    max_sea_level_pressure_in
+ Min.   : 0.00      Min.   : 39.00   Min.   :29.58            
+ 1st Qu.:21.00      1st Qu.: 73.25   1st Qu.:30.00            
+ Median :25.50      Median : 86.00   Median :30.14            
+ Mean   :26.99      Mean   : 83.23   Mean   :30.16            
+ 3rd Qu.:31.25      3rd Qu.: 93.00   3rd Qu.:30.31            
+ Max.   :94.00      Max.   :100.00   Max.   :30.88            
+ NA's   :6                                                    
+ max_temperature_f max_visibility_miles max_wind_speed_mph mean_humidity  
+ Min.   :18.00     Min.   : 2.000       Min.   : 8.00      Min.   :28.00  
+ 1st Qu.:42.00     1st Qu.:10.000       1st Qu.:16.00      1st Qu.:56.00  
+ Median :60.00     Median :10.000       Median :20.00      Median :66.00  
+ Mean   :58.93     Mean   : 9.907       Mean   :20.62      Mean   :66.02  
+ 3rd Qu.:76.00     3rd Qu.:10.000       3rd Qu.:24.00      3rd Qu.:76.75  
+ Max.   :96.00     Max.   :10.000       Max.   :38.00      Max.   :98.00  
+                                                                          
+ mean_sea_level_pressure_in mean_temperature_f mean_visibility_miles
+ Min.   :29.49              Min.   : 8.00      Min.   : 1.000       
+ 1st Qu.:29.87              1st Qu.:36.25      1st Qu.: 8.000       
+ Median :30.03              Median :53.50      Median :10.000       
+ Mean   :30.04              Mean   :51.40      Mean   : 8.891       
+ 3rd Qu.:30.19              3rd Qu.:68.00      3rd Qu.:10.000       
+ Max.   :30.77              Max.   :84.00      Max.   :10.000       
+                                                                    
+ mean_wind_speed_mph mean_dew_point_f min_dew_point_f   min_humidity  
+ Min.   : 4.00       Min.   :-11.00   Min.   :-18.00   Min.   :16.00  
+ 1st Qu.: 8.00       1st Qu.: 24.00   1st Qu.: 16.25   1st Qu.:35.00  
+ Median :10.00       Median : 41.00   Median : 35.00   Median :46.00  
+ Mean   :10.68       Mean   : 38.96   Mean   : 32.25   Mean   :48.31  
+ 3rd Qu.:13.00       3rd Qu.: 56.00   3rd Qu.: 51.00   3rd Qu.:60.00  
+ Max.   :22.00       Max.   : 71.00   Max.   : 68.00   Max.   :96.00  
+                                                                      
+ min_sea_level_pressure_in min_temperature_f min_visibility_miles
+ Min.   :29.16             Min.   :-3.00     Min.   : 0.000      
+ 1st Qu.:29.76             1st Qu.:30.00     1st Qu.: 2.000      
+ Median :29.94             Median :46.00     Median :10.000      
+ Mean   :29.93             Mean   :43.33     Mean   : 6.716      
+ 3rd Qu.:30.09             3rd Qu.:60.00     3rd Qu.:10.000      
+ Max.   :30.64             Max.   :74.00     Max.   :10.000      
+                                                                 
+ precipitation_in wind_dir_degrees
+ Min.   :0.0000   Min.   :  1.0   
+ 1st Qu.:0.0000   1st Qu.:113.0   
+ Median :0.0000   Median :222.0   
+ Mean   :0.1016   Mean   :200.1   
+ 3rd Qu.:0.0400   3rd Qu.:275.0   
+ Max.   :2.9000   Max.   :360.0   
+                                  </code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

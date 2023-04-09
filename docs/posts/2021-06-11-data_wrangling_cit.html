@@ -1,0 +1,3752 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Victor Omondi">
+<meta name="dcterms.date" content="2021-06-11">
+<meta name="description" content="CIT Club event blog &amp; Notebook. The aim of this blog/notebook was to introduce CIT Club members in data wrangling.">
+
+<title>blog - Data Wrangling in Python</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/VictorOmondi1997"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/VictorOmondi197"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Data Wrangling in Python</h1>
+                  <div>
+        <div class="description">
+          CIT Club event blog &amp; Notebook. The aim of this blog/notebook was to introduce CIT Club members in data wrangling.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">data-wrangling</div>
+                <div class="quarto-category">python</div>
+                <div class="quarto-category">cit-club</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Victor Omondi </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 11, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introductions" id="toc-introductions" class="nav-link active" data-scroll-target="#introductions">Introductions</a>
+  <ul class="collapse">
+  <li><a href="#data-sets" id="toc-data-sets" class="nav-link" data-scroll-target="#data-sets">Data Sets</a></li>
+  </ul></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">1. Prerequisites</a></li>
+  <li><a href="#reading-data" id="toc-reading-data" class="nav-link" data-scroll-target="#reading-data">2. Reading Data</a>
+  <ul class="collapse">
+  <li><a href="#exercise" id="toc-exercise" class="nav-link" data-scroll-target="#exercise"><strong>EXERCISE</strong></a></li>
+  </ul></li>
+  <li><a href="#data-exploration" id="toc-data-exploration" class="nav-link" data-scroll-target="#data-exploration">3. Data Exploration</a>
+  <ul class="collapse">
+  <li><a href="#first-few-rows" id="toc-first-few-rows" class="nav-link" data-scroll-target="#first-few-rows">3.1 First few rows</a>
+  <ul class="collapse">
+  <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><strong>EXERCISE</strong></a></li>
+  </ul></li>
+  <li><a href="#last-few-rows" id="toc-last-few-rows" class="nav-link" data-scroll-target="#last-few-rows">3.2 Last few rows</a>
+  <ul class="collapse">
+  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><strong>EXERCISE</strong></a></li>
+  </ul></li>
+  <li><a href="#sample" id="toc-sample" class="nav-link" data-scroll-target="#sample">3.3 sample</a>
+  <ul class="collapse">
+  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3"><strong>EXERCISE</strong></a></li>
+  </ul></li>
+  <li><a href="#number-of-rows-and-columns" id="toc-number-of-rows-and-columns" class="nav-link" data-scroll-target="#number-of-rows-and-columns">3.4. Number of Rows and columns</a>
+  <ul class="collapse">
+  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><strong>EXERCISE</strong></a></li>
+  </ul></li>
+  <li><a href="#info" id="toc-info" class="nav-link" data-scroll-target="#info">3.5 Info</a>
+  <ul class="collapse">
+  <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5"><strong>EXERCISE</strong></a></li>
+  </ul></li>
+  <li><a href="#describe" id="toc-describe" class="nav-link" data-scroll-target="#describe">3.6. Describe</a>
+  <ul class="collapse">
+  <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6"><strong>EXERCISE</strong></a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#reshaping-data" id="toc-reshaping-data" class="nav-link" data-scroll-target="#reshaping-data">4. Reshaping Data</a>
+  <ul class="collapse">
+  <li><a href="#droping-irrelevant-data." id="toc-droping-irrelevant-data." class="nav-link" data-scroll-target="#droping-irrelevant-data.">4.1. Droping Irrelevant Data.</a></li>
+  <li><a href="#set-index" id="toc-set-index" class="nav-link" data-scroll-target="#set-index">4.2. Set Index</a></li>
+  <li><a href="#sorting" id="toc-sorting" class="nav-link" data-scroll-target="#sorting">4.3. Sorting</a>
+  <ul class="collapse">
+  <li><a href="#exercise-7" id="toc-exercise-7" class="nav-link" data-scroll-target="#exercise-7"><strong>EXERCISE</strong></a></li>
+  </ul></li>
+  <li><a href="#duplicates" id="toc-duplicates" class="nav-link" data-scroll-target="#duplicates">4.3. Duplicates</a>
+  <ul class="collapse">
+  <li><a href="#exercise-8" id="toc-exercise-8" class="nav-link" data-scroll-target="#exercise-8"><strong>EXERCISE</strong></a></li>
+  </ul></li>
+  <li><a href="#drop-duplicates" id="toc-drop-duplicates" class="nav-link" data-scroll-target="#drop-duplicates">4.4. Drop Duplicates</a></li>
+  <li><a href="#missing-values" id="toc-missing-values" class="nav-link" data-scroll-target="#missing-values">4.5. Missing Values</a></li>
+  </ul></li>
+  <li><a href="#advanced-data-wrangling" id="toc-advanced-data-wrangling" class="nav-link" data-scroll-target="#advanced-data-wrangling">5. Advanced Data Wrangling</a>
+  <ul class="collapse">
+  <li><a href="#value-counts" id="toc-value-counts" class="nav-link" data-scroll-target="#value-counts">5.1. Value counts</a>
+  <ul class="collapse">
+  <li><a href="#exercise-9" id="toc-exercise-9" class="nav-link" data-scroll-target="#exercise-9"><strong>EXERCISE</strong></a></li>
+  </ul></li>
+  <li><a href="#data-filteration" id="toc-data-filteration" class="nav-link" data-scroll-target="#data-filteration">5.2. Data Filteration</a>
+  <ul class="collapse">
+  <li><a href="#multiple-conditions-filterring" id="toc-multiple-conditions-filterring" class="nav-link" data-scroll-target="#multiple-conditions-filterring">5.2.1. Multiple conditions filterring</a></li>
+  <li><a href="#exercise-10" id="toc-exercise-10" class="nav-link" data-scroll-target="#exercise-10"><strong>EXERCISE</strong></a></li>
+  </ul></li>
+  <li><a href="#grouping-data" id="toc-grouping-data" class="nav-link" data-scroll-target="#grouping-data">5.3. Grouping Data</a></li>
+  <li><a href="#combining-data" id="toc-combining-data" class="nav-link" data-scroll-target="#combining-data">5.4. Combining Data</a>
+  <ul class="collapse">
+  <li><a href="#exercise-11" id="toc-exercise-11" class="nav-link" data-scroll-target="#exercise-11"><strong>EXERCISE</strong></a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#exporting-data" id="toc-exporting-data" class="nav-link" data-scroll-target="#exporting-data">7. Exporting Data</a></li>
+  <li><a href="#more-resources" id="toc-more-resources" class="nav-link" data-scroll-target="#more-resources">6. More Resources</a></li>
+  <li><a href="#about-the-speaker" id="toc-about-the-speaker" class="nav-link" data-scroll-target="#about-the-speaker">About the Speaker</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/VictorOmondi1997/data_wrangling_cit/blob/master/img/wikipedia_def.gif?raw=true" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Wikipedia Definition</figcaption><p></p>
+</figure>
+</div>
+<section id="introductions" class="level1">
+<h1>Introductions</h1>
+<p>
+<img style="float: left;margin:5px 20px 5px 1px;width:500px" src="https://github.com/VictorOmondi1997/data_wrangling_cit/blob/master/img/event_banner.png?raw=true">
+</p>
+<p>Data wrangling is the process of gathering, selecting, and transforming data to answer an analytical question. Also known as data cleaning or “munging”, legend has it that this wrangling costs analytics professionals as much as 80% of their time, leaving only 20% for exploration and modeling.</p>
+<p>Hello and welcome to <strong>Data Wrangling in Python</strong>. This is a notebook/presentatation/blog used in <em>Data Science CIT club event</em>, it depends on how you’ve accessed it. Depending on how you got this notebook, this is how to work around with it to access the data sets and the entire project. - <strong>Github</strong> - clone the entire project, instructions are on the <a href="https://github.com/VictorOmondi1997/data_wrangling_cit/blob/master/README.md"><code>README.md</code></a> file - <strong>Blog</strong> - click on any of the banners shown at the top of the project - <a href="https://colab.research.google.com/github/VictorOmondi1997/blog/blob/master/_notebooks/2021-11-06-data_wrangling_cit.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" class="img-fluid" alt="Open In Collab"></a> - <a href="https://mybinder.org/v2/gh/VictorOmondi1997/blog/master?filepath=_notebooks%2F2021-11-06-data_wrangling_cit.ipynb"><img src="https://binder.pangeo.io/badge_logo.svg" class="img-fluid" alt="Binder"></a></p>
+<section id="data-sets" class="level2">
+<h2 class="anchored" data-anchor-id="data-sets">Data Sets</h2>
+<ul>
+<li><a href="https://raw.githubusercontent.com/VictorOmondi1997/data_wrangling_cit/master/data/client_status.csv"><code>client status</code></a>: Shows the client status and loan status at the end of the month their status remained the same.</li>
+<li><a href="https://raw.githubusercontent.com/VictorOmondi1997/data_wrangling_cit/master/data/kenya_subcounty.csv"><code>kenya_subcounties</code></a>: shows the county name and sub counties</li>
+</ul>
+</section>
+</section>
+<section id="prerequisites" class="level1">
+<h1>1. Prerequisites</h1>
+<p>Before starting data wrangling, we need to first install the necessary libraries needed. - Pandas: Pandas is the popular library used for data analysis and data transformation - numpy: Numpy is a popular library for scientific computing</p>
+<p>We must import these libraries first, as a convention during importing pandas is aliased to <code>pd</code> and numpy as <code>np</code>.</p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>For the purpose of viewing, some datasets might be having very long or very many columns, therefore we need to make sure pandas will be able to show all columns</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pandas usually truncates columns if they are many</p>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/VictorOmondi1997/data_wrangling_cit/blob/master/img/outline.gif?raw=true" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">outline</figcaption><p></p>
+</figure>
+</div>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_columns'</span>, <span class="va">None</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_colwidth'</span>, <span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="reading-data" class="level1">
+<h1>2. Reading Data</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/VictorOmondi1997/data_wrangling_cit/blob/master/img/read_csv.gif?raw=true" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Reading Data</figcaption><p></p>
+</figure>
+</div>
+<p>Data might come in very many formats. But mainly, for many data scientists data, the popular used are CSV files. We will use CSV file for our data. Below is how to read CSV with pandas. In pandas, we use <code>pd.read_csv</code> to create pandas dataframes from csv. You pass the csv location as a string/variablestring as the first argument. e.g.&nbsp;<code>pd.read_csv("file.csv")</code></p>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>status <span class="op">=</span> pd.read_csv(<span class="st">'data/client_status.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="exercise" class="level3">
+<h3 class="anchored" data-anchor-id="exercise"><strong>EXERCISE</strong></h3>
+<p><strong>Create a dataframe known as <code>counties</code>, the csv location is https://raw.githubusercontent.com/VictorOmondi1997/data_wrangling_cit/master/data/kenya_subcounty.csv</strong></p>
+</section>
+</section>
+<section id="data-exploration" class="level1">
+<h1>3. Data Exploration</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/VictorOmondi1997/data_wrangling_cit/blob/master/img/explore_data.gif?raw=true" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Data Exploration</figcaption><p></p>
+</figure>
+</div>
+<p>Before doing data wrangling or any data cleaning, it is important as a data scientist/analyst to explore your data. This will help you know how the data looks like, how many rows and columns it has. To check the first few rows we use <code>df.head(n)</code> where df is the dataframe name and <code>n</code> is the number of rows you want to be returned. The same is for <code>df.tail</code> and <code>df.sample</code>.</p>
+<section id="first-few-rows" class="level2">
+<h2 class="anchored" data-anchor-id="first-few-rows">3.1 First few rows</h2>
+<p>By Default, without passing any argument in <code>head()</code>, it will return the first <code>5</code> rows.</p>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>status.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>South Rift AgriBiz</td>
+      <td>Ndunyu Njeru</td>
+      <td>85119.0</td>
+      <td>New</td>
+      <td>P+I Current</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>2005.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>44.83</td>
+      <td>2018-09-30</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Eastern Region</td>
+      <td>Wote</td>
+      <td>69865.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>50.65</td>
+      <td>2020-11-30</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Western Region</td>
+      <td>Bungoma</td>
+      <td>55339.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>60.71</td>
+      <td>2020-07-31</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>South Rift Region</td>
+      <td>Kericho</td>
+      <td>38049.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.15</td>
+      <td>2019-06-30</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Passing the number of rows you want</p>
+<div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>status.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="6">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>South Rift AgriBiz</td>
+      <td>Ndunyu Njeru</td>
+      <td>85119.0</td>
+      <td>New</td>
+      <td>P+I Current</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>2005.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>44.83</td>
+      <td>2018-09-30</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Eastern Region</td>
+      <td>Wote</td>
+      <td>69865.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>50.65</td>
+      <td>2020-11-30</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Western Region</td>
+      <td>Bungoma</td>
+      <td>55339.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>60.71</td>
+      <td>2020-07-31</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>South Rift Region</td>
+      <td>Kericho</td>
+      <td>38049.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.15</td>
+      <td>2019-06-30</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>South Rift Region</td>
+      <td>Narok</td>
+      <td>33391.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.94</td>
+      <td>2019-04-30</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>North Rift Region</td>
+      <td>Iten</td>
+      <td>53675.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>35.24</td>
+      <td>2020-05-31</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>North Rift Region</td>
+      <td>Eldoret3</td>
+      <td>16893.0</td>
+      <td>Active</td>
+      <td>Penalties</td>
+      <td>26.21</td>
+      <td>2020-12-31</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Nairobi Region</td>
+      <td>Kiambu</td>
+      <td>35681.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>46.78</td>
+      <td>2019-05-31</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>24807.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>36.94</td>
+      <td>2019-02-28</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<section id="exercise-1" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-1"><strong>EXERCISE</strong></h3>
+<p><strong>For the dataframe we created (<code>counties</code>) return the first 15 rows.</strong></p>
+</section>
+</section>
+<section id="last-few-rows" class="level2">
+<h2 class="anchored" data-anchor-id="last-few-rows">3.2 Last few rows</h2>
+<p>The <code>tail</code> method returns the last rows of a dataframe, by default it returns the 5 last rows, but you can specify the number of last rows that you need to return.</p>
+<div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>status.tail()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="8">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>40019</th>
+      <td>Eastern Region</td>
+      <td>Matuu</td>
+      <td>66991.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>33.38</td>
+      <td>2020-09-30</td>
+    </tr>
+    <tr>
+      <th>40020</th>
+      <td>Report Title: Client Status (Monthly)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40021</th>
+      <td>Generated By: Victor Omondi</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40022</th>
+      <td>Generated Time: 2021-03-26 02:44:32</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40023</th>
+      <td>Report Parameters:Office: Head Office month: 2 year: 2021</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As you can see the last <code>4</code> rows have metadata on when the data was generated. We will hand this situation in the Reshaping data part.</p>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>status.tail(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="9">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>40014</th>
+      <td>South Rift AgriBiz</td>
+      <td>Maili Nne</td>
+      <td>48513.0</td>
+      <td>Active</td>
+      <td>Penalties</td>
+      <td>56.17</td>
+      <td>2021-01-31</td>
+    </tr>
+    <tr>
+      <th>40015</th>
+      <td>North Rift Region</td>
+      <td>Iten</td>
+      <td>42221.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>44.50</td>
+      <td>2019-08-31</td>
+    </tr>
+    <tr>
+      <th>40016</th>
+      <td>Western Region</td>
+      <td>Mbale</td>
+      <td>54391.0</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>56.98</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>40017</th>
+      <td>Coast Region</td>
+      <td>Mariakani</td>
+      <td>67944.0</td>
+      <td>Dormant</td>
+      <td>P+I In Default</td>
+      <td>0.15</td>
+      <td>2020-10-31</td>
+    </tr>
+    <tr>
+      <th>40018</th>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>6888.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>32.42</td>
+      <td>2020-11-30</td>
+    </tr>
+    <tr>
+      <th>40019</th>
+      <td>Eastern Region</td>
+      <td>Matuu</td>
+      <td>66991.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>33.38</td>
+      <td>2020-09-30</td>
+    </tr>
+    <tr>
+      <th>40020</th>
+      <td>Report Title: Client Status (Monthly)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40021</th>
+      <td>Generated By: Victor Omondi</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40022</th>
+      <td>Generated Time: 2021-03-26 02:44:32</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40023</th>
+      <td>Report Parameters:Office: Head Office month: 2 year: 2021</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<section id="exercise-2" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-2"><strong>EXERCISE</strong></h3>
+<p><strong>For the dataframe (<code>counties</code>) we created return the last 15 rows.</strong></p>
+</section>
+</section>
+<section id="sample" class="level2">
+<h2 class="anchored" data-anchor-id="sample">3.3 sample</h2>
+<p><code>df.sample</code> mainly is used during sampling techniques, it a random sample of items from an axis of object.</p>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>status.sample(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="11">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>24131</th>
+      <td>North Rift Region</td>
+      <td>Nandi Hills</td>
+      <td>39393.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>43.14</td>
+      <td>2020-01-31</td>
+    </tr>
+    <tr>
+      <th>2638</th>
+      <td>Western Region</td>
+      <td>Bungoma</td>
+      <td>71754.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>55.37</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>3398</th>
+      <td>North Rift Region</td>
+      <td>Eldoret1</td>
+      <td>32182.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>4.35</td>
+      <td>2019-04-30</td>
+    </tr>
+    <tr>
+      <th>24100</th>
+      <td>Coast Region</td>
+      <td>Voi</td>
+      <td>73956.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>40.49</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>31920</th>
+      <td>North Rift Region</td>
+      <td>Kapsabet</td>
+      <td>6664.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>34.83</td>
+      <td>2019-03-31</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<section id="exercise-3" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3"><strong>EXERCISE</strong></h3>
+<p><strong>For the dataframe (<code>counties</code>) we created return a sample of <code>10</code> rows</strong></p>
+</section>
+</section>
+<section id="number-of-rows-and-columns" class="level2">
+<h2 class="anchored" data-anchor-id="number-of-rows-and-columns">3.4. Number of Rows and columns</h2>
+<p>In pandas, there are various ways to know how many columns (<em>variables</em>) and rows (<em>observations</em>) a dataframe has. 1. <code>len(df)</code> - returns number of rows 2. <code>df.shape</code> - returns number of rows and columns as a tuple 3. <code>df.info()</code> - returns data frame info, non null values, columns and data columns and the data type of columns.</p>
+<div class="cell" data-execution_count="13">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>status.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>(40024, 7)</code></pre>
+</div>
+</div>
+<section id="exercise-4" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4"><strong>EXERCISE</strong></h3>
+<p><strong>For the dataframe (<code>counties</code>) we created how many rows and columns does it have?</strong></p>
+</section>
+</section>
+<section id="info" class="level2">
+<h2 class="anchored" data-anchor-id="info">3.5 Info</h2>
+<p><code>df.info</code> prints a summary of the data frame, ie, number of rows, columns, data column and their non-null values and the dtype</p>
+<div class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>status.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 40024 entries, 0 to 40023
+Data columns (total 7 columns):
+ #   Column         Non-Null Count  Dtype  
+---  ------         --------------  -----  
+ 0   Region         39944 non-null  object 
+ 1   Office         40020 non-null  object 
+ 2   Client ID      40020 non-null  float64
+ 3   Client Status  40020 non-null  object 
+ 4   Loan Status    40020 non-null  object 
+ 5   Client Score   36720 non-null  float64
+ 6   Status Date    40020 non-null  object 
+dtypes: float64(2), object(5)
+memory usage: 2.1+ MB</code></pre>
+</div>
+</div>
+<section id="exercise-5" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5"><strong>EXERCISE</strong></h3>
+<p><strong>For the dataframe (<code>counties</code>) we created how many missing values are there in the <code>name</code> columns?</strong></p>
+</section>
+</section>
+<section id="describe" class="level2">
+<h2 class="anchored" data-anchor-id="describe">3.6. Describe</h2>
+<p>We use <code>df.describe()</code> to get summary statistics, by default it returns the summary statistics of the numerical columns.</p>
+<div class="cell" data-execution_count="17">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>status.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="17">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Client ID</th>
+      <th>Client Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>40020.000000</td>
+      <td>36720.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>43747.996652</td>
+      <td>35.593555</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>24860.118889</td>
+      <td>20.538354</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>2.000000</td>
+      <td>0.150000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>22291.750000</td>
+      <td>21.887500</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>44105.000000</td>
+      <td>36.700000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>65170.500000</td>
+      <td>49.822500</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>86654.000000</td>
+      <td>92.540000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>To show all summary statistics including those for objects (strings) you can pass <code>include="all"</code> to the <code>df.describe</code>.</p>
+<div class="cell" data-execution_count="18">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>status.describe(include<span class="op">=</span><span class="st">'all'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="18">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>39944</td>
+      <td>40020</td>
+      <td>40020.000000</td>
+      <td>40020</td>
+      <td>40020</td>
+      <td>36720.000000</td>
+      <td>40020</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>12</td>
+      <td>57</td>
+      <td>NaN</td>
+      <td>4</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>67</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>Nairobi Region</td>
+      <td>Embakasi</td>
+      <td>NaN</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>9860</td>
+      <td>1561</td>
+      <td>NaN</td>
+      <td>30535</td>
+      <td>28071</td>
+      <td>NaN</td>
+      <td>8430</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>43747.996652</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>35.593555</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>24860.118889</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>20.538354</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.150000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>22291.750000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>21.887500</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>44105.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>36.700000</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>65170.500000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>49.822500</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>86654.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>92.540000</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<section id="exercise-6" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-6"><strong>EXERCISE</strong></h3>
+<p><strong>For the dataframe (<code>counties</code>) we created how many unique sub counties are there in Kenya?</strong></p>
+</section>
+</section>
+</section>
+<section id="reshaping-data" class="level1">
+<h1>4. Reshaping Data</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/VictorOmondi1997/data_wrangling_cit/blob/master/img/reshape_data.gif?raw=true" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Reshaping Data</figcaption><p></p>
+</figure>
+</div>
+<p>From the tail that we looked above, we saw that the last 4 rows have the metadata on the generation of the data. Those metadata are not very important in our analysis. We will first remove them.</p>
+<section id="droping-irrelevant-data." class="level2">
+<h2 class="anchored" data-anchor-id="droping-irrelevant-data.">4.1. Droping Irrelevant Data.</h2>
+<p>Let’s check some of the irrelevant data.</p>
+<div class="cell" data-execution_count="20">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>status.tail()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="20">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>40019</th>
+      <td>Eastern Region</td>
+      <td>Matuu</td>
+      <td>66991.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>33.38</td>
+      <td>2020-09-30</td>
+    </tr>
+    <tr>
+      <th>40020</th>
+      <td>Report Title: Client Status (Monthly)</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40021</th>
+      <td>Generated By: Victor Omondi</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40022</th>
+      <td>Generated Time: 2021-03-26 02:44:32</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>40023</th>
+      <td>Report Parameters:Office: Head Office month: 2 year: 2021</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>we can drop these 4 last columns by using <code>df.drop</code> and assigning the <code>index</code> argument to a list of indeces we want to drop.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you want to drop columns, use <code>df.drop(columns=cols)</code> were cols is a list of column names you want to drop.</p>
+</div>
+</div>
+<div class="cell" data-execution_count="21">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>status_2 <span class="op">=</span> status.drop(index<span class="op">=</span>[<span class="dv">40020</span>, <span class="dv">40021</span>, <span class="dv">40022</span>, <span class="dv">40023</span>])</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>status_2.tail()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="21">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>40015</th>
+      <td>North Rift Region</td>
+      <td>Iten</td>
+      <td>42221.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>44.50</td>
+      <td>2019-08-31</td>
+    </tr>
+    <tr>
+      <th>40016</th>
+      <td>Western Region</td>
+      <td>Mbale</td>
+      <td>54391.0</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>56.98</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>40017</th>
+      <td>Coast Region</td>
+      <td>Mariakani</td>
+      <td>67944.0</td>
+      <td>Dormant</td>
+      <td>P+I In Default</td>
+      <td>0.15</td>
+      <td>2020-10-31</td>
+    </tr>
+    <tr>
+      <th>40018</th>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>6888.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>32.42</td>
+      <td>2020-11-30</td>
+    </tr>
+    <tr>
+      <th>40019</th>
+      <td>Eastern Region</td>
+      <td>Matuu</td>
+      <td>66991.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>33.38</td>
+      <td>2020-09-30</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We can also drop inplace, no need of assigning it to a variable. This can be done by specifying the <code>inplace</code> argument to <code>True</code></p>
+</div>
+</div>
+<div class="cell" data-execution_count="22">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>status.drop(index<span class="op">=</span>[<span class="dv">40020</span>, <span class="dv">40021</span>, <span class="dv">40022</span>, <span class="dv">40023</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>status.tail()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="22">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client ID</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>40015</th>
+      <td>North Rift Region</td>
+      <td>Iten</td>
+      <td>42221.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>44.50</td>
+      <td>2019-08-31</td>
+    </tr>
+    <tr>
+      <th>40016</th>
+      <td>Western Region</td>
+      <td>Mbale</td>
+      <td>54391.0</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>56.98</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>40017</th>
+      <td>Coast Region</td>
+      <td>Mariakani</td>
+      <td>67944.0</td>
+      <td>Dormant</td>
+      <td>P+I In Default</td>
+      <td>0.15</td>
+      <td>2020-10-31</td>
+    </tr>
+    <tr>
+      <th>40018</th>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>6888.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>32.42</td>
+      <td>2020-11-30</td>
+    </tr>
+    <tr>
+      <th>40019</th>
+      <td>Eastern Region</td>
+      <td>Matuu</td>
+      <td>66991.0</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>33.38</td>
+      <td>2020-09-30</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="set-index" class="level2">
+<h2 class="anchored" data-anchor-id="set-index">4.2. Set Index</h2>
+<p>For our data frame, <code>Client ID</code> column uniquely identifies rows, for our analysis, we won’t be doing analysis on this column, we can set <code>Client ID</code> to be the index of our dataframe.</p>
+<div class="cell" data-execution_count="23">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>status.set_index(<span class="st">'Client ID'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>status.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="23">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+    <tr>
+      <th>Client ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>85119.0</th>
+      <td>South Rift AgriBiz</td>
+      <td>Ndunyu Njeru</td>
+      <td>New</td>
+      <td>P+I Current</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>2005.0</th>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>44.83</td>
+      <td>2018-09-30</td>
+    </tr>
+    <tr>
+      <th>69865.0</th>
+      <td>Eastern Region</td>
+      <td>Wote</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>50.65</td>
+      <td>2020-11-30</td>
+    </tr>
+    <tr>
+      <th>55339.0</th>
+      <td>Western Region</td>
+      <td>Bungoma</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>60.71</td>
+      <td>2020-07-31</td>
+    </tr>
+    <tr>
+      <th>38049.0</th>
+      <td>South Rift Region</td>
+      <td>Kericho</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.15</td>
+      <td>2019-06-30</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="sorting" class="level2">
+<h2 class="anchored" data-anchor-id="sorting">4.3. Sorting</h2>
+<p>Sorting is arranging values/index in data either in ascending or descending order. To sort index we use <code>df.sort_index</code>, to sort values in columns we use <code>df.sort_values(cols)</code> where <code>cols</code> is column name or list of column names we want to sort their values.</p>
+<div class="cell" data-execution_count="24">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>status.sort_index(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>status.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="24">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+    <tr>
+      <th>Client ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2.0</th>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>37.98</td>
+      <td>2020-04-30</td>
+    </tr>
+    <tr>
+      <th>7.0</th>
+      <td>NaN</td>
+      <td>Head Office</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2015-02-28</td>
+    </tr>
+    <tr>
+      <th>10.0</th>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>Active</td>
+      <td>Penalties</td>
+      <td>42.19</td>
+      <td>2020-12-31</td>
+    </tr>
+    <tr>
+      <th>12.0</th>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>65.34</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>13.0</th>
+      <td>South Rift Region</td>
+      <td>Nakuru</td>
+      <td>Dormant</td>
+      <td>Pending Renewal</td>
+      <td>57.59</td>
+      <td>2016-02-29</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="25">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>status_date_sorted <span class="op">=</span> status.sort_values(<span class="st">'Status Date'</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>status_date_sorted.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="25">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+    <tr>
+      <th>Client ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>7.0</th>
+      <td>NaN</td>
+      <td>Head Office</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2015-02-28</td>
+    </tr>
+    <tr>
+      <th>2598.0</th>
+      <td>Nairobi Region</td>
+      <td>Rongai</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2015-02-28</td>
+    </tr>
+    <tr>
+      <th>1201.0</th>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2015-02-28</td>
+    </tr>
+    <tr>
+      <th>2859.0</th>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2015-06-30</td>
+    </tr>
+    <tr>
+      <th>1058.0</th>
+      <td>Nairobi Region</td>
+      <td>Kahawa</td>
+      <td>Dormant</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2015-10-31</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>By defauld the sorting are in ascending order, we can also sort in descending order. To do this, we use <code>ascending=False</code> argument.</p>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>status.sort_values(<span class="st">'Client Score'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+    <tr>
+      <th>Client ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>28468.0</th>
+      <td>North Rift Region</td>
+      <td>Kapenguria</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>92.54</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>74947.0</th>
+      <td>South Rift AgriBiz</td>
+      <td>Ndunyu Njeru</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>92.17</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>64738.0</th>
+      <td>Eastern Region</td>
+      <td>Mwingi</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>92.02</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>31851.0</th>
+      <td>Nairobi Region</td>
+      <td>Rongai</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>91.34</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>49324.0</th>
+      <td>South Rift AgriBiz</td>
+      <td>Maili Nne</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>91.21</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>86301.0</th>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>New</td>
+      <td>P+I Current</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>86303.0</th>
+      <td>Nairobi Region</td>
+      <td>Kahawa</td>
+      <td>New</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>86308.0</th>
+      <td>Nairobi Region</td>
+      <td>Kahawa</td>
+      <td>New</td>
+      <td>P+I Current</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>86313.0</th>
+      <td>North Rift Region</td>
+      <td>Eldoret2</td>
+      <td>New</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>86654.0</th>
+      <td>Western Region</td>
+      <td>Bondo</td>
+      <td>New</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2021-02-28</td>
+    </tr>
+  </tbody>
+</table>
+<p>40020 rows × 6 columns</p>
+</div>
+</div>
+</div>
+<section id="exercise-7" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-7"><strong>EXERCISE</strong></h3>
+<p><strong>For the dataframe (<code>counties</code>) we created sort the data frame as follows</strong> 1. <strong><code>name</code>: descending</strong> 2. <strong><code>subCounty</code>: ascending</strong></p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>you can use <code>ascending=[False, True]</code>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="duplicates" class="level2">
+<h2 class="anchored" data-anchor-id="duplicates">4.3. Duplicates</h2>
+<p>Duplicates are rows that are identical to each other, ie, they have the same values. to check for duplicates we use <code>df.duplicated</code> this will return a <strong>boolean series</strong> we can use the boolean series to filter out the repeting values and we can use <code>df.drop_duplicates</code> to remove any duplicates in the data frame.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>the first occurence won’t be removed by default.</p>
+</div>
+</div>
+<p>to check for duplicates, we will first reset the index, this will make <code>Client ID</code> to be a column as it was before.</p>
+<div class="cell" data-execution_count="28">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>status.reset_index(inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="29">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>status.duplicated()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<pre><code>0        False
+1        False
+2        False
+3        False
+4        False
+         ...  
+40015    False
+40016    False
+40017    False
+40018    False
+40019    False
+Length: 40020, dtype: bool</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="30">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>status[status.duplicated()]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="30">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Client ID</th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5051</th>
+      <td>11331.0</td>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>23.84</td>
+      <td>2018-02-28</td>
+    </tr>
+    <tr>
+      <th>5052</th>
+      <td>11331.0</td>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>23.84</td>
+      <td>2018-02-28</td>
+    </tr>
+    <tr>
+      <th>5053</th>
+      <td>11331.0</td>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>23.84</td>
+      <td>2018-02-28</td>
+    </tr>
+    <tr>
+      <th>5054</th>
+      <td>11331.0</td>
+      <td>Nairobi Region</td>
+      <td>Ngong Road</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>23.84</td>
+      <td>2018-02-28</td>
+    </tr>
+    <tr>
+      <th>9624</th>
+      <td>21440.0</td>
+      <td>North Rift Region</td>
+      <td>Eldoret1</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>16.01</td>
+      <td>2018-08-31</td>
+    </tr>
+    <tr>
+      <th>9625</th>
+      <td>21440.0</td>
+      <td>North Rift Region</td>
+      <td>Eldoret1</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>16.01</td>
+      <td>2018-08-31</td>
+    </tr>
+    <tr>
+      <th>9626</th>
+      <td>21440.0</td>
+      <td>North Rift Region</td>
+      <td>Eldoret1</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>16.01</td>
+      <td>2018-08-31</td>
+    </tr>
+    <tr>
+      <th>9627</th>
+      <td>21440.0</td>
+      <td>North Rift Region</td>
+      <td>Eldoret1</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>16.01</td>
+      <td>2018-08-31</td>
+    </tr>
+    <tr>
+      <th>11194</th>
+      <td>24807.0</td>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>36.94</td>
+      <td>2019-02-28</td>
+    </tr>
+    <tr>
+      <th>11195</th>
+      <td>24807.0</td>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>36.94</td>
+      <td>2019-02-28</td>
+    </tr>
+    <tr>
+      <th>11196</th>
+      <td>24807.0</td>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>36.94</td>
+      <td>2019-02-28</td>
+    </tr>
+    <tr>
+      <th>11197</th>
+      <td>24807.0</td>
+      <td>North Rift Region</td>
+      <td>Kitale</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>36.94</td>
+      <td>2019-02-28</td>
+    </tr>
+    <tr>
+      <th>22397</th>
+      <td>49227.0</td>
+      <td>Coast Region</td>
+      <td>Voi</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.24</td>
+      <td>2020-02-29</td>
+    </tr>
+    <tr>
+      <th>22398</th>
+      <td>49227.0</td>
+      <td>Coast Region</td>
+      <td>Voi</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.24</td>
+      <td>2020-02-29</td>
+    </tr>
+    <tr>
+      <th>22399</th>
+      <td>49227.0</td>
+      <td>Coast Region</td>
+      <td>Voi</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.24</td>
+      <td>2020-02-29</td>
+    </tr>
+    <tr>
+      <th>22400</th>
+      <td>49227.0</td>
+      <td>Coast Region</td>
+      <td>Voi</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>0.24</td>
+      <td>2020-02-29</td>
+    </tr>
+    <tr>
+      <th>35401</th>
+      <td>76644.0</td>
+      <td>Western Region</td>
+      <td>Kisumu</td>
+      <td>Active</td>
+      <td>Penalties</td>
+      <td>48.92</td>
+      <td>2020-09-30</td>
+    </tr>
+    <tr>
+      <th>35402</th>
+      <td>76644.0</td>
+      <td>Western Region</td>
+      <td>Kisumu</td>
+      <td>Active</td>
+      <td>Penalties</td>
+      <td>48.92</td>
+      <td>2020-09-30</td>
+    </tr>
+    <tr>
+      <th>35403</th>
+      <td>76644.0</td>
+      <td>Western Region</td>
+      <td>Kisumu</td>
+      <td>Active</td>
+      <td>Penalties</td>
+      <td>48.92</td>
+      <td>2020-09-30</td>
+    </tr>
+    <tr>
+      <th>35404</th>
+      <td>76644.0</td>
+      <td>Western Region</td>
+      <td>Kisumu</td>
+      <td>Active</td>
+      <td>Penalties</td>
+      <td>48.92</td>
+      <td>2020-09-30</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<section id="exercise-8" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-8"><strong>EXERCISE</strong></h3>
+<p><strong>For the dataframe (<code>counties</code>), are there any duplicates in that dataframe</strong></p>
+</section>
+</section>
+<section id="drop-duplicates" class="level2">
+<h2 class="anchored" data-anchor-id="drop-duplicates">4.4. Drop Duplicates</h2>
+<p><code>df.drop_duplicates</code> removes duplicates keeping first occurence by default.</p>
+<div class="cell" data-tags="[]" data-execution_count="32">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>status.drop_duplicates(inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>status.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="33">
+<pre><code>(40000, 7)</code></pre>
+</div>
+</div>
+</section>
+<section id="missing-values" class="level2">
+<h2 class="anchored" data-anchor-id="missing-values">4.5. Missing Values</h2>
+<p>Majorly involed during data cleaning. Missing values are values that are missing, alaaa!. In this session we won’t go deeper on how to handle missing values. In python, to check for missing values we use <code>df.isnull()</code> or <code>df.isna</code>, to remove missing values we use <code>df.dropna</code></p>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>status.isna()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="34">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Client ID</th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>40015</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>40016</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>40017</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>40018</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>40019</th>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+<p>40000 rows × 7 columns</p>
+</div>
+</div>
+</div>
+<p>That returns a dataframe with boolean showing if a value is null</p>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>status.isnull().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="35">
+<pre><code>Client ID           0
+Region             80
+Office              0
+Client Status       0
+Loan Status         0
+Client Score     3300
+Status Date         0
+dtype: int64</code></pre>
+</div>
+</div>
+<p><code>df.isnull().sum()</code> is the most widely used way of cheking the number of missing values per column.</p>
+</section>
+</section>
+<section id="advanced-data-wrangling" class="level1">
+<h1>5. Advanced Data Wrangling</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/VictorOmondi1997/data_wrangling_cit/blob/master/img/advanced.gif?raw=true" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Advanced Data Wrangling</figcaption><p></p>
+</figure>
+</div>
+<section id="value-counts" class="level2">
+<h2 class="anchored" data-anchor-id="value-counts">5.1. Value counts</h2>
+<p>As a data scientist it is good to check the counts of unique values, these is mainly used to check for imbalance at later states. To check for the number of unique values, we use <code>df[col].value_counts()</code> where <code>col</code> is the column name.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>df[col]</code> is selecting a column returning a series, where <code>col</code> is the column name</p>
+</div>
+</div>
+<div class="cell" data-execution_count="36">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>status[<span class="st">'Region'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<pre><code>Nairobi Region        9856
+North Rift Region     8506
+South Rift Region     6781
+Coast Region          4661
+South Rift AgriBiz    3848
+Western Region        3360
+Eastern Region        2252
+Central AgriBiz        656
+Name: Region, dtype: int64</code></pre>
+</div>
+</div>
+<p>By default <code>.value_counts</code> drops values which are missing values, we can include the counts of missing values by setting <code>dropna=False</code></p>
+<div class="cell" data-execution_count="37">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>status[<span class="st">'Region'</span>].value_counts(dropna<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="37">
+<pre><code>Nairobi Region        9856
+North Rift Region     8506
+South Rift Region     6781
+Coast Region          4661
+South Rift AgriBiz    3848
+Western Region        3360
+Eastern Region        2252
+Central AgriBiz        656
+NaN                     80
+Name: Region, dtype: int64</code></pre>
+</div>
+</div>
+<section id="exercise-9" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-9"><strong>EXERCISE</strong></h3>
+<p><strong>For the dataframe (<code>counties</code>) Show the value counts of the <code>name</code> variable</strong></p>
+</section>
+</section>
+<section id="data-filteration" class="level2">
+<h2 class="anchored" data-anchor-id="data-filteration">5.2. Data Filteration</h2>
+<p>In pandas - we can use comparison operators to filter data meeting a certain condition, - to filter columns we can use <code>df[[col1....coln]</code>, - to filter rows based on their index we can use - <code>iloc[i]</code> or <code>loc[strn]</code> for integer based or label based indexing respectively.</p>
+<div class="cell" data-execution_count="39">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>status[status[<span class="st">'Region'</span>].isnull()]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="39">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Client ID</th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>7.0</td>
+      <td>NaN</td>
+      <td>Head Office</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>NaN</td>
+      <td>2015-02-28</td>
+    </tr>
+    <tr>
+      <th>1993</th>
+      <td>4700.0</td>
+      <td>NaN</td>
+      <td>Head Office</td>
+      <td>Inactive</td>
+      <td>Pending Renewal</td>
+      <td>15.15</td>
+      <td>2020-09-30</td>
+    </tr>
+    <tr>
+      <th>2156</th>
+      <td>5064.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>23.38</td>
+      <td>2020-08-31</td>
+    </tr>
+    <tr>
+      <th>2279</th>
+      <td>5322.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>23.96</td>
+      <td>2020-08-31</td>
+    </tr>
+    <tr>
+      <th>2407</th>
+      <td>5621.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>13.77</td>
+      <td>2020-08-31</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>38004</th>
+      <td>82121.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>NaN</td>
+      <td>2020-12-31</td>
+    </tr>
+    <tr>
+      <th>38100</th>
+      <td>82284.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>NaN</td>
+      <td>2020-12-31</td>
+    </tr>
+    <tr>
+      <th>38227</th>
+      <td>82560.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>NaN</td>
+      <td>2020-12-31</td>
+    </tr>
+    <tr>
+      <th>38296</th>
+      <td>82709.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>NaN</td>
+      <td>2020-12-31</td>
+    </tr>
+    <tr>
+      <th>38503</th>
+      <td>83150.0</td>
+      <td>NaN</td>
+      <td>Fraud</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>NaN</td>
+      <td>2020-12-31</td>
+    </tr>
+  </tbody>
+</table>
+<p>80 rows × 7 columns</p>
+</div>
+</div>
+</div>
+<p>We can use comparison operators for filtering values that meet a certain condition. - <code>&gt;</code> - Greater than - <code>&lt;</code> - Less than - <code>&gt;=</code> - Greater or equal to - <code>&lt;=</code> - Less than or equal to - <code>==</code> equal to - <code>!=</code> not equal to</p>
+<div class="cell" data-execution_count="40">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>status[<span class="st">'Client Score'</span>]<span class="op">&gt;</span><span class="dv">90</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="40">
+<pre><code>0        False
+1        False
+2        False
+3        False
+4        False
+         ...  
+40015    False
+40016    False
+40017    False
+40018    False
+40019    False
+Name: Client Score, Length: 40000, dtype: bool</code></pre>
+</div>
+</div>
+<p><code>df[col]&gt;value</code> returns a boolean series, we can use the boolean series to filter out values in dataframe not meeting that condition.</p>
+<div class="cell" data-execution_count="41">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>status[status[<span class="st">'Client Score'</span>]<span class="op">&gt;</span><span class="dv">90</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="41">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Client ID</th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2641</th>
+      <td>6150.0</td>
+      <td>South Rift Region</td>
+      <td>Kericho</td>
+      <td>Active</td>
+      <td>Pending Renewal</td>
+      <td>90.59</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>8535</th>
+      <td>19100.0</td>
+      <td>South Rift Region</td>
+      <td>Litein</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>90.85</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>12657</th>
+      <td>27981.0</td>
+      <td>South Rift AgriBiz</td>
+      <td>Ndunyu Njeru</td>
+      <td>Active</td>
+      <td>Pending Renewal</td>
+      <td>90.58</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>12876</th>
+      <td>28468.0</td>
+      <td>North Rift Region</td>
+      <td>Kapenguria</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>92.54</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>14405</th>
+      <td>31851.0</td>
+      <td>Nairobi Region</td>
+      <td>Rongai</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>91.34</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>22443</th>
+      <td>49324.0</td>
+      <td>South Rift AgriBiz</td>
+      <td>Maili Nne</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>91.21</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>26438</th>
+      <td>57810.0</td>
+      <td>South Rift AgriBiz</td>
+      <td>Maili Nne</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>90.92</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>29804</th>
+      <td>64738.0</td>
+      <td>Eastern Region</td>
+      <td>Mwingi</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>92.02</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>30564</th>
+      <td>66344.0</td>
+      <td>Central AgriBiz</td>
+      <td>Githunguri</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>90.33</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>32576</th>
+      <td>70685.0</td>
+      <td>South Rift AgriBiz</td>
+      <td>Londiani</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>90.77</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>34593</th>
+      <td>74947.0</td>
+      <td>South Rift AgriBiz</td>
+      <td>Ndunyu Njeru</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>92.17</td>
+      <td>2021-02-28</td>
+    </tr>
+    <tr>
+      <th>35239</th>
+      <td>76301.0</td>
+      <td>Nairobi Region</td>
+      <td>Kiambu</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>90.04</td>
+      <td>2021-02-28</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<section id="multiple-conditions-filterring" class="level3">
+<h3 class="anchored" data-anchor-id="multiple-conditions-filterring">5.2.1. Multiple conditions filterring</h3>
+<p>We can use logical conditions to support two or more expressions. In pandas we we can use the following operators:</p>
+<ul>
+<li><code>&amp;</code>: for logical <strong>and</strong></li>
+<li><code>|</code>: for logical <strong>or</strong></li>
+<li><code>~</code>: for logical <strong>not</strong></li>
+</ul>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Paranthesis are very important. enclose expressions in a paranthesis <code>(.....)</code></p>
+</div>
+</div>
+<div class="cell" data-execution_count="42">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>status[(status[<span class="st">'Client Score'</span>]<span class="op">&gt;</span><span class="dv">90</span>) <span class="op">&amp;</span> (status[<span class="st">'Loan Status'</span>]<span class="op">==</span><span class="st">'P+I In Default'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="42">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Client ID</th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>26438</th>
+      <td>57810.0</td>
+      <td>South Rift AgriBiz</td>
+      <td>Maili Nne</td>
+      <td>Active</td>
+      <td>P+I In Default</td>
+      <td>90.92</td>
+      <td>2021-02-28</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-10" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-10"><strong>EXERCISE</strong></h3>
+<p><strong>For the dataframe (<code>counties</code>) Filter the data to select dataset where <code>name</code> is equal to <code>'Nakuru'</code> &amp; <code>subCounty</code> is not equal to <code>'Naivasha'</code></strong></p>
+</section>
+</section>
+<section id="grouping-data" class="level2">
+<h2 class="anchored" data-anchor-id="grouping-data">5.3. Grouping Data</h2>
+<p>Grouping data is a critical step in data wrangling. in pandas we can group DataFrame using a mapper or by a Series of columns.</p>
+<p>A groupby operation involves some combination of splitting the object, applying a function, and combining the results. This can be used to group large amounts of data and compute operations on these groups.</p>
+<div class="cell" data-execution_count="44">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>status.groupby(<span class="st">'Region'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="44">
+<pre><code>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f2757be5a00&gt;</code></pre>
+</div>
+</div>
+<p>The groupby returns an object, we can use the object to perform actions in the groups.</p>
+<div class="cell" data-execution_count="45">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>status.groupby(<span class="st">'Region'</span>).agg(<span class="st">'sum'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="45">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Client ID</th>
+      <th>Client Score</th>
+    </tr>
+    <tr>
+      <th>Region</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Central AgriBiz</th>
+      <td>36163955.0</td>
+      <td>20355.84</td>
+    </tr>
+    <tr>
+      <th>Coast Region</th>
+      <td>223714866.0</td>
+      <td>157343.10</td>
+    </tr>
+    <tr>
+      <th>Eastern Region</th>
+      <td>151738957.0</td>
+      <td>61644.78</td>
+    </tr>
+    <tr>
+      <th>Nairobi Region</th>
+      <td>306914995.0</td>
+      <td>309115.63</td>
+    </tr>
+    <tr>
+      <th>North Rift Region</th>
+      <td>326377934.0</td>
+      <td>270228.72</td>
+    </tr>
+    <tr>
+      <th>South Rift AgriBiz</th>
+      <td>201143618.0</td>
+      <td>168818.01</td>
+    </tr>
+    <tr>
+      <th>South Rift Region</th>
+      <td>270779301.0</td>
+      <td>211088.41</td>
+    </tr>
+    <tr>
+      <th>Western Region</th>
+      <td>229155555.0</td>
+      <td>107269.71</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Collapse-hide</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>status.groupby(<span class="st">'Region'</span>).agg({<span class="st">'Client Score'</span>:np.<span class="bu">sum</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="46">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Client Score</th>
+    </tr>
+    <tr>
+      <th>Region</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Central AgriBiz</th>
+      <td>20355.84</td>
+    </tr>
+    <tr>
+      <th>Coast Region</th>
+      <td>157343.10</td>
+    </tr>
+    <tr>
+      <th>Eastern Region</th>
+      <td>61644.78</td>
+    </tr>
+    <tr>
+      <th>Nairobi Region</th>
+      <td>309115.63</td>
+    </tr>
+    <tr>
+      <th>North Rift Region</th>
+      <td>270228.72</td>
+    </tr>
+    <tr>
+      <th>South Rift AgriBiz</th>
+      <td>168818.01</td>
+    </tr>
+    <tr>
+      <th>South Rift Region</th>
+      <td>211088.41</td>
+    </tr>
+    <tr>
+      <th>Western Region</th>
+      <td>107269.71</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="47">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>status.groupby(<span class="st">'Region'</span>).agg(<span class="st">'mean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="47">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Client ID</th>
+      <th>Client Score</th>
+    </tr>
+    <tr>
+      <th>Region</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Central AgriBiz</th>
+      <td>55127.980183</td>
+      <td>49.527591</td>
+    </tr>
+    <tr>
+      <th>Coast Region</th>
+      <td>47997.182150</td>
+      <td>35.792334</td>
+    </tr>
+    <tr>
+      <th>Eastern Region</th>
+      <td>67379.643428</td>
+      <td>31.244187</td>
+    </tr>
+    <tr>
+      <th>Nairobi Region</th>
+      <td>31139.914265</td>
+      <td>32.839226</td>
+    </tr>
+    <tr>
+      <th>North Rift Region</th>
+      <td>38370.319069</td>
+      <td>34.059582</td>
+    </tr>
+    <tr>
+      <th>South Rift AgriBiz</th>
+      <td>52272.250000</td>
+      <td>53.729475</td>
+    </tr>
+    <tr>
+      <th>South Rift Region</th>
+      <td>39932.060316</td>
+      <td>33.389499</td>
+    </tr>
+    <tr>
+      <th>Western Region</th>
+      <td>68201.058036</td>
+      <td>35.205025</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>To check for the size of each group, we can use <code>size()</code> method of a groupby object.</p>
+<div class="cell" data-execution_count="48">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>status.groupby(<span class="st">'Region'</span>).size()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="48">
+<pre><code>Region
+Central AgriBiz        656
+Coast Region          4661
+Eastern Region        2252
+Nairobi Region        9856
+North Rift Region     8506
+South Rift AgriBiz    3848
+South Rift Region     6781
+Western Region        3360
+dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="49">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>status.groupby(<span class="st">'Region'</span>)[<span class="st">'Office'</span>].nunique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="49">
+<pre><code>Region
+Central AgriBiz       2
+Coast Region          8
+Eastern Region        7
+Nairobi Region        8
+North Rift Region     9
+South Rift AgriBiz    6
+South Rift Region     8
+Western Region        7
+Name: Office, dtype: int64</code></pre>
+</div>
+</div>
+<p>Pivot table (derived from excel) is an advanced pandas grouping method. Here you can decide on the index, columns, values and the aggregate functions. The levels in the pivot table will be stored in MultiIndex objects (hierarchical indexes) on the index and columns of the result DataFrame.</p>
+<p>the aggfunc by default is mean. You can pass string aggregates eg <code>'mean'</code>, <code>'sum'</code> ect or aggregate functions such as <code>np.mean</code>, <code>np.sum</code> etc</p>
+<div class="cell" data-execution_count="50">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>status_pivot<span class="op">=</span>pd.pivot_table(status, index<span class="op">=</span><span class="st">'Office'</span>, columns<span class="op">=</span><span class="st">'Region'</span>, values<span class="op">=</span><span class="st">'Client Score'</span>, aggfunc<span class="op">=</span><span class="st">'mean'</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>status_pivot.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="50">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>Region</th>
+      <th>Central AgriBiz</th>
+      <th>Coast Region</th>
+      <th>Eastern Region</th>
+      <th>Nairobi Region</th>
+      <th>North Rift Region</th>
+      <th>South Rift AgriBiz</th>
+      <th>South Rift Region</th>
+      <th>Western Region</th>
+    </tr>
+    <tr>
+      <th>Office</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Bomet</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>33.836232</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Bondo</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>54.472500</td>
+    </tr>
+    <tr>
+      <th>Bungoma</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>32.724249</td>
+    </tr>
+    <tr>
+      <th>Busia</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>36.784428</td>
+    </tr>
+    <tr>
+      <th>Changamwe</th>
+      <td>NaN</td>
+      <td>36.532172</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>setting <code>margins=True</code> will result to row aggregate and column column aggregate.</p>
+<div class="cell" data-execution_count="51">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>pd.pivot_table(status, index<span class="op">=</span><span class="st">'Status Date'</span>, columns<span class="op">=</span><span class="st">'Region'</span>, values<span class="op">=</span><span class="st">'Client Score'</span>, aggfunc<span class="op">=</span>np.mean, margins<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="51">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>Region</th>
+      <th>Central AgriBiz</th>
+      <th>Coast Region</th>
+      <th>Eastern Region</th>
+      <th>Nairobi Region</th>
+      <th>North Rift Region</th>
+      <th>South Rift AgriBiz</th>
+      <th>South Rift Region</th>
+      <th>Western Region</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>Status Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2016-01-31</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>44.733333</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>44.733333</td>
+    </tr>
+    <tr>
+      <th>2016-02-29</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>35.430541</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>37.207143</td>
+      <td>NaN</td>
+      <td>35.713182</td>
+    </tr>
+    <tr>
+      <th>2016-03-31</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>34.614533</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>33.599565</td>
+      <td>NaN</td>
+      <td>34.376327</td>
+    </tr>
+    <tr>
+      <th>2016-04-30</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>30.816381</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>33.833704</td>
+      <td>NaN</td>
+      <td>31.433561</td>
+    </tr>
+    <tr>
+      <th>2016-05-31</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>37.960885</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>41.225000</td>
+      <td>NaN</td>
+      <td>38.681241</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>2020-11-30</th>
+      <td>47.642000</td>
+      <td>34.752153</td>
+      <td>31.791702</td>
+      <td>34.263287</td>
+      <td>38.249737</td>
+      <td>50.445581</td>
+      <td>33.603857</td>
+      <td>32.730902</td>
+      <td>34.959187</td>
+    </tr>
+    <tr>
+      <th>2020-12-31</th>
+      <td>43.470714</td>
+      <td>37.190167</td>
+      <td>30.627154</td>
+      <td>35.245165</td>
+      <td>39.696990</td>
+      <td>49.850078</td>
+      <td>34.649405</td>
+      <td>38.350320</td>
+      <td>37.861864</td>
+    </tr>
+    <tr>
+      <th>2021-01-31</th>
+      <td>50.570377</td>
+      <td>36.696154</td>
+      <td>34.157852</td>
+      <td>38.617857</td>
+      <td>41.534072</td>
+      <td>54.294533</td>
+      <td>36.930952</td>
+      <td>35.335667</td>
+      <td>41.915679</td>
+    </tr>
+    <tr>
+      <th>2021-02-28</th>
+      <td>55.504430</td>
+      <td>48.855651</td>
+      <td>41.270897</td>
+      <td>47.413198</td>
+      <td>49.778757</td>
+      <td>56.811797</td>
+      <td>47.444950</td>
+      <td>45.280237</td>
+      <td>49.599350</td>
+    </tr>
+    <tr>
+      <th>All</th>
+      <td>49.527591</td>
+      <td>35.792334</td>
+      <td>31.244187</td>
+      <td>32.839226</td>
+      <td>34.059582</td>
+      <td>53.729475</td>
+      <td>33.389499</td>
+      <td>35.205025</td>
+      <td>35.642344</td>
+    </tr>
+  </tbody>
+</table>
+<p>63 rows × 9 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="combining-data" class="level2">
+<h2 class="anchored" data-anchor-id="combining-data">5.4. Combining Data</h2>
+<p>the are varies ways of combining data sets - append - add rows to the end of the caller. - concatenate - merge - inner join - left join - right join</p>
+<p>Type of merge to be performed. - left: use only keys from left frame, similar to a SQL left outer join; preserve key order. - right: use only keys from right frame, similar to a SQL right outer join; preserve key order. - outer: use union of keys from both frames, similar to a SQL full outer join; sort keys lexicographically. - inner: use intersection of keys from both frames, similar to a SQL inner join; preserve the order of the left keys. - cross: creates the cartesian product from both frames, preserves the order of the left keys.</p>
+<p>We use <code>df.merge</code>/<code>pd.merge</code> to import columns from other datasets.</p>
+<div class="cell" data-execution_count="52">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>counties <span class="op">=</span> pd.read_csv(<span class="st">'data/kenya_subcounty.csv'</span>)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>counties.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="52">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>name</th>
+      <th>subCounty</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mombasa</td>
+      <td>Changamwe</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mombasa</td>
+      <td>Jomvu</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Mombasa</td>
+      <td>Kisauni</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Mombasa</td>
+      <td>Likoni</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Mombasa</td>
+      <td>Mvita</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>We can merge <code>status</code> and <code>counties</code> using <code>Office</code> and <code>subCounty</code> (this is because that is the key present in both columns. Since we have diffent column names in both data frames, we have to use <code>left_on</code> and <code>right_on</code> to specify the columns.</p>
+<p>if the columns are the same on both columns, we can use <code>on</code> argument.</p>
+<div class="cell" data-execution_count="53">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>combined_ <span class="op">=</span> status.merge(counties, left_on<span class="op">=</span><span class="st">'Office'</span>, right_on<span class="op">=</span><span class="st">'subCounty'</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>combined_.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="53">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Client ID</th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+      <th>name</th>
+      <th>subCounty</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>33.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>40.00</td>
+      <td>2020-06-30</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>34.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Dormant</td>
+      <td>Pending Renewal</td>
+      <td>40.23</td>
+      <td>2016-03-31</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>206.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>76.87</td>
+      <td>2021-02-28</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>615.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>58.43</td>
+      <td>2021-02-28</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>702.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Dormant</td>
+      <td>Pending Renewal</td>
+      <td>43.73</td>
+      <td>2016-08-31</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Another method is using the <code>pd.merge</code></p>
+<div class="cell" data-execution_count="54">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>combined_2 <span class="op">=</span> pd.merge(status, counties, left_on<span class="op">=</span><span class="st">'Office'</span>, right_on<span class="op">=</span><span class="st">'subCounty'</span>)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>combined_2.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="54">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Client ID</th>
+      <th>Region</th>
+      <th>Office</th>
+      <th>Client Status</th>
+      <th>Loan Status</th>
+      <th>Client Score</th>
+      <th>Status Date</th>
+      <th>name</th>
+      <th>subCounty</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>33.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Dormant</td>
+      <td>Penalties</td>
+      <td>40.00</td>
+      <td>2020-06-30</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>34.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Dormant</td>
+      <td>Pending Renewal</td>
+      <td>40.23</td>
+      <td>2016-03-31</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>206.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>76.87</td>
+      <td>2021-02-28</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>615.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Active</td>
+      <td>P+I Current</td>
+      <td>58.43</td>
+      <td>2021-02-28</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>702.0</td>
+      <td>South Rift Region</td>
+      <td>Naivasha</td>
+      <td>Dormant</td>
+      <td>Pending Renewal</td>
+      <td>43.73</td>
+      <td>2016-08-31</td>
+      <td>Nakuru</td>
+      <td>Naivasha</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<section id="exercise-11" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-11"><strong>EXERCISE</strong></h3>
+<p><strong>For the dataframe (<code>counties</code>) do a full outer join with <code>status</code> dataframe, how many rows does it have?</strong></p>
+</section>
+</section>
+</section>
+<section id="exporting-data" class="level1">
+<h1>7. Exporting Data</h1>
+<p>After finishing data wrangling, it is good to export the data to the right file format for further uses. Let us do some final tweaks and export the final dataset as a csv.</p>
+<div class="cell" data-execution_count="56">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We will use the newly combined dataset</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Rename columns and remove unwanted columns</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>combined_2.rename(columns<span class="op">=</span>{<span class="st">'name'</span>:<span class="st">'county'</span>}, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>combined_2.drop(columns<span class="op">=</span>[<span class="st">'subCounty'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>combined_2.dropna(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>combined_3 <span class="op">=</span> pd.pivot_table(combined_2, index<span class="op">=</span><span class="st">'county'</span>, columns<span class="op">=</span><span class="st">'Loan Status'</span>, values<span class="op">=</span><span class="st">'Client Score'</span>, aggfunc<span class="op">=</span>np.median)</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>display(combined_3.head())</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>combined_3.to_csv(<span class="st">'combined.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>Loan Status</th>
+      <th>P+I Current</th>
+      <th>P+I In Default</th>
+      <th>Penalties</th>
+      <th>Pending Renewal</th>
+    </tr>
+    <tr>
+      <th>county</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Busia</th>
+      <td>64.19</td>
+      <td>47.110</td>
+      <td>32.130</td>
+      <td>41.91</td>
+    </tr>
+    <tr>
+      <th>Kericho</th>
+      <td>64.92</td>
+      <td>61.170</td>
+      <td>45.910</td>
+      <td>62.42</td>
+    </tr>
+    <tr>
+      <th>Kiambu</th>
+      <td>60.76</td>
+      <td>48.570</td>
+      <td>32.665</td>
+      <td>50.66</td>
+    </tr>
+    <tr>
+      <th>Kilifi</th>
+      <td>67.01</td>
+      <td>54.220</td>
+      <td>36.005</td>
+      <td>52.41</td>
+    </tr>
+    <tr>
+      <th>Laikipia</th>
+      <td>NaN</td>
+      <td>44.435</td>
+      <td>26.275</td>
+      <td>52.40</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="more-resources" class="level1">
+<h1>6. More Resources</h1>
+<ol type="1">
+<li>https://pandas.pydata.org/pandas-docs/stable/index.html</li>
+<li>https://pandas.pydata.org/Pandas_Cheat_Sheet.pdf</li>
+</ol>
+</section>
+<section id="about-the-speaker" class="level1">
+<h1>About the Speaker</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://github.com/VictorOmondi1997/data_wrangling_cit/blob/master/img/vick.gif?raw=true" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Victor</figcaption><p></p>
+</figure>
+</div>
+<p align="center">
+<a href="https://github.com/VictorOmondi1997"><img src="https://img.shields.io/github/followers/VictorOmondi1997.svg?label=GitHub&amp;style=social" alt="GitHub"></a> <a href="https://twitter.com/VictorOmondi197"><img src="https://img.shields.io/twitter/follow/VictorOmondi197?label=Twitter&amp;style=social" alt="Twitter"></a> <a href="https://www.linkedin.com/in/VictorOmondi1997"><img src="https://img.shields.io/badge/LinkedIn--_.svg?style=social&amp;logo=linkedin" alt="LinkedIn"></a> <a href="https://github.com/sponsors/VictorOmondi1997"><img src="https://img.shields.io/badge/Sponsors--_.svg?style=social&amp;logo=github&amp;logoColor=EA4AAA" alt="Sponsors"></a>
+</p>
+<p>Thank you for attending todays session.</p>
+<ul>
+<li>For more Consultation you can schedule a meeting at <a href="https://calendly.com/VictorOmondi1997">Calendly</a></li>
+<li>Send Email: <a href="mailto:info.victoromondi@gmail.com">info.victoromondi@gmail.com</a> or <a href="mailto:victor.omondi@inukaafrica.com">victor.omondi@inukaafrica.com</a></li>
+<li>Call/Text/Whatsapp: <a href="tel:254797817059">+254797817059</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

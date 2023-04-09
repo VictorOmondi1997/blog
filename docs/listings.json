@@ -1,0 +1,38 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/datasets/Wikipedia_articles/preprocessing.html",
+      "/posts/post-with-code/index.html",
+      "/posts/welcome/index.html",
+      "/posts/2021-09-21-hyperparameter_tuning_with_python.html",
+      "/posts/2021-06-11-data_wrangling_cit.html",
+      "/posts/2021-04-30-python_variables_and_data_types.html",
+      "/posts/2021-04-30-python_functions_and_scope.html",
+      "/posts/2020-10-19-visualizing_countries.html",
+      "/posts/2020-10-19-appliances energy prediction data.html",
+      "/posts/2020-10-19-visualizing the gender gap in college degrees.html",
+      "/posts/2020-10-19-cleaning data in r.html",
+      "/posts/2020-10-19-2016 olympic games.html",
+      "/posts/2020-10-19-avocados.html",
+      "/posts/2020-10-19-cluster analysis in r.html",
+      "/posts/2020-10-19-cluster analysis in python.html",
+      "/posts/2020-09-28-analyzing police activity with pandas.html",
+      "/posts/2020-08-30-analyzing hacker news dataset.html",
+      "/posts/2020-08-30-weather visualization.html",
+      "/posts/2020-08-25-visualizing_women_in_usa_degrees.html",
+      "/posts/2020-08-25-working with missing data.html",
+      "/posts/2020-07-26-working with dates and times in python.html",
+      "/posts/2020-07-26-working with dates and times in r.html",
+      "/posts/2020-07-26-writing functions in python.html",
+      "/posts/2020-07-14-unsupervised learning in python.html",
+      "/posts/2020-07-10-supervised learning with scikit-learn.html",
+      "/posts/2020-07-08-statistical thinking in python (part 2).html",
+      "/posts/2020-07-03-statistical thinking in python (part 1).html",
+      "/posts/2020-07-01-dr. semmelweis and the discovery of handwashing.html",
+      "/posts/2020-06-28-analyzing police activity with pandas.html",
+      "/posts/2020-06-15-exploring boston weather data.html",
+      "/posts/2020-02-20-test.html"
+    ]
+  }
+]

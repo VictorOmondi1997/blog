@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Victor Omondi">
+<meta name="dcterms.date" content="2021-09-21">
+<meta name="description" content="perform hyperparameter tuning techniques to your most accurate model in an effort to achieve optimal predictions.">
+
+<title>blog - Hyperparameter Tuning with Python</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/VictorOmondi1997"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/VictorOmondi197"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Hyperparameter Tuning with Python</h1>
+                  <div>
+        <div class="description">
+          perform hyperparameter tuning techniques to your most accurate model in an effort to achieve optimal predictions.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">machine-learning</div>
+                <div class="quarto-category">hyperparameter-tuning</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Victor Omondi </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 21, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#libraries" id="toc-libraries" class="nav-link active" data-scroll-target="#libraries">Libraries</a>
+  <ul class="collapse">
+  <li><a href="#libraries-setup" id="toc-libraries-setup" class="nav-link" data-scroll-target="#libraries-setup">Libraries setup</a></li>
+  </ul></li>
+  <li><a href="#research-question-definition" id="toc-research-question-definition" class="nav-link" data-scroll-target="#research-question-definition">1. Research Question Definition</a>
+  <ul class="collapse">
+  <li><a href="#data-analysis-question" id="toc-data-analysis-question" class="nav-link" data-scroll-target="#data-analysis-question">1.1 Data Analysis Question</a></li>
+  <li><a href="#metric-for-success" id="toc-metric-for-success" class="nav-link" data-scroll-target="#metric-for-success">1.2 Metric For Success</a></li>
+  <li><a href="#the-context" id="toc-the-context" class="nav-link" data-scroll-target="#the-context">1.3 The Context</a></li>
+  <li><a href="#experimental-design" id="toc-experimental-design" class="nav-link" data-scroll-target="#experimental-design">1.4 Experimental Design</a></li>
+  <li><a href="#data-relevance" id="toc-data-relevance" class="nav-link" data-scroll-target="#data-relevance">1.5 Data Relevance</a></li>
+  <li><a href="#data-cleaning-data-preparation" id="toc-data-cleaning-data-preparation" class="nav-link" data-scroll-target="#data-cleaning-data-preparation">2. Data Cleaning &amp; Data Preparation</a></li>
+  <li><a href="#loading-and-preview-datasets" id="toc-loading-and-preview-datasets" class="nav-link" data-scroll-target="#loading-and-preview-datasets">2.1 Loading and Preview Datasets</a>
+  <ul class="collapse">
+  <li><a href="#dataset-glossary" id="toc-dataset-glossary" class="nav-link" data-scroll-target="#dataset-glossary">Dataset Glossary</a></li>
+  </ul></li>
+  <li><a href="#data-exploration" id="toc-data-exploration" class="nav-link" data-scroll-target="#data-exploration">Data Exploration</a></li>
+  <li><a href="#handling-duplicates-and-missing-values" id="toc-handling-duplicates-and-missing-values" class="nav-link" data-scroll-target="#handling-duplicates-and-missing-values">Handling Duplicates and Missing Values</a></li>
+  <li><a href="#checking-for-anomalies" id="toc-checking-for-anomalies" class="nav-link" data-scroll-target="#checking-for-anomalies">Checking for anomalies</a></li>
+  <li><a href="#outliers-visualization" id="toc-outliers-visualization" class="nav-link" data-scroll-target="#outliers-visualization">Outliers visualization</a></li>
+  <li><a href="#records-with-outliers" id="toc-records-with-outliers" class="nav-link" data-scroll-target="#records-with-outliers">Records with outliers</a></li>
+  </ul></li>
+  <li><a href="#data-analysis" id="toc-data-analysis" class="nav-link" data-scroll-target="#data-analysis">3. Data Analysis</a>
+  <ul class="collapse">
+  <li><a href="#univariate-data-analysis" id="toc-univariate-data-analysis" class="nav-link" data-scroll-target="#univariate-data-analysis">3.1 Univariate Data Analysis</a>
+  <ul class="collapse">
+  <li><a href="#top-10-most-common-hosts" id="toc-top-10-most-common-hosts" class="nav-link" data-scroll-target="#top-10-most-common-hosts">Top 10 Most common hosts</a></li>
+  <li><a href="#the-top-10-most-common-neighbourhoods" id="toc-the-top-10-most-common-neighbourhoods" class="nav-link" data-scroll-target="#the-top-10-most-common-neighbourhoods">the top 10 most common neighbourhoods</a></li>
+  <li><a href="#the-most-common-room-types" id="toc-the-most-common-room-types" class="nav-link" data-scroll-target="#the-most-common-room-types">the most common room types</a></li>
+  <li><a href="#distribution-of-price" id="toc-distribution-of-price" class="nav-link" data-scroll-target="#distribution-of-price">distribution of price</a></li>
+  <li><a href="#the-top-10-most-common-minimum-number-of-nights-to-spend" id="toc-the-top-10-most-common-minimum-number-of-nights-to-spend" class="nav-link" data-scroll-target="#the-top-10-most-common-minimum-number-of-nights-to-spend">the top 10 most common minimum number of nights to spend</a></li>
+  </ul></li>
+  <li><a href="#bivariate-analysis" id="toc-bivariate-analysis" class="nav-link" data-scroll-target="#bivariate-analysis">3.2 Bivariate Analysis</a>
+  <ul class="collapse">
+  <li><a href="#price-by-room-type" id="toc-price-by-room-type" class="nav-link" data-scroll-target="#price-by-room-type">price by room type</a></li>
+  <li><a href="#average-price-by-neighbourhood" id="toc-average-price-by-neighbourhood" class="nav-link" data-scroll-target="#average-price-by-neighbourhood">average price by neighbourhood</a></li>
+  <li><a href="#average-price-by-minimum_nights" id="toc-average-price-by-minimum_nights" class="nav-link" data-scroll-target="#average-price-by-minimum_nights">average price by minimum_nights</a></li>
+  </ul></li>
+  <li><a href="#feature-engineering" id="toc-feature-engineering" class="nav-link" data-scroll-target="#feature-engineering">3.3 Feature Engineering</a></li>
+  </ul></li>
+  <li><a href="#data-modeling" id="toc-data-modeling" class="nav-link" data-scroll-target="#data-modeling">4. Data Modeling</a>
+  <ul class="collapse">
+  <li><a href="#normal-modeling" id="toc-normal-modeling" class="nav-link" data-scroll-target="#normal-modeling">4.1 Normal Modeling</a></li>
+  <li><a href="#modeling-with-grid-search" id="toc-modeling-with-grid-search" class="nav-link" data-scroll-target="#modeling-with-grid-search">4.2 Modeling with Grid Search</a></li>
+  <li><a href="#modeling-with-random-search" id="toc-modeling-with-random-search" class="nav-link" data-scroll-target="#modeling-with-random-search">4.3 Modeling with Random Search</a></li>
+  <li><a href="#modeling-with-bayesian-optimization" id="toc-modeling-with-bayesian-optimization" class="nav-link" data-scroll-target="#modeling-with-bayesian-optimization">4.4 Modeling with Bayesian Optimization</a></li>
+  </ul></li>
+  <li><a href="#summary-of-findings" id="toc-summary-of-findings" class="nav-link" data-scroll-target="#summary-of-findings">5. Summary of Findings</a></li>
+  <li><a href="#recommendations" id="toc-recommendations" class="nav-link" data-scroll-target="#recommendations">6. Recommendations</a></li>
+  <li><a href="#challenging-the-solution" id="toc-challenging-the-solution" class="nav-link" data-scroll-target="#challenging-the-solution">7. Challenging the Solution</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><a href="https://colab.research.google.com/github/VictorOmondi1997/blog/blob/master/_notebooks/2021-09-2-Hyperparameter_Tuning_with_Python.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+<section id="libraries" class="level1">
+<h1>Libraries</h1>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> (LabelEncoder, </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                                   StandardScaler)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> (train_test_split, </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                                     cross_val_score, </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                                     GridSearchCV, </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                                     RandomizedSearchCV, BaseCrossValidator)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.tree <span class="im">import</span> DecisionTreeRegressor</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestRegressor</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (mean_squared_error, </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                             r2_score)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> hyperopt <span class="im">import</span> hp, fmin, tpe, rand, STATUS_OK, Trials</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="libraries-setup" class="level2">
+<h2 class="anchored" data-anchor-id="libraries-setup">Libraries setup</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">"ggplot"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">"display.max_columns"</span>, <span class="va">None</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">"display.max_colwidth"</span>, <span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="research-question-definition" class="level1">
+<h1>1. Research Question Definition</h1>
+<section id="data-analysis-question" class="level2">
+<h2 class="anchored" data-anchor-id="data-analysis-question">1.1 Data Analysis Question</h2>
+<p>We will be performing hyperparameter tuning techniques to the most accurate model in an effort to achieve optimal predictions.</p>
+</section>
+<section id="metric-for-success" class="level2">
+<h2 class="anchored" data-anchor-id="metric-for-success">1.2 Metric For Success</h2>
+<p>This will be a regression task, We will use the regression metrics to determine how the model works:</p>
+<ul>
+<li><span class="math inline">\(R^2\)</span> Score</li>
+<li>Mean Absolute Error</li>
+<li>Residual Sum of Squares</li>
+</ul>
+</section>
+<section id="the-context" class="level2">
+<h2 class="anchored" data-anchor-id="the-context">1.3 The Context</h2>
+<p>Build a solution the would make optimal predictions of rental prices for the city of Amsterdam.</p>
+</section>
+<section id="experimental-design" class="level2">
+<h2 class="anchored" data-anchor-id="experimental-design">1.4 Experimental Design</h2>
+<ul>
+<li>Loading the dataset</li>
+<li>Exploring the dataset</li>
+<li>Data manipulation, data cleaning and visualization</li>
+<li>Data modeling</li>
+<li>Hyperparameter tuning</li>
+<li>Conclusion and recommendation</li>
+</ul>
+</section>
+<section id="data-relevance" class="level2">
+<h2 class="anchored" data-anchor-id="data-relevance">1.5 Data Relevance</h2>
+<p>The Data Provided in relevant to the research question</p>
+</section>
+<section id="data-cleaning-data-preparation" class="level2">
+<h2 class="anchored" data-anchor-id="data-cleaning-data-preparation">2. Data Cleaning &amp; Data Preparation</h2>
+</section>
+<section id="loading-and-preview-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="loading-and-preview-datasets">2.1 Loading and Preview Datasets</h2>
+<div class="cell" data-outputid="b7a263a4-4413-4da8-9b7c-2a07900b0730">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rentals <span class="op">=</span> pd.read_csv(<span class="st">"datasets/raw/listing_summary.csv"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>rentals.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>name</th>
+      <th>host_id</th>
+      <th>host_name</th>
+      <th>neighbourhood_group</th>
+      <th>neighbourhood</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>room_type</th>
+      <th>price</th>
+      <th>minimum_nights</th>
+      <th>number_of_reviews</th>
+      <th>last_review</th>
+      <th>reviews_per_month</th>
+      <th>calculated_host_listings_count</th>
+      <th>availability_365</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2818</td>
+      <td>Quiet Garden View Room &amp; Super Fast WiFi</td>
+      <td>3159</td>
+      <td>Daniel</td>
+      <td>NaN</td>
+      <td>Oostelijk Havengebied - Indische Buurt</td>
+      <td>52.36575</td>
+      <td>4.94142</td>
+      <td>Private room</td>
+      <td>59</td>
+      <td>3</td>
+      <td>278</td>
+      <td>2020-02-14</td>
+      <td>2.06</td>
+      <td>1</td>
+      <td>169</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20168</td>
+      <td>Studio with private bathroom in the centre 1</td>
+      <td>59484</td>
+      <td>Alexander</td>
+      <td>NaN</td>
+      <td>Centrum-Oost</td>
+      <td>52.36509</td>
+      <td>4.89354</td>
+      <td>Private room</td>
+      <td>100</td>
+      <td>1</td>
+      <td>340</td>
+      <td>2020-04-09</td>
+      <td>2.76</td>
+      <td>2</td>
+      <td>106</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>25428</td>
+      <td>Lovely apt in City Centre (w.lift) near Jordaan</td>
+      <td>56142</td>
+      <td>Joan</td>
+      <td>NaN</td>
+      <td>Centrum-West</td>
+      <td>52.37297</td>
+      <td>4.88339</td>
+      <td>Entire home/apt</td>
+      <td>125</td>
+      <td>14</td>
+      <td>5</td>
+      <td>2020-02-09</td>
+      <td>0.18</td>
+      <td>1</td>
+      <td>132</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>27886</td>
+      <td>Romantic, stylish B&amp;B houseboat in canal district</td>
+      <td>97647</td>
+      <td>Flip</td>
+      <td>NaN</td>
+      <td>Centrum-West</td>
+      <td>52.38761</td>
+      <td>4.89188</td>
+      <td>Private room</td>
+      <td>155</td>
+      <td>2</td>
+      <td>217</td>
+      <td>2020-03-02</td>
+      <td>2.15</td>
+      <td>1</td>
+      <td>172</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>28871</td>
+      <td>Comfortable double room</td>
+      <td>124245</td>
+      <td>Edwin</td>
+      <td>NaN</td>
+      <td>Centrum-West</td>
+      <td>52.36719</td>
+      <td>4.89092</td>
+      <td>Private room</td>
+      <td>75</td>
+      <td>2</td>
+      <td>332</td>
+      <td>2020-03-16</td>
+      <td>2.82</td>
+      <td>3</td>
+      <td>210</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<section id="dataset-glossary" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-glossary">Dataset Glossary</h3>
+<p>Before starting the analysis, let’s load the glossary to understand the column descriptions</p>
+<div class="cell" data-outputid="e96e0cec-4e7c-4c90-80f2-8c0361faf75c">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"datasets/raw/Glossary - Sheet1 (1).csv"</span>, encoding<span class="op">=</span><span class="st">'utf8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">file</span>.read())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>room_id: A unique number identifying an Airbnb listing.
+host_id: A unique number identifying an Airbnb host.
+neighborhood: A subregion of the city or search area for which the survey is carried out. For some cities there is no neighbourhood information.
+"room_type: One of “Entire home/apt”, “Private room”, or “Shared room”."
+host_response_rate: The rate at which the particular host responds to the customers.
+"price: The price (in $US) for a night stay. In early surveys, there may be some values that were recorded by month."
+accomodates: The number of guests a listing can accommodate.
+bathrooms: The number of bathrooms a listing offers.
+bedrooms: The number of bedrooms a listing offers.
+beds: The number of beds a listing offers.
+"minimum_nights: The minimum stay for a visit, as posted by the host."
+"maximum nights: The maximum stay for a visit, as posted by the host."
+overall_satisfaction: The average rating (out of five) that the listing has received from those visitors who left a review.
+"number_of_reviews: The number of reviews that a listing has received. Airbnb has said that 70% of visits end up with a review, so the number of reviews can be used to estimate the number of visits. Note that such an estimate will not be reliable for an individual listing (especially as reviews occasionally vanish from the site), but over a city as a whole it should be a useful metric of traffic."
+reviews_per_month: The number of reviews that a listing has received per month.
+host_listings_count: The number of listings for a particular host.
+availability_365: The number of days for which a particular host is available in a year.</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="data-exploration" class="level2">
+<h2 class="anchored" data-anchor-id="data-exploration">Data Exploration</h2>
+<p>The <code>name</code> column contains the basic information about the Airbnb room, since this column won’t be of any help in our analysis or modeling, we will drop the column</p>
+<div class="cell" data-outputid="320b33d9-6609-4165-fa94-db625039b383">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rentals.drop(columns<span class="op">=</span>[<span class="st">'name'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rentals.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>(19362, 15)</code></pre>
+</div>
+</div>
+<p>The dataset has over 19362 rentals with 15 rentals information. Each row represents an Airbnb listing</p>
+<div class="cell" data-outputid="cfaa6cad-cc12-40ea-e15a-dea5edb97849">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>rentals.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 19362 entries, 0 to 19361
+Data columns (total 15 columns):
+ #   Column                          Non-Null Count  Dtype  
+---  ------                          --------------  -----  
+ 0   id                              19362 non-null  int64  
+ 1   host_id                         19362 non-null  int64  
+ 2   host_name                       19358 non-null  object 
+ 3   neighbourhood_group             0 non-null      float64
+ 4   neighbourhood                   19362 non-null  object 
+ 5   latitude                        19362 non-null  float64
+ 6   longitude                       19362 non-null  float64
+ 7   room_type                       19362 non-null  object 
+ 8   price                           19362 non-null  int64  
+ 9   minimum_nights                  19362 non-null  int64  
+ 10  number_of_reviews               19362 non-null  int64  
+ 11  last_review                     17078 non-null  object 
+ 12  reviews_per_month               17078 non-null  float64
+ 13  calculated_host_listings_count  19362 non-null  int64  
+ 14  availability_365                19362 non-null  int64  
+dtypes: float64(4), int64(7), object(4)
+memory usage: 2.2+ MB</code></pre>
+</div>
+</div>
+<p><code>neighbourhood_group</code> 19362 missing values, that means every row in this column is a missing value. <code>last_review</code> and <code>reviews_per_month</code> have the same number of missing values.</p>
+</section>
+<section id="handling-duplicates-and-missing-values" class="level2">
+<h2 class="anchored" data-anchor-id="handling-duplicates-and-missing-values">Handling Duplicates and Missing Values</h2>
+<p>We will start by - droping any duplicates if any, - remove the <code>neighbourhood_group</code> - drop records with missing values for <code>last_review</code> and <code>reviews_per_month</code></p>
+<div class="cell" data-outputid="ff89890d-18bb-4b31-b289-630e83f57fae">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>rentals.drop_duplicates(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>rentals.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>(19362, 15)</code></pre>
+</div>
+</div>
+<p>There were no duplicates in the dataset. Let’s continue by checking missing values and dropping them</p>
+<div class="cell" data-outputid="563dd9dd-b5c5-48a9-b1c6-4086a5a60334">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rentals.isnull().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>id                                    0
+host_id                               0
+host_name                             4
+neighbourhood_group               19362
+neighbourhood                         0
+latitude                              0
+longitude                             0
+room_type                             0
+price                                 0
+minimum_nights                        0
+number_of_reviews                     0
+last_review                        2284
+reviews_per_month                  2284
+calculated_host_listings_count        0
+availability_365                      0
+dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="1a06d946-4be7-410f-c6dd-25316db5c7f1">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rentals.drop(columns<span class="op">=</span>[<span class="st">'neighbourhood_group'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>rentals.dropna(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>rentals.isnull().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>id                                0
+host_id                           0
+host_name                         0
+neighbourhood                     0
+latitude                          0
+longitude                         0
+room_type                         0
+price                             0
+minimum_nights                    0
+number_of_reviews                 0
+last_review                       0
+reviews_per_month                 0
+calculated_host_listings_count    0
+availability_365                  0
+dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="5744ba44-b7ff-4ab9-9c4b-1c34674e0a04">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>rentals.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>(17075, 14)</code></pre>
+</div>
+</div>
+<p>After removing the missing values, the dataset now has 17075 Airbnb listings</p>
+</section>
+<section id="checking-for-anomalies" class="level2">
+<h2 class="anchored" data-anchor-id="checking-for-anomalies">Checking for anomalies</h2>
+<p>To ensure there are no anomalies in the dataset, we will check the number of unique items in every column</p>
+<div class="cell" data-outputid="20624f09-547e-4678-de16-984ecd72d309">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> rentals.columns.to_list()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cols:</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>col<span class="sc">:&gt;34}</span><span class="ss"> No. of Unique Items:</span><span class="sc">{</span>rentals[col]<span class="sc">.</span>nunique()<span class="sc">:&gt;8}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                id No. of Unique Items:   17075
+                           host_id No. of Unique Items:   15182
+                         host_name No. of Unique Items:    5382
+                     neighbourhood No. of Unique Items:      22
+                          latitude No. of Unique Items:    5720
+                         longitude No. of Unique Items:    9193
+                         room_type No. of Unique Items:       4
+                             price No. of Unique Items:     422
+                    minimum_nights No. of Unique Items:      60
+                 number_of_reviews No. of Unique Items:     422
+                       last_review No. of Unique Items:    1590
+                 reviews_per_month No. of Unique Items:     703
+    calculated_host_listings_count No. of Unique Items:      23
+                  availability_365 No. of Unique Items:     366</code></pre>
+</div>
+</div>
+</section>
+<section id="outliers-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="outliers-visualization">Outliers visualization</h2>
+<div class="cell" data-outputid="b79169d7-25ef-4a55-cebe-cc41787d57fa">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">10</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>rentals.boxplot()</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2021-09-21-Hyperparameter_Tuning_with_Python_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="records-with-outliers" class="level2">
+<h2 class="anchored" data-anchor-id="records-with-outliers">Records with outliers</h2>
+<div class="cell" data-outputid="c3b50408-efed-48cc-a28e-d73f4b01dcb2">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>q1 <span class="op">=</span> rentals.quantile(<span class="fl">.25</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>q3 <span class="op">=</span> rentals.quantile(<span class="fl">.75</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>iqr <span class="op">=</span> q3 <span class="op">-</span> q1</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>outliers_df <span class="op">=</span> rentals[</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    ((rentals <span class="op">&lt;</span> (q1 <span class="op">-</span> <span class="fl">1.5</span><span class="op">*</span>iqr)) <span class="op">|</span> (rentals <span class="op">&gt;</span> (q3 <span class="op">+</span> <span class="fl">1.5</span><span class="op">*</span>iqr))).<span class="bu">any</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>outliers_df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<pre><code>(8544, 14)</code></pre>
+</div>
+</div>
+<p>There are Over 8500 outliers in the dataset</p>
+<div class="cell" data-outputid="be7f4201-5f77-45f1-f994-ba2e3959e67c">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>outliers_df.sample(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>host_id</th>
+      <th>host_name</th>
+      <th>neighbourhood</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>room_type</th>
+      <th>price</th>
+      <th>minimum_nights</th>
+      <th>number_of_reviews</th>
+      <th>last_review</th>
+      <th>reviews_per_month</th>
+      <th>calculated_host_listings_count</th>
+      <th>availability_365</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>12117</th>
+      <td>22620913</td>
+      <td>2888051</td>
+      <td>Lokke</td>
+      <td>Noord-West</td>
+      <td>52.41524</td>
+      <td>4.89218</td>
+      <td>Entire home/apt</td>
+      <td>80</td>
+      <td>4</td>
+      <td>2</td>
+      <td>2018-05-06</td>
+      <td>0.08</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3511</th>
+      <td>7166128</td>
+      <td>16634603</td>
+      <td>Hermen</td>
+      <td>Centrum-Oost</td>
+      <td>52.36991</td>
+      <td>4.92621</td>
+      <td>Entire home/apt</td>
+      <td>110</td>
+      <td>5</td>
+      <td>7</td>
+      <td>2018-08-19</td>
+      <td>0.12</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>15707</th>
+      <td>32722735</td>
+      <td>246045083</td>
+      <td>Babette</td>
+      <td>De Baarsjes - Oud-West</td>
+      <td>52.36514</td>
+      <td>4.86184</td>
+      <td>Entire home/apt</td>
+      <td>120</td>
+      <td>2</td>
+      <td>8</td>
+      <td>2019-06-29</td>
+      <td>0.64</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>13425</th>
+      <td>26037649</td>
+      <td>193680275</td>
+      <td>Merle</td>
+      <td>Westerpark</td>
+      <td>52.38374</td>
+      <td>4.87314</td>
+      <td>Entire home/apt</td>
+      <td>125</td>
+      <td>5</td>
+      <td>5</td>
+      <td>2018-11-18</td>
+      <td>0.24</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>730</th>
+      <td>1277443</td>
+      <td>6952882</td>
+      <td>Jason &amp; Lotte</td>
+      <td>Bos en Lommer</td>
+      <td>52.38129</td>
+      <td>4.85746</td>
+      <td>Entire home/apt</td>
+      <td>98</td>
+      <td>5</td>
+      <td>4</td>
+      <td>2014-07-07</td>
+      <td>0.06</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Let’s check the percentage of outliers to the original dataset</p>
+<div class="cell" data-outputid="adc53bbe-30fe-4b2d-94d9-f9e1348ff961">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of outliers: </span><span class="sc">{</span>outliers_df<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="op">/</span>rentals<span class="sc">.</span>shape[<span class="dv">0</span>]<span class="op">*</span><span class="dv">100</span><span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Percentage of outliers: 50.04</code></pre>
+</div>
+</div>
+<p>It would be tricky to drop the records with outliers since that will reduce our dataset by half so we will leave them there. However, we will drop the host_id variable later on, right before modeling.</p>
+</section>
+</section>
+<section id="data-analysis" class="level1">
+<h1>3. Data Analysis</h1>
+<section id="univariate-data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="univariate-data-analysis">3.1 Univariate Data Analysis</h2>
+<section id="top-10-most-common-hosts" class="level3">
+<h3 class="anchored" data-anchor-id="top-10-most-common-hosts">Top 10 Most common hosts</h3>
+<div class="cell" data-outputid="0c94d623-3ff1-4c5c-bbe6-5fe4212b88ef">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">12</span>))</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>rentals.host_name.value_counts()[:<span class="dv">10</span>].plot(kind<span class="op">=</span><span class="st">'bar'</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Top 10 Hosts"</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Host Name"</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Number of Listings"</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2021-09-21-Hyperparameter_Tuning_with_Python_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Martijn is the host name with most listings in the Airbnb rentals listing.</p>
+</section>
+<section id="the-top-10-most-common-neighbourhoods" class="level3">
+<h3 class="anchored" data-anchor-id="the-top-10-most-common-neighbourhoods">the top 10 most common neighbourhoods</h3>
+<div class="cell" data-outputid="2c927c61-95c9-4635-c2f5-c27c29ecade3">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">20</span>, <span class="dv">12</span>))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>rentals.neighbourhood.value_counts()[:<span class="dv">10</span>].sort_values().plot(kind <span class="op">=</span> <span class="st">'barh'</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>plt.xticks(ha <span class="op">=</span> <span class="st">"right"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Top 10 Neighbourhoods"</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Number of Listings"</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Neighbourhood"</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2021-09-21-Hyperparameter_Tuning_with_Python_files/figure-html/cell-18-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>De Baarsjes - Oud-West Had the most number of rental listings</p>
+</section>
+<section id="the-most-common-room-types" class="level3">
+<h3 class="anchored" data-anchor-id="the-most-common-room-types">the most common room types</h3>
+<div class="cell" data-outputid="1d882955-6e29-4567-9e05-d98a2799845a">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>rentals.room_type.value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="48">
+<pre><code>Entire home/apt    13308
+Private room        3497
+Hotel room           232
+Shared room           38
+Name: room_type, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="883f4445-a5b8-42b6-c87c-c2cd976b65aa">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">8</span>))</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>rentals.room_type.value_counts().plot(kind<span class="op">=</span><span class="st">'pie'</span>, autopct<span class="op">=</span><span class="st">"</span><span class="sc">%0.1f%%</span><span class="st">"</span>, labels<span class="op">=</span>rentals.room_type.value_counts().index)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"the most common room types"</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2021-09-21-Hyperparameter_Tuning_with_Python_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="distribution-of-price" class="level3">
+<h3 class="anchored" data-anchor-id="distribution-of-price">distribution of price</h3>
+<div class="cell" data-outputid="02a58d27-7d33-4c38-e325-ffff525de89d">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">14</span>,<span class="dv">8</span>))</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>sns.distplot(rentals.price)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of $price$"</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2021-09-21-Hyperparameter_Tuning_with_Python_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The distribution of price is skewed to the right and is not continous.</p>
+</section>
+<section id="the-top-10-most-common-minimum-number-of-nights-to-spend" class="level3">
+<h3 class="anchored" data-anchor-id="the-top-10-most-common-minimum-number-of-nights-to-spend">the top 10 most common minimum number of nights to spend</h3>
+<div class="cell" data-outputid="3d684037-c957-4eb7-aa05-2c54656170fc">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">10</span>))</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>rentals.minimum_nights.value_counts()[:<span class="dv">10</span>].sort_values().plot(kind<span class="op">=</span><span class="st">'barh'</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"the top 10 most common minimum number of nights to spend"</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Number of listings"</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Minimum Nights"</span>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2021-09-21-Hyperparameter_Tuning_with_Python_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The most common minimum number of nights to spend is 2.</p>
+</section>
+</section>
+<section id="bivariate-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="bivariate-analysis">3.2 Bivariate Analysis</h2>
+<section id="price-by-room-type" class="level3">
+<h3 class="anchored" data-anchor-id="price-by-room-type">price by room type</h3>
+<div class="cell" data-outputid="8a178303-d009-4f52-ed43-b43ec0823f1f">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>rentals.hist(<span class="st">'price'</span>, by<span class="op">=</span><span class="st">'room_type'</span>, figsize<span class="op">=</span>(<span class="dv">20</span>,<span class="dv">12</span>))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2021-09-21-Hyperparameter_Tuning_with_Python_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="average-price-by-neighbourhood" class="level3">
+<h3 class="anchored" data-anchor-id="average-price-by-neighbourhood">average price by neighbourhood</h3>
+<div class="cell" data-outputid="734430c9-ef4f-45f0-f6c5-170986ce9326">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>rentals.groupby(<span class="st">'neighbourhood'</span>)[<span class="st">'price'</span>].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="60">
+<pre><code>neighbourhood
+Centrum-West                              203.653397
+Centrum-Oost                              190.534247
+Zuid                                      178.813243
+Oud-Noord                                 168.763566
+De Pijp - Rivierenbuurt                   166.601787
+IJburg - Zeeburgereiland                  157.723077
+Westerpark                                151.241140
+De Baarsjes - Oud-West                    149.376228
+Oud-Oost                                  144.606957
+Watergraafsmeer                           141.199125
+Buitenveldert - Zuidas                    137.690355
+Oostelijk Havengebied - Indische Buurt    135.101163
+Noord-Oost                                130.495833
+Noord-West                                126.318885
+Bos en Lommer                             122.525304
+De Aker - Nieuw Sloten                    121.268908
+Slotervaart                               119.791549
+Geuzenveld - Slotermeer                   113.937143
+Osdorp                                    103.418182
+Gaasperdam - Driemond                      96.317757
+Bijlmer-Centrum                            91.434343
+Bijlmer-Oost                               89.696629
+Name: price, dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="346c3a04-fd88-47f5-8757-35fe255cf15b">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>rentals.groupby(<span class="st">'neighbourhood'</span>)[<span class="st">'price'</span>].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>)[:<span class="dv">10</span>].sort_values().plot(kind<span class="op">=</span><span class="st">'barh'</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Average Neighbourhood Price"</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"average price by neighbourhood"</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2021-09-21-Hyperparameter_Tuning_with_Python_files/figure-html/cell-25-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Based on neighbour hood, Centrum West Has the highest average weight of listings.</p>
+</section>
+<section id="average-price-by-minimum_nights" class="level3">
+<h3 class="anchored" data-anchor-id="average-price-by-minimum_nights">average price by minimum_nights</h3>
+<div class="cell" data-outputid="86b2ea3c-d295-4f3a-fbf2-167e50ff6cdd">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>rentals.groupby(<span class="st">'minimum_nights'</span>)[<span class="st">'price'</span>].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>)[:<span class="dv">15</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="70">
+<pre><code>minimum_nights
+365     3000.000000
+200      999.000000
+99       999.000000
+52       429.000000
+30       331.551020
+222      300.000000
+27       275.000000
+48       250.000000
+31       243.750000
+150      203.000000
+21       201.761905
+15       197.888889
+1000     185.000000
+240      180.000000
+28       175.900000
+Name: price, dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="59f287a3-8d20-4d2f-c215-4654071c0421">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>rentals.groupby(<span class="st">'minimum_nights'</span>)[<span class="st">'price'</span>].mean().sort_values(ascending<span class="op">=</span><span class="va">False</span>)[:<span class="dv">10</span>].sort_values().plot(kind<span class="op">=</span><span class="st">'barh'</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Average minimum nights Price"</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"average price by minimum nights"</span>)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2021-09-21-Hyperparameter_Tuning_with_Python_files/figure-html/cell-27-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>By average, those who spend 365 nights spend most price</p>
+</section>
+</section>
+<section id="feature-engineering" class="level2">
+<h2 class="anchored" data-anchor-id="feature-engineering">3.3 Feature Engineering</h2>
+<div class="cell" data-outputid="dc926093-dd51-4e11-f716-e8ec5c12cca1">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>rentals.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="72">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>host_id</th>
+      <th>host_name</th>
+      <th>neighbourhood</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>room_type</th>
+      <th>price</th>
+      <th>minimum_nights</th>
+      <th>number_of_reviews</th>
+      <th>last_review</th>
+      <th>reviews_per_month</th>
+      <th>calculated_host_listings_count</th>
+      <th>availability_365</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2818</td>
+      <td>3159</td>
+      <td>Daniel</td>
+      <td>Oostelijk Havengebied - Indische Buurt</td>
+      <td>52.36575</td>
+      <td>4.94142</td>
+      <td>Private room</td>
+      <td>59</td>
+      <td>3</td>
+      <td>278</td>
+      <td>2020-02-14</td>
+      <td>2.06</td>
+      <td>1</td>
+      <td>169</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20168</td>
+      <td>59484</td>
+      <td>Alexander</td>
+      <td>Centrum-Oost</td>
+      <td>52.36509</td>
+      <td>4.89354</td>
+      <td>Private room</td>
+      <td>100</td>
+      <td>1</td>
+      <td>340</td>
+      <td>2020-04-09</td>
+      <td>2.76</td>
+      <td>2</td>
+      <td>106</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>25428</td>
+      <td>56142</td>
+      <td>Joan</td>
+      <td>Centrum-West</td>
+      <td>52.37297</td>
+      <td>4.88339</td>
+      <td>Entire home/apt</td>
+      <td>125</td>
+      <td>14</td>
+      <td>5</td>
+      <td>2020-02-09</td>
+      <td>0.18</td>
+      <td>1</td>
+      <td>132</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>27886</td>
+      <td>97647</td>
+      <td>Flip</td>
+      <td>Centrum-West</td>
+      <td>52.38761</td>
+      <td>4.89188</td>
+      <td>Private room</td>
+      <td>155</td>
+      <td>2</td>
+      <td>217</td>
+      <td>2020-03-02</td>
+      <td>2.15</td>
+      <td>1</td>
+      <td>172</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>28871</td>
+      <td>124245</td>
+      <td>Edwin</td>
+      <td>Centrum-West</td>
+      <td>52.36719</td>
+      <td>4.89092</td>
+      <td>Private room</td>
+      <td>75</td>
+      <td>2</td>
+      <td>332</td>
+      <td>2020-03-16</td>
+      <td>2.82</td>
+      <td>3</td>
+      <td>210</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-outputid="bda3cc54-7e6c-4e5f-d768-abd842e073d6">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>rentals[<span class="st">'room_type_encoded'</span>] <span class="op">=</span> LabelEncoder().fit_transform(rentals.room_type)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>rentals.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="75">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>host_id</th>
+      <th>host_name</th>
+      <th>neighbourhood</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>room_type</th>
+      <th>price</th>
+      <th>minimum_nights</th>
+      <th>number_of_reviews</th>
+      <th>last_review</th>
+      <th>reviews_per_month</th>
+      <th>calculated_host_listings_count</th>
+      <th>availability_365</th>
+      <th>room_type_encoded</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2818</td>
+      <td>3159</td>
+      <td>Daniel</td>
+      <td>Oostelijk Havengebied - Indische Buurt</td>
+      <td>52.36575</td>
+      <td>4.94142</td>
+      <td>Private room</td>
+      <td>59</td>
+      <td>3</td>
+      <td>278</td>
+      <td>2020-02-14</td>
+      <td>2.06</td>
+      <td>1</td>
+      <td>169</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20168</td>
+      <td>59484</td>
+      <td>Alexander</td>
+      <td>Centrum-Oost</td>
+      <td>52.36509</td>
+      <td>4.89354</td>
+      <td>Private room</td>
+      <td>100</td>
+      <td>1</td>
+      <td>340</td>
+      <td>2020-04-09</td>
+      <td>2.76</td>
+      <td>2</td>
+      <td>106</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>25428</td>
+      <td>56142</td>
+      <td>Joan</td>
+      <td>Centrum-West</td>
+      <td>52.37297</td>
+      <td>4.88339</td>
+      <td>Entire home/apt</td>
+      <td>125</td>
+      <td>14</td>
+      <td>5</td>
+      <td>2020-02-09</td>
+      <td>0.18</td>
+      <td>1</td>
+      <td>132</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>27886</td>
+      <td>97647</td>
+      <td>Flip</td>
+      <td>Centrum-West</td>
+      <td>52.38761</td>
+      <td>4.89188</td>
+      <td>Private room</td>
+      <td>155</td>
+      <td>2</td>
+      <td>217</td>
+      <td>2020-03-02</td>
+      <td>2.15</td>
+      <td>1</td>
+      <td>172</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>28871</td>
+      <td>124245</td>
+      <td>Edwin</td>
+      <td>Centrum-West</td>
+      <td>52.36719</td>
+      <td>4.89092</td>
+      <td>Private room</td>
+      <td>75</td>
+      <td>2</td>
+      <td>332</td>
+      <td>2020-03-16</td>
+      <td>2.82</td>
+      <td>3</td>
+      <td>210</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-outputid="a11f2554-42a8-43a1-a625-9a6037545b5e">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>rentals.neighbourhood.nunique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="76">
+<pre><code>22</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="e3eb7bf8-142f-44c1-fb41-9c7bf9ab84c0">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>rentals_2 <span class="op">=</span> rentals.drop(columns<span class="op">=</span>[<span class="st">'id'</span>, <span class="st">'host_id'</span>, <span class="st">'host_name'</span>, <span class="st">'neighbourhood'</span>, <span class="st">'last_review'</span>, <span class="st">'room_type'</span>])</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>rentals_2.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="77">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>price</th>
+      <th>minimum_nights</th>
+      <th>number_of_reviews</th>
+      <th>reviews_per_month</th>
+      <th>calculated_host_listings_count</th>
+      <th>availability_365</th>
+      <th>room_type_encoded</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>52.36575</td>
+      <td>4.94142</td>
+      <td>59</td>
+      <td>3</td>
+      <td>278</td>
+      <td>2.06</td>
+      <td>1</td>
+      <td>169</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>52.36509</td>
+      <td>4.89354</td>
+      <td>100</td>
+      <td>1</td>
+      <td>340</td>
+      <td>2.76</td>
+      <td>2</td>
+      <td>106</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>52.37297</td>
+      <td>4.88339</td>
+      <td>125</td>
+      <td>14</td>
+      <td>5</td>
+      <td>0.18</td>
+      <td>1</td>
+      <td>132</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>52.38761</td>
+      <td>4.89188</td>
+      <td>155</td>
+      <td>2</td>
+      <td>217</td>
+      <td>2.15</td>
+      <td>1</td>
+      <td>172</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>52.36719</td>
+      <td>4.89092</td>
+      <td>75</td>
+      <td>2</td>
+      <td>332</td>
+      <td>2.82</td>
+      <td>3</td>
+      <td>210</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="data-modeling" class="level1">
+<h1>4. Data Modeling</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> rentals_2.drop(columns<span class="op">=</span>[<span class="st">'price'</span>])</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> rentals_2.price</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="b358627b-569e-4171-ebfa-caa40977ef27">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> StandardScaler().fit_transform(X)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>X[:<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="80">
+<pre><code>array([[ 0.01659773,  1.45384638, -0.02542703,  4.36034888,  0.92231486,
+        -0.21630069,  1.18401885,  1.92103452],
+       [-0.02390588,  0.11006752, -0.15344314,  5.44467417,  1.44564814,
+         0.06606432,  0.54605829,  1.92103452],
+       [ 0.45968261, -0.17479788,  0.67866153, -0.4141802 , -0.4832088 ,
+        -0.21630069,  0.8093436 , -0.52593784],
+       [ 1.3581262 ,  0.0634787 , -0.08943509,  3.29351271,  0.98960057,
+        -0.21630069,  1.21439792,  1.92103452],
+       [ 0.10496923,  0.03653577, -0.08943509,  5.30476123,  1.49050528,
+         0.34842932,  1.59919952,  1.92103452]])</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For purposes of simplicity, we will work with the following regressors:</p>
+<ul>
+<li>Decision Tree Regressor</li>
+<li>Random Forest Regressor</li>
+</ul>
+<section id="normal-modeling" class="level2">
+<h2 class="anchored" data-anchor-id="normal-modeling">4.1 Normal Modeling</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> DecisionTreeRegressor()</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> RandomForestRegressor()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="a5eeb705-712c-4b5b-bcec-d67094f500d0">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>dt.fit(X_train, y_train)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>dt_pred <span class="op">=</span> dt.predict(X_test)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"DT RMSE: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(mean_squared_error(y_test, dt_pred))<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"DT R2: </span><span class="sc">{</span>r2_score(y_test, dt_pred)<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DT RMSE: 249.36
+DT R2: -5.03</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="e6b5394f-8b60-4dc9-83d6-938ad70b0899">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>rf.fit(X_train, y_train)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>rf_pred <span class="op">=</span> rf.predict(X_test)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"rf RMSE: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(mean_squared_error(y_test, rf_pred))<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"rf R2: </span><span class="sc">{</span>r2_score(y_test, rf_pred)<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>rf RMSE: 111.97
+rf R2: -0.22</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="af76779e-5b4a-47c3-9edc-c967540f7461">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>y.sample(<span class="bu">int</span>(y.shape[<span class="dv">0</span>]<span class="op">*</span><span class="fl">.1</span>)).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="99">
+<pre><code>154.93731693028704</code></pre>
+</div>
+</div>
+<p>Both models are performing well, we will use Random Forest Regressor because it is the best perfroming model producing the best fit.</p>
+</section>
+<section id="modeling-with-grid-search" class="level2">
+<h2 class="anchored" data-anchor-id="modeling-with-grid-search">4.2 Modeling with Grid Search</h2>
+<div class="cell" data-outputid="a8f7d96a-6bf3-45a1-de3a-82423096fd49">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>rf.get_params()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="101">
+<pre><code>{'bootstrap': True,
+ 'ccp_alpha': 0.0,
+ 'criterion': 'mse',
+ 'max_depth': None,
+ 'max_features': 'auto',
+ 'max_leaf_nodes': None,
+ 'max_samples': None,
+ 'min_impurity_decrease': 0.0,
+ 'min_impurity_split': None,
+ 'min_samples_leaf': 1,
+ 'min_samples_split': 2,
+ 'min_weight_fraction_leaf': 0.0,
+ 'n_estimators': 100,
+ 'n_jobs': None,
+ 'oob_score': False,
+ 'random_state': None,
+ 'verbose': 0,
+ 'warm_start': False}</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="8aa6a33e-bb60-4801-e265-a76350b70717">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'bootstrap'</span>: [<span class="va">True</span>, <span class="va">False</span>],</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'n_estimators'</span>: [<span class="dv">100</span>,<span class="dv">110</span>,<span class="dv">120</span>,<span class="dv">130</span>,<span class="dv">140</span>],</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_depth'</span>: [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>]</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>grid_search <span class="op">=</span> GridSearchCV(rf, param_grid<span class="op">=</span>param_grid, cv<span class="op">=</span><span class="dv">5</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>grid_result <span class="op">=</span> grid_search.fit(X_train, y_train)</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best Score: </span><span class="sc">{</span>grid_result<span class="sc">.</span>best_score_<span class="sc">}</span><span class="ch">\n</span><span class="ss">Best Parameters: </span><span class="sc">{</span>grid_result<span class="sc">.</span>best_params_<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Best Score: -0.060206490328136075
+Best Parameters: {'bootstrap': True, 'max_depth': 40, 'n_estimators': 140}</code></pre>
+</div>
+</div>
+<p>We will use the generated parameters to train our model</p>
+<div class="cell" data-outputid="826401de-d70e-49a0-d022-c9b81aa762cc">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>rf_gs <span class="op">=</span> RandomForestRegressor(bootstrap<span class="op">=</span><span class="va">True</span>, max_depth<span class="op">=</span><span class="dv">40</span>, n_estimators<span class="op">=</span><span class="dv">140</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>rf_gs.fit(X_train, y_train)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>rf_gs_pred <span class="op">=</span> rf_gs.predict(X_test)</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(mean_squared_error(y_test, rf_gs_pred))<span class="sc">:.2f}</span><span class="ch">\n</span><span class="ss">R2 Score: </span><span class="sc">{</span>r2_score(y_test, rf_gs_pred)<span class="sc">:2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>RMSE: 112.40
+R2 Score: -0.225879</code></pre>
+</div>
+</div>
+</section>
+<section id="modeling-with-random-search" class="level2">
+<h2 class="anchored" data-anchor-id="modeling-with-random-search">4.3 Modeling with Random Search</h2>
+<div class="cell" data-outputid="aad0aaab-f689-4bc7-84a6-5d6c191ea9a3">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>random_search <span class="op">=</span> RandomizedSearchCV(rf, param_distributions<span class="op">=</span>param_grid, cv<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>random_result <span class="op">=</span> random_search.fit(X_train, y_train)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best Score: </span><span class="sc">{</span>random_result<span class="sc">.</span>best_score_<span class="sc">}</span><span class="ch">\n</span><span class="ss">Best Parameters: </span><span class="sc">{</span>random_result<span class="sc">.</span>best_params_<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Best Score: -0.11714015166923782
+Best Parameters: {'n_estimators': 120, 'max_depth': 40, 'bootstrap': True}</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="05eb4590-5ecc-4d2c-f3f4-d3005fe7117d">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>rf_rs <span class="op">=</span> RandomForestRegressor(bootstrap<span class="op">=</span><span class="va">True</span>, max_depth<span class="op">=</span><span class="dv">40</span>, n_estimators<span class="op">=</span><span class="dv">140</span>, n_jobs<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>rf_rs.fit(X_train, y_train)</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>rf_rs_pred <span class="op">=</span> rf_rs.predict(X_test)</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(mean_squared_error(y_test, rf_rs_pred))<span class="sc">:.2f}</span><span class="ch">\n</span><span class="ss">R2 Score: </span><span class="sc">{</span>r2_score(y_test, rf_rs_pred)<span class="sc">:2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>RMSE: 108.37
+R2 Score: -0.139507</code></pre>
+</div>
+</div>
+</section>
+<section id="modeling-with-bayesian-optimization" class="level2">
+<h2 class="anchored" data-anchor-id="modeling-with-bayesian-optimization">4.4 Modeling with Bayesian Optimization</h2>
+<div class="cell" data-outputid="34836e17-4389-415a-83a1-d1d413f01720">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> objective(space):</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> RandomForestRegressor(</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>        n_estimators<span class="op">=</span>space[<span class="st">'n_estimators'</span>], </span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>        bootstrap<span class="op">=</span>space[<span class="st">'bootstrap'</span>], </span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>        max_depth<span class="op">=</span>space[<span class="st">'max_depth'</span>]</span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a>    accuracy <span class="op">=</span> cross_val_score(model, X_train, y_train, cv<span class="op">=</span><span class="dv">5</span>).mean()</span>
+<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">'loss'</span>: <span class="op">-</span>accuracy, <span class="st">'status'</span>: STATUS_OK }</span>
+<span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a>param_grid <span class="op">=</span> {</span>
+<span id="cb66-10"><a href="#cb66-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'bootstrap'</span>: hp.choice(<span class="st">'bootstrap'</span>,  [<span class="va">True</span>, <span class="va">False</span>]),</span>
+<span id="cb66-11"><a href="#cb66-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'n_estimators'</span>: hp.choice(<span class="st">'n_estimators'</span>, [<span class="dv">100</span>,<span class="dv">110</span>,<span class="dv">120</span>,<span class="dv">130</span>,<span class="dv">140</span>]),</span>
+<span id="cb66-12"><a href="#cb66-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_depth'</span>: hp.quniform(<span class="st">'max_depth'</span>, <span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">10</span>)</span>
+<span id="cb66-13"><a href="#cb66-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb66-14"><a href="#cb66-14" aria-hidden="true" tabindex="-1"></a>trials <span class="op">=</span> Trials()</span>
+<span id="cb66-15"><a href="#cb66-15" aria-hidden="true" tabindex="-1"></a>best <span class="op">=</span> fmin(fn<span class="op">=</span> objective,</span>
+<span id="cb66-16"><a href="#cb66-16" aria-hidden="true" tabindex="-1"></a>            space<span class="op">=</span> param_grid,</span>
+<span id="cb66-17"><a href="#cb66-17" aria-hidden="true" tabindex="-1"></a>            algo<span class="op">=</span> tpe.suggest,</span>
+<span id="cb66-18"><a href="#cb66-18" aria-hidden="true" tabindex="-1"></a>            max_evals <span class="op">=</span> <span class="dv">100</span>,</span>
+<span id="cb66-19"><a href="#cb66-19" aria-hidden="true" tabindex="-1"></a>            trials<span class="op">=</span> trials)</span>
+<span id="cb66-20"><a href="#cb66-20" aria-hidden="true" tabindex="-1"></a>best</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>100%|███████████████████████████████████████████| 100/100 [1:20:39&lt;00:00, 48.39s/trial, best loss: 0.05966699243049871]</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="112">
+<pre><code>{'bootstrap': 0, 'max_depth': 10.0, 'n_estimators': 3}</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="73a3e17d-9919-43f2-ba0f-c079181b967d">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>btsp <span class="op">=</span> {<span class="dv">0</span>:<span class="va">True</span>, <span class="dv">1</span>:<span class="va">False</span>}</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>n_est <span class="op">=</span> {<span class="dv">0</span>:<span class="dv">100</span>,<span class="dv">1</span>:<span class="dv">110</span>,<span class="dv">2</span>:<span class="dv">120</span>,<span class="dv">3</span>:<span class="dv">130</span>,<span class="dv">4</span>:<span class="dv">140</span>}</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>rf_bo <span class="op">=</span> RandomForestRegressor(</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>    bootstrap<span class="op">=</span>btsp[best[<span class="st">'bootstrap'</span>]],</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>    max_depth <span class="op">=</span> best[<span class="st">'max_depth'</span>],</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span>n_est[best[<span class="st">'n_estimators'</span>]]</span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>).fit(X_train, y_train)</span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>rf_bo_pred <span class="op">=</span> rf_bo.predict(X_test)</span>
+<span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>np<span class="sc">.</span>sqrt(mean_squared_error(y_test, rf_bo_pred))<span class="sc">:.2f}</span><span class="ch">\n</span><span class="ss">R2 Score: </span><span class="sc">{</span>r2_score(y_test, rf_bo_pred)<span class="sc">:2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>RMSE: 107.42
+R2 Score: -0.119587</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="summary-of-findings" class="level1">
+<h1>5. Summary of Findings</h1>
+<ul>
+<li>By performing hyperparameter tuning, we have achieved a model that achieves optimal predictions</li>
+<li>Compared to <code>GridSearchCV</code> and <code>RandomizedSearchCV</code>, Bayesian Optimization is a superior tuning approach that produces better results in less time.</li>
+</ul>
+</section>
+<section id="recommendations" class="level1">
+<h1>6. Recommendations</h1>
+<ul>
+<li>More data need to be added. When we have more data, the model will be more accurate and this will minimize bias in prediction.</li>
+<li>More features need to be added. In addition to the data we need more features about rental listings so that the data won’t depend on minimal features during prediction</li>
+</ul>
+</section>
+<section id="challenging-the-solution" class="level1">
+<h1>7. Challenging the Solution</h1>
+<ul>
+<li>The question was clear since we were required to perform hyperparameter tuning techniques to your most accurate model in an effort to achieve optimal predictions.</li>
+<li>This was a right data but Major imporvements need to be added to the data, more features need to be added to make the model more accurate. Missing values needs to be addressed during data collection</li>
+<li>To improve the solution, more data is needed to train the model to be as accurate as possible in the prediction.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

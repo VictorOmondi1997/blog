@@ -1,0 +1,2272 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Victor Omondi">
+<meta name="dcterms.date" content="2020-10-19">
+<meta name="description" content="exploring unsupervised learning through clustering using the SciPy library in Python">
+
+<title>blog - Cluster Analysis in Python</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/VictorOmondi1997"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/VictorOmondi197"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Cluster Analysis in Python</h1>
+                  <div>
+        <div class="description">
+          exploring unsupervised learning through clustering using the SciPy library in Python
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">cluster-analysis</div>
+                <div class="quarto-category">unsupervised-learning</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Victor Omondi </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 19, 2020</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries">Libraries</a></li>
+  <li><a href="#introduction-to-clustering" id="toc-introduction-to-clustering" class="nav-link" data-scroll-target="#introduction-to-clustering">Introduction to Clustering</a>
+  <ul class="collapse">
+  <li><a href="#unsupervised-learning-basics" id="toc-unsupervised-learning-basics" class="nav-link" data-scroll-target="#unsupervised-learning-basics">Unsupervised learning: basics</a>
+  <ul class="collapse">
+  <li><a href="#unsupervised-learning-in-real-world" id="toc-unsupervised-learning-in-real-world" class="nav-link" data-scroll-target="#unsupervised-learning-in-real-world">Unsupervised learning in real world</a></li>
+  <li><a href="#pokémon-sightings" id="toc-pokémon-sightings" class="nav-link" data-scroll-target="#pokémon-sightings">Pokémon sightings</a></li>
+  </ul></li>
+  <li><a href="#basics-of-cluster-analysis" id="toc-basics-of-cluster-analysis" class="nav-link" data-scroll-target="#basics-of-cluster-analysis">Basics of cluster analysis</a>
+  <ul class="collapse">
+  <li><a href="#pokémon-sightings-hierarchical-clustering" id="toc-pokémon-sightings-hierarchical-clustering" class="nav-link" data-scroll-target="#pokémon-sightings-hierarchical-clustering">Pokémon sightings: hierarchical clustering</a></li>
+  <li><a href="#pokémon-sightings-k-means-clustering" id="toc-pokémon-sightings-k-means-clustering" class="nav-link" data-scroll-target="#pokémon-sightings-k-means-clustering">Pokémon sightings: k-means clustering</a></li>
+  </ul></li>
+  <li><a href="#data-preparation-for-cluster-analysis" id="toc-data-preparation-for-cluster-analysis" class="nav-link" data-scroll-target="#data-preparation-for-cluster-analysis">Data preparation for cluster analysis</a>
+  <ul class="collapse">
+  <li><a href="#normalize-basic-list-data" id="toc-normalize-basic-list-data" class="nav-link" data-scroll-target="#normalize-basic-list-data">Normalize basic list data</a></li>
+  <li><a href="#visualize-normalized-data" id="toc-visualize-normalized-data" class="nav-link" data-scroll-target="#visualize-normalized-data">Visualize normalized data</a></li>
+  <li><a href="#normalization-of-small-numbers" id="toc-normalization-of-small-numbers" class="nav-link" data-scroll-target="#normalization-of-small-numbers">Normalization of small numbers</a></li>
+  <li><a href="#fifa-18-normalize-data" id="toc-fifa-18-normalize-data" class="nav-link" data-scroll-target="#fifa-18-normalize-data">FIFA 18: Normalize data</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#hierarchical-clustering" id="toc-hierarchical-clustering" class="nav-link" data-scroll-target="#hierarchical-clustering">Hierarchical Clustering</a>
+  <ul class="collapse">
+  <li><a href="#basics-of-hierarchical-clustering" id="toc-basics-of-hierarchical-clustering" class="nav-link" data-scroll-target="#basics-of-hierarchical-clustering">Basics of hierarchical clustering</a>
+  <ul class="collapse">
+  <li><a href="#hierarchical-clustering-ward-method" id="toc-hierarchical-clustering-ward-method" class="nav-link" data-scroll-target="#hierarchical-clustering-ward-method">Hierarchical clustering: ward method</a></li>
+  <li><a href="#hierarchical-clustering-single-method" id="toc-hierarchical-clustering-single-method" class="nav-link" data-scroll-target="#hierarchical-clustering-single-method">Hierarchical clustering: single method</a></li>
+  <li><a href="#hierarchical-clustering-complete-method" id="toc-hierarchical-clustering-complete-method" class="nav-link" data-scroll-target="#hierarchical-clustering-complete-method">Hierarchical clustering: complete method</a></li>
+  </ul></li>
+  <li><a href="#visualize-clusters" id="toc-visualize-clusters" class="nav-link" data-scroll-target="#visualize-clusters">Visualize clusters</a>
+  <ul class="collapse">
+  <li><a href="#visualize-clusters-with-matplotlib" id="toc-visualize-clusters-with-matplotlib" class="nav-link" data-scroll-target="#visualize-clusters-with-matplotlib">Visualize clusters with matplotlib</a></li>
+  <li><a href="#visualize-clusters-with-seaborn" id="toc-visualize-clusters-with-seaborn" class="nav-link" data-scroll-target="#visualize-clusters-with-seaborn">Visualize clusters with seaborn</a></li>
+  </ul></li>
+  <li><a href="#how-many-clusters" id="toc-how-many-clusters" class="nav-link" data-scroll-target="#how-many-clusters">How many clusters?</a>
+  <ul class="collapse">
+  <li><a href="#create-a-dendrogram" id="toc-create-a-dendrogram" class="nav-link" data-scroll-target="#create-a-dendrogram">Create a dendrogram</a></li>
+  </ul></li>
+  <li><a href="#limitations-of-hierarchical-clustering" id="toc-limitations-of-hierarchical-clustering" class="nav-link" data-scroll-target="#limitations-of-hierarchical-clustering">Limitations of hierarchical clustering</a>
+  <ul class="collapse">
+  <li><a href="#fifa-18-exploring-defenders" id="toc-fifa-18-exploring-defenders" class="nav-link" data-scroll-target="#fifa-18-exploring-defenders">FIFA 18: exploring defenders</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering">K-Means Clustering</a>
+  <ul class="collapse">
+  <li><a href="#basics-of-k-means-clustering" id="toc-basics-of-k-means-clustering" class="nav-link" data-scroll-target="#basics-of-k-means-clustering">Basics of k-means clustering</a>
+  <ul class="collapse">
+  <li><a href="#k-means-clustering-1" id="toc-k-means-clustering-1" class="nav-link" data-scroll-target="#k-means-clustering-1">K-means clustering</a></li>
+  <li><a href="#runtime-of-k-means-clustering" id="toc-runtime-of-k-means-clustering" class="nav-link" data-scroll-target="#runtime-of-k-means-clustering">Runtime of k-means clustering</a></li>
+  </ul></li>
+  <li><a href="#how-many-clusters-1" id="toc-how-many-clusters-1" class="nav-link" data-scroll-target="#how-many-clusters-1">How many clusters?</a>
+  <ul class="collapse">
+  <li><a href="#elbow-method-on-distinct-clusters" id="toc-elbow-method-on-distinct-clusters" class="nav-link" data-scroll-target="#elbow-method-on-distinct-clusters">Elbow method on distinct clusters</a></li>
+  </ul></li>
+  <li><a href="#limitations-of-k-means-clustering" id="toc-limitations-of-k-means-clustering" class="nav-link" data-scroll-target="#limitations-of-k-means-clustering">Limitations of k-means clustering</a>
+  <ul class="collapse">
+  <li><a href="#impact-of-seeds-on-distinct-clusters" id="toc-impact-of-seeds-on-distinct-clusters" class="nav-link" data-scroll-target="#impact-of-seeds-on-distinct-clusters">Impact of seeds on distinct clusters</a></li>
+  <li><a href="#uniform-clustering-patterns" id="toc-uniform-clustering-patterns" class="nav-link" data-scroll-target="#uniform-clustering-patterns">Uniform clustering patterns</a></li>
+  <li><a href="#fifa-18-defenders-revisited" id="toc-fifa-18-defenders-revisited" class="nav-link" data-scroll-target="#fifa-18-defenders-revisited">FIFA 18: defenders revisited</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#clustering-in-real-world" id="toc-clustering-in-real-world" class="nav-link" data-scroll-target="#clustering-in-real-world">Clustering in Real World</a>
+  <ul class="collapse">
+  <li><a href="#dominant-colors-in-images" id="toc-dominant-colors-in-images" class="nav-link" data-scroll-target="#dominant-colors-in-images">Dominant colors in images</a>
+  <ul class="collapse">
+  <li><a href="#extract-rgb-values-from-image" id="toc-extract-rgb-values-from-image" class="nav-link" data-scroll-target="#extract-rgb-values-from-image">Extract RGB values from image</a></li>
+  <li><a href="#display-dominant-colors" id="toc-display-dominant-colors" class="nav-link" data-scroll-target="#display-dominant-colors">Display dominant colors</a></li>
+  <li><a href="#document-clustering" id="toc-document-clustering" class="nav-link" data-scroll-target="#document-clustering">Document clustering</a></li>
+  <li><a href="#tf-idf-of-movie-plots" id="toc-tf-idf-of-movie-plots" class="nav-link" data-scroll-target="#tf-idf-of-movie-plots">TF-IDF of movie plots</a></li>
+  <li><a href="#top-terms-in-movie-clusters" id="toc-top-terms-in-movie-clusters" class="nav-link" data-scroll-target="#top-terms-in-movie-clusters">Top terms in movie clusters</a></li>
+  </ul></li>
+  <li><a href="#clustering-with-multiple-features" id="toc-clustering-with-multiple-features" class="nav-link" data-scroll-target="#clustering-with-multiple-features">Clustering with multiple features</a>
+  <ul class="collapse">
+  <li><a href="#clustering-with-many-features" id="toc-clustering-with-many-features" class="nav-link" data-scroll-target="#clustering-with-many-features">Clustering with many features</a></li>
+  <li><a href="#basic-checks-on-clusters" id="toc-basic-checks-on-clusters" class="nav-link" data-scroll-target="#basic-checks-on-clusters">Basic checks on clusters</a></li>
+  <li><a href="#fifa-18-what-makes-a-complete-player" id="toc-fifa-18-what-makes-a-complete-player" class="nav-link" data-scroll-target="#fifa-18-what-makes-a-complete-player">FIFA 18: what makes a complete player?</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<p>You have probably come across Google News, which automatically groups similar news articles under a topic. Have you ever wondered what process runs in the background to arrive at these groups? We will be exploring unsupervised learning through clustering using the SciPy library in Python. We will cover pre-processing of data and application of hierarchical and k-means clustering. We will explore player statistics from a popular football video game, FIFA 18. We will be able to quickly apply various clustering algorithms on data, visualize the clusters formed and analyze results.</p>
+</section>
+<section id="libraries" class="level1">
+<h1>Libraries</h1>
+<div class="cell" data-execution_count="111">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.cluster.hierarchy <span class="im">import</span> (linkage, </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                                     fcluster, </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                                     dendrogram)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.cluster.vq <span class="im">import</span> (kmeans, </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                              vq, </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                              whiten)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> word_tokenize</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.image <span class="im">as</span> img</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">"ggplot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="introduction-to-clustering" class="level1">
+<h1>Introduction to Clustering</h1>
+<p>Before we are ready to classify news articles, we need to be introduced to the basics of clustering. We will familiarize ourselves with a class of machine learning algorithms called unsupervised learning and clustering, one of the popular unsupervised learning algorithms. We will explore two popular clustering techniques - hierarchical clustering and k-means clustering. We will conclude with basic pre-processing steps before we start clustering data.</p>
+<section id="unsupervised-learning-basics" class="level2">
+<h2 class="anchored" data-anchor-id="unsupervised-learning-basics">Unsupervised learning: basics</h2>
+<blockquote class="blockquote">
+<h3 id="everyday-example-google-news" class="anchored">Everyday example: Google news</h3>
+<ul>
+<li>How does Google News classify articles?</li>
+<li>Unsupervised Learning Algorithm: <strong>Clustering</strong></li>
+<li>Match frequent terms in articles to find similarity</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="what-is-unsupervised-learning" class="anchored">What is unsupervised learning?</h3>
+<ul>
+<li>A group of machine learning algorithms that find patterns in data</li>
+<li>Data for algorithms has not been labeled, classified or characterized</li>
+<li>The objective of the algorithm is to interpret any structure in the data</li>
+<li>Common unsupervised learning algorithms: clustering, neural networks, anomaly detection</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="what-is-clustering" class="anchored">What is clustering?</h3>
+<ul>
+<li>The process of grouping items with similar characteristics</li>
+<li>Items in groups similar to each other than in other groups</li>
+<li><strong>Example</strong>: distance between points on a 2D plane</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="plotting-data-for-clustering---pokemon-sightings" class="anchored">Plotting data for clustering - Pokemon sightings</h3>
+</blockquote>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x_coordinates <span class="op">=</span> [<span class="dv">80</span>, <span class="dv">93</span>, <span class="dv">86</span>, <span class="dv">98</span>, <span class="dv">86</span>, <span class="dv">9</span>, <span class="dv">15</span>, <span class="dv">3</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">44</span>, <span class="dv">56</span>, <span class="dv">49</span>, <span class="dv">62</span>, <span class="dv">44</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y_coordinates <span class="op">=</span> [<span class="dv">87</span>, <span class="dv">96</span>, <span class="dv">95</span>, <span class="dv">92</span>, <span class="dv">92</span>, <span class="dv">57</span>, <span class="dv">49</span>, <span class="dv">47</span>, <span class="dv">59</span>, <span class="dv">55</span>, <span class="dv">25</span>, <span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">24</span>, <span class="dv">10</span>]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> sns.scatterplot(x_coordinates, y_coordinates)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Visualizing helps in determining how many clusters are in the data.</p>
+<section id="unsupervised-learning-in-real-world" class="level3">
+<h3 class="anchored" data-anchor-id="unsupervised-learning-in-real-world">Unsupervised learning in real world</h3>
+<p>Segmentation of learners at DataCamp based on courses they complete. The training data has no labels. As the training data has no labels, an unsupervised algorithm needs to be used to understand patterns in the data.</p>
+</section>
+<section id="pokémon-sightings" class="level3">
+<h3 class="anchored" data-anchor-id="pokémon-sightings">Pokémon sightings</h3>
+<p>There have been reports of sightings of rare, legendary Pokémon. We have been asked to investigate! We will plot the coordinates of sightings to find out where the Pokémon might be. The X and Y coordinates of the points are stored in list x_p and y_p, respectively</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x_p <span class="op">=</span> [<span class="dv">9</span>, <span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">23</span>, <span class="dv">26</span>, <span class="dv">25</span>, <span class="dv">23</span>, <span class="dv">21</span>, <span class="dv">23</span>, <span class="dv">23</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">23</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>y_p <span class="op">=</span> [<span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">29</span>, <span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">29</span>, <span class="dv">29</span>, <span class="dv">30</span>, <span class="dv">25</span>, <span class="dv">27</span>, <span class="dv">26</span>, <span class="dv">30</span>]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> sns.scatterplot(x_p, y_p)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Notice the areas where the sightings are dense. This indicates that there is not one, but two legendary Pokémon out there!</p>
+</section>
+</section>
+<section id="basics-of-cluster-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="basics-of-cluster-analysis">Basics of cluster analysis</h2>
+<blockquote class="blockquote">
+<h3 id="what-is-a-cluster" class="anchored">What is a cluster?</h3>
+<ul>
+<li>A group of items with similar characteristics</li>
+<li>Google News: articles where similar words andword associations appear together</li>
+<li>Customer Segments</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="clustering-algorithms" class="anchored">Clustering algorithms</h3>
+<ul>
+<li>Hierarchical clustering</li>
+<li>K means clustering</li>
+<li>Other clustering algorithms: DBSCAN, Gaussian Methods</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="hierarchical-clustering-in-scipy" class="anchored">Hierarchical clustering in SciPy</h3>
+</blockquote>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x_coordinates <span class="op">=</span> [<span class="fl">80.1</span>, <span class="fl">93.1</span>, <span class="fl">86.6</span>, <span class="fl">98.5</span>, <span class="fl">86.4</span>, <span class="fl">9.5</span>, <span class="fl">15.2</span>, <span class="fl">3.4</span>, <span class="fl">10.4</span>, <span class="fl">20.3</span>, <span class="fl">44.2</span>, <span class="fl">56.8</span>, <span class="fl">49.2</span>, <span class="fl">62.5</span>, <span class="fl">44.0</span>]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>y_coordinates <span class="op">=</span> [<span class="fl">87.2</span>, <span class="fl">96.1</span>, <span class="fl">95.6</span>, <span class="fl">92.4</span>, <span class="fl">92.4</span>, <span class="fl">57.7</span>, <span class="fl">49.4</span>, <span class="fl">47.3</span>, <span class="fl">59.1</span>, <span class="fl">55.5</span>, <span class="fl">25.6</span>, <span class="fl">2.1</span>, <span class="fl">10.9</span>, <span class="fl">24.1</span>, <span class="fl">10.3</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df_c <span class="op">=</span> pd.DataFrame({<span class="st">'x_cood'</span>:x_coordinates, <span class="st">'y_cood'</span>:y_coordinates})</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df_c.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>x_cood</th>
+      <th>y_cood</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>80.1</td>
+      <td>87.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>93.1</td>
+      <td>96.1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>86.6</td>
+      <td>95.6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>98.5</td>
+      <td>92.4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>86.4</td>
+      <td>92.4</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Z_c <span class="op">=</span> linkage(df_c, method<span class="op">=</span><span class="st">"ward"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_c[<span class="st">'cluster_labels'</span>] <span class="op">=</span> fcluster(Z_c, <span class="dv">3</span>, criterion<span class="op">=</span><span class="st">"maxclust"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> sns.scatterplot(data<span class="op">=</span>df_c, x<span class="op">=</span><span class="st">"x_cood"</span>, y<span class="op">=</span><span class="st">"y_cood"</span>, hue<span class="op">=</span><span class="st">"cluster_labels"</span>, palette<span class="op">=</span><span class="st">"RdGy"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<blockquote class="blockquote">
+<h3 id="k-means-clustering-in-scipy" class="anchored">K-means clustering in SciPy</h3>
+</blockquote>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_c <span class="op">=</span> pd.DataFrame({<span class="st">'x_cood'</span>:x_coordinates, <span class="st">'y_cood'</span>:y_coordinates})</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>centroids_c, _ <span class="op">=</span> kmeans(df_c, <span class="dv">3</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df_c[<span class="st">"cluster_labels"</span>], _ <span class="op">=</span> vq(df_c, centroids_c)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> sns.scatterplot(data<span class="op">=</span>df_c, x<span class="op">=</span><span class="st">"x_cood"</span>, y<span class="op">=</span><span class="st">"y_cood"</span>, hue<span class="op">=</span><span class="st">"cluster_labels"</span>, palette<span class="op">=</span><span class="st">"RdGy"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<section id="pokémon-sightings-hierarchical-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="pokémon-sightings-hierarchical-clustering">Pokémon sightings: hierarchical clustering</h3>
+<p>We are going to continue the investigation into the sightings of legendary Pokémon. In the scatter plot we identified two areas where Pokémon sightings were dense. This means that the points seem to separate into two clusters. We will form two clusters of the sightings using hierarchical clustering.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_p <span class="op">=</span> pd.DataFrame({<span class="st">'x'</span>:x_p, <span class="st">'y'</span>:y_p})</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_p.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>x</th>
+      <th>y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>9</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>6</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>‘x’ and ‘y’ are columns of X and Y coordinates of the locations of sightings, stored in a Pandas data frame,</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the linkage() function to compute distance</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Z_p <span class="op">=</span> linkage(df_p, <span class="st">'ward'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate cluster labels for each data point with two clusters</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>df_p[<span class="st">'cluster_labels'</span>] <span class="op">=</span> fcluster(Z_p, <span class="dv">2</span>, criterion<span class="op">=</span><span class="st">'maxclust'</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the points with seaborn</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">"x"</span>, y<span class="op">=</span><span class="st">"y"</span>, hue<span class="op">=</span><span class="st">"cluster_labels"</span>, data<span class="op">=</span>df_p)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>the resulting plot has an extra cluster labelled 0 in the legend.</p>
+</section>
+<section id="pokémon-sightings-k-means-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="pokémon-sightings-k-means-clustering">Pokémon sightings: k-means clustering</h3>
+<p>We are going to continue the investigation into the sightings of legendary Pokémon. We will use the same example of Pokémon sightings. We will form clusters of the sightings using k-means clustering.</p>
+<p>x and y are columns of X and Y coordinates of the locations of sightings, stored in a Pandas data frame</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df_p.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>x                 int64
+y                 int64
+cluster_labels    int32
+dtype: object</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df_p <span class="op">=</span> df_p.<span class="bu">apply</span>(<span class="kw">lambda</span> x: x.astype(<span class="st">"float"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute cluster centers</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>centroids_p, _ <span class="op">=</span> kmeans(df_p, <span class="dv">2</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign cluster labels to each data point</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>df_p[<span class="st">'cluster_labels'</span>], _ <span class="op">=</span> vq(df_p, centroids_p)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the points with seaborn</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">"x"</span>, y<span class="op">=</span><span class="st">"y"</span>, hue<span class="op">=</span><span class="st">"cluster_labels"</span>, data<span class="op">=</span>df_p)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="data-preparation-for-cluster-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="data-preparation-for-cluster-analysis">Data preparation for cluster analysis</h2>
+<blockquote class="blockquote">
+<h3 id="why-do-we-need-to-prepare-data-for-clustering" class="anchored">Why do we need to prepare data for clustering?</h3>
+<ul>
+<li>Variables have incomparable units (product dimensions in cm, price in $)</li>
+<li>Variables with same units have vastly different scales and variances (expenditures on cereals, travel)</li>
+<li>Data in raw form may lead to bias in clustering</li>
+<li>Clusters may be heavily dependent on one variable</li>
+<li><strong>Solution</strong>: normalization of individual variables</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="normalization-of-data" class="anchored">Normalization of data</h3>
+<ul>
+<li><strong>Normalization</strong>: process of rescaling data to a standard deviation of 1</li>
+</ul>
+</blockquote>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>x_new <span class="op">=</span> x <span class="op">/</span> std_dev(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>scaled_data <span class="op">=</span> whiten(data)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>scaled_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>array([2.72733941, 0.54546788, 1.63640365, 1.63640365, 1.09093577,
+       1.63640365, 1.63640365, 4.36374306, 0.54546788, 1.09093577,
+       1.09093577, 1.63640365, 2.72733941])</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<h3 id="illustration-normalization-of-data" class="anchored">Illustration: normalization of data</h3>
+</blockquote>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> sns.lineplot(x<span class="op">=</span><span class="bu">range</span>(<span class="bu">len</span>(data)), y<span class="op">=</span>data, label<span class="op">=</span><span class="st">"original"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> sns.lineplot(x<span class="op">=</span><span class="bu">range</span>(<span class="bu">len</span>(data)), y<span class="op">=</span>scaled_data, label<span class="op">=</span><span class="st">'scaled'</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<section id="normalize-basic-list-data" class="level3">
+<h3 class="anchored" data-anchor-id="normalize-basic-list-data">Normalize basic list data</h3>
+<p>let us try to normalize some data. <code>goals_for</code> is a list of goals scored by a football team in their last ten matches. Let us standardize the data using the <code>whiten()</code> function.</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>goals_for <span class="op">=</span> [<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">4</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the whiten() function to standardize the data</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>scaled_goals_for <span class="op">=</span> whiten(goals_for)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>scaled_goals_for</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>array([3.07692308, 2.30769231, 1.53846154, 2.30769231, 0.76923077,
+       0.76923077, 1.53846154, 0.        , 0.76923077, 3.07692308])</code></pre>
+</div>
+</div>
+<p>the scaled values have less variations in them.</p>
+</section>
+<section id="visualize-normalized-data" class="level3">
+<h3 class="anchored" data-anchor-id="visualize-normalized-data">Visualize normalized data</h3>
+<p>After normalizing the data, we can compare the scaled data to the original data to see the difference.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> sns.lineplot(x<span class="op">=</span><span class="bu">range</span>(<span class="bu">len</span>(goals_for)), y<span class="op">=</span>goals_for, label<span class="op">=</span><span class="st">"original"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> sns.lineplot(x<span class="op">=</span><span class="bu">range</span>(<span class="bu">len</span>(goals_for)), y<span class="op">=</span>scaled_goals_for, label<span class="op">=</span><span class="st">"scaled"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>scaled values have lower variations in them.</p>
+</section>
+<section id="normalization-of-small-numbers" class="level3">
+<h3 class="anchored" data-anchor-id="normalization-of-small-numbers">Normalization of small numbers</h3>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>rate_cuts <span class="op">=</span> [<span class="fl">0.0025</span>, <span class="fl">0.001</span>, <span class="op">-</span><span class="fl">0.0005</span>, <span class="op">-</span><span class="fl">0.001</span>, <span class="op">-</span><span class="fl">0.0005</span>, <span class="fl">0.0025</span>, <span class="op">-</span><span class="fl">0.001</span>, <span class="op">-</span><span class="fl">0.0015</span>, <span class="op">-</span><span class="fl">0.001</span>, <span class="fl">0.0005</span>]</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the whiten() function to standardize the data</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>scaled_rate_cuts <span class="op">=</span> whiten(rate_cuts)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot original data</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>plt.plot(rate_cuts, label<span class="op">=</span><span class="st">'original'</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot scaled data</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>plt.plot(scaled_rate_cuts, label<span class="op">=</span><span class="st">'scaled'</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>the original data are negligible as compared to the scaled data</p>
+</section>
+<section id="fifa-18-normalize-data" class="level3">
+<h3 class="anchored" data-anchor-id="fifa-18-normalize-data">FIFA 18: Normalize data</h3>
+<p>FIFA 18 is a football video game that was released in 2017 for PC and consoles. The dataset that we are about to work on contains data on the 1000 top individual players in the game. We will explore various features of the data as we move ahead.</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fifa <span class="op">=</span> pd.read_csv(<span class="st">"datasets/fifa.csv"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>fifa.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>ID</th>
+      <th>name</th>
+      <th>full_name</th>
+      <th>club</th>
+      <th>club_logo</th>
+      <th>special</th>
+      <th>age</th>
+      <th>league</th>
+      <th>birth_date</th>
+      <th>height_cm</th>
+      <th>...</th>
+      <th>prefers_cb</th>
+      <th>prefers_lb</th>
+      <th>prefers_lwb</th>
+      <th>prefers_ls</th>
+      <th>prefers_lf</th>
+      <th>prefers_lam</th>
+      <th>prefers_lcm</th>
+      <th>prefers_ldm</th>
+      <th>prefers_lcb</th>
+      <th>prefers_gk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>20801</td>
+      <td>Cristiano Ronaldo</td>
+      <td>C. Ronaldo dos Santos Aveiro</td>
+      <td>Real Madrid CF</td>
+      <td>https://cdn.sofifa.org/18/teams/243.png</td>
+      <td>2228</td>
+      <td>32</td>
+      <td>Spanish Primera División</td>
+      <td>1985-02-05</td>
+      <td>185.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>158023</td>
+      <td>L. Messi</td>
+      <td>Lionel Messi</td>
+      <td>FC Barcelona</td>
+      <td>https://cdn.sofifa.org/18/teams/241.png</td>
+      <td>2158</td>
+      <td>30</td>
+      <td>Spanish Primera División</td>
+      <td>1987-06-24</td>
+      <td>170.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>190871</td>
+      <td>Neymar</td>
+      <td>Neymar da Silva Santos Jr.</td>
+      <td>Paris Saint-Germain</td>
+      <td>https://cdn.sofifa.org/18/teams/73.png</td>
+      <td>2100</td>
+      <td>25</td>
+      <td>French Ligue 1</td>
+      <td>1992-02-05</td>
+      <td>175.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>176580</td>
+      <td>L. Suárez</td>
+      <td>Luis Suárez</td>
+      <td>FC Barcelona</td>
+      <td>https://cdn.sofifa.org/18/teams/241.png</td>
+      <td>2291</td>
+      <td>30</td>
+      <td>Spanish Primera División</td>
+      <td>1987-01-24</td>
+      <td>182.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>167495</td>
+      <td>M. Neuer</td>
+      <td>Manuel Neuer</td>
+      <td>FC Bayern Munich</td>
+      <td>https://cdn.sofifa.org/18/teams/21.png</td>
+      <td>1493</td>
+      <td>31</td>
+      <td>German Bundesliga</td>
+      <td>1986-03-27</td>
+      <td>193.0</td>
+      <td>...</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 185 columns</p>
+</div>
+</div>
+</div>
+<p>We will work with two columns, <code>eur_wage</code>, the wage of a player in Euros and <code>eur_value</code>, their current transfer market value.</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale wage and value</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>fifa[<span class="st">'scaled_wage'</span>] <span class="op">=</span> whiten(fifa[<span class="st">'eur_wage'</span>])</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>fifa[<span class="st">'scaled_value'</span>] <span class="op">=</span> whiten(fifa[<span class="st">'eur_value'</span>])</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the two columns in a scatter plot</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>fifa.plot(x<span class="op">=</span><span class="st">"scaled_wage"</span>, y<span class="op">=</span><span class="st">"scaled_value"</span>, kind<span class="op">=</span><span class="st">'scatter'</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check mean and standard deviation of scaled values</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>fifa[[<span class="st">'scaled_wage'</span>, <span class="st">'scaled_value'</span>]].describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>scaled_wage</th>
+      <th>scaled_value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>1000.000000</td>
+      <td>1000.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>1.119812</td>
+      <td>1.306272</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.000500</td>
+      <td>1.000500</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>0.467717</td>
+      <td>0.730412</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.854794</td>
+      <td>1.022576</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>1.407184</td>
+      <td>1.542995</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>9.112425</td>
+      <td>8.984064</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>the scaled values have a standard deviation of 1.</p>
+</section>
+</section>
+</section>
+<section id="hierarchical-clustering" class="level1">
+<h1>Hierarchical Clustering</h1>
+<p>We willl focus on a popular clustering algorithm - hierarchical clustering - and its implementation in SciPy. In addition to the procedure to perform hierarchical clustering, it attempts to help you answer an important question - how many clusters are present in your data? We will conclude with a discussion on the limitations of hierarchical clustering and discuss considerations while using hierarchical clustering.</p>
+<section id="basics-of-hierarchical-clustering" class="level2">
+<h2 class="anchored" data-anchor-id="basics-of-hierarchical-clustering">Basics of hierarchical clustering</h2>
+<blockquote class="blockquote">
+<h3 id="creating-a-distance-matrix-using-linkage" class="anchored">Creating a distance matrix using linkage</h3>
+</blockquote>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>scipy.cluster.hierarchy.linkage(observations,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                                method<span class="op">=</span><span class="st">'single'</span>,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                                metric<span class="op">=</span><span class="st">'euclidean'</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                                optimal_ordering<span class="op">=</span><span class="va">False</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>method</code>: how to calculate the proximity of clusters</li>
+<li><code>metric</code>: distance metric</li>
+<li><code>optimal_ordering</code>: order data points</li>
+</ul>
+<blockquote class="blockquote">
+<h3 id="which-method-should-use" class="anchored">Which method should use?</h3>
+<ul>
+<li><strong>single</strong>: based on two closest objects</li>
+<li><strong>complete</strong>: based on two farthest objects</li>
+<li><strong>average</strong>: based on the arithmetic mean of all objects</li>
+<li><strong>centroid</strong>: based on the geometric mean of all objects</li>
+<li><strong>median</strong>: based on the median of all objects</li>
+<li><strong>ward</strong>: based on the sum of squares</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="create-cluster-labels-with-fcluster" class="anchored">Create cluster labels with fcluster</h3>
+</blockquote>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>scipy.cluster.hierarchy.fcluster(distance_matrix,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                                 num_clusters,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                                 criterion</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>distance_matrix</code>: output of <code>linkage()</code> method</li>
+<li><code>num_clusters</code>: number of clusters</li>
+<li><code>criterion</code>: how to decide thresholds to form clusters</li>
+</ul>
+<blockquote class="blockquote">
+<h3 id="final-thoughts-on-selecting-a-method" class="anchored">Final thoughts on selecting a method</h3>
+<ul>
+<li>No one right method for all</li>
+<li>Need to carefully understand the distribution of data</li>
+</ul>
+</blockquote>
+<section id="hierarchical-clustering-ward-method" class="level3">
+<h3 class="anchored" data-anchor-id="hierarchical-clustering-ward-method">Hierarchical clustering: ward method</h3>
+<p>It is time for Comic-Con! Comic-Con is an annual comic-based convention held in major cities in the world. We have the data of last year’s footfall, the number of people at the convention ground at a given time. We would like to decide the location of the stall to maximize sales. Using the ward method, we’ll apply hierarchical clustering to find the two points of attraction in the area.</p>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>comic_con <span class="op">=</span> pd.read_csv(<span class="st">"datasets/comic_con.csv"</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>comic_con.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>x_coordinate</th>
+      <th>y_coordinate</th>
+      <th>x_scaled</th>
+      <th>y_scaled</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>17</td>
+      <td>4</td>
+      <td>0.509349</td>
+      <td>0.090010</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>20</td>
+      <td>6</td>
+      <td>0.599234</td>
+      <td>0.135015</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>35</td>
+      <td>0</td>
+      <td>1.048660</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>14</td>
+      <td>0</td>
+      <td>0.419464</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>37</td>
+      <td>4</td>
+      <td>1.108583</td>
+      <td>0.090010</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the linkage() function</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>distance_matrix_cc <span class="op">=</span> linkage(comic_con[[<span class="st">'x_scaled'</span>, <span class="st">'y_scaled'</span>]], method <span class="op">=</span> <span class="st">"ward"</span>, metric <span class="op">=</span> <span class="st">'euclidean'</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign cluster labels</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>comic_con[<span class="st">'cluster_labels'</span>] <span class="op">=</span> fcluster(distance_matrix_cc, <span class="dv">2</span>, criterion<span class="op">=</span><span class="st">'maxclust'</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot clusters</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'x_scaled'</span>, y<span class="op">=</span><span class="st">'y_scaled'</span>, </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>                hue<span class="op">=</span><span class="st">'cluster_labels'</span>, data <span class="op">=</span> comic_con)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>the two clusters correspond to the points of attractions in the figure towards the bottom (a stage) and the top right (an interesting stall).</p>
+</section>
+<section id="hierarchical-clustering-single-method" class="level3">
+<h3 class="anchored" data-anchor-id="hierarchical-clustering-single-method">Hierarchical clustering: single method</h3>
+<p>Let us use the same footfall dataset and check if any changes are seen if we use a different method for clustering.</p>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the linkage() function</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>distance_matrix_cc <span class="op">=</span> linkage(comic_con[[<span class="st">'x_scaled'</span>, <span class="st">'y_scaled'</span>]], method <span class="op">=</span> <span class="st">"single"</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign cluster labels</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>comic_con[<span class="st">'cluster_labels'</span>] <span class="op">=</span> fcluster(distance_matrix_cc, <span class="dv">2</span>, criterion<span class="op">=</span><span class="st">"maxclust"</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot clusters</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'x_scaled'</span>, y<span class="op">=</span><span class="st">'y_scaled'</span>, </span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>                hue<span class="op">=</span><span class="st">'cluster_labels'</span>, data <span class="op">=</span> comic_con)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>the clusters formed are not different from the ones created using the ward method.</p>
+</section>
+<section id="hierarchical-clustering-complete-method" class="level3">
+<h3 class="anchored" data-anchor-id="hierarchical-clustering-complete-method">Hierarchical clustering: complete method</h3>
+<p>For the third and final time, let us use the same footfall dataset and check if any changes are seen if we use a different method for clustering.</p>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the linkage() function</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>distance_matrix_cc <span class="op">=</span> linkage(comic_con[[<span class="st">'x_scaled'</span>, <span class="st">'y_scaled'</span>]], method<span class="op">=</span><span class="st">"complete"</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign cluster labels</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>comic_con[<span class="st">'cluster_labels'</span>] <span class="op">=</span> fcluster(distance_matrix_cc, <span class="dv">2</span>, criterion<span class="op">=</span><span class="st">"maxclust"</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot clusters</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'x_scaled'</span>, y<span class="op">=</span><span class="st">'y_scaled'</span>, </span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>                hue<span class="op">=</span><span class="st">'cluster_labels'</span>, data <span class="op">=</span> comic_con)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-24-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Coincidentally, the clusters formed are not different from the ward or single methods.</p>
+</section>
+</section>
+<section id="visualize-clusters" class="level2">
+<h2 class="anchored" data-anchor-id="visualize-clusters">Visualize clusters</h2>
+<blockquote class="blockquote">
+<h3 id="why-visualize-clusters" class="anchored">Why visualize clusters?</h3>
+<ul>
+<li>Try to make sense of the clusters formed</li>
+<li>An additional step in validation of clusters</li>
+<li>Spot trends in data</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="an-introduction-to-seaborn" class="anchored">An introduction to seaborn</h3>
+<ul>
+<li><code>seaborn</code>: a Python data visualization library based on matplotlib</li>
+<li>Has better, easily modiable aesthetics than matplotlib!</li>
+<li>Contains functions that make data visualization tasks easy in the context of data analytics</li>
+<li>Use case for clustering: <code>hue</code> parameter for plots</li>
+</ul>
+</blockquote>
+<section id="visualize-clusters-with-matplotlib" class="level3">
+<h3 class="anchored" data-anchor-id="visualize-clusters-with-matplotlib">Visualize clusters with matplotlib</h3>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot a scatter plot</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>comic_con.plot.scatter(x<span class="op">=</span><span class="st">'x_scaled'</span>,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                       y<span class="op">=</span><span class="st">'y_scaled'</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                       c<span class="op">=</span><span class="st">'cluster_labels'</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-25-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="visualize-clusters-with-seaborn" class="level3">
+<h3 class="anchored" data-anchor-id="visualize-clusters-with-seaborn">Visualize clusters with seaborn</h3>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot a scatter plot using seaborn</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'x_scaled'</span>, </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                y<span class="op">=</span><span class="st">'y_scaled'</span>, </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                hue<span class="op">=</span><span class="st">'cluster_labels'</span>, </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                data <span class="op">=</span> comic_con)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-26-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="how-many-clusters" class="level2">
+<h2 class="anchored" data-anchor-id="how-many-clusters">How many clusters?</h2>
+<blockquote class="blockquote">
+<h3 id="introduction-to-dendrograms" class="anchored">Introduction to dendrograms</h3>
+<ul>
+<li>Strategy till now - decide clusters on visual inspection</li>
+<li>Dendrograms help in showing progressions as clusters are merged</li>
+<li>A dendrogram is a branching diagram that demonstrates how each cluster is composed by branching out into its child nodes</li>
+</ul>
+</blockquote>
+<section id="create-a-dendrogram" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-dendrogram">Create a dendrogram</h3>
+<p>Dendrograms are branching diagrams that show the merging of clusters as we move through the distance matrix. Let us use the Comic Con footfall data to create a dendrogram.</p>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dendrogram</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>dn_cc <span class="op">=</span> dendrogram(distance_matrix_cc)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the dendogram</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-27-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>the top two clusters are farthest away from each other.</p>
+</section>
+</section>
+<section id="limitations-of-hierarchical-clustering" class="level2">
+<h2 class="anchored" data-anchor-id="limitations-of-hierarchical-clustering">Limitations of hierarchical clustering</h2>
+<blockquote class="blockquote">
+<h3 id="measuring-speed-in-hierarchical-clustering" class="anchored">Measuring speed in hierarchical clustering</h3>
+<ul>
+<li><code>timeit</code> module</li>
+<li>Measure the speed of <code>.linkage()</code> method</li>
+<li>Use randomly generated points</li>
+<li>Run various iterations to extrapolate</li>
+</ul>
+</blockquote>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>points_s <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>df_s <span class="op">=</span> pd.DataFrame({<span class="st">'x'</span>:np.random.sample(points_s),</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'y'</span>:np.random.sample(points_s)})</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit linkage(df_s[[<span class="st">'x'</span>, <span class="st">'y'</span>]], method<span class="op">=</span><span class="st">'ward'</span>, metric<span class="op">=</span><span class="st">'euclidean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2 ms ± 312 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<h3 id="comparison-of-runtime-of-linkage-method" class="anchored">Comparison of runtime of linkage method</h3>
+<ul>
+<li>Increasing runtime with data points</li>
+<li>Quadratic increase of runtime</li>
+<li>Not feasible for large datasets</li>
+</ul>
+</blockquote>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit linkage(comic_con[[<span class="st">'x_scaled'</span>, <span class="st">'y_scaled'</span>]], method<span class="op">=</span><span class="st">"complete"</span>, metric<span class="op">=</span><span class="st">'euclidean'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1.47 ms ± 70 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)</code></pre>
+</div>
+</div>
+<section id="fifa-18-exploring-defenders" class="level3">
+<h3 class="anchored" data-anchor-id="fifa-18-exploring-defenders">FIFA 18: exploring defenders</h3>
+<p>In the FIFA 18 dataset, various attributes of players are present. Two such attributes are:</p>
+<ul>
+<li><em>sliding tackle</em>: a number between 0-99 which signifies how accurate a player is able to perform sliding tackles</li>
+<li><em>aggression</em>: a number between 0-99 which signifies the commitment and will of a player</li>
+</ul>
+<p>These are typically high in defense-minded players. We will perform clustering based on these attributes in the data.</p>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>fifa[[<span class="st">'sliding_tackle'</span>, <span class="st">'aggression'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="34">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>sliding_tackle</th>
+      <th>aggression</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>23</td>
+      <td>63</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>26</td>
+      <td>48</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>33</td>
+      <td>56</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>38</td>
+      <td>78</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>11</td>
+      <td>29</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>fifa[<span class="st">'scaled_sliding_tackle'</span>] <span class="op">=</span> whiten(fifa.sliding_tackle)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>fifa[<span class="st">'scaled_aggression'</span>] <span class="op">=</span> whiten(fifa.aggression)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the data into a hierarchical clustering algorithm</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>distance_matrix_f <span class="op">=</span> linkage(fifa[[<span class="st">'scaled_sliding_tackle'</span>, <span class="st">'scaled_aggression'</span>]], <span class="st">'ward'</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign cluster labels to each row of data</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>fifa[<span class="st">'cluster_labels'</span>] <span class="op">=</span> fcluster(distance_matrix_f, <span class="dv">3</span>, criterion<span class="op">=</span><span class="st">'maxclust'</span>)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display cluster centers of each cluster</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>fifa[[<span class="st">'scaled_sliding_tackle'</span>, <span class="st">'scaled_aggression'</span>, <span class="st">'cluster_labels'</span>]].groupby(<span class="st">'cluster_labels'</span>).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="37">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>scaled_sliding_tackle</th>
+      <th>scaled_aggression</th>
+    </tr>
+    <tr>
+      <th>cluster_labels</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>2.837810</td>
+      <td>4.280968</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.579966</td>
+      <td>1.766698</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.166930</td>
+      <td>3.415214</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatter plot through seaborn</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">"scaled_sliding_tackle"</span>, y<span class="op">=</span><span class="st">"scaled_aggression"</span>, hue<span class="op">=</span><span class="st">"cluster_labels"</span>, data<span class="op">=</span>fifa)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-33-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="k-means-clustering" class="level1">
+<h1>K-Means Clustering</h1>
+<p>Exploring a different clustering algorithm - k-means clustering - and its implementation in SciPy. K-means clustering overcomes the biggest drawback of hierarchical clustering. As dendrograms are specific to hierarchical clustering, we will discuss one method to find the number of clusters before running k-means clustering. We will conclude with a discussion on the limitations of k-means clustering and discuss considerations while using this algorithm.</p>
+<section id="basics-of-k-means-clustering" class="level2">
+<h2 class="anchored" data-anchor-id="basics-of-k-means-clustering">Basics of k-means clustering</h2>
+<blockquote class="blockquote">
+<h3 id="why-k-means-clustering" class="anchored">Why k-means clustering?</h3>
+<ul>
+<li>A critical drawback of hierarchical clustering: runtime</li>
+<li>K means runs signicantly faster on large datasets</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="step-1-generate-cluster-centers" class="anchored">Step 1: Generate cluster centers</h3>
+</blockquote>
+<div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>kmeans(obs, k_or_guess, <span class="bu">iter</span>, thresh, check_finite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>obs</code>: standardized observations</li>
+<li><code>k_or_guess</code>: number of clusters</li>
+<li><code>iter</code>: number of iterations (default: 20)</li>
+<li><code>thres</code>: threshold (default: 1e-05)</li>
+<li><code>check_finite</code>: whether to check if observations contain only finite numbers (default: True)</li>
+<li>Returns two objects:
+<ul>
+<li>cluster centers, distortion</li>
+</ul></li>
+</ul>
+<blockquote class="blockquote">
+<h3 id="step-2-generate-cluster-labels" class="anchored">Step 2: Generate cluster labels</h3>
+</blockquote>
+<div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>vq(obs, code_book, check_finite<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><code>obs</code>: standardized observations</li>
+<li><code>code_book</code>: cluster centers</li>
+<li><code>check_finite</code>: whether to check if observations contain only finite numbers (default: True)</li>
+<li>Returns two objects:
+<ul>
+<li>a list of cluster labels,</li>
+<li>a list of distortions</li>
+</ul></li>
+</ul>
+<blockquote class="blockquote">
+<h3 id="a-note-on-distortions" class="anchored">A note on distortions</h3>
+<ul>
+<li><code>kmeans</code> returns a single value of distortions</li>
+<li><code>vq</code> returns a list of distortions.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="running-k-means" class="anchored">Running k-means</h3>
+</blockquote>
+<section id="k-means-clustering-1" class="level3">
+<h3 class="anchored" data-anchor-id="k-means-clustering-1">K-means clustering</h3>
+<p>Let us use the Comic Con dataset and check how k-means clustering works on it.</p>
+<p>the two steps of k-means clustering:</p>
+<ul>
+<li>Define cluster centers through <code>kmeans()</code> function. It has two required arguments: observations and number of clusters.</li>
+<li>Assign cluster labels through the <code>vq()</code> function. It has two required arguments: observations and cluster centers.</li>
+</ul>
+<div class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate cluster centers</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>cluster_centers_cc, distortion_cc <span class="op">=</span> kmeans(comic_con[[<span class="st">'x_scaled'</span>, <span class="st">'y_scaled'</span>]], <span class="dv">2</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign cluster labels</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>comic_con[<span class="st">'cluster_labels'</span>], distortion_list_cc <span class="op">=</span> vq(comic_con[[<span class="st">'x_scaled'</span>, <span class="st">'y_scaled'</span>]], cluster_centers_cc)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot clusters</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'x_scaled'</span>, y<span class="op">=</span><span class="st">'y_scaled'</span>, </span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>                hue<span class="op">=</span><span class="st">'cluster_labels'</span>, data <span class="op">=</span> comic_con)</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-34-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="runtime-of-k-means-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="runtime-of-k-means-clustering">Runtime of k-means clustering</h3>
+<div class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit kmeans(fifa[[<span class="st">'scaled_sliding_tackle'</span>, <span class="st">'scaled_aggression'</span>]], <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>31.9 ms ± 3.4 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)</code></pre>
+</div>
+</div>
+<p>It took only about 5 seconds to run hierarchical clustering on this data, but only 50 milliseconds to run k-means clustering.</p>
+</section>
+</section>
+<section id="how-many-clusters-1" class="level2">
+<h2 class="anchored" data-anchor-id="how-many-clusters-1">How many clusters?</h2>
+<blockquote class="blockquote">
+<h3 id="how-to-find-the-right-k" class="anchored">How to find the right k?</h3>
+<ul>
+<li>No absolute method to find right number of clusters (k) in k-means clustering</li>
+<li>Elbow method</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="distortions-revisited" class="anchored">Distortions revisited</h3>
+<ul>
+<li><strong>Distortion</strong>: sum of squared distances of points from cluster centers</li>
+<li>Decreases with an increasing number ofclusters</li>
+<li>Becomes zero when the number of clusters equals the number of points</li>
+<li><strong>Elbow plot</strong>: line plot between cluster centers and distortion</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="elbow-method" class="anchored">Elbow method</h3>
+<ul>
+<li><strong>Elbow plot</strong>: plot of the number of clusters and distortion</li>
+<li>Elbow plot helps indicate number of clusters present in data</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="final-thoughts-on-using-the-elbow-method" class="anchored">Final thoughts on using the elbow method</h3>
+<ul>
+<li>Only gives an indication of optimal k (numbers of clusters)</li>
+<li>Does not always pinpoint how many k (numbers of clusters)</li>
+<li>Other methods: average silhouette and gap statistic</li>
+</ul>
+</blockquote>
+<section id="elbow-method-on-distinct-clusters" class="level3">
+<h3 class="anchored" data-anchor-id="elbow-method-on-distinct-clusters">Elbow method on distinct clusters</h3>
+<p>Let us use the comic con data set to see how the elbow plot looks on a data set with distinct, well-defined clusters.</p>
+<div class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>distortions_cc <span class="op">=</span> []</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>num_clusters_cc <span class="op">=</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">7</span>)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a list of distortions from the kmeans function</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> num_clusters_cc:</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>    cluster_centers_cc, distortion_cc <span class="op">=</span> kmeans(comic_con[[<span class="st">'x_scaled'</span>, <span class="st">'y_scaled'</span>]], i)</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>    distortions_cc.append(distortion_cc)</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame with two lists - num_clusters, distortions</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>elbow_plot_cc <span class="op">=</span> pd.DataFrame({<span class="st">'num_clusters'</span>: num_clusters_cc, <span class="st">'distortions'</span>: distortions_cc})</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Creat a line plot of num_clusters and distortions</span></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span><span class="st">"num_clusters"</span>, y<span class="op">=</span><span class="st">"distortions"</span>, data <span class="op">=</span> elbow_plot_cc)</span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>plt.xticks(num_clusters_cc)</span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-36-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>uniform_data <span class="op">=</span> pd.read_csv(<span class="st">"datasets/uniform_data.csv"</span>)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>distortions_u <span class="op">=</span> []</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>num_clusters_u <span class="op">=</span> <span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">7</span>)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a list of distortions from the kmeans function</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> num_clusters_u:</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>    cluster_centers_u, distortion_u <span class="op">=</span> kmeans(uniform_data[[<span class="st">'x_scaled'</span>, <span class="st">'y_scaled'</span>]], i)</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>    distortions_u.append(distortion_u)</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame with two lists - number of clusters and distortions</span></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>elbow_plot_u <span class="op">=</span> pd.DataFrame({<span class="st">'num_clusters'</span>: num_clusters_u, <span class="st">'distortions'</span>: distortions_u})</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Creat a line plot of num_clusters and distortions</span></span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span><span class="st">"num_clusters"</span>, y<span class="op">=</span><span class="st">"distortions"</span>, data<span class="op">=</span>elbow_plot_u)</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>plt.xticks(num_clusters_u)</span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-37-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>There is no well defined elbow in this plot!</p>
+</section>
+</section>
+<section id="limitations-of-k-means-clustering" class="level2">
+<h2 class="anchored" data-anchor-id="limitations-of-k-means-clustering">Limitations of k-means clustering</h2>
+<ul>
+<li>How to find the right K (number of clusters)?</li>
+<li>Impact of seeds</li>
+<li>Biased towards equal sized clusters</li>
+</ul>
+<blockquote class="blockquote">
+<h3 id="final-thoughts" class="anchored">Final thoughts</h3>
+<ul>
+<li>Each technique has its pros and cons</li>
+<li>Consider your data size and patterns before deciding on algorithm</li>
+<li>Clustering is exploratory phase of analysis</li>
+</ul>
+</blockquote>
+<section id="impact-of-seeds-on-distinct-clusters" class="level3">
+<h3 class="anchored" data-anchor-id="impact-of-seeds-on-distinct-clusters">Impact of seeds on distinct clusters</h3>
+<p>whether seeds impact the clusters in the Comic Con data, where the clusters are well-defined.</p>
+<div class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize seed</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">0</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run kmeans clustering</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>cluster_centers_cc, distortion_cc <span class="op">=</span> kmeans(comic_con[[<span class="st">'x_scaled'</span>, <span class="st">'y_scaled'</span>]], <span class="dv">2</span>)</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>comic_con[<span class="st">'cluster_labels'</span>], distortion_list_cc <span class="op">=</span> vq(comic_con[[<span class="st">'x_scaled'</span>, <span class="st">'y_scaled'</span>]], cluster_centers_cc)</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the scatterplot</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'x_scaled'</span>, y<span class="op">=</span><span class="st">'y_scaled'</span>, </span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>                hue<span class="op">=</span><span class="st">'cluster_labels'</span>, data <span class="op">=</span> comic_con)</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-38-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize seed</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>np.random.seed([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1000</span>])</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run kmeans clustering</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>cluster_centers_cc, distortion_cc <span class="op">=</span> kmeans(comic_con[[<span class="st">'x_scaled'</span>, <span class="st">'y_scaled'</span>]], <span class="dv">2</span>)</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>comic_con[<span class="st">'cluster_labels'</span>], distortion_list_cc <span class="op">=</span> vq(comic_con[[<span class="st">'x_scaled'</span>, <span class="st">'y_scaled'</span>]], cluster_centers_cc)</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the scatterplot</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'x_scaled'</span>, y<span class="op">=</span><span class="st">'y_scaled'</span>, </span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>                hue<span class="op">=</span><span class="st">'cluster_labels'</span>, data <span class="op">=</span> comic_con)</span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-39-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="uniform-clustering-patterns" class="level3">
+<h3 class="anchored" data-anchor-id="uniform-clustering-patterns">Uniform clustering patterns</h3>
+<p>let us look at the bias in k-means clustering towards the formation of uniform clusters. Let us use a mouse-like dataset for our next exercise. A mouse-like dataset is a group of points that resemble the head of a mouse: it has three clusters of points arranged in circles, one each for the face and two ears of a mouse.</p>
+<div class="cell" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>mouse <span class="op">=</span> pd.read_csv(<span class="st">"datasets/mouse.csv"</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate cluster centers</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>cluster_centers_m, distortion_m <span class="op">=</span> kmeans(mouse[[<span class="st">'x_scaled'</span>, <span class="st">'y_scaled'</span>]], <span class="dv">3</span>)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign cluster labels</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>mouse[<span class="st">'cluster_labels'</span>], distortion_list_m <span class="op">=</span> vq(mouse[[<span class="st">'x_scaled'</span>, <span class="st">'y_scaled'</span>]], cluster_centers_m)</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot clusters</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'x_scaled'</span>, y<span class="op">=</span><span class="st">'y_scaled'</span>, </span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>                hue<span class="op">=</span><span class="st">'cluster_labels'</span>, data <span class="op">=</span> mouse)</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-40-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>kmeans is unable to capture the three visible clusters clearly, and the two clusters towards the top have taken in some points along the boundary. This happens due to the underlying assumption in kmeans algorithm to minimize distortions which leads to clusters that are similar in terms of area.</p>
+</section>
+<section id="fifa-18-defenders-revisited" class="level3">
+<h3 class="anchored" data-anchor-id="fifa-18-defenders-revisited">FIFA 18: defenders revisited</h3>
+<p>In the FIFA 18 dataset, various attributes of players are present. Two such attributes are:</p>
+<ul>
+<li><strong>defending</strong>: a number which signifies the defending attributes of a player</li>
+<li><strong>physical</strong>: a number which signifies the physical attributes of a player</li>
+</ul>
+<p>These are typically defense-minded players. We will perform clustering based on these attributes in the data.</p>
+<div class="cell" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>fifa <span class="op">=</span> pd.read_csv(<span class="st">"datasets/fifa2.csv"</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up a random seed in numpy</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>np.random.seed([<span class="dv">1000</span>, <span class="dv">2000</span>])</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the data into a k-means algorithm</span></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>cluster_centers,_ <span class="op">=</span> kmeans(fifa[[<span class="st">'scaled_def'</span>, <span class="st">'scaled_phy'</span>]], <span class="dv">3</span>)</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign cluster labels</span></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>fifa[<span class="st">'cluster_labels'</span>],_ <span class="op">=</span> vq(fifa[[<span class="st">'scaled_def'</span>, <span class="st">'scaled_phy'</span>]], cluster_centers)</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Display cluster centers </span></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>fifa[[<span class="st">'scaled_def'</span>, <span class="st">'scaled_phy'</span>, <span class="st">'cluster_labels'</span>]].groupby(<span class="st">'cluster_labels'</span>).mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="49">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>scaled_def</th>
+      <th>scaled_phy</th>
+    </tr>
+    <tr>
+      <th>cluster_labels</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.743692</td>
+      <td>8.867419</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.865936</td>
+      <td>7.082691</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2.096297</td>
+      <td>8.944870</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatter plot through seaborn</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">"scaled_def"</span>, y<span class="op">=</span><span class="st">"scaled_phy"</span>, hue<span class="op">=</span><span class="st">"cluster_labels"</span>, data<span class="op">=</span>fifa)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-42-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>the seed has an impact on clustering as the data is uniformly distributed.</p>
+</section>
+</section>
+</section>
+<section id="clustering-in-real-world" class="level1">
+<h1>Clustering in Real World</h1>
+<p>Applying clustering knowledge to real-world problems. We will explore the process of finding dominant colors in an image, before moving on to the problem - clustering of news articles. We will conclude with a discussion on clustering with multiple variables, which makes it difficult to visualize all the data.</p>
+<section id="dominant-colors-in-images" class="level2">
+<h2 class="anchored" data-anchor-id="dominant-colors-in-images">Dominant colors in images</h2>
+<ul>
+<li>All images consist of pixelsEach pixel has three values: Red, Green and Blue</li>
+<li><strong>Pixel color</strong>: combination of these RGB values</li>
+<li>Perform k-means on standardized RGB values to find cluster centers</li>
+<li><strong>Uses</strong>: Identifying features in satellite images</li>
+</ul>
+<blockquote class="blockquote">
+<h3 id="tools-to-find-dominant-colors" class="anchored">Tools to find dominant colors</h3>
+<ul>
+<li>Convert image to pixels: <code>matplotlib.image.imread</code></li>
+<li>Display colors of cluster centers: <code>matplotlib.pyplot.imshow</code> <img src="datasets/sea.png" class="img-fluid" alt="sea"></li>
+</ul>
+</blockquote>
+<div class="cell" data-execution_count="95">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>image <span class="op">=</span> img.imread(<span class="st">"datasets/sea.jpg"</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>image.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="95">
+<pre><code>(390, 632, 3)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="96">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>image[<span class="dv">0</span>][:<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="96">
+<pre><code>array([[255, 255, 255]], dtype=uint8)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="97">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>plt.imshow(image)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="97">
+<pre><code>&lt;matplotlib.image.AxesImage at 0x2088a4426a0&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-45-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="91">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> []</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> []</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> []</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> row <span class="kw">in</span> image:</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> pixel <span class="kw">in</span> row:</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>        temp_r, temp_g, temp_b <span class="op">=</span> pixel</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>        r.append(temp_r)</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>        g.append(temp_g)</span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>        b.append(temp_b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<blockquote class="blockquote">
+<h3 id="data-frame-with-rgb-values" class="anchored">Data frame with RGB values</h3>
+</blockquote>
+<div class="cell" data-execution_count="92">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>pixels <span class="op">=</span> pd.DataFrame({<span class="st">'red'</span>:r, <span class="st">'green'</span>:g, <span class="st">'blue'</span>:b})</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>pixels.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="92">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>red</th>
+      <th>green</th>
+      <th>blue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>255</td>
+      <td>255</td>
+      <td>255</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>255</td>
+      <td>255</td>
+      <td>255</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>255</td>
+      <td>255</td>
+      <td>255</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>255</td>
+      <td>255</td>
+      <td>255</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>255</td>
+      <td>255</td>
+      <td>255</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<blockquote class="blockquote">
+<h3 id="create-an-elbow-plot" class="anchored">Create an elbow plot</h3>
+</blockquote>
+<div class="cell" data-execution_count="101">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>pixels[[<span class="st">'scaled_red'</span>, <span class="st">'scaled_blue'</span>, <span class="st">'scaled_green'</span>]] <span class="op">=</span> pixels[[<span class="st">'red'</span>, <span class="st">'blue'</span>, <span class="st">'green'</span>]].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x<span class="op">/</span>np.std(x)<span class="op">*</span><span class="dv">255</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>distortions_i <span class="op">=</span> []</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>num_clusters_i <span class="op">=</span> []</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> num_clusters_i:</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>    cluster_centers_i, distortion_i <span class="op">=</span> kmeans(pixels[[<span class="st">'scaled_red'</span>, <span class="st">'scaled_blue'</span>, <span class="st">'scaled_green'</span>]], i)</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>    distortions_i.append(distortion_i)</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>elbow_plot_i <span class="op">=</span> pd.DataFrame({<span class="st">'num_clusters'</span>:num_clusters_i, <span class="st">'distortions'</span>:distortions_i})</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> sns.lineplot(data<span class="op">=</span>elbow_plot_i, x<span class="op">=</span><span class="st">"num_clusters"</span>, y<span class="op">=</span><span class="st">'distortions'</span>)</span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>plt.xticks(num_clusters_i)</span>
+<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-48-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<section id="extract-rgb-values-from-image" class="level3">
+<h3 class="anchored" data-anchor-id="extract-rgb-values-from-image">Extract RGB values from image</h3>
+<p>There are broadly three steps to find the dominant colors in an image:</p>
+<ul>
+<li>Extract RGB values into three lists.</li>
+<li>Perform k-means clustering on scaled RGB values.</li>
+<li>Display the colors of cluster centers.</li>
+</ul>
+<div class="cell" data-execution_count="102">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>batman_df <span class="op">=</span> pd.read_csv(<span class="st">"datasets/batman.csv"</span>)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>batman_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="102">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>red</th>
+      <th>blue</th>
+      <th>green</th>
+      <th>scaled_red</th>
+      <th>scaled_blue</th>
+      <th>scaled_green</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>10</td>
+      <td>15</td>
+      <td>9</td>
+      <td>0.134338</td>
+      <td>0.179734</td>
+      <td>0.126269</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>14</td>
+      <td>49</td>
+      <td>36</td>
+      <td>0.188074</td>
+      <td>0.587133</td>
+      <td>0.505076</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>55</td>
+      <td>125</td>
+      <td>103</td>
+      <td>0.738862</td>
+      <td>1.497787</td>
+      <td>1.445077</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>35</td>
+      <td>129</td>
+      <td>98</td>
+      <td>0.470185</td>
+      <td>1.545716</td>
+      <td>1.374928</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>38</td>
+      <td>134</td>
+      <td>101</td>
+      <td>0.510486</td>
+      <td>1.605628</td>
+      <td>1.417017</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="105">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>distortions <span class="op">=</span> []</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>num_clusters <span class="op">=</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">7</span>)</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a list of distortions from the kmeans function</span></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> num_clusters:</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>    cluster_centers, distortion <span class="op">=</span> kmeans(batman_df[[<span class="st">'scaled_red'</span>, <span class="st">'scaled_blue'</span>, <span class="st">'scaled_green'</span>]], i)</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>    distortions.append(distortion)</span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame with two lists, num_clusters and distortions</span></span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>elbow_plot <span class="op">=</span> pd.DataFrame({<span class="st">'num_clusters'</span>:num_clusters, <span class="st">'distortions'</span>:distortions})</span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a line plot of num_clusters and distortions</span></span>
+<span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span><span class="st">"num_clusters"</span>, y<span class="op">=</span><span class="st">"distortions"</span>, data <span class="op">=</span> elbow_plot)</span>
+<span id="cb63-14"><a href="#cb63-14" aria-hidden="true" tabindex="-1"></a>plt.xticks(num_clusters)</span>
+<span id="cb63-15"><a href="#cb63-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-50-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>there are three distinct colors present in the image, which is supported by the elbow plot.</p>
+</section>
+<section id="display-dominant-colors" class="level3">
+<h3 class="anchored" data-anchor-id="display-dominant-colors">Display dominant colors</h3>
+<p>To display the dominant colors, we will convert the colors of the cluster centers to their raw values and then converted them to the range of 0-1, using the following formula:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>converted_pixel <span class="op">=</span> standardized_pixel <span class="op">*</span> pixel_std <span class="op">/</span> <span class="dv">255</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="107">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get standard deviations of each color</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>r_std, g_std, b_std <span class="op">=</span> batman_df[[<span class="st">'red'</span>, <span class="st">'green'</span>, <span class="st">'blue'</span>]].std()</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> []</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cluster_center <span class="kw">in</span> cluster_centers:</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>    scaled_r, scaled_g, scaled_b <span class="op">=</span> cluster_center</span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert each standardized value to scaled value</span></span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a>    colors.append((</span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a>        scaled_r <span class="op">*</span> r_std <span class="op">/</span> <span class="dv">255</span>,</span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a>        scaled_g <span class="op">*</span> g_std <span class="op">/</span> <span class="dv">255</span>,</span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a>        scaled_b <span class="op">*</span> b_std <span class="op">/</span> <span class="dv">255</span></span>
+<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a>    ))</span>
+<span id="cb65-13"><a href="#cb65-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-14"><a href="#cb65-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Display colors of cluster centers</span></span>
+<span id="cb65-15"><a href="#cb65-15" aria-hidden="true" tabindex="-1"></a>plt.imshow([colors])</span>
+<span id="cb65-16"><a href="#cb65-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-51-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="document-clustering" class="level3">
+<h3 class="anchored" data-anchor-id="document-clustering">Document clustering</h3>
+<blockquote class="blockquote">
+<h3 id="concepts" class="anchored">concepts</h3>
+<ol type="1">
+<li>Clean data before processing</li>
+<li>Determine the importance of the terms in a document (in TF-IDF matrix)</li>
+<li>Cluster the TF-IDF matrix4. Find top terms, documents in each cluste</li>
+</ol>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="clean-and-tokenize-data" class="anchored">Clean and tokenize data</h3>
+<ul>
+<li>Convert text into smaller parts called tokens, clean data for processing</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="tf-idf-term-frequency---inverse-documentfrequency" class="anchored">TF-IDF (Term Frequency - Inverse DocumentFrequency)</h3>
+<ul>
+<li>A weighted measure: evaluate how important a word is to a document in a collection</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="clustering-with-sparse-matrix" class="anchored">Clustering with sparse matrix</h3>
+<ul>
+<li>kmeans() in SciPy does not support sparse matrices</li>
+<li>Use <code>.todense()</code> to convert to a matrix</li>
+</ul>
+</blockquote>
+<div class="sourceCode" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>cluster_centers, distortion <span class="op">=</span> kmeans(tfidf_matrix.todense(), num_clusters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<h3 id="top-terms-per-cluster" class="anchored">Top terms per cluster</h3>
+<ul>
+<li>Cluster centers: lists with a size equal to the number of terms</li>
+<li>Each value in the cluster center is its importance</li>
+<li>Create a dictionary and print top terms</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="more-considerations" class="anchored">More considerations</h3>
+<ul>
+<li>Work with hyperlinks, emoticons etc.</li>
+<li>Normalize words (run, ran, running -&gt; run)</li>
+<li><code>.todense()</code> may not work with large datasets</li>
+</ul>
+</blockquote>
+<div class="cell" data-execution_count="114">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> remove_noise(text, stop_words <span class="op">=</span> []):    </span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>    tokens <span class="op">=</span> word_tokenize(text)    </span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>    cleaned_tokens <span class="op">=</span> []    </span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> token <span class="kw">in</span> tokens:        </span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>        token <span class="op">=</span> re.sub(<span class="st">'[^A-Za-z0-9]+'</span>, <span class="st">''</span>, token)        </span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(token) <span class="op">&gt;</span> <span class="dv">1</span> <span class="kw">and</span> token.lower() <span class="kw">not</span> <span class="kw">in</span> stop_words:            </span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get lowercase            </span></span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>            cleaned_tokens.append(token.lower())    </span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cleaned_tokens</span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a>remove_noise(<span class="st">"It is lovely weather we are having. I hope the weather continues."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="114">
+<pre><code>['it',
+ 'is',
+ 'lovely',
+ 'weather',
+ 'we',
+ 'are',
+ 'having',
+ 'hope',
+ 'the',
+ 'weather',
+ 'continues']</code></pre>
+</div>
+</div>
+</section>
+<section id="tf-idf-of-movie-plots" class="level3">
+<h3 class="anchored" data-anchor-id="tf-idf-of-movie-plots">TF-IDF of movie plots</h3>
+<p>Let us use the plots of randomly selected movies to perform document clustering on. Before performing clustering on documents, they need to be cleaned of any unwanted noise (such as special characters and stop words) and converted into a sparse matrix through TF-IDF of the documents.</p>
+<div class="cell" data-execution_count="115">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>stop_words_2 <span class="op">=</span> [<span class="st">'i'</span>, <span class="st">'me'</span>, <span class="st">'my'</span>, <span class="st">'myself'</span>, <span class="st">'we'</span>, <span class="st">'our'</span>, <span class="st">'ours'</span>, <span class="st">'ourselves'</span>, <span class="st">'you'</span>, <span class="st">'youre'</span>, <span class="st">'youve'</span>, <span class="st">'youll'</span>, <span class="st">'youd'</span>, <span class="st">'your'</span>, <span class="st">'yours'</span>, <span class="st">'yourself'</span>, <span class="st">'yourselves'</span>, <span class="st">'he'</span>, <span class="st">'him'</span>, <span class="st">'his'</span>, <span class="st">'himself'</span>, <span class="st">'she'</span>, <span class="st">'shes'</span>, <span class="st">'her'</span>, <span class="st">'hers'</span>, <span class="st">'herself'</span>, <span class="st">'it'</span>, <span class="st">'its'</span>, <span class="st">'its'</span>, <span class="st">'itself'</span>, <span class="st">'they'</span>, <span class="st">'them'</span>, <span class="st">'their'</span>, <span class="st">'theirs'</span>, <span class="st">'themselves'</span>, <span class="st">'what'</span>, <span class="st">'which'</span>, <span class="st">'who'</span>, <span class="st">'whom'</span>, <span class="st">'this'</span>, <span class="st">'that'</span>, <span class="st">'thatll'</span>, <span class="st">'these'</span>, <span class="st">'those'</span>, <span class="st">'am'</span>, <span class="st">'is'</span>, <span class="st">'are'</span>, <span class="st">'was'</span>, <span class="st">'were'</span>, <span class="st">'be'</span>, <span class="st">'been'</span>, <span class="st">'being'</span>, <span class="st">'have'</span>, <span class="st">'has'</span>, <span class="st">'had'</span>, <span class="st">'having'</span>, <span class="st">'do'</span>, <span class="st">'does'</span>, <span class="st">'did'</span>, <span class="st">'doing'</span>, <span class="st">'a'</span>, <span class="st">'an'</span>, <span class="st">'the'</span>, <span class="st">'and'</span>, <span class="st">'but'</span>, <span class="st">'if'</span>, <span class="st">'or'</span>, <span class="st">'because'</span>, <span class="st">'as'</span>, <span class="st">'until'</span>, <span class="st">'while'</span>, <span class="st">'of'</span>, <span class="st">'at'</span>, <span class="st">'by'</span>, <span class="st">'for'</span>, <span class="st">'with'</span>, <span class="st">'about'</span>, <span class="st">'against'</span>, <span class="st">'between'</span>, <span class="st">'into'</span>, <span class="st">'through'</span>, <span class="st">'during'</span>, <span class="st">'before'</span>, <span class="st">'after'</span>, <span class="st">'above'</span>, <span class="st">'below'</span>, <span class="st">'to'</span>, <span class="st">'from'</span>, <span class="st">'up'</span>, <span class="st">'down'</span>, <span class="st">'in'</span>, <span class="st">'out'</span>, <span class="st">'on'</span>, <span class="st">'off'</span>, <span class="st">'over'</span>, <span class="st">'under'</span>, <span class="st">'again'</span>, <span class="st">'further'</span>, <span class="st">'then'</span>, <span class="st">'once'</span>, <span class="st">'here'</span>, <span class="st">'there'</span>, <span class="st">'when'</span>, <span class="st">'where'</span>, <span class="st">'why'</span>, <span class="st">'how'</span>, <span class="st">'all'</span>, <span class="st">'any'</span>, <span class="st">'both'</span>, <span class="st">'each'</span>, <span class="st">'few'</span>, <span class="st">'more'</span>, <span class="st">'most'</span>, <span class="st">'other'</span>, <span class="st">'some'</span>, <span class="st">'such'</span>, <span class="st">'no'</span>, <span class="st">'nor'</span>, <span class="st">'not'</span>, <span class="st">'only'</span>, <span class="st">'own'</span>, <span class="st">'same'</span>, <span class="st">'so'</span>, <span class="st">'than'</span>, <span class="st">'too'</span>, <span class="st">'very'</span>, <span class="st">'s'</span>, <span class="st">'t'</span>, <span class="st">'can'</span>, <span class="st">'will'</span>, <span class="st">'just'</span>, <span class="st">'don'</span>, <span class="st">'dont'</span>, <span class="st">'should'</span>, <span class="st">'shouldve'</span>, <span class="st">'now'</span>, <span class="st">'d'</span>, <span class="st">'ll'</span>, <span class="st">'m'</span>, <span class="st">'o'</span>, <span class="st">'re'</span>, <span class="st">'ve'</span>, <span class="st">'y'</span>, <span class="st">'ain'</span>, <span class="st">'aren'</span>, <span class="st">'arent'</span>, <span class="st">'couldn'</span>, <span class="st">'couldnt'</span>, <span class="st">'didn'</span>, <span class="st">'didnt'</span>, <span class="st">'doesn'</span>, <span class="st">'doesnt'</span>, <span class="st">'hadn'</span>, <span class="st">'hadnt'</span>, <span class="st">'hasn'</span>, <span class="st">'hasnt'</span>, <span class="st">'haven'</span>, <span class="st">'havent'</span>, <span class="st">'isn'</span>, <span class="st">'isnt'</span>, <span class="st">'ma'</span>, <span class="st">'mightn'</span>, <span class="st">'mightnt'</span>, <span class="st">'mustn'</span>, <span class="st">'mustnt'</span>, <span class="st">'needn'</span>, <span class="st">'neednt'</span>, <span class="st">'shan'</span>, <span class="st">'shant'</span>, <span class="st">'shouldn'</span>, <span class="st">'shouldnt'</span>, <span class="st">'wasn'</span>, <span class="st">'wasnt'</span>, <span class="st">'weren'</span>, <span class="st">'werent'</span>, <span class="st">'won'</span>, <span class="st">'wont'</span>, <span class="st">'wouldn'</span>, <span class="st">'wouldnt'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="116">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>remove_noise(<span class="st">"It is lovely weather we are having. I hope the weather continues."</span>, stop_words<span class="op">=</span>stop_words_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="116">
+<pre><code>['lovely', 'weather', 'hope', 'weather', 'continues']</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="117">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> remove_noise(text, stop_words <span class="op">=</span> stop_words_2):    </span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>    tokens <span class="op">=</span> word_tokenize(text)    </span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>    cleaned_tokens <span class="op">=</span> []    </span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> token <span class="kw">in</span> tokens:        </span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>        token <span class="op">=</span> re.sub(<span class="st">'[^A-Za-z0-9]+'</span>, <span class="st">''</span>, token)        </span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(token) <span class="op">&gt;</span> <span class="dv">1</span> <span class="kw">and</span> token.lower() <span class="kw">not</span> <span class="kw">in</span> stop_words:            </span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Get lowercase            </span></span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a>            cleaned_tokens.append(token.lower())    </span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cleaned_tokens</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="118">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>plots <span class="op">=</span> pd.read_csv(<span class="st">"datasets/plots.csv"</span>)[<span class="st">'0'</span>].to_list()</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>plots[<span class="dv">0</span>][:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="118">
+<pre><code>'Cable Hogu'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="119">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize TfidfVectorizer</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>tfidf_vectorizer <span class="op">=</span> TfidfVectorizer(min_df<span class="op">=</span><span class="fl">.1</span>, max_df<span class="op">=</span><span class="fl">.75</span>, max_features<span class="op">=</span><span class="dv">50</span>, tokenizer<span class="op">=</span>remove_noise)</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the .fit_transform() method on the list plots</span></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>tfidf_matrix <span class="op">=</span> tfidf_vectorizer.fit_transform(plots)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="top-terms-in-movie-clusters" class="level3">
+<h3 class="anchored" data-anchor-id="top-terms-in-movie-clusters">Top terms in movie clusters</h3>
+<div class="cell" data-execution_count="120">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>num_clusters <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate cluster centers through the kmeans function</span></span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>cluster_centers, distortion <span class="op">=</span> kmeans(tfidf_matrix.todense(), num_clusters)</span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate terms from the tfidf_vectorizer object</span></span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>terms <span class="op">=</span> tfidf_vectorizer.get_feature_names()</span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(num_clusters):</span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sort the terms and print top 3 terms</span></span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>    center_terms <span class="op">=</span> <span class="bu">dict</span>(<span class="bu">zip</span>(terms, cluster_centers[i]))</span>
+<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a>    sorted_terms <span class="op">=</span> <span class="bu">sorted</span>(center_terms, key<span class="op">=</span>center_terms.get, reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb76-13"><a href="#cb76-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(sorted_terms[:<span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['police', 'man', 'one']
+['father', 'back', 'one']</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="clustering-with-multiple-features" class="level2">
+<h2 class="anchored" data-anchor-id="clustering-with-multiple-features">Clustering with multiple features</h2>
+<blockquote class="blockquote">
+<h3 id="feature-reduction" class="anchored">Feature reduction</h3>
+<ul>
+<li>Factoranalysis</li>
+<li>Multidimensional scaling</li>
+</ul>
+</blockquote>
+<section id="clustering-with-many-features" class="level3">
+<h3 class="anchored" data-anchor-id="clustering-with-many-features">Clustering with many features</h3>
+<p>Reduce features using a technique like Factor Analysis. explore steps to reduce the number of features.</p>
+</section>
+<section id="basic-checks-on-clusters" class="level3">
+<h3 class="anchored" data-anchor-id="basic-checks-on-clusters">Basic checks on clusters</h3>
+<p>In the FIFA 18 dataset, we have concentrated on defenders in previous exercises. Let us try to focus on attacking attributes of a player. Pace (pac), Dribbling (dri) and Shooting (sho) are features that are present in attack minded players.</p>
+<div class="cell" data-execution_count="122">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>fifa <span class="op">=</span> pd.read_csv(<span class="st">"datasets/fifa3.csv"</span>)</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the size of the clusters</span></span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>fifa.groupby(<span class="st">"cluster_labels"</span>)[<span class="st">'ID'</span>].count()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="122">
+<pre><code>cluster_labels
+0     83
+1    107
+2     60
+Name: ID, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="124">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the mean value of wages in each cluster</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>fifa.groupby([<span class="st">"cluster_labels"</span>])[<span class="st">'eur_wage'</span>].mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="124">
+<pre><code>cluster_labels
+0    132108.433735
+1    130308.411215
+2    117583.333333
+Name: eur_wage, dtype: float64</code></pre>
+</div>
+</div>
+<p>the cluster sizes are not very different, and there are no significant differences that can be seen in the wages. Further analysis is required to validate these clusters.</p>
+</section>
+<section id="fifa-18-what-makes-a-complete-player" class="level3">
+<h3 class="anchored" data-anchor-id="fifa-18-what-makes-a-complete-player">FIFA 18: what makes a complete player?</h3>
+<p>The overall level of a player in FIFA 18 is defined by six characteristics: pace (pac), shooting (sho), passing (pas), dribbling (dri), defending (def), physical (phy).</p>
+<p>Here is a sample card: <img src="datasets/fut18-top100-hazard-lg.jpg" class="img-fluid"></p>
+<div class="cell" data-execution_count="126">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>features<span class="op">=</span> [<span class="st">'pac'</span>, <span class="st">'sho'</span>, <span class="st">'pas'</span>, <span class="st">'dri'</span>, <span class="st">'def'</span>, <span class="st">'phy'</span>]</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>scaled_features <span class="op">=</span> [<span class="st">'scaled_pac'</span>,</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a> <span class="st">'scaled_sho'</span>,</span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a> <span class="st">'scaled_pas'</span>,</span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a> <span class="st">'scaled_dri'</span>,</span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a> <span class="st">'scaled_def'</span>,</span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a> <span class="st">'scaled_phy'</span>]</span>
+<span id="cb82-8"><a href="#cb82-8" aria-hidden="true" tabindex="-1"></a>fifa[scaled_features] <span class="op">=</span> fifa[features].<span class="bu">apply</span>(<span class="kw">lambda</span> x: whiten(x))</span>
+<span id="cb82-9"><a href="#cb82-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create centroids with kmeans for 2 clusters</span></span>
+<span id="cb82-10"><a href="#cb82-10" aria-hidden="true" tabindex="-1"></a>cluster_centers,_ <span class="op">=</span> kmeans(fifa[scaled_features], <span class="dv">2</span>)</span>
+<span id="cb82-11"><a href="#cb82-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign cluster labels and print cluster centers</span></span>
+<span id="cb82-12"><a href="#cb82-12" aria-hidden="true" tabindex="-1"></a>fifa[<span class="st">'cluster_labels'</span>], _ <span class="op">=</span> vq(fifa[scaled_features], cluster_centers)</span>
+<span id="cb82-13"><a href="#cb82-13" aria-hidden="true" tabindex="-1"></a>fifa.groupby(<span class="st">"cluster_labels"</span>)[scaled_features].mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="126">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>scaled_pac</th>
+      <th>scaled_sho</th>
+      <th>scaled_pas</th>
+      <th>scaled_dri</th>
+      <th>scaled_def</th>
+      <th>scaled_phy</th>
+    </tr>
+    <tr>
+      <th>cluster_labels</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>6.617743</td>
+      <td>3.885153</td>
+      <td>7.353643</td>
+      <td>7.148098</td>
+      <td>3.862353</td>
+      <td>9.009407</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7.762181</td>
+      <td>5.610629</td>
+      <td>8.620873</td>
+      <td>8.968266</td>
+      <td>2.262328</td>
+      <td>8.009867</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="127">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot cluster centers to visualize clusters</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>fifa.groupby(<span class="st">'cluster_labels'</span>)[scaled_features].mean().plot(legend<span class="op">=</span><span class="va">True</span>, kind<span class="op">=</span><span class="st">"bar"</span>)</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-10-19-Cluster Analysis in Python_files/figure-html/cell-62-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="128">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the name column of first 5 players in each cluster</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> cluster <span class="kw">in</span> fifa[<span class="st">'cluster_labels'</span>].unique():</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(cluster, fifa[fifa[<span class="st">'cluster_labels'</span>] <span class="op">==</span> cluster][<span class="st">'name'</span>].values[:<span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1 ['Cristiano Ronaldo' 'L. Messi' 'Neymar' 'L. Suárez' 'M. Neuer']
+0 ['Sergio Ramos' 'G. Chiellini' 'L. Bonucci' 'J. Boateng' 'D. Godín']</code></pre>
+</div>
+</div>
+<p>the top players in each cluster are representative of the overall characteristics of the cluster - one of the clusters primarily represents attackers, whereas the other represents defenders. Surprisingly, a top goalkeeper Manuel Neuer is seen in the attackers group, but he is known for going out of the box and participating in open play, which are reflected in his FIFA 18 attributes.</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Victor Omondi">
+<meta name="dcterms.date" content="2020-08-30">
+
+<title>blog - Weather Visualization</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/VictorOmondi1997"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/VictorOmondi197"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Weather Visualization</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">data-visualization</div>
+                <div class="quarto-category">weather</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Victor Omondi </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 30, 2020</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#weather-patterns-in-seattle-and-austin" id="toc-weather-patterns-in-seattle-and-austin" class="nav-link active" data-scroll-target="#weather-patterns-in-seattle-and-austin">Weather Patterns in Seattle and Austin</a></li>
+  <li><a href="#monthly-precipitation-and-temperature-in-seattle-and-austin" id="toc-monthly-precipitation-and-temperature-in-seattle-and-austin" class="nav-link" data-scroll-target="#monthly-precipitation-and-temperature-in-seattle-and-austin">Monthly Precipitation and Temperature in Seattle and Austin</a></li>
+  <li><a href="#precipitation-data-in-seattle-and-austin" id="toc-precipitation-data-in-seattle-and-austin" class="nav-link" data-scroll-target="#precipitation-data-in-seattle-and-austin">Precipitation data in Seattle and Austin</a></li>
+  <li><a href="#adding-error-bars" id="toc-adding-error-bars" class="nav-link" data-scroll-target="#adding-error-bars">Adding error-bars</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>austin_weather <span class="op">=</span> pd.read_csv(<span class="st">'../data/austin_weather.csv'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>seattle_weather <span class="op">=</span> pd.read_csv(<span class="st">'../data/seattle_weather.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>austin_weather.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>DATE</th>
+      <th>STATION</th>
+      <th>NAME</th>
+      <th>MLY-CLDD-BASE45</th>
+      <th>MLY-CLDD-BASE50</th>
+      <th>MLY-CLDD-BASE55</th>
+      <th>MLY-CLDD-BASE57</th>
+      <th>MLY-CLDD-BASE60</th>
+      <th>MLY-CLDD-BASE70</th>
+      <th>MLY-CLDD-BASE72</th>
+      <th>...</th>
+      <th>MLY-TMIN-AVGNDS-LSTH070</th>
+      <th>MLY-TMIN-NORMAL</th>
+      <th>MLY-TMIN-PRBOCC-LSTH016</th>
+      <th>MLY-TMIN-PRBOCC-LSTH020</th>
+      <th>MLY-TMIN-PRBOCC-LSTH024</th>
+      <th>MLY-TMIN-PRBOCC-LSTH028</th>
+      <th>MLY-TMIN-PRBOCC-LSTH032</th>
+      <th>MLY-TMIN-PRBOCC-LSTH036</th>
+      <th>MLY-TMIN-STDDEV</th>
+      <th>MONTH</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>USW00013904</td>
+      <td>AUSTIN BERGSTROM INTERNATIONAL AIRPORT, TX US</td>
+      <td>190</td>
+      <td>103</td>
+      <td>50</td>
+      <td>35</td>
+      <td>18</td>
+      <td>1</td>
+      <td>-7777</td>
+      <td>...</td>
+      <td>310</td>
+      <td>36.3</td>
+      <td>298</td>
+      <td>570</td>
+      <td>839</td>
+      <td>967</td>
+      <td>997</td>
+      <td>1000</td>
+      <td>2.9</td>
+      <td>Jan</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>USW00013904</td>
+      <td>AUSTIN BERGSTROM INTERNATIONAL AIRPORT, TX US</td>
+      <td>228</td>
+      <td>132</td>
+      <td>68</td>
+      <td>49</td>
+      <td>29</td>
+      <td>3</td>
+      <td>1</td>
+      <td>...</td>
+      <td>280</td>
+      <td>39.4</td>
+      <td>103</td>
+      <td>327</td>
+      <td>614</td>
+      <td>867</td>
+      <td>973</td>
+      <td>999</td>
+      <td>3.2</td>
+      <td>Feb</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>USW00013904</td>
+      <td>AUSTIN BERGSTROM INTERNATIONAL AIRPORT, TX US</td>
+      <td>446</td>
+      <td>306</td>
+      <td>185</td>
+      <td>146</td>
+      <td>98</td>
+      <td>13</td>
+      <td>6</td>
+      <td>...</td>
+      <td>308</td>
+      <td>46.6</td>
+      <td>10</td>
+      <td>73</td>
+      <td>242</td>
+      <td>494</td>
+      <td>761</td>
+      <td>928</td>
+      <td>3.6</td>
+      <td>Mar</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>USW00013904</td>
+      <td>AUSTIN BERGSTROM INTERNATIONAL AIRPORT, TX US</td>
+      <td>668</td>
+      <td>519</td>
+      <td>373</td>
+      <td>318</td>
+      <td>240</td>
+      <td>53</td>
+      <td>32</td>
+      <td>...</td>
+      <td>287</td>
+      <td>54.7</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>48</td>
+      <td>189</td>
+      <td>453</td>
+      <td>4.1</td>
+      <td>Apr</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>USW00013904</td>
+      <td>AUSTIN BERGSTROM INTERNATIONAL AIRPORT, TX US</td>
+      <td>936</td>
+      <td>781</td>
+      <td>626</td>
+      <td>564</td>
+      <td>471</td>
+      <td>181</td>
+      <td>134</td>
+      <td>...</td>
+      <td>250</td>
+      <td>63.7</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2.5</td>
+      <td>May</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 68 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>seattle_weather.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>DATE</th>
+      <th>STATION</th>
+      <th>NAME</th>
+      <th>MLY-CLDD-BASE45</th>
+      <th>MLY-CLDD-BASE50</th>
+      <th>MLY-CLDD-BASE55</th>
+      <th>MLY-CLDD-BASE57</th>
+      <th>MLY-CLDD-BASE60</th>
+      <th>MLY-CLDD-BASE70</th>
+      <th>MLY-CLDD-BASE72</th>
+      <th>...</th>
+      <th>MLY-TMIN-AVGNDS-LSTH070</th>
+      <th>MLY-TMIN-NORMAL</th>
+      <th>MLY-TMIN-PRBOCC-LSTH016</th>
+      <th>MLY-TMIN-PRBOCC-LSTH020</th>
+      <th>MLY-TMIN-PRBOCC-LSTH024</th>
+      <th>MLY-TMIN-PRBOCC-LSTH028</th>
+      <th>MLY-TMIN-PRBOCC-LSTH032</th>
+      <th>MLY-TMIN-PRBOCC-LSTH036</th>
+      <th>MLY-TMIN-STDDEV</th>
+      <th>MONTH</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>USW00094290</td>
+      <td>SEATTLE SAND PT WSFO, WA US</td>
+      <td>27.0</td>
+      <td>3.0</td>
+      <td>-7777.0</td>
+      <td>-7777.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>310.0</td>
+      <td>37.0</td>
+      <td>64.0</td>
+      <td>129.0</td>
+      <td>317.0</td>
+      <td>709.0</td>
+      <td>959.0</td>
+      <td>1000.0</td>
+      <td>2.3</td>
+      <td>Jan</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>USW00094290</td>
+      <td>SEATTLE SAND PT WSFO, WA US</td>
+      <td>31.0</td>
+      <td>3.0</td>
+      <td>-7777.0</td>
+      <td>-7777.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>280.0</td>
+      <td>36.9</td>
+      <td>15.0</td>
+      <td>76.0</td>
+      <td>273.0</td>
+      <td>616.0</td>
+      <td>917.0</td>
+      <td>1000.0</td>
+      <td>2.6</td>
+      <td>Feb</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>USW00094290</td>
+      <td>SEATTLE SAND PT WSFO, WA US</td>
+      <td>81.0</td>
+      <td>16.0</td>
+      <td>2.0</td>
+      <td>-7777.0</td>
+      <td>-7777.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>310.0</td>
+      <td>39.3</td>
+      <td>0.0</td>
+      <td>20.0</td>
+      <td>41.0</td>
+      <td>152.0</td>
+      <td>670.0</td>
+      <td>986.0</td>
+      <td>1.8</td>
+      <td>Mar</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>USW00094290</td>
+      <td>SEATTLE SAND PT WSFO, WA US</td>
+      <td>169.0</td>
+      <td>58.0</td>
+      <td>12.0</td>
+      <td>6.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>300.0</td>
+      <td>42.5</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>114.0</td>
+      <td>711.0</td>
+      <td>1.5</td>
+      <td>Apr</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>USW00094290</td>
+      <td>SEATTLE SAND PT WSFO, WA US</td>
+      <td>343.0</td>
+      <td>193.0</td>
+      <td>78.0</td>
+      <td>49.0</td>
+      <td>21.0</td>
+      <td>-7777.0</td>
+      <td>-7777.0</td>
+      <td>...</td>
+      <td>310.0</td>
+      <td>47.8</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>58.0</td>
+      <td>1.9</td>
+      <td>May</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 81 columns</p>
+</div>
+</div>
+</div>
+<section id="weather-patterns-in-seattle-and-austin" class="level1">
+<h1>Weather Patterns in Seattle and Austin</h1>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">6</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot MLY-PRCP-NORMAL from seattle_weather against the MONTH</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>ax.plot(seattle_weather[<span class="st">"MONTH"</span>], seattle_weather[<span class="st">'MLY-PRCP-NORMAL'</span>], c<span class="op">=</span><span class="st">'blue'</span>, marker<span class="op">=</span><span class="st">'o'</span>, linestyle<span class="op">=</span><span class="st">'dashdot'</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot MLY-PRCP-NORMAL from austin_weather against MONTH</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>ax.plot(austin_weather[<span class="st">'MONTH'</span>], austin_weather[<span class="st">'MLY-PRCP-NORMAL'</span>], c<span class="op">=</span><span class="st">'red'</span>, marker<span class="op">=</span><span class="st">'v'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Time (months)'</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Precipitation (inches)'</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Weather patterns in Seattle and Austin'</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-08-30-Weather Visualization_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="monthly-precipitation-and-temperature-in-seattle-and-austin" class="level1">
+<h1>Monthly Precipitation and Temperature in Seattle and Austin</h1>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig,ax<span class="op">=</span>plt.subplots(<span class="dv">2</span>,<span class="dv">2</span>, sharey<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">4</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>,<span class="dv">0</span>].plot(seattle_weather[<span class="st">'MONTH'</span>], seattle_weather[<span class="st">'MLY-PRCP-NORMAL'</span>])</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>,<span class="dv">1</span>].plot(seattle_weather[<span class="st">'MONTH'</span>], seattle_weather[<span class="st">'MLY-TAVG-NORMAL'</span>])</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>,<span class="dv">0</span>].plot(austin_weather[<span class="st">'MONTH'</span>], austin_weather[<span class="st">'MLY-PRCP-NORMAL'</span>])</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>,<span class="dv">1</span>].plot(austin_weather[<span class="st">'MONTH'</span>], austin_weather[<span class="st">'MLY-TAVG-NORMAL'</span>])</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-08-30-Weather Visualization_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="precipitation-data-in-seattle-and-austin" class="level1">
+<h1>Precipitation data in Seattle and Austin</h1>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure and an array of axes: 2 rows, 1 column with shared y axis</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, sharey<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Seattle precipitation data in the top axes</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(seattle_weather[<span class="st">'MONTH'</span>], seattle_weather[<span class="st">'MLY-PRCP-NORMAL'</span>], color <span class="op">=</span> <span class="st">'b'</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(seattle_weather[<span class="st">'MONTH'</span>], seattle_weather[<span class="st">'MLY-PRCP-25PCTL'</span>], color <span class="op">=</span> <span class="st">'b'</span>, linestyle <span class="op">=</span> <span class="st">'--'</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">0</span>].plot(seattle_weather[<span class="st">'MONTH'</span>], seattle_weather[<span class="st">'MLY-PRCP-75PCTL'</span>], color <span class="op">=</span> <span class="st">'b'</span>, linestyle <span class="op">=</span> <span class="st">'--'</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Austin precipitation data in the bottom axes</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(austin_weather[<span class="st">'MONTH'</span>], austin_weather[<span class="st">'MLY-PRCP-NORMAL'</span>], color <span class="op">=</span> <span class="st">'r'</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(austin_weather[<span class="st">'MONTH'</span>], austin_weather[<span class="st">'MLY-PRCP-25PCTL'</span>], color <span class="op">=</span> <span class="st">'r'</span>, linestyle <span class="op">=</span> <span class="st">'--'</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>ax[<span class="dv">1</span>].plot(austin_weather[<span class="st">'MONTH'</span>], austin_weather[<span class="st">'MLY-PRCP-75PCTL'</span>], color <span class="op">=</span> <span class="st">'r'</span>, linestyle <span class="op">=</span> <span class="st">'--'</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-08-30-Weather Visualization_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="adding-error-bars" class="level1">
+<h1>Adding error-bars</h1>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'seaborn'</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">6</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ax.errorbar(seattle_weather[<span class="st">'MONTH'</span>], seattle_weather[<span class="st">'MLY-TAVG-NORMAL'</span>],yerr<span class="op">=</span>seattle_weather[<span class="st">'MLY-TAVG-STDDEV'</span>])</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>ax.errorbar(austin_weather[<span class="st">'MONTH'</span>], austin_weather[<span class="st">'MLY-TAVG-NORMAL'</span>],yerr<span class="op">=</span>austin_weather[<span class="st">'MLY-TAVG-STDDEV'</span>]) </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Temperature (Fahrenheit)'</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-08-30-Weather Visualization_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

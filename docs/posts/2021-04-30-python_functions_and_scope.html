@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Victor Omondi">
+<meta name="dcterms.date" content="2021-04-30">
+<meta name="description" content="Learn how to create and use functions in python">
+
+<title>blog - Writing Reusable Code using Functions in Python</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/VictorOmondi1997"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/VictorOmondi197"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Writing Reusable Code using Functions in Python</h1>
+                  <div>
+        <div class="description">
+          Learn how to create and use functions in python
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">python</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Victor Omondi </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 30, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#creating-and-using-functions" id="toc-creating-and-using-functions" class="nav-link active" data-scroll-target="#creating-and-using-functions">Creating and using functions</a>
+  <ul class="collapse">
+  <li><a href="#function-arguments" id="toc-function-arguments" class="nav-link" data-scroll-target="#function-arguments">Function arguments</a></li>
+  </ul></li>
+  <li><a href="#writing-great-functions-in-python" id="toc-writing-great-functions-in-python" class="nav-link" data-scroll-target="#writing-great-functions-in-python">Writing great functions in Python</a>
+  <ul class="collapse">
+  <li><a href="#local-variables-and-scope" id="toc-local-variables-and-scope" class="nav-link" data-scroll-target="#local-variables-and-scope">Local variables and scope</a></li>
+  <li><a href="#return-values" id="toc-return-values" class="nav-link" data-scroll-target="#return-values">Return values</a></li>
+  <li><a href="#optional-arguments" id="toc-optional-arguments" class="nav-link" data-scroll-target="#optional-arguments">Optional arguments</a></li>
+  <li><a href="#named-arguments" id="toc-named-arguments" class="nav-link" data-scroll-target="#named-arguments">Named arguments</a></li>
+  <li><a href="#modules-and-library-functions" id="toc-modules-and-library-functions" class="nav-link" data-scroll-target="#modules-and-library-functions">Modules and library functions</a></li>
+  <li><a href="#reusing-and-improving-functions" id="toc-reusing-and-improving-functions" class="nav-link" data-scroll-target="#reusing-and-improving-functions">Reusing and improving functions</a></li>
+  <li><a href="#exceptions-and-try-except" id="toc-exceptions-and-try-except" class="nav-link" data-scroll-target="#exceptions-and-try-except">Exceptions and <code>try</code>-<code>except</code></a></li>
+  <li><a href="#documenting-functions-using-docstrings" id="toc-documenting-functions-using-docstrings" class="nav-link" data-scroll-target="#documenting-functions-using-docstrings">Documenting functions using Docstrings</a></li>
+  </ul></li>
+  <li><a href="#exercise---data-analysis-for-vacation-planning" id="toc-exercise---data-analysis-for-vacation-planning" class="nav-link" data-scroll-target="#exercise---data-analysis-for-vacation-planning">Exercise - Data Analysis for Vacation Planning</a></li>
+  <li><a href="#summary-and-further-reading" id="toc-summary-and-further-reading" class="nav-link" data-scroll-target="#summary-and-further-reading">Summary and Further Reading</a></li>
+  <li><a href="#questions-for-revision" id="toc-questions-for-revision" class="nav-link" data-scroll-target="#questions-for-revision">Questions for Revision</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><a href="https://colab.research.google.com/github/VictorOmondi1997/blog/blob/master/_notebooks/2021-04-30-python_functions_and_scope.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+<p>This tutorial covers the following topics:</p>
+<ul>
+<li>Creating and using functions in Python</li>
+<li>Local variables, return values, and optional arguments</li>
+<li>Reusing functions and using Python library functions</li>
+<li>Exception handling using <code>try</code>-<code>except</code> blocks</li>
+<li>Documenting functions using docstrings</li>
+</ul>
+<section id="creating-and-using-functions" class="level2">
+<h2 class="anchored" data-anchor-id="creating-and-using-functions">Creating and using functions</h2>
+<p>A function is a reusable set of instructions that takes one or more inputs, performs some operations, and often returns an output. Python contains many in-built functions like <code>print</code>, <code>len</code>, etc., and provides the ability to define new ones.</p>
+<div class="cell" data-outputid="86108275-5794-45b0-bfec-be24b9d7694d" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>today <span class="op">=</span> <span class="st">"Friday"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Today is"</span>, today)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Today is Friday</code></pre>
+</div>
+</div>
+<p>You can define a new function using the <code>def</code> keyword.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> say_hello():</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Hello there!'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'How are you?'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note the round brackets or parentheses <code>()</code> and colon <code>:</code> after the function’s name. Both are essential parts of the syntax. The function’s <em>body</em> contains an indented block of statements. The statements inside a function’s body are not executed when the function is defined. To execute the statements, we need to <em>call</em> or <em>invoke</em> the function.</p>
+<div class="cell" data-outputid="94ceb51d-62e5-4722-e926-e2651511c108" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>say_hello()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hello there!
+How are you?</code></pre>
+</div>
+</div>
+<section id="function-arguments" class="level3">
+<h3 class="anchored" data-anchor-id="function-arguments">Function arguments</h3>
+<p>Functions can accept zero or more values as <em>inputs</em> (also knows as <em>arguments</em> or <em>parameters</em>). Arguments help us write flexible functions that can perform the same operations on different values. Further, functions can return a result that can be stored in a variable or used in other expressions.</p>
+<p>Here’s a function that filters out the even numbers from a list and returns a new list using the <code>return</code> keyword.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> filter_even(number_list):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    result_list <span class="op">=</span> []</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> number <span class="kw">in</span> number_list:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> number <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>            result_list.append(number)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Can you understand what the function does by looking at the code? If not, try executing each line of the function’s body separately within a code cell with an actual list of numbers in place of <code>number_list</code>.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>even_list <span class="op">=</span> filter_even([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="a3dae433-35fa-409b-e4b4-82f20b7c2cb6" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>even_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>[2, 4, 6]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="writing-great-functions-in-python" class="level2">
+<h2 class="anchored" data-anchor-id="writing-great-functions-in-python">Writing great functions in Python</h2>
+<p>As a programmer, you will spend most of your time writing and using functions. Python offers many features to make your functions powerful and flexible. Let’s explore some of these by solving a problem:</p>
+<blockquote class="blockquote">
+<p>Radha is planning to buy a house that costs <code>$1,260,000</code>. She considering two options to finance her purchase:</p>
+<ul>
+<li>Option 1: Make an immediate down payment of <code>$300,000</code>, and take loan 8-year loan with an interest rate of 10% (compounded monthly) for the remaining amount.</li>
+<li>Option 2: Take a 10-year loan with an interest rate of 8% (compounded monthly) for the entire amount.</li>
+</ul>
+<p>Both these loans have to be paid back in equal monthly installments (EMIs). Which loan has a lower EMI among the two?</p>
+</blockquote>
+<p>Since we need to compare the EMIs for two loan options, defining a function to calculate the EMI for a loan would be a great idea. The inputs to the function would be cost of the house, the down payment, duration of the loan, rate of interest etc. We’ll build this function step by step.</p>
+<p>First, let’s write a simple function that calculates the EMI on the entire cost of the house, assuming that the loan must be paid back in one year, and there is no interest or down payment.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> loan_emi(amount):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    emi <span class="op">=</span> amount <span class="op">/</span> <span class="dv">12</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The EMI is $</span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(emi))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="5560e9e0-7c5d-498d-df22-741950d0ee7a" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>loan_emi(<span class="dv">1260000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The EMI is $105000.0</code></pre>
+</div>
+</div>
+<section id="local-variables-and-scope" class="level3">
+<h3 class="anchored" data-anchor-id="local-variables-and-scope">Local variables and scope</h3>
+<p>Let’s add a second argument to account for the duration of the loan in months.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> loan_emi(amount, duration):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    emi <span class="op">=</span> amount <span class="op">/</span> duration</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The EMI is $</span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(emi))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that the variable <code>emi</code> defined inside the function is not accessible outside. The same is true for the parameters <code>amount</code> and <code>duration</code>. These are all <em>local variables</em> that lie within the <em>scope</em> of the function.</p>
+<blockquote class="blockquote">
+<p><strong>Scope</strong>: Scope refers to the region within the code where a particular variable is visible. Every function (or class definition) defines a scope within Python. Variables defined in this scope are called <em>local variables</em>. Variables that are available everywhere are called <em>global variables</em>. Scope rules allow you to use the same variable names in different functions without sharing values from one to the other.</p>
+</blockquote>
+<div class="cell" data-outputid="c301fc1b-fb22-4b0a-a70e-da5a77b94c10" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>emi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: ignored</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="f24029d1-390a-432c-f6fe-edfdac638985" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>amount</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: ignored</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="6558ae78-bebf-417e-e981-6178eea35484" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>duration</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>NameError: ignored</code></pre>
+</div>
+</div>
+<p>We can now compare a 6-year loan vs.&nbsp;a 10-year loan (assuming no down payment or interest).</p>
+<div class="cell" data-outputid="f41a29a1-7f52-4989-c525-0121ffa3c216" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>loan_emi(<span class="dv">1260000</span>, <span class="dv">8</span><span class="op">*</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The EMI is $13125.0</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="f83f2431-cd59-46a9-e0d9-de54aafb06a0" data-scrolled="true" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>loan_emi(<span class="dv">1260000</span>, <span class="dv">10</span><span class="op">*</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The EMI is $10500.0</code></pre>
+</div>
+</div>
+</section>
+<section id="return-values" class="level3">
+<h3 class="anchored" data-anchor-id="return-values">Return values</h3>
+<p>As you might expect, the EMI for the 6-year loan is higher compared to the 10-year loan. Right now, we’re printing out the result. It would be better to return it and store the results in variables for easier comparison. We can do this using the <code>return</code> statement</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> loan_emi(amount, duration):</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    emi <span class="op">=</span> amount <span class="op">/</span> duration</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> emi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>emi1 <span class="op">=</span> loan_emi(<span class="dv">1260000</span>, <span class="dv">8</span><span class="op">*</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>emi2 <span class="op">=</span> loan_emi(<span class="dv">1260000</span>, <span class="dv">10</span><span class="op">*</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="a4318c26-b77b-4469-e68b-e263d90c0245" data-scrolled="true" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>emi1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>13125.0</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="9365e1da-53ca-4e96-9e67-b4c771709211" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>emi2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>10500.0</code></pre>
+</div>
+</div>
+</section>
+<section id="optional-arguments" class="level3">
+<h3 class="anchored" data-anchor-id="optional-arguments">Optional arguments</h3>
+<p>Next, let’s add another argument to account for the immediate down payment. We’ll make this an <em>optional argument</em> with a default value of 0.</p>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> loan_emi(amount, duration, down_payment<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    loan_amount <span class="op">=</span> amount <span class="op">-</span> down_payment</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    emi <span class="op">=</span> loan_amount <span class="op">/</span> duration</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> emi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>emi1 <span class="op">=</span> loan_emi(<span class="dv">1260000</span>, <span class="dv">8</span><span class="op">*</span><span class="dv">12</span>, <span class="fl">3e5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="f41f6e7f-5efb-4253-e6cd-40b413107bbe" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>emi1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>10000.0</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>emi2 <span class="op">=</span> loan_emi(<span class="dv">1260000</span>, <span class="dv">10</span><span class="op">*</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="7c56ebb9-4716-4dfa-885c-1d4dcfa1ab2c" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>emi2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>10500.0</code></pre>
+</div>
+</div>
+<p>Next, let’s add the interest calculation into the function. Here’s the formula used to calculate the EMI for a loan:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.imgur.com/iKujHGK.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Img</figcaption><p></p>
+</figure>
+</div>
+<p>where:</p>
+<ul>
+<li><code>P</code> is the loan amount (principal)</li>
+<li><code>n</code> is the no. of months</li>
+<li><code>r</code> is the rate of interest per month</li>
+</ul>
+<p>The derivation of this formula is beyond the scope of this tutorial. See this video for an explanation: https://youtu.be/Coxza9ugW4E .</p>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> loan_emi(amount, duration, rate, down_payment<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    loan_amount <span class="op">=</span> amount <span class="op">-</span> down_payment</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    emi <span class="op">=</span> loan_amount <span class="op">*</span> rate <span class="op">*</span> ((<span class="dv">1</span><span class="op">+</span>rate)<span class="op">**</span>duration) <span class="op">/</span> (((<span class="dv">1</span><span class="op">+</span>rate)<span class="op">**</span>duration)<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> emi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that while defining the function, required arguments like <code>cost</code>, <code>duration</code> and <code>rate</code> must appear before optional arguments like <code>down_payment</code>.</p>
+<p>Let’s calculate the EMI for Option 1</p>
+<div class="cell" data-outputid="8ca8ed5a-57b8-4576-99f5-2416b0a93be2" data-scrolled="true" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>loan_emi(<span class="dv">1260000</span>, <span class="dv">8</span><span class="op">*</span><span class="dv">12</span>, <span class="fl">0.1</span><span class="op">/</span><span class="dv">12</span>, <span class="fl">3e5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<pre><code>14567.19753389219</code></pre>
+</div>
+</div>
+<p>While calculating the EMI for Option 2, we need not include the <code>down_payment</code> argument.</p>
+<div class="cell" data-outputid="4d54937b-beb8-4a17-b169-2f9240fdfd9c" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>loan_emi(<span class="dv">1260000</span>, <span class="dv">10</span><span class="op">*</span><span class="dv">12</span>, <span class="fl">0.08</span><span class="op">/</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<pre><code>15287.276888775077</code></pre>
+</div>
+</div>
+</section>
+<section id="named-arguments" class="level3">
+<h3 class="anchored" data-anchor-id="named-arguments">Named arguments</h3>
+<p>Invoking a function with many arguments can often get confusing and is prone to human errors. Python provides the option of invoking functions with <em>named</em> arguments for better clarity. You can also split function invocation into multiple lines.</p>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>emi1 <span class="op">=</span> loan_emi(</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    amount<span class="op">=</span><span class="dv">1260000</span>, </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    duration<span class="op">=</span><span class="dv">8</span><span class="op">*</span><span class="dv">12</span>, </span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    rate<span class="op">=</span><span class="fl">0.1</span><span class="op">/</span><span class="dv">12</span>, </span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    down_payment<span class="op">=</span><span class="fl">3e5</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="b765b606-f839-44ad-9e73-b05e35379654" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>emi1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
+<pre><code>14567.19753389219</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>emi2 <span class="op">=</span> loan_emi(amount<span class="op">=</span><span class="dv">1260000</span>, duration<span class="op">=</span><span class="dv">10</span><span class="op">*</span><span class="dv">12</span>, rate<span class="op">=</span><span class="fl">0.08</span><span class="op">/</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="68b0dd56-43e0-4b63-8277-a7237697e17c" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>emi2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="33">
+<pre><code>15287.276888775077</code></pre>
+</div>
+</div>
+</section>
+<section id="modules-and-library-functions" class="level3">
+<h3 class="anchored" data-anchor-id="modules-and-library-functions">Modules and library functions</h3>
+<p>We can already see that the EMI for Option 1 is lower than the EMI for Option 2. However, it would be nice to round up the amount to full dollars, rather than showing digits after the decimal. To achieve this, we might want to write a function that can take a number and round it up to the next integer (e.g., 1.2 is rounded up to 2). That would be a great exercise to try out!</p>
+<p>However, since rounding numbers is a fairly common operation, Python provides a function for it (along with thousands of other functions) as part of the <a href="https://docs.python.org/3/library/">Python Standard Library</a>. Functions are organized into <em>modules</em> that need to be imported to use the functions they contain.</p>
+<blockquote class="blockquote">
+<p><strong>Modules</strong>: Modules are files containing Python code (variables, functions, classes, etc.). They provide a way of organizing the code for large Python projects into files and folders. The key benefit of using modules is <em>namespaces</em>: you must import the module to use its functions within a Python script or notebook. Namespaces provide encapsulation and avoid naming conflicts between your code and a module or across modules.</p>
+</blockquote>
+<p>We can use the <code>ceil</code> function (short for <em>ceiling</em>) from the <code>math</code> module to round up numbers. Let’s import the module and use it to round up the number <code>1.2</code>.</p>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="9674ce67-f446-4d8c-fc56-08970dbbe144" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(math.ceil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Help on built-in function ceil in module math:
+
+ceil(x, /)
+    Return the ceiling of x as an Integral.
+    
+    This is the smallest integer &gt;= x.
+</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="3d6e7a31-dca1-4440-8af4-7d676ab87d30" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>math.ceil(<span class="fl">1.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<pre><code>2</code></pre>
+</div>
+</div>
+<p>Let’s now use the <code>math.ceil</code> function within the <code>home_loan_emi</code> function to round up the EMI amount.</p>
+<blockquote class="blockquote">
+<p>Using functions to build other functions is a great way to reuse code and implement complex business logic while still keeping the code small, understandable, and manageable. Ideally, a function should do one thing and one thing only. If you find yourself writing a function that does too many things, consider splitting it into multiple smaller, independent functions. As a rule of thumb, try to limit your functions to 10 lines of code or less. Good programmers always write short, simple, and readable functions.</p>
+</blockquote>
+<div class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> loan_emi(amount, duration, rate, down_payment<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    loan_amount <span class="op">=</span> amount <span class="op">-</span> down_payment</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    emi <span class="op">=</span> loan_amount <span class="op">*</span> rate <span class="op">*</span> ((<span class="dv">1</span><span class="op">+</span>rate)<span class="op">**</span>duration) <span class="op">/</span> (((<span class="dv">1</span><span class="op">+</span>rate)<span class="op">**</span>duration)<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    emi <span class="op">=</span> math.ceil(emi)</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> emi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>emi1 <span class="op">=</span> loan_emi(</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    amount<span class="op">=</span><span class="dv">1260000</span>, </span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    duration<span class="op">=</span><span class="dv">8</span><span class="op">*</span><span class="dv">12</span>, </span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>    rate<span class="op">=</span><span class="fl">0.1</span><span class="op">/</span><span class="dv">12</span>, </span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>    down_payment<span class="op">=</span><span class="fl">3e5</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="c850e656-4ef4-46ae-8294-29170eaa916d" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>emi1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="39">
+<pre><code>14568</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>emi2 <span class="op">=</span> loan_emi(amount<span class="op">=</span><span class="dv">1260000</span>, duration<span class="op">=</span><span class="dv">10</span><span class="op">*</span><span class="dv">12</span>, rate<span class="op">=</span><span class="fl">0.08</span><span class="op">/</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="1ede90be-80fe-4188-c4e0-3c2702c01b11" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>emi2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<pre><code>15288</code></pre>
+</div>
+</div>
+<p>Let’s compare the EMIs and display a message for the option with the lower EMI.</p>
+<div class="cell" data-outputid="6f33f06c-c046-463e-8072-54f600742cb9" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> emi1 <span class="op">&lt;</span> emi2:</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Option 1 has the lower EMI: $</span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(emi1))</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Option 2 has the lower EMI: $</span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(emi2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Option 1 has the lower EMI: $14568</code></pre>
+</div>
+</div>
+</section>
+<section id="reusing-and-improving-functions" class="level3">
+<h3 class="anchored" data-anchor-id="reusing-and-improving-functions">Reusing and improving functions</h3>
+<p>Now we know for sure that “Option 1” has the lower EMI among the two options. But what’s even better is that we now have a handy function <code>loan_emi</code> that we can use to solve many other similar problems with just a few lines of code. Let’s try it with a couple more questions.</p>
+<blockquote class="blockquote">
+<p><strong>Q</strong>: Shaun is currently paying back a home loan for a house he bought a few years ago. The cost of the house was <code>$800,000</code>. Shaun made a down payment of <code>25%</code> of the price. He financed the remaining amount using a 6-year loan with an interest rate of <code>7%</code> per annum (compounded monthly). Shaun is now buying a car worth <code>$60,000</code>, which he is planning to finance using a 1-year loan with an interest rate of <code>12%</code> per annum. Both loans are paid back in EMIs. What is the total monthly payment Shaun makes towards loan repayment?</p>
+</blockquote>
+<p>This question is now straightforward to solve, using the <code>loan_emi</code> function we’ve already defined.</p>
+<div class="cell" data-outputid="64a960cd-33ae-4b84-e415-452ac3b6f2bd" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>cost_of_house <span class="op">=</span> <span class="dv">800000</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>home_loan_duration <span class="op">=</span> <span class="dv">6</span><span class="op">*</span><span class="dv">12</span> <span class="co"># months</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>home_loan_rate <span class="op">=</span> <span class="fl">0.07</span><span class="op">/</span><span class="dv">12</span> <span class="co"># monthly</span></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>home_down_payment <span class="op">=</span> <span class="fl">.25</span> <span class="op">*</span> <span class="dv">800000</span></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>emi_house <span class="op">=</span> loan_emi(amount<span class="op">=</span>cost_of_house,</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>                     duration<span class="op">=</span>home_loan_duration,</span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>                     rate<span class="op">=</span>home_loan_rate, </span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>                     down_payment<span class="op">=</span>home_down_payment)</span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a>emi_house</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="43">
+<pre><code>10230</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="9c130d27-d19c-4e83-f6cb-9131427d883c" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>cost_of_car <span class="op">=</span> <span class="dv">60000</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>car_loan_duration <span class="op">=</span> <span class="dv">1</span><span class="op">*</span><span class="dv">12</span> <span class="co"># months</span></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>car_loan_rate <span class="op">=</span> <span class="fl">.12</span><span class="op">/</span><span class="dv">12</span> <span class="co"># monthly</span></span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>emi_car <span class="op">=</span> loan_emi(amount<span class="op">=</span>cost_of_car, </span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>                   duration<span class="op">=</span>car_loan_duration, </span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>                   rate<span class="op">=</span>car_loan_rate)</span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a>emi_car</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="44">
+<pre><code>5331</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="d2afc74c-7edc-41ea-b051-110ecb873b8f" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Shaun makes a total monthly payment of $</span><span class="sc">{}</span><span class="st"> towards loan repayments."</span>.<span class="bu">format</span>(emi_house<span class="op">+</span>emi_car))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Shaun makes a total monthly payment of $15561 towards loan repayments.</code></pre>
+</div>
+</div>
+</section>
+<section id="exceptions-and-try-except" class="level3">
+<h3 class="anchored" data-anchor-id="exceptions-and-try-except">Exceptions and <code>try</code>-<code>except</code></h3>
+<blockquote class="blockquote">
+<p>Q: If you borrow <code>$100,000</code> using a 10-year loan with an interest rate of 9% per annum, what is the total amount you end up paying as interest?</p>
+</blockquote>
+<p>One way to solve this problem is to compare the EMIs for two loans: one with the given rate of interest and another with a 0% rate of interest. The total interest paid is then simply the sum of monthly differences over the duration of the loan.</p>
+<div class="cell" data-outputid="374e6674-505c-472c-9d2d-e12c7b018b7d" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>emi_with_interest <span class="op">=</span> loan_emi(amount<span class="op">=</span><span class="dv">100000</span>, duration<span class="op">=</span><span class="dv">10</span><span class="op">*</span><span class="dv">12</span>, rate<span class="op">=</span><span class="fl">0.09</span><span class="op">/</span><span class="dv">12</span>)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>emi_with_interest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="46">
+<pre><code>1267</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="d88efe78-4fc8-493c-bb54-8fb8b12417e4" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>emi_without_interest <span class="op">=</span> loan_emi(amount<span class="op">=</span><span class="dv">100000</span>, duration<span class="op">=</span><span class="dv">10</span><span class="op">*</span><span class="dv">12</span>, rate<span class="op">=</span><span class="fl">0.</span><span class="op">/</span><span class="dv">12</span>)</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>emi_without_interest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>ZeroDivisionError: ignored</code></pre>
+</div>
+</div>
+<p>Something seems to have gone wrong! If you look at the error message above carefully, Python tells us precisely what is wrong. Python <em>throws</em> a <code>ZeroDivisionError</code> with a message indicating that we’re trying to divide a number by zero. <code>ZeroDivisonError</code> is an <em>exception</em> that stops further execution of the program.</p>
+<blockquote class="blockquote">
+<p><strong>Exception</strong>: Even if a statement or expression is syntactically correct, it may cause an error when the Python interpreter tries to execute it. Errors detected during execution are called exceptions. Exceptions typically stop further execution of the program unless handled within the program using <code>try</code>-<code>except</code> statements.</p>
+</blockquote>
+<p>Python provides many built-in exceptions <em>thrown</em> when built-in operators, functions, or methods are used incorrectly: https://docs.python.org/3/library/exceptions.html#built-in-exceptions. You can also define your custom exception by extending the <code>Exception</code> class (more on that later).</p>
+<p>You can use the <code>try</code> and <code>except</code> statements to <em>handle</em> an exception. Here’s an example:</p>
+<div class="cell" data-outputid="24d8ca4e-5478-4666-d66c-f60fa42fb122" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Now computing the result.."</span>)</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> <span class="dv">5</span> <span class="op">/</span> <span class="dv">0</span></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Computation was completed successfully"</span>)</span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Failed to compute result because you were trying to divide by zero"</span>)</span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Now computing the result..
+Failed to compute result because you were trying to divide by zero
+None</code></pre>
+</div>
+</div>
+<p>When an exception occurs inside a <code>try</code> block, the block’s remaining statements are skipped. The <code>except</code> block is executed if the type of exception thrown matches that of the exception being handled. After executing the <code>except</code> block, the program execution returns to the normal flow.</p>
+<p>You can also handle more than one type of exception using multiple <code>except</code> statements. Learn more about exceptions here: https://www.w3schools.com/python/python_try_except.asp .</p>
+<p>Let’s enhance the <code>loan_emi</code> function to use <code>try</code>-<code>except</code> to handle the scenario where the interest rate is 0%. It’s common practice to make changes/enhancements to functions over time as new scenarios and use cases come up. It makes functions more robust &amp; versatile.</p>
+<div class="cell" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> loan_emi(amount, duration, rate, down_payment<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>    loan_amount <span class="op">=</span> amount <span class="op">-</span> down_payment</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>        emi <span class="op">=</span> loan_amount <span class="op">*</span> rate <span class="op">*</span> ((<span class="dv">1</span><span class="op">+</span>rate)<span class="op">**</span>duration) <span class="op">/</span> (((<span class="dv">1</span><span class="op">+</span>rate)<span class="op">**</span>duration)<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>        emi <span class="op">=</span> loan_amount <span class="op">/</span> duration</span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>    emi <span class="op">=</span> math.ceil(emi)</span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> emi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can use the updated <code>loan_emi</code> function to solve our problem.</p>
+<blockquote class="blockquote">
+<p><strong>Q</strong>: If you borrow <code>$100,000</code> using a 10-year loan with an interest rate of 9% per annum, what is the total amount you end up paying as interest?</p>
+</blockquote>
+<div class="cell" data-outputid="db266182-cda5-4b04-f3a5-9f5992e8e2cb" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>emi_with_interest <span class="op">=</span> loan_emi(amount<span class="op">=</span><span class="dv">100000</span>, duration<span class="op">=</span><span class="dv">10</span><span class="op">*</span><span class="dv">12</span>, rate<span class="op">=</span><span class="fl">0.09</span><span class="op">/</span><span class="dv">12</span>)</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>emi_with_interest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="50">
+<pre><code>1267</code></pre>
+</div>
+</div>
+<div class="cell" data-outputid="3d5ebd98-05dd-4660-ade0-0ece6c85415a" data-execution_count="51">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>emi_without_interest <span class="op">=</span> loan_emi(amount<span class="op">=</span><span class="dv">100000</span>, duration<span class="op">=</span><span class="dv">10</span><span class="op">*</span><span class="dv">12</span>, rate<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>emi_without_interest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="51">
+<pre><code>834</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="52">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>total_interest <span class="op">=</span> (emi_with_interest <span class="op">-</span> emi_without_interest) <span class="op">*</span> <span class="dv">10</span><span class="op">*</span><span class="dv">12</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-outputid="36737ddb-e653-4645-d04b-06a5f04d909f" data-execution_count="53">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The total interest paid is $</span><span class="sc">{}</span><span class="st">."</span>.<span class="bu">format</span>(total_interest))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The total interest paid is $51960.</code></pre>
+</div>
+</div>
+</section>
+<section id="documenting-functions-using-docstrings" class="level3">
+<h3 class="anchored" data-anchor-id="documenting-functions-using-docstrings">Documenting functions using Docstrings</h3>
+<p>We can add some documentation within our function using a <em>docstring</em>. A docstring is simply a string that appears as the first statement within the function body, and is used by the <code>help</code> function. A good docstring describes what the function does, and provides some explanation about the arguments.</p>
+<div class="cell" data-execution_count="54">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> loan_emi(amount, duration, rate, down_payment<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculates the equal montly installment (EMI) for a loan.</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Arguments:</span></span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a><span class="co">        amount - Total amount to be spent (loan + down payment)</span></span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a><span class="co">        duration - Duration of the loan (in months)</span></span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a><span class="co">        rate - Rate of interest (monthly)</span></span>
+<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a><span class="co">        down_payment (optional) - Optional intial payment (deducted from amount)</span></span>
+<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb83-10"><a href="#cb83-10" aria-hidden="true" tabindex="-1"></a>    loan_amount <span class="op">=</span> amount <span class="op">-</span> down_payment</span>
+<span id="cb83-11"><a href="#cb83-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb83-12"><a href="#cb83-12" aria-hidden="true" tabindex="-1"></a>        emi <span class="op">=</span> loan_amount <span class="op">*</span> rate <span class="op">*</span> ((<span class="dv">1</span><span class="op">+</span>rate)<span class="op">**</span>duration) <span class="op">/</span> (((<span class="dv">1</span><span class="op">+</span>rate)<span class="op">**</span>duration)<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb83-13"><a href="#cb83-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
+<span id="cb83-14"><a href="#cb83-14" aria-hidden="true" tabindex="-1"></a>        emi <span class="op">=</span> loan_amount <span class="op">/</span> duration</span>
+<span id="cb83-15"><a href="#cb83-15" aria-hidden="true" tabindex="-1"></a>    emi <span class="op">=</span> math.ceil(emi)</span>
+<span id="cb83-16"><a href="#cb83-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> emi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the docstring above, we’ve provided some additional information that the <code>duration</code> and <code>rate</code> are measured in months. You might even consider naming the arguments <code>duration_months</code> and <code>rate_monthly</code>, to avoid any confusion whatsoever. Can you think of some other ways to improve the function?</p>
+<div class="cell" data-outputid="1aa3399b-8ab3-40ac-aa18-ed028725b00a" data-execution_count="55">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(loan_emi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Help on function loan_emi in module __main__:
+
+loan_emi(amount, duration, rate, down_payment=0)
+    Calculates the equal montly installment (EMI) for a loan.
+    
+    Arguments:
+        amount - Total amount to be spent (loan + down payment)
+        duration - Duration of the loan (in months)
+        rate - Rate of interest (monthly)
+        down_payment (optional) - Optional intial payment (deducted from amount)
+</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="exercise---data-analysis-for-vacation-planning" class="level2">
+<h2 class="anchored" data-anchor-id="exercise---data-analysis-for-vacation-planning">Exercise - Data Analysis for Vacation Planning</h2>
+<p>You’re planning a vacation, and you need to decide which city you want to visit. You have shortlisted four cities and identified the return flight cost, daily hotel cost, and weekly car rental cost. While renting a car, you need to pay for entire weeks, even if you return the car sooner.</p>
+<table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 35%">
+<col style="width: 24%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>City</th>
+<th>Return Flight (<code>$</code>)</th>
+<th>Hotel per day (<code>$</code>)</th>
+<th>Weekly Car Rental (<code>$</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Paris</td>
+<td>200</td>
+<td>20</td>
+<td>200</td>
+</tr>
+<tr class="even">
+<td>London</td>
+<td>250</td>
+<td>30</td>
+<td>120</td>
+</tr>
+<tr class="odd">
+<td>Dubai</td>
+<td>370</td>
+<td>15</td>
+<td>80</td>
+</tr>
+<tr class="even">
+<td>Mumbai</td>
+<td>450</td>
+<td>10</td>
+<td>70</td>
+</tr>
+</tbody>
+</table>
+<p>Answer the following questions using the data above:</p>
+<ol type="1">
+<li>If you’re planning a 1-week long trip, which city should you visit to spend the least amount of money?</li>
+<li>How does the answer to the previous question change if you change the trip’s duration to four days, ten days or two weeks?</li>
+<li>If your total budget for the trip is <code>$1000</code>, which city should you visit to maximize the duration of your trip? Which city should you visit if you want to minimize the duration?</li>
+<li>How does the answer to the previous question change if your budget is <code>$600</code>, <code>$2000</code>, or <code>$1500</code>?</li>
+</ol>
+<p><em>Hint: To answer these questions, it will help to define a function <code>cost_of_trip</code> with relevant inputs like flight cost, hotel rate, car rental rate, and duration of the trip. You may find the <code>math.ceil</code> function useful for calculating the total cost of car rental.</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use these cells to answer the question - build the function step-by-step</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="summary-and-further-reading" class="level2">
+<h2 class="anchored" data-anchor-id="summary-and-further-reading">Summary and Further Reading</h2>
+<p>With this, we complete our discussion of functions in Python. We’ve covered the following topics in this tutorial:</p>
+<ul>
+<li>Creating and using functions</li>
+<li>Functions with one or more arguments</li>
+<li>Local variables and scope</li>
+<li>Returning values using <code>return</code></li>
+<li>Using default arguments to make a function flexible</li>
+<li>Using named arguments while invoking a function</li>
+<li>Importing modules and using library functions</li>
+<li>Reusing and improving functions to handle new use cases</li>
+<li>Handling exceptions with <code>try</code>-<code>except</code></li>
+<li>Documenting functions using docstrings</li>
+</ul>
+<p>This tutorial on functions in Python is by no means exhaustive. Here are a few more topics to learn about:</p>
+<ul>
+<li>Functions with an arbitrary number of arguments using (<code>*args</code> and <code>**kwargs</code>)</li>
+<li>Defining functions inside functions (and closures)</li>
+<li>A function that invokes itself (recursion)</li>
+<li>Functions that accept other functions as arguments or return other functions</li>
+<li>Functions that enhance other functions (decorators)</li>
+</ul>
+<p>Following are some resources to learn about more functions in Python:</p>
+<ul>
+<li>Python Tutorial at W3Schools: https://www.w3schools.com/python/</li>
+<li>Practical Python Programming: https://dabeaz-course.github.io/practical-python/Notes/Contents.html</li>
+<li>Python official documentation: https://docs.python.org/3/tutorial/index.html</li>
+</ul>
+</section>
+<section id="questions-for-revision" class="level2">
+<h2 class="anchored" data-anchor-id="questions-for-revision">Questions for Revision</h2>
+<p>Try answering the following questions to test your understanding of the topics covered in this notebook:</p>
+<ol type="1">
+<li>What is a function?</li>
+<li>What are the benefits of using functions?</li>
+<li>What are some built-in functions in Python?</li>
+<li>How do you define a function in Python? Give an example.</li>
+<li>What is the body of a function?</li>
+<li>When are the statements in the body of a function executed?</li>
+<li>What is meant by calling or invoking a function? Give an example.</li>
+<li>What are function arguments? How are they useful?</li>
+<li>How do you store the result of a function in a variable?</li>
+<li>What is the purpose of the <code>return</code> keyword in Python?</li>
+<li>Can you return multiple values from a function?</li>
+<li>Can a <code>return</code> statement be used inside an <code>if</code> block or a <code>for</code> loop?</li>
+<li>Can the <code>return</code> keyword be used outside a function?</li>
+<li>What is scope in a programming region?</li>
+<li>How do you define a variable inside a function?</li>
+<li>What are local &amp; global variables?</li>
+<li>Can you access the variables defined inside a function outside its body? Why or why not?</li>
+<li>What do you mean by the statement “a function defines a scope within Python”?</li>
+<li>Do for and while loops define a scope, like functions?</li>
+<li>Do if-else blocks define a scope, like functions?</li>
+<li>What are optional function arguments &amp; default values? Give an example.</li>
+<li>Why should the required arguments appear before the optional arguments in a function definition?</li>
+<li>How do you invoke a function with named arguments? Illustrate with an example.</li>
+<li>Can you split a function invocation into multiple lines?</li>
+<li>Write a function that takes a number and rounds it up to the nearest integer.</li>
+<li>What are modules in Python?</li>
+<li>What is a Python library?</li>
+<li>What is the Python Standard Library?</li>
+<li>Where can you learn about the modules and functions available in the Python standard library?</li>
+<li>How do you install a third-party library?</li>
+<li>What is a module namespace? How is it useful?</li>
+<li>What problems would you run into if Python modules did not provide namespaces?</li>
+<li>How do you import a module?</li>
+<li>How do you use a function from an imported module? Illustrate with an example.</li>
+<li>Can you invoke a function inside the body of another function? Give an example.</li>
+<li>What is the single responsibility principle, and how does it apply while writing functions?</li>
+<li>What some characteristics of well-written functions?</li>
+<li>Can you use if statements or while loops within a function? Illustrate with an example.</li>
+<li>What are exceptions in Python? When do they occur?</li>
+<li>How are exceptions different from syntax errors?</li>
+<li>What are the different types of in-built exceptions in Python? Where can you learn about them?</li>
+<li>How do you prevent the termination of a program due to an exception?</li>
+<li>What is the purpose of the <code>try</code>-<code>except</code> statements in Python?</li>
+<li>What is the syntax of the <code>try</code>-<code>except</code> statements? Give an example.</li>
+<li>What happens if an exception occurs inside a <code>try</code> block?</li>
+<li>How do you handle two different types of exceptions using <code>except</code>? Can you have multiple <code>except</code> blocks under a single <code>try</code> block?</li>
+<li>How do you create an <code>except</code> block to handle any type of exception?</li>
+<li>Illustrate the usage of <code>try</code>-<code>except</code> inside a function with an example.</li>
+<li>What is a docstring? Why is it useful?</li>
+<li>How do you display the docstring for a function?</li>
+<li>What are *args and **kwargs? How are they useful? Give an example.</li>
+<li>Can you define functions inside functions?</li>
+<li>What is function closure in Python? How is it useful? Give an example.</li>
+<li>What is recursion? Illustrate with an example.</li>
+<li>Can functions accept other functions as arguments? Illustrate with an example.</li>
+<li>Can functions return other functions as results? Illustrate with an example.</li>
+<li>What are decorators? How are they useful?</li>
+<li>Implement a function decorator which prints the arguments and result of wrapped functions.</li>
+<li>What are some in-built decorators in Python?</li>
+<li>What are some popular Python libraries?</li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
