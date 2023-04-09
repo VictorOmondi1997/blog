@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Victor Omondi">
+<meta name="dcterms.date" content="2020-07-03">
+<meta name="description" content="Building the foundation you need to think statistically, speak the language of your data, and understand what your data is telling you.">
+
+<title>blog - Statistical Thinking in Python (Part 1)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/VictorOmondi1997"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/VictorOmondi197"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Statistical Thinking in Python (Part 1)</h1>
+                  <div>
+        <div class="description">
+          Building the foundation you need to think statistically, speak the language of your data, and understand what your data is telling you.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">statistical-thinking</div>
+                <div class="quarto-category">eda</div>
+                <div class="quarto-category">data-science</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Victor Omondi </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 3, 2020</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#graphical-exploratory-data-analysis" id="toc-graphical-exploratory-data-analysis" class="nav-link active" data-scroll-target="#graphical-exploratory-data-analysis">Graphical exploratory data analysis</a>
+  <ul class="collapse">
+  <li><a href="#introduction-to-exploratory-data-analysis" id="toc-introduction-to-exploratory-data-analysis" class="nav-link" data-scroll-target="#introduction-to-exploratory-data-analysis">Introduction to Exploratory Data Analysis</a>
+  <ul class="collapse">
+  <li><a href="#tukeys-comments-on-eda" id="toc-tukeys-comments-on-eda" class="nav-link" data-scroll-target="#tukeys-comments-on-eda">Tukey’s comments on EDA</a></li>
+  <li><a href="#advantages-of-graphical-eda" id="toc-advantages-of-graphical-eda" class="nav-link" data-scroll-target="#advantages-of-graphical-eda">Advantages of graphical EDA</a></li>
+  </ul></li>
+  <li><a href="#plotting-a-histogram" id="toc-plotting-a-histogram" class="nav-link" data-scroll-target="#plotting-a-histogram">Plotting a histogram</a>
+  <ul class="collapse">
+  <li><a href="#plotting-a-histogram-of-iris-data" id="toc-plotting-a-histogram-of-iris-data" class="nav-link" data-scroll-target="#plotting-a-histogram-of-iris-data">Plotting a histogram of iris data</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries">Libraries</a>
+  <ul class="collapse">
+  <li><a href="#adjusting-the-number-of-bins-in-a-histogram" id="toc-adjusting-the-number-of-bins-in-a-histogram" class="nav-link" data-scroll-target="#adjusting-the-number-of-bins-in-a-histogram">Adjusting the number of bins in a histogram</a></li>
+  <li><a href="#plot-all-data-bee-swarm-plots" id="toc-plot-all-data-bee-swarm-plots" class="nav-link" data-scroll-target="#plot-all-data-bee-swarm-plots">Plot all data: Bee swarm plots</a>
+  <ul class="collapse">
+  <li><a href="#bee-swarm-plot" id="toc-bee-swarm-plot" class="nav-link" data-scroll-target="#bee-swarm-plot">Bee swarm plot</a></li>
+  <li><a href="#interpreting-a-bee-swarm-plot" id="toc-interpreting-a-bee-swarm-plot" class="nav-link" data-scroll-target="#interpreting-a-bee-swarm-plot">Interpreting a bee swarm plot</a></li>
+  </ul></li>
+  <li><a href="#plot-all-data-ecdfs" id="toc-plot-all-data-ecdfs" class="nav-link" data-scroll-target="#plot-all-data-ecdfs">Plot all data: ECDFs</a>
+  <ul class="collapse">
+  <li><a href="#computing-the-ecdf" id="toc-computing-the-ecdf" class="nav-link" data-scroll-target="#computing-the-ecdf">Computing the ECDF</a></li>
+  <li><a href="#plotting-the-ecdf" id="toc-plotting-the-ecdf" class="nav-link" data-scroll-target="#plotting-the-ecdf">Plotting the ECDF</a></li>
+  <li><a href="#comparison-of-ecdfs" id="toc-comparison-of-ecdfs" class="nav-link" data-scroll-target="#comparison-of-ecdfs">Comparison of ECDFs</a></li>
+  </ul></li>
+  <li><a href="#onward-toward-the-whole-story" id="toc-onward-toward-the-whole-story" class="nav-link" data-scroll-target="#onward-toward-the-whole-story">Onward toward the whole story!</a></li>
+  </ul></li>
+  <li><a href="#quantitative-exploratory-data-analysis" id="toc-quantitative-exploratory-data-analysis" class="nav-link" data-scroll-target="#quantitative-exploratory-data-analysis">Quantitative exploratory data analysis</a>
+  <ul class="collapse">
+  <li><a href="#introduction-to-summary-statistics-the-sample-mean-and-median" id="toc-introduction-to-summary-statistics-the-sample-mean-and-median" class="nav-link" data-scroll-target="#introduction-to-summary-statistics-the-sample-mean-and-median">Introduction to summary statistics: The sample mean and median</a>
+  <ul class="collapse">
+  <li><a href="#computing-means" id="toc-computing-means" class="nav-link" data-scroll-target="#computing-means">Computing means</a></li>
+  </ul></li>
+  <li><a href="#percentiles-outliers-and-box-plots" id="toc-percentiles-outliers-and-box-plots" class="nav-link" data-scroll-target="#percentiles-outliers-and-box-plots">Percentiles, outliers, and box plots</a>
+  <ul class="collapse">
+  <li><a href="#computing-percentiles" id="toc-computing-percentiles" class="nav-link" data-scroll-target="#computing-percentiles">Computing percentiles</a></li>
+  <li><a href="#comparing-percentiles-to-ecdf" id="toc-comparing-percentiles-to-ecdf" class="nav-link" data-scroll-target="#comparing-percentiles-to-ecdf">Comparing percentiles to ECDF</a></li>
+  <li><a href="#box-and-whisker-plot" id="toc-box-and-whisker-plot" class="nav-link" data-scroll-target="#box-and-whisker-plot">Box-and-whisker plot</a></li>
+  </ul></li>
+  <li><a href="#variance-and-standard-deviation" id="toc-variance-and-standard-deviation" class="nav-link" data-scroll-target="#variance-and-standard-deviation">Variance and standard deviation</a>
+  <ul class="collapse">
+  <li><a href="#computing-the-variance" id="toc-computing-the-variance" class="nav-link" data-scroll-target="#computing-the-variance">Computing the variance</a></li>
+  <li><a href="#the-standard-deviation-and-the-variance" id="toc-the-standard-deviation-and-the-variance" class="nav-link" data-scroll-target="#the-standard-deviation-and-the-variance">The standard deviation and the variance</a></li>
+  </ul></li>
+  <li><a href="#covariance-and-the-pearson-correlation-coefficient" id="toc-covariance-and-the-pearson-correlation-coefficient" class="nav-link" data-scroll-target="#covariance-and-the-pearson-correlation-coefficient">Covariance and the Pearson correlation coefficient</a>
+  <ul class="collapse">
+  <li><a href="#scatter-plots" id="toc-scatter-plots" class="nav-link" data-scroll-target="#scatter-plots">Scatter plots</a></li>
+  <li><a href="#computing-the-covariance" id="toc-computing-the-covariance" class="nav-link" data-scroll-target="#computing-the-covariance">Computing the covariance</a></li>
+  <li><a href="#computing-the-pearson-correlation-coefficient" id="toc-computing-the-pearson-correlation-coefficient" class="nav-link" data-scroll-target="#computing-the-pearson-correlation-coefficient">Computing the Pearson correlation coefficient</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#thinking-probabilistically-discrete-variables" id="toc-thinking-probabilistically-discrete-variables" class="nav-link" data-scroll-target="#thinking-probabilistically-discrete-variables">Thinking probabilistically– Discrete variables</a>
+  <ul class="collapse">
+  <li><a href="#probabilistic-logic-and-statistical-inference" id="toc-probabilistic-logic-and-statistical-inference" class="nav-link" data-scroll-target="#probabilistic-logic-and-statistical-inference">Probabilistic logic and statistical inference</a>
+  <ul class="collapse">
+  <li><a href="#the-goal-of-statistical-inference" id="toc-the-goal-of-statistical-inference" class="nav-link" data-scroll-target="#the-goal-of-statistical-inference">the goal of statistical inference</a></li>
+  <li><a href="#why-we-use-the-probabilistic-language-in-statistical-inference" id="toc-why-we-use-the-probabilistic-language-in-statistical-inference" class="nav-link" data-scroll-target="#why-we-use-the-probabilistic-language-in-statistical-inference">Why we use the probabilistic language in statistical inference</a></li>
+  </ul></li>
+  <li><a href="#random-number-generators-and-hacker-statistics" id="toc-random-number-generators-and-hacker-statistics" class="nav-link" data-scroll-target="#random-number-generators-and-hacker-statistics">Random number generators and hacker statistics</a>
+  <ul class="collapse">
+  <li><a href="#generating-random-numbers-using-the-np.random-module" id="toc-generating-random-numbers-using-the-np.random-module" class="nav-link" data-scroll-target="#generating-random-numbers-using-the-np.random-module">Generating random numbers using the np.random module</a></li>
+  <li><a href="#the-np.random-module-and-bernoulli-trials" id="toc-the-np.random-module-and-bernoulli-trials" class="nav-link" data-scroll-target="#the-np.random-module-and-bernoulli-trials">The np.random module and Bernoulli trials</a></li>
+  <li><a href="#how-many-defaults-might-we-expect" id="toc-how-many-defaults-might-we-expect" class="nav-link" data-scroll-target="#how-many-defaults-might-we-expect">How many defaults might we expect?</a></li>
+  <li><a href="#will-the-bank-fail" id="toc-will-the-bank-fail" class="nav-link" data-scroll-target="#will-the-bank-fail">Will the bank fail?</a></li>
+  </ul></li>
+  <li><a href="#probability-distributions-and-stories-the-binomial-distribution" id="toc-probability-distributions-and-stories-the-binomial-distribution" class="nav-link" data-scroll-target="#probability-distributions-and-stories-the-binomial-distribution">Probability distributions and stories: The Binomial distribution</a>
+  <ul class="collapse">
+  <li><a href="#sampling-out-of-the-binomial-distribution" id="toc-sampling-out-of-the-binomial-distribution" class="nav-link" data-scroll-target="#sampling-out-of-the-binomial-distribution">Sampling out of the Binomial distribution</a></li>
+  <li><a href="#plotting-the-binomial-pmf" id="toc-plotting-the-binomial-pmf" class="nav-link" data-scroll-target="#plotting-the-binomial-pmf">Plotting the Binomial PMF</a></li>
+  </ul></li>
+  <li><a href="#poisson-processes-and-the-poisson-distribution" id="toc-poisson-processes-and-the-poisson-distribution" class="nav-link" data-scroll-target="#poisson-processes-and-the-poisson-distribution">Poisson processes and the Poisson distribution</a>
+  <ul class="collapse">
+  <li><a href="#relationship-between-binomial-and-poisson-distributions" id="toc-relationship-between-binomial-and-poisson-distributions" class="nav-link" data-scroll-target="#relationship-between-binomial-and-poisson-distributions">Relationship between Binomial and Poisson distributions</a></li>
+  <li><a href="#was-2015-anomalous" id="toc-was-2015-anomalous" class="nav-link" data-scroll-target="#was-2015-anomalous">Was 2015 anomalous?</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#thinking-probabilistically-continuous-variables" id="toc-thinking-probabilistically-continuous-variables" class="nav-link" data-scroll-target="#thinking-probabilistically-continuous-variables">Thinking probabilistically– Continuous variables</a>
+  <ul class="collapse">
+  <li><a href="#probability-density-functions" id="toc-probability-density-functions" class="nav-link" data-scroll-target="#probability-density-functions">Probability density functions</a></li>
+  <li><a href="#introduction-to-the-normal-distribution" id="toc-introduction-to-the-normal-distribution" class="nav-link" data-scroll-target="#introduction-to-the-normal-distribution">Introduction to the Normal distribution</a>
+  <ul class="collapse">
+  <li><a href="#the-normal-pdf" id="toc-the-normal-pdf" class="nav-link" data-scroll-target="#the-normal-pdf">The Normal PDF</a></li>
+  <li><a href="#the-normal-cdf" id="toc-the-normal-cdf" class="nav-link" data-scroll-target="#the-normal-cdf">The Normal CDF</a></li>
+  </ul></li>
+  <li><a href="#the-normal-distribution-properties-and-warnings" id="toc-the-normal-distribution-properties-and-warnings" class="nav-link" data-scroll-target="#the-normal-distribution-properties-and-warnings">The Normal distribution: Properties and warnings</a>
+  <ul class="collapse">
+  <li><a href="#are-the-belmont-stakes-results-normally-distributed" id="toc-are-the-belmont-stakes-results-normally-distributed" class="nav-link" data-scroll-target="#are-the-belmont-stakes-results-normally-distributed">Are the Belmont Stakes results Normally distributed?</a></li>
+  <li><a href="#what-are-the-chances-of-a-horse-matching-or-beating-secretariats-record" id="toc-what-are-the-chances-of-a-horse-matching-or-beating-secretariats-record" class="nav-link" data-scroll-target="#what-are-the-chances-of-a-horse-matching-or-beating-secretariats-record">What are the chances of a horse matching or beating Secretariat’s record?</a></li>
+  </ul></li>
+  <li><a href="#the-exponential-distribution" id="toc-the-exponential-distribution" class="nav-link" data-scroll-target="#the-exponential-distribution">The Exponential distribution</a>
+  <ul class="collapse">
+  <li><a href="#if-you-have-a-story-you-can-simulate-it" id="toc-if-you-have-a-story-you-can-simulate-it" class="nav-link" data-scroll-target="#if-you-have-a-story-you-can-simulate-it">If you have a story, you can simulate it!</a></li>
+  <li><a href="#distribution-of-no-hitters-and-cycles" id="toc-distribution-of-no-hitters-and-cycles" class="nav-link" data-scroll-target="#distribution-of-no-hitters-and-cycles">Distribution of no-hitters and cycles</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="graphical-exploratory-data-analysis" class="level1">
+<h1>Graphical exploratory data analysis</h1>
+<p>Before diving into sophisticated statistical inference techniques, we should first explore our data by plotting them and computing simple summary statistics. This process, called <strong>exploratory data analysis</strong>, is a crucial first step in statistical analysis of data.</p>
+<section id="introduction-to-exploratory-data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-exploratory-data-analysis">Introduction to Exploratory Data Analysis</h2>
+<p>Exploratory Data Analysis is the process of organizing, plo!ing, and summarizing a data set</p>
+<blockquote class="blockquote">
+<p>“Exploratory data analysis can never be the whole story, but nothing else can serve as the foundation stone.” &gt; ~ John Tukey</p>
+</blockquote>
+<section id="tukeys-comments-on-eda" class="level3">
+<h3 class="anchored" data-anchor-id="tukeys-comments-on-eda">Tukey’s comments on EDA</h3>
+<ul>
+<li>Exploratory data analysis is detective work.</li>
+<li>There is no excuse for failing to plot and look.</li>
+<li>The greatest value of a picture is that it forces us to notice what we never expected to see.</li>
+<li>It is important to understand what you can do before you learn how to measure how well you seem to have done it.</li>
+</ul>
+<blockquote class="blockquote">
+<p>If you don’t have time to do EDA, you really don’t have time to do hypothesis tests. And you should always do EDA first.</p>
+</blockquote>
+</section>
+<section id="advantages-of-graphical-eda" class="level3">
+<h3 class="anchored" data-anchor-id="advantages-of-graphical-eda">Advantages of graphical EDA</h3>
+<ul>
+<li>It often involves converting tabular data into graphical form.</li>
+<li>If done well, graphical representations can allow for more rapid interpretation of data.</li>
+<li>There is no excuse for neglecting to do graphical EDA.</li>
+</ul>
+<blockquote class="blockquote">
+<p>While a good, informative plot can sometimes be the end point of an analysis, it is more like a beginning: it helps guide you in the quantitative statistical analyses that come next.</p>
+</blockquote>
+</section>
+</section>
+<section id="plotting-a-histogram" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-a-histogram">Plotting a histogram</h2>
+<section id="plotting-a-histogram-of-iris-data" class="level3">
+<h3 class="anchored" data-anchor-id="plotting-a-histogram-of-iris-data">Plotting a histogram of iris data</h3>
+<p>We will use a classic data set collected by botanist Edward Anderson and made famous by Ronald Fisher, one of the most prolific statisticians in history. Anderson carefully measured the anatomical properties of samples of three different species of iris, Iris setosa, Iris versicolor, and Iris virginica. The full data set is <a href="http://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html">available as part of scikit-learn</a>. Here, you will work with his measurements of petal length.</p>
+<p>We will plot a histogram of the petal lengths of his 50 samples of Iris versicolor using matplotlib/seaborn’s default settings.</p>
+<p>The subset of the data set containing the Iris versicolor petal lengths in units of centimeters (cm) is stored in the NumPy array <code>versicolor_petal_length</code>.</p>
+</section>
+</section>
+</section>
+<section id="libraries" class="level1">
+<h1>Libraries</h1>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import plotting modules</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Set default Seaborn style</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>()</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>versicolor_petal_length <span class="op">=</span> np.array([<span class="fl">4.7</span>, <span class="fl">4.5</span>, <span class="fl">4.9</span>, <span class="fl">4.</span> , <span class="fl">4.6</span>, <span class="fl">4.5</span>, <span class="fl">4.7</span>, <span class="fl">3.3</span>, <span class="fl">4.6</span>, <span class="fl">3.9</span>, <span class="fl">3.5</span>, <span class="fl">4.2</span>, <span class="fl">4.</span> ,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>       <span class="fl">4.7</span>, <span class="fl">3.6</span>, <span class="fl">4.4</span>, <span class="fl">4.5</span>, <span class="fl">4.1</span>, <span class="fl">4.5</span>, <span class="fl">3.9</span>, <span class="fl">4.8</span>, <span class="fl">4.</span> , <span class="fl">4.9</span>, <span class="fl">4.7</span>, <span class="fl">4.3</span>, <span class="fl">4.4</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>       <span class="fl">4.8</span>, <span class="fl">5.</span> , <span class="fl">4.5</span>, <span class="fl">3.5</span>, <span class="fl">3.8</span>, <span class="fl">3.7</span>, <span class="fl">3.9</span>, <span class="fl">5.1</span>, <span class="fl">4.5</span>, <span class="fl">4.5</span>, <span class="fl">4.7</span>, <span class="fl">4.4</span>, <span class="fl">4.1</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>       <span class="fl">4.</span> , <span class="fl">4.4</span>, <span class="fl">4.6</span>, <span class="fl">4.</span> , <span class="fl">3.3</span>, <span class="fl">4.2</span>, <span class="fl">4.2</span>, <span class="fl">4.2</span>, <span class="fl">4.3</span>, <span class="fl">3.</span> , <span class="fl">4.1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot histogram of versicolor petal lengths</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.hist(versicolor_petal_length)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"count"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"petal length (cm)"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<section id="adjusting-the-number-of-bins-in-a-histogram" class="level3">
+<h3 class="anchored" data-anchor-id="adjusting-the-number-of-bins-in-a-histogram">Adjusting the number of bins in a histogram</h3>
+<p>The histogram we just made had ten bins. This is the default of matplotlib.</p>
+<blockquote class="blockquote">
+<p>Tip: The “square root rule” is a commonly-used rule of thumb for choosing number of bins: choose the number of bins to be the square root of the number of samples.</p>
+</blockquote>
+<p>We will plot the histogram of <em>Iris versicolor petal lengths</em> again, this time using the square root rule for the number of bins. You specify the number of bins using the <code>bins</code> keyword argument of <code>plt.hist()</code>.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute number of data points: n_data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n_data <span class="op">=</span> <span class="bu">len</span>(versicolor_petal_length)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of bins is the square root of number of data points: n_bins</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>n_bins <span class="op">=</span> np.sqrt(n_data)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert number of bins to integer: n_bins</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>n_bins <span class="op">=</span> <span class="bu">int</span>(n_bins)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the histogram</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.hist(versicolor_petal_length, bins<span class="op">=</span>n_bins)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Label axes</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.xlabel(<span class="st">'petal length (cm)'</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.ylabel(<span class="st">'count'</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Show histogram</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="plot-all-data-bee-swarm-plots" class="level2">
+<h2 class="anchored" data-anchor-id="plot-all-data-bee-swarm-plots">Plot all data: Bee swarm plots</h2>
+<section id="bee-swarm-plot" class="level3">
+<h3 class="anchored" data-anchor-id="bee-swarm-plot">Bee swarm plot</h3>
+<p>We will make a bee swarm plot of the iris petal lengths. The x-axis will contain each of the three species, and the y-axis the petal lengths.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>iris_petal_lengths <span class="op">=</span> pd.read_csv(<span class="st">"../datasets/iris_petal_lengths.csv"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>iris_petal_lengths.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>sepal length (cm)</th>
+      <th>sepal width (cm)</th>
+      <th>petal length (cm)</th>
+      <th>petal width (cm)</th>
+      <th>species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>iris_petal_lengths.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>(150, 5)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>iris_petal_lengths.tail()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>sepal length (cm)</th>
+      <th>sepal width (cm)</th>
+      <th>petal length (cm)</th>
+      <th>petal width (cm)</th>
+      <th>species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>145</th>
+      <td>6.7</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.3</td>
+      <td>virginica</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>virginica</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.0</td>
+      <td>virginica</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>6.2</td>
+      <td>3.4</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>virginica</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>5.9</td>
+      <td>3.0</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>virginica</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create bee swarm plot with Seaborn's default settings</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> sns.swarmplot(data<span class="op">=</span>iris_petal_lengths, x<span class="op">=</span><span class="st">"species"</span>, y<span class="op">=</span><span class="st">"petal length (cm)"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Label the axes</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.xlabel(<span class="st">"species"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.ylabel(<span class="st">"petal length (cm)"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="interpreting-a-bee-swarm-plot" class="level3">
+<h3 class="anchored" data-anchor-id="interpreting-a-bee-swarm-plot">Interpreting a bee swarm plot</h3>
+<ul>
+<li><em>I. virginica</em> petals tend to be the longest, and <em>I. setosa</em> petals tend to be the shortest of the three species.</li>
+</ul>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice that we said <strong>“tend to be.”</strong> Some individual <em>I. virginica</em> flowers may be shorter than individual <em>I. versicolor</em> flowers. It is also possible that an individual <em>I. setosa</em> flower may have longer petals than in individual <em>I. versicolor</em> flower, though this is highly unlikely, and was not observed by Anderson.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="plot-all-data-ecdfs" class="level2">
+<h2 class="anchored" data-anchor-id="plot-all-data-ecdfs">Plot all data: ECDFs</h2>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Empirical cumulative distribution function (ECDF)</p>
+</div>
+</div>
+<section id="computing-the-ecdf" class="level3">
+<h3 class="anchored" data-anchor-id="computing-the-ecdf">Computing the ECDF</h3>
+<p>We will write a function that takes as input a 1D array of data and then returns the <code>x</code> and <code>y</code> values of the ECDF.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>ECDFs are among the most important plots in statistical analysis.</p>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ecdf(data):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Compute ECDF for a one-dimensional array of measurements."""</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Number of data points: n</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(data)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x-data for the ECDF: x</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.sort(data)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># y-data for the ECDF: y</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.arange(<span class="dv">1</span>, n<span class="op">+</span><span class="dv">1</span>) <span class="op">/</span> n</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x, y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="plotting-the-ecdf" class="level3">
+<h3 class="anchored" data-anchor-id="plotting-the-ecdf">Plotting the ECDF</h3>
+<p>We will now use <code>ecdf()</code> function to compute the ECDF for the petal lengths of Anderson’s <em>Iris versicolor</em> flowers. We will then plot the ECDF.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>ecdf()</code> function returns two arrays so we will need to unpack them. An example of such unpacking is <code>x, y = foo(data)</code>, for some function <code>foo()</code>.</p>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute ECDF for versicolor data: x_vers, y_vers</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>x_vers, y_vers <span class="op">=</span> ecdf(versicolor_petal_length)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate plot</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(x_vers, y_vers, marker<span class="op">=</span><span class="st">"."</span>, linestyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Label the axes</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.xlabel(<span class="st">"versicolor petal length, (cm)"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.ylabel(<span class="st">"ECDF"</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="comparison-of-ecdfs" class="level3">
+<h3 class="anchored" data-anchor-id="comparison-of-ecdfs">Comparison of ECDFs</h3>
+<p>ECDFs also allow us to compare two or more distributions <strong><em>(though plots get cluttered if you have too many)</em></strong>. Here, we will plot ECDFs for the petal lengths of all three iris species.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>we already wrote a function to generate ECDFs so we can put it to good use!</p>
+</div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>setosa_petal_length <span class="op">=</span> iris_petal_lengths[<span class="st">"petal length (cm)"</span>][iris_petal_lengths.species <span class="op">==</span> <span class="st">"setosa"</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>versicolor_petal_length <span class="op">=</span> iris_petal_lengths[<span class="st">"petal length (cm)"</span>][iris_petal_lengths.species <span class="op">==</span> <span class="st">"versicolor"</span>]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>virginica_petal_length <span class="op">=</span> iris_petal_lengths[<span class="st">"petal length (cm)"</span>][iris_petal_lengths.species <span class="op">==</span> <span class="st">"virginica"</span>]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>setosa_petal_length.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>0    1.4
+1    1.4
+2    1.3
+3    1.5
+4    1.4
+Name: petal length (cm), dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute ECDFs</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>x_set, y_set <span class="op">=</span> ecdf(setosa_petal_length)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>x_vers, y_vers <span class="op">=</span> ecdf(versicolor_petal_length)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>x_virg, y_virg <span class="op">=</span> ecdf(virginica_petal_length)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot all ECDFs on the same plot</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(x_set, y_set, marker<span class="op">=</span><span class="st">"."</span>, linestyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(x_vers, y_vers, marker<span class="op">=</span><span class="st">"."</span>, linestyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(x_virg, y_virg, marker<span class="op">=</span><span class="st">"."</span>, linestyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Annotate the plot</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>plt.legend((<span class="st">'setosa'</span>, <span class="st">'versicolor'</span>, <span class="st">'virginica'</span>), loc<span class="op">=</span><span class="st">'lower right'</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.xlabel(<span class="st">'petal length (cm)'</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.ylabel(<span class="st">'ECDF'</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The ECDFs expose clear differences among the species. Setosa is much shorter, also with less absolute variability in petal length than versicolor and virginica.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="onward-toward-the-whole-story" class="level2">
+<h2 class="anchored" data-anchor-id="onward-toward-the-whole-story">Onward toward the whole story!</h2>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>“Exploratory data analysis can never be the</p>
+</div>
+</div>
+<p>whole story, but nothing else can serve as the foundation stone.” —John Tukey</p>
+</section>
+</section>
+<section id="quantitative-exploratory-data-analysis" class="level1">
+<h1>Quantitative exploratory data analysis</h1>
+<p>We will compute useful summary statistics, which serve to concisely describe salient features of a dataset with a few numbers.</p>
+<section id="introduction-to-summary-statistics-the-sample-mean-and-median" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-summary-statistics-the-sample-mean-and-median">Introduction to summary statistics: The sample mean and median</h2>
+<p><span class="math display">\[
+mean = \bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
+\]</span></p>
+<blockquote class="blockquote">
+<h3 id="outliers" class="anchored">Outliers</h3>
+<p>● Data points whose value is far greater or less than most of the rest of the data</p>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="the-median" class="anchored">The median</h3>
+<p>● The middle value of a data set</p>
+</blockquote>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An outlier can significantly affect the value of the mean, but not the median</p>
+</div>
+</div>
+<section id="computing-means" class="level3">
+<h3 class="anchored" data-anchor-id="computing-means">Computing means</h3>
+<p>The mean of all measurements gives an indication of the typical magnitude of a measurement. It is computed using <code>np.mean()</code>.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the mean: mean_length_vers</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>mean_length_vers <span class="op">=</span> np.mean(versicolor_petal_length)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result with some nice formatting</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'I. versicolor:'</span>, mean_length_vers, <span class="st">'cm'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>I. versicolor: 4.26 cm</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="percentiles-outliers-and-box-plots" class="level2">
+<h2 class="anchored" data-anchor-id="percentiles-outliers-and-box-plots">Percentiles, outliers, and box plots</h2>
+<section id="computing-percentiles" class="level3">
+<h3 class="anchored" data-anchor-id="computing-percentiles">Computing percentiles</h3>
+<p>We will compute the percentiles of petal length of <em>Iris versicolor</em>.</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify array of percentiles: percentiles</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>percentiles <span class="op">=</span> np.array([<span class="fl">2.5</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">75</span>, <span class="fl">97.5</span>])</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute percentiles: ptiles_vers</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>ptiles_vers <span class="op">=</span> np.percentile(versicolor_petal_length, percentiles)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>ptiles_vers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>array([3.3   , 4.    , 4.35  , 4.6   , 4.9775])</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-percentiles-to-ecdf" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-percentiles-to-ecdf">Comparing percentiles to ECDF</h3>
+<p>To see how the percentiles relate to the ECDF, we will plot the percentiles of <em>Iris versicolor</em> petal lengths on the ECDF plot.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the ECDF</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(x_vers, y_vers, <span class="st">'.'</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.xlabel(<span class="st">'petal length (cm)'</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.ylabel(<span class="st">'ECDF'</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Overlay percentiles as red diamonds.</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(ptiles_vers, percentiles<span class="op">/</span><span class="dv">100</span>, marker<span class="op">=</span><span class="st">'D'</span>, color<span class="op">=</span><span class="st">'red'</span>,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>         linestyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="box-and-whisker-plot" class="level3">
+<h3 class="anchored" data-anchor-id="box-and-whisker-plot">Box-and-whisker plot</h3>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Making a box plot for the petal lengths is unnecessary because the iris data set is not too large and the bee swarm plot works fine.</p>
+</div>
+</div>
+<p>We will Make a box plot of the iris petal lengths.</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create box plot with Seaborn's default settings</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> sns.boxplot(data<span class="op">=</span>iris_petal_lengths, x<span class="op">=</span><span class="st">"species"</span>, y<span class="op">=</span><span class="st">"petal length (cm)"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Label the axes</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.xlabel(<span class="st">"species"</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.ylabel(<span class="st">"petal length (cm)"</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="variance-and-standard-deviation" class="level2">
+<h2 class="anchored" data-anchor-id="variance-and-standard-deviation">Variance and standard deviation</h2>
+<blockquote class="blockquote">
+<h3 id="variance" class="anchored">Variance</h3>
+<p>● The mean squared distance of the data from their mean</p>
+</blockquote>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Variance; nformally, a measure of the spread of data</p>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><span class="math display">\[
+variance = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2
+\]</span></p>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="standard-deviation" class="anchored">standard Deviation</h3>
+<p><span class="math display">\[
+std = \sqrt {\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2}
+\]</span></p>
+</blockquote>
+<section id="computing-the-variance" class="level3">
+<h3 class="anchored" data-anchor-id="computing-the-variance">Computing the variance</h3>
+<p>we will explicitly compute the variance of the petal length of <em>Iris veriscolor</em>, we will then use <code>np.var()</code> to compute it.</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Array of differences to mean: differences</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>differences <span class="op">=</span> versicolor_petal_length<span class="op">-</span>np.mean(versicolor_petal_length)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Square the differences: diff_sq</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>diff_sq <span class="op">=</span> differences<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the mean square difference: variance_explicit</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>variance_explicit <span class="op">=</span> np.mean(diff_sq)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the variance using NumPy: variance_np</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>variance_np <span class="op">=</span> np.var(versicolor_petal_length)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(variance_explicit, variance_np)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.21640000000000004 0.21640000000000004</code></pre>
+</div>
+</div>
+</section>
+<section id="the-standard-deviation-and-the-variance" class="level3">
+<h3 class="anchored" data-anchor-id="the-standard-deviation-and-the-variance">The standard deviation and the variance</h3>
+<p>the standard deviation is the square root of the variance.</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the variance: variance</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>variance <span class="op">=</span> np.var(versicolor_petal_length)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the square root of the variance</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.sqrt(variance))</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the standard deviation</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.std(versicolor_petal_length))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.4651881339845203
+0.4651881339845203</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="covariance-and-the-pearson-correlation-coefficient" class="level2">
+<h2 class="anchored" data-anchor-id="covariance-and-the-pearson-correlation-coefficient">Covariance and the Pearson correlation coefficient</h2>
+<blockquote class="blockquote">
+<h3 id="covariance" class="anchored">Covariance</h3>
+<p>● A measure of how two quantities vary together <span class="math display">\[
+covariance = \frac{1}{n} \sum_{i=1}^{n} (x_i\ \bar{x})\ (y_i \ - \bar{y})
+\]</span></p>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="pearson-correlation-coefficient" class="anchored">Pearson correlation coefficient</h3>
+<p><span class="math display">\[
+\rho = Pearson\ correlation = \frac{covariance}{(std\ of\ x)\ (std\ of\ y)} = \frac{variability\ due\ to\ codependence}{independent variability}
+\]</span></p>
+</blockquote>
+<section id="scatter-plots" class="level3">
+<h3 class="anchored" data-anchor-id="scatter-plots">Scatter plots</h3>
+<p>When we made bee swarm plots, box plots, and ECDF plots in previous exercises, we compared the petal lengths of different species of <em>iris</em>. But what if we want to compare two properties of a single species? This is exactly what we will do, we will make a <strong>scatter plot</strong> of the petal length and width measurements of Anderson’s <em>Iris versicolor</em> flowers.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the flower scales (that is, it preserves its proportion as it grows), we would expect the length and width to be correlated.</p>
+</div>
+</div>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>versicolor_petal_width <span class="op">=</span> np.array([<span class="fl">1.4</span>, <span class="fl">1.5</span>, <span class="fl">1.5</span>, <span class="fl">1.3</span>, <span class="fl">1.5</span>, <span class="fl">1.3</span>, <span class="fl">1.6</span>, <span class="fl">1.</span> , <span class="fl">1.3</span>, <span class="fl">1.4</span>, <span class="fl">1.</span> , <span class="fl">1.5</span>, <span class="fl">1.</span> ,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>       <span class="fl">1.4</span>, <span class="fl">1.3</span>, <span class="fl">1.4</span>, <span class="fl">1.5</span>, <span class="fl">1.</span> , <span class="fl">1.5</span>, <span class="fl">1.1</span>, <span class="fl">1.8</span>, <span class="fl">1.3</span>, <span class="fl">1.5</span>, <span class="fl">1.2</span>, <span class="fl">1.3</span>, <span class="fl">1.4</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>       <span class="fl">1.4</span>, <span class="fl">1.7</span>, <span class="fl">1.5</span>, <span class="fl">1.</span> , <span class="fl">1.1</span>, <span class="fl">1.</span> , <span class="fl">1.2</span>, <span class="fl">1.6</span>, <span class="fl">1.5</span>, <span class="fl">1.6</span>, <span class="fl">1.5</span>, <span class="fl">1.3</span>, <span class="fl">1.3</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>       <span class="fl">1.3</span>, <span class="fl">1.2</span>, <span class="fl">1.4</span>, <span class="fl">1.2</span>, <span class="fl">1.</span> , <span class="fl">1.3</span>, <span class="fl">1.2</span>, <span class="fl">1.3</span>, <span class="fl">1.3</span>, <span class="fl">1.1</span>, <span class="fl">1.3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a scatter plot</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(versicolor_petal_length, versicolor_petal_width, marker<span class="op">=</span><span class="st">"."</span>, linestyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Label the axes</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.xlabel(<span class="st">"petal length, (cm)"</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.ylabel(<span class="st">"petal length, (cm)"</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the result</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>we see some correlation. Longer petals also tend to be wider.</p>
+</div>
+</div>
+</section>
+<section id="computing-the-covariance" class="level3">
+<h3 class="anchored" data-anchor-id="computing-the-covariance">Computing the covariance</h3>
+<p>The covariance may be computed using the Numpy function <code>np.cov()</code>. For example, we have two sets of data <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, <code>np.cov(x, y)</code> returns a 2D array where entries <code>[0,1</code>] and <code>[1,0]</code> are the covariances. Entry <code>[0,0]</code> is the variance of the data in <code>x</code>, and entry <code>[1,1]</code> is the variance of the data in <code>y</code>. This 2D output array is called the <strong>covariance matrix</strong>, since it organizes the self- and covariance.</p>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the covariance matrix: covariance_matrix</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>covariance_matrix <span class="op">=</span> np.cov(versicolor_petal_length, versicolor_petal_width)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print covariance matrix</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(covariance_matrix)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract covariance of length and width of petals: petal_cov</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>petal_cov <span class="op">=</span> covariance_matrix[<span class="dv">0</span>,<span class="dv">1</span>]</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the length/width covariance</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(petal_cov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[0.22081633 0.07310204]
+ [0.07310204 0.03910612]]
+0.07310204081632653</code></pre>
+</div>
+</div>
+</section>
+<section id="computing-the-pearson-correlation-coefficient" class="level3">
+<h3 class="anchored" data-anchor-id="computing-the-pearson-correlation-coefficient">Computing the Pearson correlation coefficient</h3>
+<p>the Pearson correlation coefficient, also called the <strong>Pearson r</strong>, is often easier to interpret than the covariance. It is computed using the <code>np.corrcoef()</code> function. Like <code>np.cov(</code>), it takes two arrays as arguments and returns a 2D array. Entries <code>[0,0]</code> and <code>[1,1]</code> are necessarily equal to <code>1</code>, and the value we are after is entry <code>[0,1]</code>.</p>
+<p>We will write a function, <code>pearson_r(x, y)</code> that takes in two arrays and returns the Pearson correlation coefficient. We will then use this function to compute it for the petal lengths and widths of <span class="math inline">\(I.\ versicolor\)</span>.</p>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pearson_r(x, y):</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Compute Pearson correlation coefficient between two arrays."""</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute correlation matrix: corr_mat</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    corr_mat <span class="op">=</span> np.corrcoef(x,y)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Return entry [0,1]</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> corr_mat[<span class="dv">0</span>,<span class="dv">1</span>]</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute Pearson correlation coefficient for I. versicolor: r</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> pearson_r(versicolor_petal_length, versicolor_petal_width)</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.7866680885228169</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="thinking-probabilistically-discrete-variables" class="level1">
+<h1>Thinking probabilistically– Discrete variables</h1>
+<p>Statistical inference rests upon probability. Because we can very rarely say anything meaningful with absolute certainty from data, we use probabilistic language to make quantitative statements about data. We will think probabilistically about discrete quantities: those that can only take certain values, like integers.</p>
+<section id="probabilistic-logic-and-statistical-inference" class="level2">
+<h2 class="anchored" data-anchor-id="probabilistic-logic-and-statistical-inference">Probabilistic logic and statistical inference</h2>
+<section id="the-goal-of-statistical-inference" class="level3">
+<h3 class="anchored" data-anchor-id="the-goal-of-statistical-inference">the goal of statistical inference</h3>
+<ul>
+<li>To draw probabilistic conclusions about what we might expect if we collected the same data again.</li>
+<li>To draw actionable conclusions from data.</li>
+<li>To draw more general conclusions from relatively few data or observations.</li>
+</ul>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Statistical inference involves taking your data to probabilistic conclusions about what you would expect if you took even more data, and you can make decisions based on these conclusions.</p>
+</div>
+</div>
+</section>
+<section id="why-we-use-the-probabilistic-language-in-statistical-inference" class="level3">
+<h3 class="anchored" data-anchor-id="why-we-use-the-probabilistic-language-in-statistical-inference">Why we use the probabilistic language in statistical inference</h3>
+<ul>
+<li>Probability provides a measure of uncertainty and this is crucial because we can quantify what we might expect if the data were acquired again.</li>
+<li>Data are almost never exactly the same when acquired again, and probability allows us to say how much we expect them to vary. We need probability to say how data might vary if acquired again.</li>
+</ul>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Probabilistic language is in fact very precise. It precisely describes uncertainty.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="random-number-generators-and-hacker-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="random-number-generators-and-hacker-statistics">Random number generators and hacker statistics</h2>
+<blockquote class="blockquote">
+<h3 id="hacker-statistics" class="anchored">Hacker statistics</h3>
+<ul>
+<li>Uses simulated repeated measurements to compute probabilities.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="the-np.random-module" class="anchored">The np.random module</h3>
+<ul>
+<li>Suite of functions based on random number generation</li>
+<li><code>np.random.random()</code>: draw a number between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span></li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="bernoulli-trial" class="anchored">Bernoulli trial</h3>
+<p>● An experiment that has two options, “success” (True) and “failure” (False).</p>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="random-number-seed" class="anchored">Random number seed</h3>
+<ul>
+<li>Integer fed into random number generating algorithm</li>
+<li>Manually seed random number generator if you need reproducibility</li>
+<li>Specified using <code>np.random.seed()</code></li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="hacker-stats-probabilities" class="anchored">Hacker stats probabilities</h3>
+<ul>
+<li>Determine how to simulate data</li>
+<li>Simulate many many times</li>
+<li>Probability is approximately fraction of trials with the outcome of interest</li>
+</ul>
+</blockquote>
+<section id="generating-random-numbers-using-the-np.random-module" class="level3">
+<h3 class="anchored" data-anchor-id="generating-random-numbers-using-the-np.random-module">Generating random numbers using the np.random module</h3>
+<p>we’ll generate lots of random numbers between zero and one, and then plot a histogram of the results. If the numbers are truly random, all bars in the histogram should be of (close to) equal height.</p>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Seed the random number generator</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize random numbers: random_numbers</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>random_numbers <span class="op">=</span> np.empty(<span class="dv">100000</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate random numbers by looping over range(100000)</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100000</span>):</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    random_numbers[i] <span class="op">=</span> np.random.random()</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot a histogram</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.hist(random_numbers, bins<span class="op">=</span><span class="dv">316</span>, histtype<span class="op">=</span><span class="st">"step"</span>, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.xlabel(<span class="st">"random numbers"</span>)</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.ylabel(<span class="st">"counts"</span>)</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-24-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The histogram is almost exactly flat across the top, indicating that there is equal chance that a randomly-generated number is in any of the bins of the histogram.</p>
+</div>
+</div>
+</section>
+<section id="the-np.random-module-and-bernoulli-trials" class="level3">
+<h3 class="anchored" data-anchor-id="the-np.random-module-and-bernoulli-trials">The np.random module and Bernoulli trials</h3>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can think of a Bernoulli trial as a flip of a possibly biased coin. Each coin flip has a probability <span class="math inline">\(p\)</span> of landing heads (success) and probability <span class="math inline">\(1−p\)</span> of landing tails (failure).</p>
+</div>
+</div>
+<p>We will write a function to perform <code>n</code> Bernoulli trials, <code>perform_bernoulli_trials(n, p)</code>, which returns the number of successes out of <code>n</code> Bernoulli trials, each of which has probability <span class="math inline">\(p\)</span> of success. To perform each Bernoulli trial, we will use the <code>np.random.random()</code> function, which returns a random number between zero and one.</p>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> perform_bernoulli_trials(n, p):</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Perform n Bernoulli trials with success probability p</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co">    and return number of successes."""</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize number of successes: n_success</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    n_success <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Perform trials</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Choose random number between zero and one: random_number</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>        random_number <span class="op">=</span> np.random.random()</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># If less than p, it's a success so add one to n_success</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> random_number <span class="op">&lt;</span> p:</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>            n_success <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> n_success</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="how-many-defaults-might-we-expect" class="level3">
+<h3 class="anchored" data-anchor-id="how-many-defaults-might-we-expect">How many defaults might we expect?</h3>
+<p>Let’s say a bank made 100 mortgage loans. It is possible that anywhere between <span class="math inline">\(0\)</span> and <span class="math inline">\(100\)</span> of the loans will be defaulted upon. We would like to know the probability of getting a given number of defaults, given that the probability of a default is <span class="math inline">\(p = 0.05\)</span>. To investigate this, we will do a simulation. We will perform 100 Bernoulli trials using the <code>perform_bernoulli_trials()</code> function and record how many defaults we get. Here, a success is a default.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Remember that the word “success” just means that the Bernoulli trial evaluates to True, i.e., did the loan recipient default?</p>
+</div>
+</div>
+<p>You will do this for another <span class="math inline">\(100\)</span> Bernoulli trials. And again and again until we have tried it <span class="math inline">\(1000\)</span> times. Then, we will plot a histogram describing the probability of the number of defaults.</p>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Seed random number generator</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize the number of defaults: n_defaults</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>n_defaults <span class="op">=</span> np.empty(<span class="dv">1000</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the number of defaults</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>):</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    n_defaults[i] <span class="op">=</span> perform_bernoulli_trials(<span class="dv">100</span>, <span class="fl">0.05</span>)</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the histogram with default number of bins; label your axes</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.hist(n_defaults, density<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.xlabel(<span class="st">'number of defaults out of 100 loans'</span>)</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.ylabel(<span class="st">'probability'</span>)</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-26-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is actually not an optimal way to plot a histogram when the results are known to be integers. We will revisit this</p>
+</div>
+</div>
+</section>
+<section id="will-the-bank-fail" class="level3">
+<h3 class="anchored" data-anchor-id="will-the-bank-fail">Will the bank fail?</h3>
+<p>If interest rates are such that the bank will lose money if 10 or more of its loans are defaulted upon, what is the probability that the bank will lose money?</p>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute ECDF: x, y</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>x,y <span class="op">=</span> ecdf(n_defaults)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the ECDF with labeled axes</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(x,y, marker<span class="op">=</span><span class="st">"."</span>, linestyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.xlabel(<span class="st">"number of defaults"</span>)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.ylabel(<span class="st">"ECDF"</span>)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the number of 100-loan simulations with 10 or more defaults: n_lose_money</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>n_lose_money <span class="op">=</span> np.<span class="bu">sum</span>(n_defaults <span class="op">&gt;=</span> <span class="dv">10</span>)</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute and print probability of losing money</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Probability of losing money ='</span>, n_lose_money <span class="op">/</span> <span class="bu">len</span>(n_defaults))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-27-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Probability of losing money = 0.022</code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>we most likely get 5/100 defaults. But we still have about a 2% chance of getting 10 or more defaults out of 100 loans.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="probability-distributions-and-stories-the-binomial-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="probability-distributions-and-stories-the-binomial-distribution">Probability distributions and stories: The Binomial distribution</h2>
+<blockquote class="blockquote">
+<h3 id="probability-mass-function-pmf" class="anchored">Probability mass function (PMF)</h3>
+<ul>
+<li>The set of probabilities of discrete outcomes</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="probability-distribution" class="anchored">Probability distribution</h3>
+<ul>
+<li>A mathematical description of outcomes</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="discrete-uniform-distribution-the-story" class="anchored">Discrete Uniform distribution: the story</h3>
+<ul>
+<li>The outcome of rolling a single fair die is Discrete Uniformly distributed.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="binomial-distribution-the-story" class="anchored">Binomial distribution: the story</h3>
+<ul>
+<li>The number <span class="math inline">\(r\)</span> of successes in <span class="math inline">\(n\)</span> Bernoulli trials with probability <span class="math inline">\(p\)</span> of success, is Binomially distributed</li>
+<li>The number <span class="math inline">\(r\)</span> of heads in <span class="math inline">\(4\)</span> coin flips with probability <span class="math inline">\(0.5\)</span> of heads, is Binomially distributed</li>
+</ul>
+</blockquote>
+<section id="sampling-out-of-the-binomial-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="sampling-out-of-the-binomial-distribution">Sampling out of the Binomial distribution</h3>
+<p>We will compute the probability mass function for the number of defaults we would expect for <span class="math inline">\(100\)</span> loans as in the last section, but instead of simulating all of the Bernoulli trials, we will perform the sampling using <code>np.random.binomial()</code>{% fn 1 %}.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is identical to the calculation we did in the last set of exercises using our custom-written <code>perform_bernoulli_trials()</code> function, but far more computationally efficient.</p>
+</div>
+</div>
+<p>Given this extra efficiency, we will take <span class="math inline">\(10,000\)</span> samples instead of <span class="math inline">\(1000\)</span>. After taking the samples, we will plot the CDF. This CDF that we are plotting is that of the Binomial distribution.</p>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take 10,000 samples out of the binomial distribution: n_defaults</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>n_defaults <span class="op">=</span> np.random.binomial(<span class="dv">100</span>, <span class="fl">0.05</span>, size<span class="op">=</span><span class="dv">10000</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute CDF: x, y</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>x,y <span class="op">=</span> ecdf(n_defaults)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the CDF with axis labels</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(x,y, marker<span class="op">=</span><span class="st">"."</span>, linestyle<span class="op">=</span><span class="st">"-"</span>)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.xlabel(<span class="st">"number of defaults out of 100 loans"</span>)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.ylabel(<span class="st">"CDF"</span>)</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-28-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you know the story, using built-in algorithms to directly sample out of the distribution is <strong><em>much</em></strong> faster.</p>
+</div>
+</div>
+</section>
+<section id="plotting-the-binomial-pmf" class="level3">
+<h3 class="anchored" data-anchor-id="plotting-the-binomial-pmf">Plotting the Binomial PMF</h3>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>plotting a nice looking PMF requires a bit of matplotlib trickery that we will not go into here.</p>
+</div>
+</div>
+<p>we will plot the PMF of the Binomial distribution as a histogram. The trick is setting up the edges of the <code>bins</code> to pass to <code>plt.hist()</code> via the <code>bins</code> keyword argument. We want the bins centered on the integers. So, the edges of the bins should be <span class="math inline">\(-0.5, 0.5, 1.5, 2.5, ...\)</span> up to <code>max(n_defaults) + 1.5</code>. We can generate an array like this using <code>np.arange()</code>and then subtracting <code>0.5</code> from the array.</p>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute bin edges: bins</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="bu">max</span>(n_defaults) <span class="op">+</span> <span class="fl">1.5</span>) <span class="op">-</span> <span class="fl">0.5</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate histogram</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.hist(n_defaults, density<span class="op">=</span><span class="va">True</span>, bins<span class="op">=</span>bins)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Label axes</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.xlabel(<span class="st">"number of defaults out of 100 loans"</span>)</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.ylabel(<span class="st">"probability"</span>)</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-29-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="poisson-processes-and-the-poisson-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="poisson-processes-and-the-poisson-distribution">Poisson processes and the Poisson distribution</h2>
+<blockquote class="blockquote">
+<h3 id="poisson-process" class="anchored">Poisson process</h3>
+<ul>
+<li>The timing of the next event is completely independent of when the previous event happened</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="examples-of-poisson-processes" class="anchored">Examples of Poisson processes</h3>
+<ul>
+<li>Natural births in a given hospital</li>
+<li>Hit on a website during a given hour</li>
+<li>Meteor strikes</li>
+<li>Molecular collisions in a gas</li>
+<li>Aviation incidents</li>
+<li>Buses in Poissonville</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="poisson-distribution" class="anchored">Poisson distribution</h3>
+<ul>
+<li>The number <span class="math inline">\(r\)</span> of arrivals of a Poisson process in a given time interval with average rate of <span class="math inline">\(λ\)</span> arrivals per interval is Poisson distributed.</li>
+<li>The number r of hits on a website in one hour with an average hit rate of 6 hits per hour is Poisson distributed.</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="poisson-distribution-1" class="anchored">Poisson Distribution</h3>
+<ul>
+<li>Limit of the Binomial distribution for low probability of success and large number of trials.</li>
+<li>That is, for rare events.</li>
+</ul>
+</blockquote>
+<section id="relationship-between-binomial-and-poisson-distributions" class="level3">
+<h3 class="anchored" data-anchor-id="relationship-between-binomial-and-poisson-distributions">Relationship between Binomial and Poisson distributions</h3>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Poisson distribution is a limit of the Binomial distribution for rare events.</p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Poisson distribution with arrival rate equal to <span class="math inline">\(np\)</span> approximates a Binomial distribution for <span class="math inline">\(n\)</span> Bernoulli trials with probability <span class="math inline">\(p\)</span> of success (with <span class="math inline">\(n\)</span> large and <span class="math inline">\(p\)</span> small). Importantly, the Poisson distribution is often simpler to work with because it has only one parameter instead of two for the Binomial distribution.</p>
+</div>
+</div>
+<p>Let’s explore these two distributions computationally. We will compute the mean and standard deviation of samples from a Poisson distribution with an arrival rate of <span class="math inline">\(10\)</span>. Then, we will compute the mean and standard deviation of samples from a Binomial distribution with parameters <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span> such that <span class="math inline">\(np = 10\)</span>.</p>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw 10,000 samples out of Poisson distribution: samples_poisson</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>samples_poisson <span class="op">=</span> np.random.poisson(<span class="dv">10</span>, size<span class="op">=</span><span class="dv">10000</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the mean and standard deviation</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Poisson:     '</span>, np.mean(samples_poisson),</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>                       np.std(samples_poisson))</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify values of n and p to consider for Binomial: n, p</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> [<span class="dv">20</span>, <span class="dv">100</span>, <span class="dv">1000</span>]</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> [<span class="fl">.5</span>, <span class="fl">.1</span>, <span class="fl">.01</span>]</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw 10,000 samples for each n,p pair: samples_binomial</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>    samples_binomial <span class="op">=</span> np.random.binomial(n[i],p[i], size<span class="op">=</span><span class="dv">10000</span>)</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print results</span></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'n ='</span>, n[i], <span class="st">'Binom:'</span>, np.mean(samples_binomial),</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>                                 np.std(samples_binomial))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Poisson:      10.0145 3.1713545607516043
+n = 20 Binom: 10.0592 2.23523944131272
+n = 100 Binom: 10.0441 2.9942536949964675
+n = 1000 Binom: 10.0129 3.139639085946026</code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The means are all about the same, which can be shown to be true by doing some pen-and-paper work. The standard deviation of the Binomial distribution gets closer and closer to that of the Poisson distribution as the probability <span class="math inline">\(p\)</span> gets lower and lower.</p>
+</div>
+</div>
+</section>
+<section id="was-2015-anomalous" class="level3">
+<h3 class="anchored" data-anchor-id="was-2015-anomalous">Was 2015 anomalous?</h3>
+<p>In baseball, a no-hitter is a game in which a pitcher does not allow the other team to get a hit. This is a rare event, and since the beginning of the so-called modern era of baseball (starting in 1901), there have only been 251 of them through the 2015 season in over 200,000 games. The ECDF of the number of no-hitters in a season is shown to the right. The probability distribution that would be appropriate to describe the number of no-hitters we would expect in a given season? is Both Binomial and Poisson, though Poisson is easier to model and compute.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When we have rare events (low <span class="math inline">\(p\)</span>, high <span class="math inline">\(n\)</span>), the Binomial distribution is Poisson. This has a single parameter, the mean number of successes per time interval, in our case the mean number of no-hitters per season.</p>
+</div>
+</div>
+<p>1990 and 2015 featured the most no-hitters of any season of baseball (there were seven). Given that there are on average <span class="math inline">\(\frac{251}{115}\)</span> no-hitters per season, what is the probability of having seven or more in a season? Let’s find out</p>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw 10,000 samples out of Poisson distribution: n_nohitters</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>n_nohitters <span class="op">=</span> np.random.poisson(<span class="dv">251</span><span class="op">/</span><span class="dv">115</span>, size<span class="op">=</span><span class="dv">10000</span>)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute number of samples that are seven or greater: n_large</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>n_large <span class="op">=</span> np.<span class="bu">sum</span>(n_nohitters <span class="op">&gt;=</span> <span class="dv">7</span>)</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute probability of getting seven or more: p_large</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>p_large <span class="op">=</span> n_large<span class="op">/</span><span class="dv">10000</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Probability of seven or more no-hitters:'</span>, p_large)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Probability of seven or more no-hitters: 0.0072</code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The result is about <span class="math inline">\(0.007\)</span>. This means that it is not that improbable to see a 7-or-more no-hitter season in a century. We have seen two in a century and a half, so it is not unreasonable.</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="thinking-probabilistically-continuous-variables" class="level1">
+<h1>Thinking probabilistically– Continuous variables</h1>
+<p>It’s time to move onto continuous variables, such as those that can take on any fractional value. Many of the principles are the same, but there are some subtleties. We will be speaking the probabilistic language needed to launch into the inference techniques.</p>
+<section id="probability-density-functions" class="level2">
+<h2 class="anchored" data-anchor-id="probability-density-functions">Probability density functions</h2>
+<blockquote class="blockquote">
+<h3 id="continuous-variables" class="anchored">Continuous variables</h3>
+<ul>
+<li>Quantities that can take any value, not just discrete values</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<h3 id="probability-density-function-pdf" class="anchored">Probability density function (PDF)</h3>
+<ul>
+<li>Continuous analog to the PMF</li>
+<li>Mathematical description of the relative likelihood of observing a value of a continuous variable</li>
+</ul>
+</blockquote>
+</section>
+<section id="introduction-to-the-normal-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-the-normal-distribution">Introduction to the Normal distribution</h2>
+<blockquote class="blockquote">
+<h3 id="normal-distribution" class="anchored">Normal distribution</h3>
+<ul>
+<li>Describes a continuous variable whose PDF has a single symmetric peak.</li>
+</ul>
+</blockquote>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>&gt;</th>
+<th>Parameter</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>mean of a Normal distribution</td>
+<td>≠</td>
+<td>mean computed from data</td>
+</tr>
+<tr class="even">
+<td>st. dev. of a Normal distribution</td>
+<td>≠</td>
+<td>standard deviation computed from data</td>
+</tr>
+</tbody>
+</table>
+<section id="the-normal-pdf" class="level3">
+<h3 class="anchored" data-anchor-id="the-normal-pdf">The Normal PDF</h3>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw 100000 samples from Normal distribution with stds of interest: samples_std1, samples_std3, samples_std10</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>samples_std1 <span class="op">=</span> np.random.normal(<span class="dv">20</span>,<span class="dv">1</span>,size<span class="op">=</span><span class="dv">100000</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>samples_std3 <span class="op">=</span> np.random.normal(<span class="dv">20</span>, <span class="dv">3</span>, size<span class="op">=</span><span class="dv">100000</span>)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>samples_std10 <span class="op">=</span> np.random.normal(<span class="dv">20</span>, <span class="dv">10</span>, size<span class="op">=</span><span class="dv">100000</span>)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Make histograms</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.hist(samples_std1, density<span class="op">=</span><span class="va">True</span>, histtype<span class="op">=</span><span class="st">"step"</span>, bins<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.hist(samples_std3, density<span class="op">=</span><span class="va">True</span>, histtype<span class="op">=</span><span class="st">"step"</span>, bins<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.hist(samples_std10, density<span class="op">=</span><span class="va">True</span>, histtype<span class="op">=</span><span class="st">"step"</span>, bins<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a legend, set limits and show plot</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.legend((<span class="st">'std = 1'</span>, <span class="st">'std = 3'</span>, <span class="st">'std = 10'</span>))</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.42</span>)</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-32-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can see how the different standard deviations result in PDFs of different widths. The peaks are all centered at the mean of 20.</p>
+</div>
+</div>
+</section>
+<section id="the-normal-cdf" class="level3">
+<h3 class="anchored" data-anchor-id="the-normal-cdf">The Normal CDF</h3>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate CDFs</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>x_std1, y_std1 <span class="op">=</span> ecdf(samples_std1)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>x_std3, y_std3 <span class="op">=</span> ecdf(samples_std3)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>x_std10, y_std10 <span class="op">=</span> ecdf(samples_std10)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot CDFs</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(x_std1, y_std1, marker<span class="op">=</span><span class="st">"."</span>, linestyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(x_std3, y_std3, marker<span class="op">=</span><span class="st">"."</span>, linestyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(x_std10, y_std10, marker<span class="op">=</span><span class="st">"."</span>, linestyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a legend and show the plot</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.legend((<span class="st">'std = 1'</span>, <span class="st">'std = 3'</span>, <span class="st">'std = 10'</span>), loc<span class="op">=</span><span class="st">'lower right'</span>)</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-33-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The CDFs all pass through the mean at the 50th percentile; the mean and median of a Normal distribution are equal. The width of the CDF varies with the standard deviation.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="the-normal-distribution-properties-and-warnings" class="level2">
+<h2 class="anchored" data-anchor-id="the-normal-distribution-properties-and-warnings">The Normal distribution: Properties and warnings</h2>
+<section id="are-the-belmont-stakes-results-normally-distributed" class="level3">
+<h3 class="anchored" data-anchor-id="are-the-belmont-stakes-results-normally-distributed">Are the Belmont Stakes results Normally distributed?</h3>
+<p>Since 1926, the Belmont Stakes is a <span class="math inline">\(1.5\)</span> mile-long race of 3-year old thoroughbred horses. <a href="https://en.wikipedia.org/wiki/Secretariat_(horse)">Secretariat</a> ran the fastest Belmont Stakes in history in <span class="math inline">\(1973\)</span>. While that was the fastest year, 1970 was the slowest because of unusually wet and sloppy conditions. With these two outliers removed from the data set, we will compute the mean and standard deviation of the Belmont winners’ times. We will sample out of a Normal distribution with this mean and standard deviation using the <code>np.random.normal()</code> function and plot a CDF. Overlay the ECDF from the winning Belmont times {% fn 2 %}.</p>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>belmont_no_outliers <span class="op">=</span> np.array([<span class="fl">148.51</span>, <span class="fl">146.65</span>, <span class="fl">148.52</span>, <span class="fl">150.7</span> , <span class="fl">150.42</span>, <span class="fl">150.88</span>, <span class="fl">151.57</span>, <span class="fl">147.54</span>,</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>       <span class="fl">149.65</span>, <span class="fl">148.74</span>, <span class="fl">147.86</span>, <span class="fl">148.75</span>, <span class="fl">147.5</span> , <span class="fl">148.26</span>, <span class="fl">149.71</span>, <span class="fl">146.56</span>,</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>       <span class="fl">151.19</span>, <span class="fl">147.88</span>, <span class="fl">149.16</span>, <span class="fl">148.82</span>, <span class="fl">148.96</span>, <span class="fl">152.02</span>, <span class="fl">146.82</span>, <span class="fl">149.97</span>,</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>       <span class="fl">146.13</span>, <span class="fl">148.1</span> , <span class="fl">147.2</span> , <span class="fl">146.</span>  , <span class="fl">146.4</span> , <span class="fl">148.2</span> , <span class="fl">149.8</span> , <span class="fl">147.</span>  ,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>       <span class="fl">147.2</span> , <span class="fl">147.8</span> , <span class="fl">148.2</span> , <span class="fl">149.</span>  , <span class="fl">149.8</span> , <span class="fl">148.6</span> , <span class="fl">146.8</span> , <span class="fl">149.6</span> ,</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>       <span class="fl">149.</span>  , <span class="fl">148.2</span> , <span class="fl">149.2</span> , <span class="fl">148.</span>  , <span class="fl">150.4</span> , <span class="fl">148.8</span> , <span class="fl">147.2</span> , <span class="fl">148.8</span> ,</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>       <span class="fl">149.6</span> , <span class="fl">148.4</span> , <span class="fl">148.4</span> , <span class="fl">150.2</span> , <span class="fl">148.8</span> , <span class="fl">149.2</span> , <span class="fl">149.2</span> , <span class="fl">148.4</span> ,</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>       <span class="fl">150.2</span> , <span class="fl">146.6</span> , <span class="fl">149.8</span> , <span class="fl">149.</span>  , <span class="fl">150.8</span> , <span class="fl">148.6</span> , <span class="fl">150.2</span> , <span class="fl">149.</span>  ,</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>       <span class="fl">148.6</span> , <span class="fl">150.2</span> , <span class="fl">148.2</span> , <span class="fl">149.4</span> , <span class="fl">150.8</span> , <span class="fl">150.2</span> , <span class="fl">152.2</span> , <span class="fl">148.2</span> ,</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>       <span class="fl">149.2</span> , <span class="fl">151.</span>  , <span class="fl">149.6</span> , <span class="fl">149.6</span> , <span class="fl">149.4</span> , <span class="fl">148.6</span> , <span class="fl">150.</span>  , <span class="fl">150.6</span> ,</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>       <span class="fl">149.2</span> , <span class="fl">152.6</span> , <span class="fl">152.8</span> , <span class="fl">149.6</span> , <span class="fl">151.6</span> , <span class="fl">152.8</span> , <span class="fl">153.2</span> , <span class="fl">152.4</span> ,</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>       <span class="fl">152.2</span> ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute mean and standard deviation: mu, sigma</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> np.mean(belmont_no_outliers)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> np.std(belmont_no_outliers)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample out of a normal distribution with this mu and sigma: samples</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> np.random.normal(mu, sigma, size<span class="op">=</span><span class="dv">10000</span>)</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the CDF of the samples and of the data</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>x_theor, y_theor <span class="op">=</span> ecdf(samples)</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>x,y <span class="op">=</span> ecdf(belmont_no_outliers)</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the CDFs and show the plot</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(x_theor, y_theor)</span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(x, y, marker<span class="op">=</span><span class="st">'.'</span>, linestyle<span class="op">=</span><span class="st">'none'</span>)</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.xlabel(<span class="st">'Belmont winning time (sec.)'</span>)</span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.ylabel(<span class="st">'CDF'</span>)</span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-35-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The theoretical CDF and the ECDF of the data suggest that the winning Belmont times are, indeed, Normally distributed. This also suggests that in the last 100 years or so, there have not been major technological or training advances that have significantly affected the speed at which horses can run this race.</p>
+</div>
+</div>
+</section>
+<section id="what-are-the-chances-of-a-horse-matching-or-beating-secretariats-record" class="level3">
+<h3 class="anchored" data-anchor-id="what-are-the-chances-of-a-horse-matching-or-beating-secretariats-record">What are the chances of a horse matching or beating Secretariat’s record?</h3>
+<p>The probability that the winner of a given Belmont Stakes will run it as fast or faster than Secretariat assuming that the Belmont winners’ times are Normally distributed (with the 1970 and 1973 years removed)</p>
+<div class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take a million samples out of the Normal distribution: samples</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> np.random.normal(mu, sigma, size<span class="op">=</span><span class="dv">1000000</span>)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the fraction that are faster than 144 seconds: prob</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> np.<span class="bu">sum</span>(samples<span class="op">&lt;=</span><span class="dv">144</span>)<span class="op">/</span><span class="bu">len</span>(samples)</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result</span></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Probability of besting Secretariat:'</span>, prob)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Probability of besting Secretariat: 0.000614</code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We had to take a million samples because the probability of a fast time is very low and we had to be sure to sample enough. We get that there is only a 0.06% chance of a horse running the Belmont as fast as Secretariat.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="the-exponential-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="the-exponential-distribution">The Exponential distribution</h2>
+<p>The waiting time between arrivals of a Poisson process is Exponentially distributed</p>
+<blockquote class="blockquote">
+<h3 id="possible-poisson-process" class="anchored">Possible Poisson process</h3>
+<ul>
+<li>Nuclear incidents:</li>
+<li>Timing of one is independent of all others</li>
+</ul>
+</blockquote>
+<p><span class="math inline">\(f(x; \frac{1}{\beta}) = \frac{1}{\beta} \exp(-\frac{x}{\beta})\)</span></p>
+<section id="if-you-have-a-story-you-can-simulate-it" class="level3">
+<h3 class="anchored" data-anchor-id="if-you-have-a-story-you-can-simulate-it">If you have a story, you can simulate it!</h3>
+<p>Sometimes, the story describing our probability distribution does not have a named distribution to go along with it. In these cases, fear not! You can always simulate it.</p>
+<p>we looked at the rare event of no-hitters in Major League Baseball. <em>Hitting the cycle</em> is another rare baseball event. When a batter hits the cycle, he gets all four kinds of hits, a single, double, triple, and home run, in a single game. Like no-hitters, this can be modeled as a Poisson process, so the time between hits of the cycle are also Exponentially distributed.</p>
+<p>How long must we wait to see both a no-hitter and then a batter hit the cycle? The idea is that we have to wait some time for the no-hitter, and then after the no-hitter, we have to wait for hitting the cycle. Stated another way, what is the total waiting time for the arrival of two different Poisson processes? The total waiting time is the time waited for the no-hitter, plus the time waited for the hitting the cycle.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We will write a function to sample out of the distribution described by this story.</p>
+</div>
+</div>
+<div class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> successive_poisson(tau1, tau2, size<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Compute time for arrival of 2 successive Poisson processes."""</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Draw samples out of first exponential distribution: t1</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    t1 <span class="op">=</span> np.random.exponential(tau1, size<span class="op">=</span>size)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Draw samples out of second exponential distribution: t2</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>    t2 <span class="op">=</span> np.random.exponential(tau2, size<span class="op">=</span>size)</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t1 <span class="op">+</span> t2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="distribution-of-no-hitters-and-cycles" class="level3">
+<h3 class="anchored" data-anchor-id="distribution-of-no-hitters-and-cycles">Distribution of no-hitters and cycles</h3>
+<p>We’ll use the sampling function to compute the waiting time to observe a no-hitter and hitting of the cycle. The mean waiting time for a no-hitter is <span class="math inline">\(764\)</span> games, and the mean waiting time for hitting the cycle is <span class="math inline">\(715\)</span> games.</p>
+<div class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw samples of waiting times: waiting_times</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>waiting_times <span class="op">=</span> successive_poisson(<span class="dv">764</span>, <span class="dv">715</span>, size<span class="op">=</span><span class="dv">100000</span>)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the histogram</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.hist(waiting_times, bins<span class="op">=</span><span class="dv">100</span>, density<span class="op">=</span><span class="va">True</span>, histtype<span class="op">=</span><span class="st">"step"</span>)</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Label axes</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.xlabel(<span class="st">"Waiting times"</span>)</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.ylabel(<span class="st">"probability"</span>)</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-38-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Notice that the PDF is peaked, unlike the waiting time for a single Poisson process. For fun (and enlightenment), Let’s also plot the CDF.</p>
+<div class="cell" data-scrolled="true" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>x,y <span class="op">=</span> ecdf(waiting_times)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(x,y)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.plot(x,y, marker<span class="op">=</span><span class="st">"."</span>, linestyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.xlabel(<span class="st">"Waiting times"</span>)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> plt.ylabel(<span class="st">"CDF"</span>)</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2020-07-03-Statistical Thinking in Python (Part 1)_files/figure-html/cell-39-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>{{‘For this exercise and all going forward, the random number generator is pre-seeded for you (with <code>np.random.seed(42))</code> to save you typing that each time.’ | fndetail: 1 }} {{‘we scraped the data concerning the Belmont Stakes from the <a href="https://en.wikipedia.org/wiki/Belmont_Stakes">Belmont Wikipedia page</a>.’ | fndetail: 2 }}</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

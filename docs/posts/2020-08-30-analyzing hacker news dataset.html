@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Victor Omondi">
+<meta name="dcterms.date" content="2020-08-30">
+
+<title>blog - Analyzing Hacker News Dataset</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/VictorOmondi1997"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/VictorOmondi197"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Analyzing Hacker News Dataset</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">data-analysis</div>
+                <div class="quarto-category">hacker-news</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Victor Omondi </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 30, 2020</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#read-the-dataset" id="toc-read-the-dataset" class="nav-link active" data-scroll-target="#read-the-dataset">Read the Dataset</a>
+  <ul class="collapse">
+  <li><a href="#dataset-shape" id="toc-dataset-shape" class="nav-link" data-scroll-target="#dataset-shape">Dataset Shape</a></li>
+  </ul></li>
+  <li><a href="#how-many-times-is-python-mentioned-in-the-title-of-stories-in-our-hacker-news-dataset." id="toc-how-many-times-is-python-mentioned-in-the-title-of-stories-in-our-hacker-news-dataset." class="nav-link" data-scroll-target="#how-many-times-is-python-mentioned-in-the-title-of-stories-in-our-hacker-news-dataset.">how many times is Python mentioned in the title of stories in our Hacker News dataset.</a></li>
+  <li><a href="#titles-that-mention-the-programming-language-ruby" id="toc-titles-that-mention-the-programming-language-ruby" class="nav-link" data-scroll-target="#titles-that-mention-the-programming-language-ruby">Titles that mention the programming language Ruby</a></li>
+  <li><a href="#how-many-titles-in-our-dataset-mention-email-or-e-mail" id="toc-how-many-titles-in-our-dataset-mention-email-or-e-mail" class="nav-link" data-scroll-target="#how-many-titles-in-our-dataset-mention-email-or-e-mail">how many titles in our dataset mention email or e-mail</a></li>
+  <li><a href="#how-many-titles-in-our-dataset-have-tags" id="toc-how-many-titles-in-our-dataset-have-tags" class="nav-link" data-scroll-target="#how-many-titles-in-our-dataset-have-tags">how many titles in our dataset have tags?</a></li>
+  <li><a href="#titles-that-contain-java" id="toc-titles-that-contain-java" class="nav-link" data-scroll-target="#titles-that-contain-java">Titles that contain Java</a></li>
+  <li><a href="#how-many-titles-have-tags-at-the-start-versus-the-end-of-the-story-title-in-our-hacker-news-dataset." id="toc-how-many-titles-have-tags-at-the-start-versus-the-end-of-the-story-title-in-our-hacker-news-dataset." class="nav-link" data-scroll-target="#how-many-titles-have-tags-at-the-start-versus-the-end-of-the-story-title-in-our-hacker-news-dataset.">how many titles have tags at the start versus the end of the story title in our Hacker News dataset.</a></li>
+  <li><a href="#count-the-number-of-times-that-email-is-mentioned-in-story-titles." id="toc-count-the-number-of-times-that-email-is-mentioned-in-story-titles." class="nav-link" data-scroll-target="#count-the-number-of-times-that-email-is-mentioned-in-story-titles.">count the number of times that email is mentioned in story titles.</a></li>
+  <li><a href="#count-the-number-of-times-that-sql-is-mentioned-in-story-titles." id="toc-count-the-number-of-times-that-sql-is-mentioned-in-story-titles." class="nav-link" data-scroll-target="#count-the-number-of-times-that-sql-is-mentioned-in-story-titles.">count the number of times that sql is mentioned in story titles.</a></li>
+  <li><a href="#version-of-python-that-is-mentioned-most-often-in-our-dataset" id="toc-version-of-python-that-is-mentioned-most-often-in-our-dataset" class="nav-link" data-scroll-target="#version-of-python-that-is-mentioned-most-often-in-our-dataset">version of Python that is mentioned most often in our dataset</a></li>
+  <li><a href="#c-programming-titles" id="toc-c-programming-titles" class="nav-link" data-scroll-target="#c-programming-titles">C programming titles</a></li>
+  <li><a href="#make-all-the-different-variations-of-email-in-the-dataset-uniform." id="toc-make-all-the-different-variations-of-email-in-the-dataset-uniform." class="nav-link" data-scroll-target="#make-all-the-different-variations-of-email-in-the-dataset-uniform.">make all the different variations of “email” in the dataset uniform.</a></li>
+  <li><a href="#extract-components-of-urls-from-our-dataset." id="toc-extract-components-of-urls-from-our-dataset." class="nav-link" data-scroll-target="#extract-components-of-urls-from-our-dataset.">extract components of URLs from our dataset.</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="read-the-dataset" class="level1">
+<h1>Read the Dataset</h1>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>hn <span class="op">=</span> pd.read_csv(<span class="st">'../hacker_news.csv'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>hn.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>title</th>
+      <th>url</th>
+      <th>num_points</th>
+      <th>num_comments</th>
+      <th>author</th>
+      <th>created_at</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>12224879</td>
+      <td>Interactive Dynamic Video</td>
+      <td>http://www.interactivedynamicvideo.com/</td>
+      <td>386</td>
+      <td>52</td>
+      <td>ne0phyte</td>
+      <td>8/4/2016 11:52</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>11964716</td>
+      <td>Florida DJs May Face Felony for April Fools' W...</td>
+      <td>http://www.thewire.com/entertainment/2013/04/f...</td>
+      <td>2</td>
+      <td>1</td>
+      <td>vezycash</td>
+      <td>6/23/2016 22:20</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>11919867</td>
+      <td>Technology ventures: From Idea to Enterprise</td>
+      <td>https://www.amazon.com/Technology-Ventures-Ent...</td>
+      <td>3</td>
+      <td>1</td>
+      <td>hswarna</td>
+      <td>6/17/2016 0:01</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>10301696</td>
+      <td>Note by Note: The Making of Steinway L1037 (2007)</td>
+      <td>http://www.nytimes.com/2007/11/07/movies/07ste...</td>
+      <td>8</td>
+      <td>2</td>
+      <td>walterbell</td>
+      <td>9/30/2015 4:12</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>10482257</td>
+      <td>Title II kills investment? Comcast and other I...</td>
+      <td>http://arstechnica.com/business/2015/10/comcas...</td>
+      <td>53</td>
+      <td>22</td>
+      <td>Deinos</td>
+      <td>10/31/2015 9:48</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<section id="dataset-shape" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-shape">Dataset Shape</h2>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>hn.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>(20099, 7)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>hn.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 20099 entries, 0 to 20098
+Data columns (total 7 columns):
+ #   Column        Non-Null Count  Dtype 
+---  ------        --------------  ----- 
+ 0   id            20099 non-null  int64 
+ 1   title         20099 non-null  object
+ 2   url           17659 non-null  object
+ 3   num_points    20099 non-null  int64 
+ 4   num_comments  20099 non-null  int64 
+ 5   author        20099 non-null  object
+ 6   created_at    20099 non-null  object
+dtypes: int64(3), object(4)
+memory usage: 1.1+ MB</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>hn.isnull().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>id                 0
+title              0
+url             2440
+num_points         0
+num_comments       0
+author             0
+created_at         0
+dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>hn.describe().T</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>id</th>
+      <td>20099.0</td>
+      <td>1.131755e+07</td>
+      <td>696453.087424</td>
+      <td>10176908.0</td>
+      <td>10701720.0</td>
+      <td>11284523.0</td>
+      <td>11926127.0</td>
+      <td>12578975.0</td>
+    </tr>
+    <tr>
+      <th>num_points</th>
+      <td>20099.0</td>
+      <td>5.029663e+01</td>
+      <td>107.110322</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>9.0</td>
+      <td>54.0</td>
+      <td>2553.0</td>
+    </tr>
+    <tr>
+      <th>num_comments</th>
+      <td>20099.0</td>
+      <td>2.480303e+01</td>
+      <td>56.108639</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>21.0</td>
+      <td>1733.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="how-many-times-is-python-mentioned-in-the-title-of-stories-in-our-hacker-news-dataset." class="level1">
+<h1>how many times is Python mentioned in the title of stories in our Hacker News dataset.</h1>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>([title <span class="cf">for</span> title <span class="kw">in</span> hn.title.to_list() <span class="cf">if</span> re.search(<span class="st">'[Pp]ython'</span>, title)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>160</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>hn.title.<span class="bu">str</span>.contains(<span class="st">'[Pp]ython'</span>).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>160</code></pre>
+</div>
+</div>
+</section>
+<section id="titles-that-mention-the-programming-language-ruby" class="level1">
+<h1>Titles that mention the programming language Ruby</h1>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>hn.title[hn.title.<span class="bu">str</span>.contains(<span class="st">'[Rr]uby'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>190                     Ruby on Google AppEngine Goes Beta
+484           Related: Pure Ruby Relational Algebra Engine
+1388     Show HN: HTTPalooza  Ruby's greatest HTTP clie...
+1949     Rewriting a Ruby C Extension in Rust: How a Na...
+2022     Show HN: CrashBreak  Reproduce exceptions as f...
+2163                   Ruby 2.3 Is Only 4% Faster than 2.2
+2306     Websocket Shootout: Clojure, C++, Elixir, Go, ...
+2620                       Why Startups Use Ruby on Rails?
+2645     Ask HN: Should I continue working a Ruby gem f...
+3290     Ruby on Rails and the importance of being stup...
+3749     Telegram.org Bot Platform Webhooks Server, for...
+3874     Warp Directory (wd) unix command line tool for...
+4026     OS X 10.11 Ruby / Rails users can install ther...
+4163     Charles Nutter of JRuby Banned by Rubinius for...
+4602     Quiz: Ruby or Rails? Matz and DHH were not abl...
+5832     Show HN: An experimental Python to C#/Go/Ruby/...
+6180     Shrine  A new solution for handling file uploa...
+7171     JRuby+Truffle: Why its important to optimise t...
+7235                                        Ruby or Rails?
+7671                    How I hunted the most odd ruby bug
+7776     Elixir obsoletes Ruby, Erlang and Clojure in o...
+7870                            Elixir and Ruby Comparison
+8502     Show HN: Di-ary  a math note-taking app built ...
+10212               Ruby has been fast enough for 13 years
+11060    Show HN: VeryAnts: Probabilistic Integer Arith...
+11534                             The Ruby Code of Conduct
+11622    FasterPath: Faster Pathname Handling for Ruby ...
+12061       Ask HN: What's your favorite ruby HTTP client?
+12091    Show HN: Automated Bundle Update with Descript...
+12114                                         Awesome Ruby
+12543    Ruby Bug: SecureRandom should try /dev/urandom...
+12987    Show HN: Klipse  code evaluator pluggable on a...
+13550    Matz: I cannot accept the CoC for the Ruby com...
+13650                  Programs that rewrite Ruby programs
+14798                  Ruby Wrapper for Telegram's Bot API
+14980                    A Ruby gem for genetic algorithms
+16093                          Master Ruby Web APIs Is Out
+16149         Ruru: native Ruby extensions written in Rust
+16327                   Make Ruby Great Again [transcript]
+16422                                 Object Oriented Ruby
+16536                           Ruby Deoptimization Engine
+16875                         Video: Make Ruby Great Again
+17072    A coupon/deals site built using Roda gem for Ruby
+17510                        Table Flip on Ruby Exceptions
+18877    Using Rust with Ruby, a Deep Dive with Yehuda ...
+19077                           Python is Better than Ruby
+19224                    Modern concurrency tools for Ruby
+19743    Using a Neural Network to Train a Ruby Twitter...
+Name: title, dtype: object</code></pre>
+</div>
+</div>
+</section>
+<section id="how-many-titles-in-our-dataset-mention-email-or-e-mail" class="level1">
+<h1>how many titles in our dataset mention email or e-mail</h1>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>hn.title[hn.title.<span class="bu">str</span>.contains(<span class="st">'e-?mail'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>119      Show HN: Send an email from your shell to your...
+313          Disposable emails for safe spam free shopping
+1361     Ask HN: Doing cold emails? helps us prove this...
+1750     Protect yourself from spam, bots and phishing ...
+2421                    Ashley Madison hack treating email
+                               ...                        
+18098    House panel looking into Reddit post about Cli...
+18583    Mailgen  Generates clean, responsive HTML for ...
+18847    Show HN: Crisp iOS keyboard for email and text...
+19303    Ask HN: Why big email providers don't sign the...
+19446    Tell HN: Secure email provider Riseup will run...
+Name: title, Length: 86, dtype: object</code></pre>
+</div>
+</div>
+</section>
+<section id="how-many-titles-in-our-dataset-have-tags" class="level1">
+<h1>how many titles in our dataset have tags?</h1>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>hn.title[hn.title.<span class="bu">str</span>.contains(<span class="st">'\[\w+\]'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>66       Analysis of 114 propaganda sources from ISIS, ...
+100      Munich Gunman Got Weapon from the Darknet [Ger...
+159           File indexing and searching for Plan 9 [pdf]
+162      Attack on Kunduz Trauma Centre, Afghanistan  I...
+195                 [Beta] Speedtest.net  HTML5 Speed Test
+                               ...                        
+19763    TSA can now force you to go through body scann...
+19867                       Using Pony for Fintech [video]
+19947                                Swift Reversing [pdf]
+19979    WSJ/Dowjones Announce Unauthorized Access Betw...
+20089    Users Really Do Plug in USB Drives They Find [...
+Name: title, Length: 444, dtype: object</code></pre>
+</div>
+</div>
+<p>we were able to calculate that 444 of the 20,100 Hacker News stories in our dataset contain tags. What if we wanted to find out what the text of these tags were, and how many of each are in the dataset? In order to do this, we’ll need to use capture groups.</p>
+<p># extract all of the tags from the Hacker News titles and build a frequency table of those tags.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>hn[<span class="st">'title'</span>].<span class="bu">str</span>.extract(<span class="vs">r'\[(\w+)\]'</span>)[<span class="dv">0</span>].value_counts().head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>pdf       276
+video     111
+2015        3
+audio       3
+slides      2
+Name: 0, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> first_10_matches(pattern):</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Return the story titles that match</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">    the provided regular expression</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> titles[titles.<span class="bu">str</span>.contains(pattern)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="titles-that-contain-java" class="level1">
+<h1>Titles that contain Java</h1>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>hn.title[hn.title.<span class="bu">str</span>.contains(<span class="vs">r'[Jj]ava[^Ss]'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>436      Unikernel Power Comes to Java, Node.js, Go, an...
+811      Ask HN: Are there any projects or compilers wh...
+1840                     Adopting RxJava on the Airbnb App
+1972           Node.js vs. Java: Which Is Faster for APIs?
+2093                     Java EE and Microservices in 2016
+2367     Code that is valid in both PHP and Java, and p...
+2493     Ask HN: I've been a java dev for a couple of y...
+2751                 Eventsourcing for Java 0.4.0 released
+2910                 2016 JavaOne Intel Keynote  32mn Talk
+3452     What are the Differences Between Java Platform...
+4273      Ask HN: Is Bloch's Effective Java Still Current?
+4624     Oracle Discloses Critical Java Vulnerability i...
+5461                        Lambdas (in Java 8) Screencast
+5847     IntelliJ IDEA and the whole IntelliJ platform ...
+5947                                        JavaFX is dead
+6268             Oracle deprecating Java applets in Java 9
+7436     Forget Guava: 5 Google Libraries Java Develope...
+7481     Ask HN: Beside Java what languages have a stro...
+8100        Advantages of Functional Programming in Java 8
+8135     Show HN: Rogue AI Dungeon, javacript bot scrip...
+8447                  Show HN: Java multicore intelligence
+8487     Why IntelliJ IDEA is hailed as the most friend...
+8984     Ask HN: Should Learn/switch to JavaScript Prog...
+8987     Last-khajiit/vkb: Java bot for vk.com competit...
+10529             Angular 2 coming to Java, Python and PHP
+11454    Ask HN: Java or .NET for a new big enterprise ...
+11902                         The Java Deserialization Bug
+12382          Ask HN: Why does Java continue to dominate?
+12582    Java Memory Model Examples: Good, Bad and Ugly...
+12711    Oracle seeks $9.3B for Googles use of Java in ...
+13048        A high performance caching library for Java 8
+13105    Show HN: Backblaze-b2 is a simple java library...
+13150             Java Tops TIOBE's Popular-Languages List
+13170    Show HN: Tablesaw: A Java data-frame for 500M-...
+13272      Java StringBuffer and StringBuilder performance
+13620    1M Java questions have now been asked on Stack...
+13839        Ask HN: Hosting a Java Spring web application
+13843                                 Var and val in Java?
+13844               Answerz.com  Java and J2ee Programming
+13930     Java 8s new Optional type doesn't solve anything
+13934    Java 6 vs. Java 7 vs. Java 8 between 2013  201...
+15257                       Oracle and the fall of Java EE
+15868                 Java generics never cease to impress
+16023    Will you use ReactJS with a REST service inste...
+16932       Swift versus Java: the bitset performance test
+16948          Show HN: Bt  0-hassle BitTorrent for Java 8
+17579                Java Lazy Streamed Zip Implementation
+18407    Show HN: Scala idioms in Java: cases, patterns...
+19481    Show HN: Adding List Comprehension in Java - E...
+19735          Java Named Top Programming Language of 2015
+Name: title, dtype: object</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>hn.title[hn.title.<span class="bu">str</span>.contains(<span class="vs">r'\b[Jj]ava\b'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>436      Unikernel Power Comes to Java, Node.js, Go, an...
+811      Ask HN: Are there any projects or compilers wh...
+1023                          Pippo  Web framework in Java
+1972           Node.js vs. Java: Which Is Faster for APIs?
+2093                     Java EE and Microservices in 2016
+2367     Code that is valid in both PHP and Java, and p...
+2493     Ask HN: I've been a java dev for a couple of y...
+2751                 Eventsourcing for Java 0.4.0 released
+3228                               Comparing Rust and Java
+3452     What are the Differences Between Java Platform...
+3627                     Friends don't let friends do Java
+4273      Ask HN: Is Bloch's Effective Java Still Current?
+4624     Oracle Discloses Critical Java Vulnerability i...
+5461                        Lambdas (in Java 8) Screencast
+5847     IntelliJ IDEA and the whole IntelliJ platform ...
+6268             Oracle deprecating Java applets in Java 9
+7436     Forget Guava: 5 Google Libraries Java Develope...
+7481     Ask HN: Beside Java what languages have a stro...
+7686             Insider: Oracle has lost interest in Java
+8100        Advantages of Functional Programming in Java 8
+8447                  Show HN: Java multicore intelligence
+8487     Why IntelliJ IDEA is hailed as the most friend...
+8984     Ask HN: Should Learn/switch to JavaScript Prog...
+8987     Last-khajiit/vkb: Java bot for vk.com competit...
+10529             Angular 2 coming to Java, Python and PHP
+11454    Ask HN: Java or .NET for a new big enterprise ...
+11902                         The Java Deserialization Bug
+12382          Ask HN: Why does Java continue to dominate?
+12582    Java Memory Model Examples: Good, Bad and Ugly...
+12711    Oracle seeks $9.3B for Googles use of Java in ...
+12730                              Show HN: Shazam in Java
+13048        A high performance caching library for Java 8
+13105    Show HN: Backblaze-b2 is a simple java library...
+13150             Java Tops TIOBE's Popular-Languages List
+13170    Show HN: Tablesaw: A Java data-frame for 500M-...
+13272      Java StringBuffer and StringBuilder performance
+13620    1M Java questions have now been asked on Stack...
+13839        Ask HN: Hosting a Java Spring web application
+13843                                 Var and val in Java?
+13844               Answerz.com  Java and J2ee Programming
+13930     Java 8s new Optional type doesn't solve anything
+13934    Java 6 vs. Java 7 vs. Java 8 between 2013  201...
+14393              JavaScript is immature compared to Java
+14847    Show HN: TurboRLE: Bringing Turbo Run Length E...
+15257                       Oracle and the fall of Java EE
+15868                 Java generics never cease to impress
+16023    Will you use ReactJS with a REST service inste...
+16932       Swift versus Java: the bitset performance test
+16948          Show HN: Bt  0-hassle BitTorrent for Java 8
+17458                            Super Mario clone in Java
+17579                Java Lazy Streamed Zip Implementation
+18407    Show HN: Scala idioms in Java: cases, patterns...
+19481    Show HN: Adding List Comprehension in Java - E...
+19735          Java Named Top Programming Language of 2015
+Name: title, dtype: object</code></pre>
+</div>
+</div>
+</section>
+<section id="how-many-titles-have-tags-at-the-start-versus-the-end-of-the-story-title-in-our-hacker-news-dataset." class="level1">
+<h1>how many titles have tags at the start versus the end of the story title in our Hacker News dataset.</h1>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>hn.title.<span class="bu">str</span>.contains(<span class="vs">r'^\[\w+\]'</span>).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>15</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>hn.title.<span class="bu">str</span>.contains(<span class="vs">r'\[\w+\]$'</span>).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>417</code></pre>
+</div>
+</div>
+</section>
+<section id="count-the-number-of-times-that-email-is-mentioned-in-story-titles." class="level1">
+<h1>count the number of times that email is mentioned in story titles.</h1>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>hn.title.<span class="bu">str</span>.contains(<span class="vs">r'\be\-?\s?mails?\b'</span>, flags<span class="op">=</span>re.I).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>141</code></pre>
+</div>
+</div>
+<p>We’ll continue to analyze and count mentions of different programming languages in the dataset, and then we’ll finish by extracting the different components of the URLs submitted to Hacker News.</p>
+</section>
+<section id="count-the-number-of-times-that-sql-is-mentioned-in-story-titles." class="level1">
+<h1>count the number of times that sql is mentioned in story titles.</h1>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>hn.title.<span class="bu">str</span>.contains(<span class="vs">r'sql'</span>, flags<span class="op">=</span>re.I).<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>108</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>hn_sql <span class="op">=</span> hn[hn.title.<span class="bu">str</span>.contains(<span class="vs">r'\w+sql'</span>, flags<span class="op">=</span>re.I)].copy()</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>hn_sql[<span class="st">'flavor'</span>] <span class="op">=</span> hn[<span class="st">'title'</span>].<span class="bu">str</span>.extract(<span class="vs">r'(\w+sql)'</span>, flags<span class="op">=</span>re.I)[<span class="dv">0</span>].<span class="bu">str</span>.lower()</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>sql_pivot <span class="op">=</span> hn_sql.pivot_table(index<span class="op">=</span><span class="st">'flavor'</span>, values<span class="op">=</span><span class="st">'num_comments'</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>sql_pivot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>num_comments</th>
+    </tr>
+    <tr>
+      <th>flavor</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>cloudsql</th>
+      <td>5.000000</td>
+    </tr>
+    <tr>
+      <th>memsql</th>
+      <td>14.000000</td>
+    </tr>
+    <tr>
+      <th>mysql</th>
+      <td>12.230769</td>
+    </tr>
+    <tr>
+      <th>nosql</th>
+      <td>14.529412</td>
+    </tr>
+    <tr>
+      <th>postgresql</th>
+      <td>25.962963</td>
+    </tr>
+    <tr>
+      <th>sparksql</th>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="version-of-python-that-is-mentioned-most-often-in-our-dataset" class="level1">
+<h1>version of Python that is mentioned most often in our dataset</h1>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>hn.title.<span class="bu">str</span>.extract(<span class="vs">r'python ([\d\.]+)'</span>, flags<span class="op">=</span>re.I)[<span class="dv">0</span>].value_counts().to_dict()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>{'3': 10,
+ '2': 3,
+ '3.5': 3,
+ '3.6': 2,
+ '2.7': 1,
+ '8': 1,
+ '1.5': 1,
+ '3.5.0': 1,
+ '4': 1}</code></pre>
+</div>
+</div>
+</section>
+<section id="c-programming-titles" class="level1">
+<h1>C programming titles</h1>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>hn.title[hn.title.<span class="bu">str</span>.contains(<span class="vs">r'(?!&lt;series)\bc\b(?![\.\+])'</span>, flags<span class="op">=</span>re.I)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>221                   MemSQL (YC W11) Raises $36M Series C
+365                       The new C standards are worth it
+444            Moz raises $10m Series C from Foundry Group
+521           Fuchsia: Micro kernel written in C by Google
+1307             Show HN: Yupp, yet another C preprocessor
+                               ...                        
+18549            Show HN: An awesome C library for Windows
+18649                 Python vs. C/C++ in embedded systems
+18689                    Philz Coffee raises $45M Series C
+19151                      Ask HN: How to learn C in 2016?
+19933    Lightweight C library to parse NMEA 0183 sente...
+Name: title, Length: 105, dtype: object</code></pre>
+</div>
+</div>
+</section>
+<section id="make-all-the-different-variations-of-email-in-the-dataset-uniform." class="level1">
+<h1>make all the different variations of “email” in the dataset uniform.</h1>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>hn[<span class="st">'title'</span>] <span class="op">=</span> hn.title.<span class="bu">str</span>.replace(<span class="vs">r'e[\-\s]?mail'</span>,<span class="st">'email'</span>, flags<span class="op">=</span>re.I)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>hn.title[hn.title.<span class="bu">str</span>.contains(<span class="st">'email'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>119      Show HN: Send an email from your shell to your...
+161      Computer Specialist Who Deleted Clinton emails...
+174                                        email Apps Suck
+261      emails Show Unqualified Clinton Foundation Don...
+313          Disposable emails for safe spam free shopping
+                               ...                        
+19303    Ask HN: Why big email providers don't sign the...
+19395    I used HTML email when applying for jobs, here...
+19446    Tell HN: Secure email provider Riseup will run...
+19838                       Petition to Open Sourcemailbox
+19905    Gmail Will Soon Warn Users When emails Arrive ...
+Name: title, Length: 151, dtype: object</code></pre>
+</div>
+</div>
+</section>
+<section id="extract-components-of-urls-from-our-dataset." class="level1">
+<h1>extract components of URLs from our dataset.</h1>
+<p>most stories on Hacker News contain a link to an external resource. Once we have extracted the domains, we will be building a frequency table so we can determine the most popular domains. There are over 7,000 unique domains in our dataset, so to make the frequency table easier to analyze, we’ll look at only the top 20 domains</p>
+<div class="cell" data-scrolled="true" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>hn.url.<span class="bu">str</span>.extract(<span class="vs">r'https?://([\w\-\.]+)'</span>, flags<span class="op">=</span>re.I)[<span class="dv">0</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>github.com                1008
+medium.com                 825
+www.nytimes.com            525
+www.theguardian.com        248
+techcrunch.com             245
+                          ... 
+pss-camera.appspot.com       1
+www.mrrrgn.com               1
+ams-ix.net                   1
+www.codeshare.co.uk          1
+lambdaschool.com             1
+Name: 0, Length: 7251, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>hn_urls<span class="op">=</span>hn.url.<span class="bu">str</span>.extract(<span class="vs">r'(?P&lt;protocol&gt;\w+://(?P&lt;domain&gt;[\w\.\-]+)/?(?P&lt;path&gt;.*))'</span>, flags<span class="op">=</span>re.I)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>hn_urls.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>protocol</th>
+      <th>domain</th>
+      <th>path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>http://www.interactivedynamicvideo.com/</td>
+      <td>www.interactivedynamicvideo.com</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>http://www.thewire.com/entertainment/2013/04/f...</td>
+      <td>www.thewire.com</td>
+      <td>entertainment/2013/04/florida-djs-april-fools-...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>https://www.amazon.com/Technology-Ventures-Ent...</td>
+      <td>www.amazon.com</td>
+      <td>Technology-Ventures-Enterprise-Thomas-Byers/dp...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>http://www.nytimes.com/2007/11/07/movies/07ste...</td>
+      <td>www.nytimes.com</td>
+      <td>2007/11/07/movies/07stein.html?_r=0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>http://arstechnica.com/business/2015/10/comcas...</td>
+      <td>arstechnica.com</td>
+      <td>business/2015/10/comcast-and-other-isps-boost-...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>hn_urls.domain.value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="30">
+<pre><code>github.com                1008
+medium.com                 825
+www.nytimes.com            525
+www.theguardian.com        248
+techcrunch.com             245
+                          ... 
+pss-camera.appspot.com       1
+www.mrrrgn.com               1
+ams-ix.net                   1
+www.codeshare.co.uk          1
+lambdaschool.com             1
+Name: domain, Length: 7251, dtype: int64</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
