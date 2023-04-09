@@ -11,4 +11,10 @@ page-layout: full
 title-block-banner: true
 ---
 
+Hi! Welcome to My Blog. I’m Victor Omondi, a Data Analyst at [Maisha Meds](https://maishameds.org), A Computer Technology graduate from [Multimedia University of Kenya](https://mmu.ac.ke). I like manipulating, exploring, visualizing and modeling data to obtain insights that can be used in future decision making.
 
+
+
+![](images/vick-cover.gif)
+
+<hr>

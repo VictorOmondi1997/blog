@@ -1,6 +1,6 @@
 ---
 title: "About"
-image: profile.jpg
+image: profile.png
 about:
   template: jolla
   links:
@@ -16,4 +16,5 @@ about:
 
 ---
 
-About this blog
+I am a Data Scientist with industry experience analyzing, visualizing, and modeling data. I specialize in Python & SQL and have professional experience working with R and JavaScript. I have been involved in mentorship and community building having served as a Campus Ambassodor for AgoraIO, Ingressive LLC, CodeLN & MoringaSchool Campus Ambassador. I've mentored peers and students at Andela Learning Community and Technovation Challenge.
+Served as a team and community leader at Developer Student Club (DSC) and Computing and Information Technology Club (CIT Club) in Multimedia University of Kenya.
