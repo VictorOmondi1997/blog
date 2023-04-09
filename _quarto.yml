@@ -7,9 +7,9 @@ website:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
+        href: https://github.com/VictorOmondi1997
       - icon: twitter
-        href: https://twitter.com
+        href: https://twitter.com/VictorOmondi197
 format:
   html:
     theme: cosmo
